@@ -1,0 +1,96 @@
+#version 120
+
+uniform sampler2D Texture0;	// Albedo (G-buffer)
+uniform sampler2D Texture1;	// Normal (G-buffer)
+uniform sampler2D Texture2;	// Depth (G-buffer)
+
+uniform mat4	InvVPMatrix;
+uniform	vec4	EyePosition;
+uniform	vec4	LightPosition;
+uniform	vec4	LightColor;
+
+varying vec4	PassVPos;
+
+vec4 GetWSPos( vec2 UV, float Depth )
+{
+	vec2 FixedUV	= ( UV * 2.0f ) - 1.0f;
+	vec4 VPos4		= vec4( FixedUV.x, FixedUV.y, Depth, 1.0f );	// ROSANOTE: *Don't* negate FixedUV.y, it's already flipped in GLSL
+	vec4 WSPos		= VPos4 * InvVPMatrix;
+	return WSPos / WSPos.w;
+}
+
+vec2 FixUV( vec2 UV )
+{
+	return vec2( UV.x, 1.0f - UV.y );
+}
+
+float Sign( float x )
+{
+	return ( x > 0.0f ) ? 1.0f : ( ( x < 0.0f ) ? -1.0f : 0.0f );
+}
+
+float NonZeroSign( float x )
+{
+	return ( step( 0.0f, x ) * 2.0f ) - 1.0f;
+}
+
+vec3 GetInvStereographicProjection( vec2 Normal, float NormalZSign )
+{
+	float XXYY	= dot( Normal.xy, Normal.xy );
+	float Denom	= 1.0f / ( 1.0f + XXYY );
+	return vec3( 2.0f * Normal.xy * Denom, NormalZSign * abs( ( XXYY - 1.0f ) * Denom ) );
+}
+
+vec2 Unpack( vec2 Packed )
+{
+	return clamp( ( Packed * 1.066666f ) - 0.066666f, 0.0f, 1.0f );
+}
+
+void main()
+{
+	// Fix VPos
+	vec2	NormVPos	= PassVPos.xy / PassVPos.w;
+	vec2	FixedUV		= FixUV( NormVPos );
+
+	vec4	NormalSpec		= texture2D( Texture1, FixedUV );
+	vec4	NormalUnpack	= ( NormalSpec * 2.0f ) - 1.0f;
+	float	NormalZSign		= NonZeroSign( NormalUnpack.z );
+	vec3	WSNormal		= GetInvStereographicProjection( NormalUnpack.xy, NormalZSign );
+
+	vec2	SmoothRefl		= Unpack( abs( NormalUnpack.zw ) );		// Scale back from non-zero range
+	float	Dielectric		= step( 0.0f, NormalUnpack.w );			// 0 if metal, 1 if dielectric
+
+	vec3	BaseColor		= texture2D( Texture0, FixedUV ).rgb;	// Base is used as either albedo or specular color depending on dielectric/metal material
+	vec3	Black			= vec3( 0.0f, 0.0f, 0.0f );
+	vec3	White			= vec3( 1.0f, 1.0f, 1.0f );
+	vec3	AlbedoColor		= mix( Black, BaseColor, Dielectric );
+	vec3	SpecColor		= mix( BaseColor, White, Dielectric );
+
+	float	Depth			= texture2D( Texture2, FixedUV ).r;
+	vec3	WSPos			= GetWSPos( FixedUV, Depth ).xyz;
+
+	vec3	View			= normalize( EyePosition.xyz - WSPos );	// View vector V
+	vec3	PosToLight		= LightPosition.xyz - WSPos;
+	vec3	Light			= normalize( PosToLight );					// Light vector L
+	vec3	Half			= normalize( Light + View );				// Half vector H
+	float	NdotL			= clamp( dot( WSNormal, Light ), 0.0f, 1.0f );
+	float	NdotH			= clamp( dot( WSNormal, Half ), 0.0f, 1.0f );
+	float	SpecShadow		= clamp( NdotL * 16.0f, 0.0f, 1.0f );
+
+	float	FresnelC		= mix( 0.25f, 1.0f, clamp( SmoothRefl.x * 2.0f, 0.0f, 1.0f ) );
+	float	Fresnel			= FresnelC * pow( 1.0f - dot( Light, Half ), 5.0f );
+	float	Reflectance		= mix( SmoothRefl.y, 1.0f, Fresnel );		// Apply Fresnel to reflectance
+	float	SpecularPower	= mix( 1.0f, 100.0f, SmoothRefl.x );		// Scale into reasonable range. Smoothness is already squared to get "perceptually linear" value.
+
+	float	SpecEnergy		= ( SpecularPower * 0.125f ) + 1.0f;		// Same as (n+8)/8
+
+	vec3	Diffuse			= AlbedoColor * NdotL;
+	vec3	Specular		= SpecShadow * SpecColor * SpecEnergy * pow( NdotH, SpecularPower );
+	vec3	AllLight		= LightColor.rgb * mix( Diffuse, Specular, Reflectance );
+	
+	float	Dist			= sqrt( dot( PosToLight, PosToLight ) );
+	float	LinearFalloff	= clamp( 1.0f - ( Dist / LightColor.a ), 0.0f, 1.0f );
+	float	Falloff			= LinearFalloff * LinearFalloff;
+
+	gl_FragColor = vec4( Falloff * AllLight, 1.0f );
+}

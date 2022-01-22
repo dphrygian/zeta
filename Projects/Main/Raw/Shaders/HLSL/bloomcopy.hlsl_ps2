@@ -1,0 +1,13 @@
+#include "common.hlsl_psh"
+
+sampler Sampler	: register(s0);
+
+struct PS_INPUT
+{
+	float2 UV	: TEXCOORD0;
+};
+
+float4 Main( PS_INPUT In ) : COLOR
+{
+	return tex2D( Sampler, In.UV );
+}

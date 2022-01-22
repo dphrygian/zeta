@@ -1,0 +1,16 @@
+row_major float4x4 BoneMatrices[32];
+
+// To transform a direction instead of a point, make sure Point.w = 0
+float4 ApplyBones( float4 Point, float4 Weights, int4 Indices )
+{
+	float4 TransformedPoint =
+		mul( Point, BoneMatrices[ Indices.x ] ) * Weights.x +
+		mul( Point, BoneMatrices[ Indices.y ] ) * Weights.y +
+		mul( Point, BoneMatrices[ Indices.z ] ) * Weights.z +
+		mul( Point, BoneMatrices[ Indices.w ] ) * Weights.w;
+
+	// Badness can creep in if we don't do this. I don't exactly understand why.
+	TransformedPoint.w = Point.w;
+
+	return TransformedPoint;
+}

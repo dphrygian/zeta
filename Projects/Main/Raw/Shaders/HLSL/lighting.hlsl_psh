@@ -1,0 +1,28 @@
+#define TEST_LIGHTING 0	// Render without base (albedo/metal) color
+
+float4 LightCube[6];
+
+float4 GetCubeLight( const float3 InNormal )
+{
+	const float3	NormalSquared	= InNormal * InNormal;
+	const int3		IsNegative		= InNormal < 0.0f;
+
+	return
+		NormalSquared.x * LightCube[ IsNegative.x ] +
+		NormalSquared.y * LightCube[ IsNegative.y + 2 ] +
+		NormalSquared.z * LightCube[ IsNegative.z + 4 ];
+}
+
+float4 GetCubeLightCel( float3 InNormal )
+{
+	const float3	NormalSquared = InNormal * InNormal;
+	const int3		IsNegative = InNormal < 0.0f;
+	const int		UseX = NormalSquared.x >= NormalSquared.y && NormalSquared.x >= NormalSquared.z;
+	const int		UseY = ( 1 - UseX ) * ( NormalSquared.y >= NormalSquared.z );
+	const int		UseZ = 1 - ( UseX + UseY );
+
+	return
+		UseX * LightCube[ IsNegative.x ] +
+		UseY * LightCube[ IsNegative.y + 2 ] +
+		UseZ * LightCube[ IsNegative.z + 4 ];
+}

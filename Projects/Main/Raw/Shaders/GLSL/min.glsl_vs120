@@ -1,0 +1,14 @@
+#version 120
+
+uniform mat4	WVP;
+
+attribute vec4	InPosition;
+attribute vec4	InColor;
+
+varying vec4	PassColor;
+
+void main()
+{
+	gl_Position	= InPosition * WVP;
+	PassColor	= InColor;
+}

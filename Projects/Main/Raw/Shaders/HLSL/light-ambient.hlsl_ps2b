@@ -1,0 +1,69 @@
+#include "common.hlsl_psh"
+#include "lighting.hlsl_psh"
+
+sampler	AlbedoSampler	: register(s0);
+sampler	NormalSampler	: register(s1);
+sampler	DepthSampler	: register(s2);
+sampler	CubeSampler		: register(s3);
+
+struct PS_INPUT 
+{
+	float4 VPos : TEXCOORD0;
+};
+
+float4 Main( PS_INPUT In ) : COLOR
+{
+	// ROSATODO: Unify with code in light.hlsl_ps2, it's all basically the same now
+
+	// Fix VPos
+	const float2	NormVPos		= In.VPos.xy / In.VPos.w;
+
+	const float4	NormalSpec		= tex2D( NormalSampler, NormVPos );
+	const float4	NormalUnpack	= ( NormalSpec * 2.0f ) - 1.0f;
+	const float		NormalZSign		= NonZeroSign( NormalUnpack.z );
+	const float3	WSNormal		= GetInvStereographicProjection( NormalUnpack.xy, NormalZSign );
+
+	const float2	SmoothRefl		= Unpack( abs( NormalUnpack.zw ) );		// Scale back from non-zero range
+	const float		Dielectric		= step( 0.0f, NormalUnpack.w );			// 0 if metal, 1 if dielectric
+
+#if TEST_LIGHTING
+	const float3	BaseColor		= float3( 1.0f, 1.0f, 1.0f );
+#else
+	const float3	BaseColor		= tex2D( AlbedoSampler, NormVPos ).rgb;	// Base is used as either albedo or specular color depending on dielectric/metal material
+#endif
+	const float3	Black			= float3( 0.0f, 0.0f, 0.0f );
+	const float3	White			= float3( 1.0f, 1.0f, 1.0f );
+	const float3	AlbedoColor		= lerp( Black, BaseColor, Dielectric );
+	const float3	ReflColor		= lerp( BaseColor, White, Dielectric );
+	// DLP 5 Jan 2019: This is actually not correct; at grazing angles (Fresnel),
+	// metal should also reflect the true light color (or at least an edge tint).
+	// This is subtle, and I rarely use tinted metals, and I can't spare the cost.
+	
+	const float		Depth			= tex2D( DepthSampler, NormVPos ).r;
+	const float3	WSPos			= GetWSPos( NormVPos, Depth ).xyz;
+
+	const float3	View			= normalize( EyePosition.xyz - WSPos );	// View vector V
+
+	const float		NdotV			= saturate( dot( WSNormal, View ) );
+	const float		FresnelC		= lerp( 0.25f, 1.0f, saturate( SmoothRefl.x * 2.0f ) );	// HACKHACK: Rougher materials do not become fully reflective at glancing angles.
+	const float		Fresnel			= FresnelC * pow( 1.0f - NdotV, 5.0f );
+	const float		Reflectance		= lerp( SmoothRefl.y, 1.0f, Fresnel );		// Apply Fresnel to reflectance
+
+	// ROSAHACK: Cheaper way to get reflective energy that doesn't require intermediate specular power value.
+	// Gets the same results as computing power as lerp( 1, 100, smoothness ) and then applying the energy scalar.
+	// (lerp(a,b,x)+y)/y => lerp((a+y)/y,(b+y)/y),x)
+	// This uses a different scalar than point lights ((n+64)/64 instead of (n+8)/8) to prevent
+	// overly bright reflections, because we can't focus an unmipped cubemap like a specular point.
+	//const float		ReflEnergy		= lerp( 1.015625f, 2.5625f, SmoothRefl.x );	// (n+64)/64 scalar.
+
+	// The expensive way to do the same thing... but I'm rolling it back because it doesn't look right anyway.
+	// This was ostensibly an alternative to using different mip levels in cubemap but it's fake and too bright.
+	//const float		SpecularPower	= lerp( 1.0f, 100.0f, SmoothRefl.x );		// Scale into reasonable range. Smoothness is already squared to get "perceptually linear" value.
+	//const float		ReflEnergy		= ( SpecularPower * 0.015625f ) + 1.0f;		// Same as (n+64)/64
+
+	const float3	Ambient			= AlbedoColor * GetCubeLight( WSNormal ).rgb;
+	//const float3	Reflection		= ReflColor * ReflEnergy * SampleCube( CubeSampler, WSNormal, View ).rgb;	// Cubemap is already linear! (NOTE: This now fixes cubemap sample for nice edges!)
+	const float3	Reflection		= ReflColor * SampleCube( CubeSampler, WSNormal, View ).rgb;	// Cubemap is already linear! (NOTE: This now fixes cubemap sample for nice edges!)
+
+	return float4( lerp( Ambient, Reflection, Reflectance ), 1.0f );
+}

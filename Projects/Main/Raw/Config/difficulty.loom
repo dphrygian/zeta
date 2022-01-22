@@ -1,0 +1,8 @@
+[RosaDifficulty]
+NumDifficulties	= &
+@ Difficulty
+@@&				= "Difficulty_Tourist"
+#@@&				= "Difficulty_Easy"
+@@&				= "Difficulty_Normal"
+#@@&				= "Difficulty_Hard"
+#@@&				= "Difficulty_Expert"

@@ -1,0 +1,513 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="src\Actions\wbactioncomposite.cpp">
+      <Filter>src\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Actions\wbactiondestroy.cpp">
+      <Filter>src\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Actions\wbactionlog.cpp">
+      <Filter>src\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Actions\wbactionselector.cpp">
+      <Filter>src\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Actions\wbactionsendevent.cpp">
+      <Filter>src\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Actions\wbactionsetconfigvar.cpp">
+      <Filter>src\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Actions\wbactionsetstate.cpp">
+      <Filter>src\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Actions\wbactionsetvariable.cpp">
+      <Filter>src\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Actions\wbactiontriggerstatmod.cpp">
+      <Filter>src\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Actions\wbactionunqueueevent.cpp">
+      <Filter>src\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomplabel.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcompowner.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomppemap.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcompreactions.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcompstate.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcompstatmod.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomptransform.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcompvariablemap.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PEs\wbpeabs.cpp">
+      <Filter>src\PEs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PEs\wbpeadd.cpp">
+      <Filter>src\PEs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PEs\wbpeand.cpp">
+      <Filter>src\PEs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PEs\wbpebinaryop.cpp">
+      <Filter>src\PEs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PEs\wbpeconditional.cpp">
+      <Filter>src\PEs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PEs\wbpeconstantangles.cpp">
+      <Filter>src\PEs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PEs\wbpeconstantbool.cpp">
+      <Filter>src\PEs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PEs\wbpeconstantfloat.cpp">
+      <Filter>src\PEs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PEs\wbpeconstantint.cpp">
+      <Filter>src\PEs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PEs\wbpeconstantstring.cpp">
+      <Filter>src\PEs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PEs\wbpeconstantvector.cpp">
+      <Filter>src\PEs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PEs\wbpecross.cpp">
+      <Filter>src\PEs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PEs\wbpediv.cpp">
+      <Filter>src\PEs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PEs\wbpedot.cpp">
+      <Filter>src\PEs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PEs\wbpegetconfigvar.cpp">
+      <Filter>src\PEs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PEs\wbpegetentitybylabel.cpp">
+      <Filter>src\PEs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PEs\wbpegetname.cpp">
+      <Filter>src\PEs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PEs\wbpegetstate.cpp">
+      <Filter>src\PEs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PEs\wbpegetvariable.cpp">
+      <Filter>src\PEs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PEs\wbpeisstate.cpp">
+      <Filter>src\PEs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PEs\wbpelength.cpp">
+      <Filter>src\PEs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PEs\wbpelookup.cpp">
+      <Filter>src\PEs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PEs\wbpemax.cpp">
+      <Filter>src\PEs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PEs\wbpemin.cpp">
+      <Filter>src\PEs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PEs\wbpemul.cpp">
+      <Filter>src\PEs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PEs\wbpeneg.cpp">
+      <Filter>src\PEs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PEs\wbpenormal.cpp">
+      <Filter>src\PEs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PEs\wbpenot.cpp">
+      <Filter>src\PEs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PEs\wbpenull.cpp">
+      <Filter>src\PEs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PEs\wbpeor.cpp">
+      <Filter>src\PEs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PEs\wbpeowner.cpp">
+      <Filter>src\PEs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PEs\wbpepow.cpp">
+      <Filter>src\PEs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PEs\wbpepushcontext.cpp">
+      <Filter>src\PEs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PEs\wbpequeryactionstack.cpp">
+      <Filter>src\PEs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PEs\wbperandombool.cpp">
+      <Filter>src\PEs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PEs\wbperandomfloat.cpp">
+      <Filter>src\PEs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PEs\wbperandomint.cpp">
+      <Filter>src\PEs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PEs\wbperandomvector.cpp">
+      <Filter>src\PEs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PEs\wbpesaturate.cpp">
+      <Filter>src\PEs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PEs\wbpeselector.cpp">
+      <Filter>src\PEs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PEs\wbpeself.cpp">
+      <Filter>src\PEs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PEs\wbpesquare.cpp">
+      <Filter>src\PEs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PEs\wbpestatmod.cpp">
+      <Filter>src\PEs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PEs\wbpesub.cpp">
+      <Filter>src\PEs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PEs\wbpeunaryop.cpp">
+      <Filter>src\PEs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PEs\wbpexor.cpp">
+      <Filter>src\PEs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\wbaction.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\wbactionfactory.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\wbactionstack.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\wbcomponent.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\wbcomponentarrays.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\wbentity.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\wbevent.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\wbeventmanager.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\wbparamevaluator.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\wbparamevaluatorfactory.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\wbpatternmatching.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\wbpe.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\wbrule.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\wbscene.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\wbworld.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Actions\wbactioncomposite.h">
+      <Filter>src\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Actions\wbactiondestroy.h">
+      <Filter>src\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Actions\wbactionlog.h">
+      <Filter>src\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Actions\wbactionselector.h">
+      <Filter>src\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Actions\wbactionsendevent.h">
+      <Filter>src\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Actions\wbactionsetconfigvar.h">
+      <Filter>src\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Actions\wbactionsetstate.h">
+      <Filter>src\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Actions\wbactionsetvariable.h">
+      <Filter>src\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Actions\wbactiontriggerstatmod.h">
+      <Filter>src\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Actions\wbactionunqueueevent.h">
+      <Filter>src\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomplabel.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcompowner.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomppemap.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcompreactions.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcompstate.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcompstatmod.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomptransform.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcompvariablemap.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PEs\wbpeabs.h">
+      <Filter>src\PEs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PEs\wbpeadd.h">
+      <Filter>src\PEs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PEs\wbpeand.h">
+      <Filter>src\PEs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PEs\wbpebinaryop.h">
+      <Filter>src\PEs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PEs\wbpeconditional.h">
+      <Filter>src\PEs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PEs\wbpeconstantangles.h">
+      <Filter>src\PEs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PEs\wbpeconstantbool.h">
+      <Filter>src\PEs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PEs\wbpeconstantfloat.h">
+      <Filter>src\PEs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PEs\wbpeconstantint.h">
+      <Filter>src\PEs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PEs\wbpeconstantstring.h">
+      <Filter>src\PEs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PEs\wbpeconstantvector.h">
+      <Filter>src\PEs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PEs\wbpecross.h">
+      <Filter>src\PEs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PEs\wbpediv.h">
+      <Filter>src\PEs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PEs\wbpedot.h">
+      <Filter>src\PEs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PEs\wbpegetconfigvar.h">
+      <Filter>src\PEs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PEs\wbpegetentitybylabel.h">
+      <Filter>src\PEs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PEs\wbpegetname.h">
+      <Filter>src\PEs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PEs\wbpegetstate.h">
+      <Filter>src\PEs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PEs\wbpegetvariable.h">
+      <Filter>src\PEs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PEs\wbpeisstate.h">
+      <Filter>src\PEs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PEs\wbpelength.h">
+      <Filter>src\PEs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PEs\wbpelookup.h">
+      <Filter>src\PEs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PEs\wbpemax.h">
+      <Filter>src\PEs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PEs\wbpemin.h">
+      <Filter>src\PEs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PEs\wbpemul.h">
+      <Filter>src\PEs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PEs\wbpeneg.h">
+      <Filter>src\PEs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PEs\wbpenormal.h">
+      <Filter>src\PEs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PEs\wbpenot.h">
+      <Filter>src\PEs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PEs\wbpenull.h">
+      <Filter>src\PEs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PEs\wbpeor.h">
+      <Filter>src\PEs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PEs\wbpeowner.h">
+      <Filter>src\PEs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PEs\wbpepow.h">
+      <Filter>src\PEs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PEs\wbpepushcontext.h">
+      <Filter>src\PEs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PEs\wbpequeryactionstack.h">
+      <Filter>src\PEs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PEs\wbperandombool.h">
+      <Filter>src\PEs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PEs\wbperandomfloat.h">
+      <Filter>src\PEs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PEs\wbperandomint.h">
+      <Filter>src\PEs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PEs\wbperandomvector.h">
+      <Filter>src\PEs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PEs\wbpesaturate.h">
+      <Filter>src\PEs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PEs\wbpeselector.h">
+      <Filter>src\PEs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PEs\wbpeself.h">
+      <Filter>src\PEs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PEs\wbpesquare.h">
+      <Filter>src\PEs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PEs\wbpestatmod.h">
+      <Filter>src\PEs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PEs\wbpesub.h">
+      <Filter>src\PEs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PEs\wbpeunaryop.h">
+      <Filter>src\PEs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PEs\wbpexor.h">
+      <Filter>src\PEs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\wbworld.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\iwbeventobserver.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\wbaction.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\wbactionfactory.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\wbactions.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\wbactionstack.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\wbcomponent.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\wbcomponentarrays.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\wbcomponents.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\wbentity.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\wbentityref.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\wbevent.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\wbeventmanager.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\wbparamevaluator.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\wbparamevaluatorfactory.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\wbpatternmatching.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\wbpe.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\wbpes.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\wbrule.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\wbscene.h">
+      <Filter>src</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{2555e4c3-6a27-47da-a591-09f09b107d4b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Actions">
+      <UniqueIdentifier>{cd071b58-13e3-4570-9886-bc0aec6420d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Components">
+      <UniqueIdentifier>{fc565930-b7a1-4328-83f7-23940157cf5a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\PEs">
+      <UniqueIdentifier>{2fd74941-d0da-4076-8bb9-6c3392e869b1}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="Workbench.natvis" />
+  </ItemGroup>
+</Project>

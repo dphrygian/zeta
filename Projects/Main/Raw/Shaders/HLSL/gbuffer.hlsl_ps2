@@ -1,0 +1,77 @@
+#include "common.hlsl_psh"
+
+sampler AlbedoSampler	: register(s0);
+sampler NormalSampler	: register(s1);
+sampler SpecSampler		: register(s2);
+
+float4	Highlight;	// Set from code. Linear space. RGB is multiplicative to albedo and A is additive to emissive.
+
+struct PS_INPUT 
+{
+	float2	UV			: TEXCOORD0;
+	float4	PositionSS	: TEXCOORD1;
+	float3	NormalWS	: TEXCOORD2;
+	float4	TangentWS	: TEXCOORD3;
+};
+
+struct PS_OUTPUT
+{
+	float4	Normal	: COLOR0;
+	float4	Albedo	: COLOR1;
+	float4	Depth	: COLOR2;
+};
+
+PS_OUTPUT Main( PS_INPUT In )
+{
+	PS_OUTPUT Out;
+
+	// Spec map surface notes:
+	// SpecMap.r: reflectance (diffuse-specular and ambient-cubemap lerp)
+	// SpecMap.g: smoothness (specular power, mapped to [0,1])
+	// SpecMap.b: emissive
+	// SpecMap.a: metal/dielectric (binary)
+	// DLP 5 Jan 2019: 0-20 is a reasonable range for reflectance; plastic is 10, or 4% specular.
+	// It'd be nice to clamp to that range for better packing, and then scale back in the light
+	// shader, but I can't afford the instructions. Just be aware that going beyond the range of
+	// 20 is going to look improbable.
+	// DLP 5 Jan 2019: Also, metals should generally be 255 for reflectance unless there's a good
+	// reason not to be. They have no diffuse, so anything less is just artificially limiting the
+	// specular/environment terms. *BUT*, using a lower reflectance gives Fresnel something to do,
+	// which can help a lot. 192 (75%) seems fine.
+	// (Oh, also, of course metal can absorb light; that's what gives gold and copper their color.
+	// So modeling other amounts of absorption is not inaccurate. Whatever looks best is fine!)
+	
+	// G-buffer notes:
+	// Normal.r: stereographic normal X
+	// Normal.g: stereographic normal Y
+	// Normal.b: smoothness + normal Z sign
+	// Normal.a: reflectance + metal/dielectric
+
+	// Renormalize normal and tangent before creating TBN matrix
+	const float3	Normal		= normalize( In.NormalWS );
+	const float3	Tangent		= normalize( In.TangentWS.xyz );
+	const float3	Bitangent	= GetBitangent( Normal, Tangent, In.TangentWS.w );
+	const float4x4	InvTBN		= GetInverseTBNMatrix( Tangent, Bitangent, Normal );
+
+	const float3	Albedo		= SampleSRGBToLinear( AlbedoSampler, In.UV ).rgb * Highlight.rgb;
+
+	const float3	NormalMapTS	= SampleNormal( NormalSampler, In.UV );
+	const float3	NormalMapWS	= mul( float4( NormalMapTS, 0.0f ), InvTBN ).xyz;
+
+	const float4	SpecMap		= tex2D( SpecSampler, In.UV );
+	const float2	ReflSmooth	= Pack( float2( SpecMap.r, SpecMap.g * SpecMap.g ) );	// Square for perceptually linear smoothness. ROSAHACK: Pack because we need these to be non-zero for multiplying with sign bits.
+	const float		Emissive	= Pack( SpecMap.b + Highlight.a );	// Pack for multiplying with skin bit
+	const float		Dielectric	= SpecMap.a * 2.0f - 1.0f;	// ROSANOTE: Dielectric/metal is binary. -1 if metal, 1 if dielectric.
+
+	const float		Depth		= In.PositionSS.z / In.PositionSS.w;
+
+	const float		NormalZSign	= NonZeroSign( NormalMapWS.z );
+	const float4	NormalPack	= float4( GetStereographicProjection( NormalMapWS ), NormalZSign * ReflSmooth.y, Dielectric * ReflSmooth.x ) * 0.5f + 0.5f;
+	const float4	AlbedoPack	= float4( Albedo, Emissive * 0.5f + 0.5f );	// Emissive also stores skin bit (-1 if skin, 1 if not skin; this shader never emits skin)
+
+	Out.Normal	= NormalPack;
+	Out.Albedo	= AlbedoPack;
+	Out.Depth	= float4( Depth, Depth, Depth, Depth );
+	
+	return Out;
+}

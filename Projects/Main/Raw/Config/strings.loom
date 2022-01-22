@@ -1,0 +1,697 @@
+﻿#!
+
+Guide to markup:
+
+Config vars:
+Use the form #{TAG:CONTEXT:KEY} or #{TAG:KEY} to do config var lookups or localization with the following tags:
+
+	b: bool (replaced with localized True/False)
+	a: bool (replaced with localized Achieved/NotAchieved) (not actually used anymore!)
+	!: bool (replaced with localized and recursively parsed Notification_On/Notification_Off)
+	X: bool (replaced with localized and recursively parsed Objective_Complete/Objective_Incomplete; no support for failed objectives this way)
+	i: signed int
+	t: int as 2 digits for time
+	x: int as unsigned hex
+	f: float
+	p: float as int percent (multiplied by 100, percent sign added, no decimal places)
+	s: string
+	k: localize (doesn't do a config lookup, just localizes the given key (ignores context))
+	l: localized string (does a config lookup expecting a loc key and then localizes it)
+	n: non-localized config string (does a config lookup expecting a literal string and then recursively parses it as a config string; subsumes the "s" tag)
+	c: config string (does a config lookup expecting a loc key, localizes it, and then recursively parses that as a config string; subsumes the "l" tag)
+
+Presentation:
+Use the form #<TAG> to do color and style with the following tags:
+
+	(empty): reset to default color and style
+	c: "clear" (reset color without changing style)
+	r: "regular" (reset style without changing color)
+	b: bold
+	i: italic
+	(hhhhhh): hex color, must be a full six characters
+
+!#
+
+[English]
+
+English			= "English"
+WindowTitle		= "NEON STRUCT: Desperation Column"
+
+NullString		= ""
+
+True			= "On"
+False			= "Off"
+
+Notification_On		= "#<ffffff>#{k:Notification}#<>"
+Notification_Off	= ""
+
+Objective_Complete		= "#<ffffff>#{k:ObjSucceeded}#<>"
+Objective_Incomplete	= "#<ffffff>#{k:ObjIncomplete}#<>"
+
+OK				= "OK"
+Yes				= "Yes"
+No				= "No"
+
+Options			= "Options"
+
+Version			= "Build #{s:Version:BuildNumber} #{s:Version:BuildTime}"
+
+CurrentLanguage		= "Language: #{l:Language}"
+Language			= "Language"
+BindControls		= "Bind Controls"
+GameOptions			= "Game"
+Controls			= "Controls"
+Display				= "Display"
+Graphics			= "Graphics"
+Audio				= "Audio"
+Help				= "Help"
+ResetToDefaults		= "Reset to Defaults"
+DifficultyOption		= "Difficulty:"
+DifficultyOptionSetting	= "#{l:HUD:Difficulty}"
+PlayIntroLevel			= "Enable Introduction:"
+PlayIntroLevelSetting	= "#{b:PlayIntroLevel}"
+ShowTutorials			= "Enable Help Text:"
+ShowTutorialsSetting	= "#{b:ShowTutorials}"
+ShowHUD				= "HUD:"
+ShowHUDSetting		= "#{b:ShowHUD}"
+HUDMarkers			= "HUD Markers:"
+HUDMarkersSetting	= "#{b:HUDMarkers}"
+Minimap				= "Minimap:"
+MinimapSetting		= "#{b:Minimap}"
+MinimapMarkers			= "Minimap Markers:"
+MinimapMarkersSetting	= "#{b:MinimapMarkers}"
+MouseSpeed			= "Mouse Sensitivity:"
+MouseSpeedValue		= "#{f:MouseSpeed}"
+ControllerSpeed		= "Stick Sensitivity:"
+ControllerSpeedValue	= "#{f:ControllerSpeed}"
+InvertY				= "Invert Y:"
+InvertYSetting		= "#{b:InvertY}"
+AutoAim				= "Controller Auto-Aim:"
+AutoAimSetting		= "#{b:AutoAim}"
+Resolution			= "Resolution:"
+ResolutionSetting	= "#{i:DisplayWidth} × #{i:DisplayHeight}"
+SetRes				= "Resolution"
+Fullscreen			= "Fullscreen:"
+FullscreenSetting	= "#{b:Fullscreen}"
+VSync				= "Vertical Sync:"
+VSyncSetting		= "#{b:VSync}"
+FixedDT				= "Fixed Timestep:"
+FixedDTSetting		= "#{b:Framework:UseFixedFrameTime}"
+FXAA				= "Anti-Aliasing:"
+FXAASetting			= "#{b:FXAA}"
+SSAO				= "Ambient Occlusion:"
+SSAOSetting			= "#{b:SSAO}"
+Gradient			= "Gradient:"
+GradientSetting		= "#{b:Gradient}"
+Displace			= "Displace:"
+DisplaceSetting		= "#{b:Displace}"
+Blur				= "Blur:"
+BlurSetting			= "#{b:Blur}"
+Blot				= "Blot:"
+BlotSetting			= "#{b:Blot}"
+Canvas				= "Canvas:"
+CanvasSetting		= "#{b:Canvas}"
+Edge				= "Edge:"
+EdgeSetting			= "#{b:Edge}"
+PostCheap			= "Low Spec Post:"
+PostCheapSetting	= "#{b:PostCheap}"
+Brightness			= "Brightness:"
+BrightnessValue		= "#{f:DisplayedBrightness}"
+FOV					= "FOV:"
+FOVValue			= "(#{i:HorizontalFOV}H/#{i:VerticalFOV}V)"
+VanishingPointY			= "Reticle Offset:"
+VanishingPointYValue	= "#{p:VanishingPointYPct}"
+LightDistance		= "Light Distance:"
+LightDistanceValue	= "#{p:LightDistance}"
+ViewBob				= "View Bob:"
+ViewBobSetting		= "#{b:ViewBob}"
+ViewSway			= "View Sway:"
+ViewSwaySetting		= "#{b:ViewSway}"
+StrafeRoll			= "Strafe Tilt:"
+StrafeRollSetting	= "#{b:StrafeRoll}"
+SlideRoll			= "Slide Tilt:"
+SlideRollSetting	= "#{b:SlideRoll}"
+SprintFOV			= "Sprint Zoom:"
+SprintFOVSetting	= "#{b:SprintFOV}"
+HandsVelocity			= "Weapon Drag:"
+HandsVelocitySetting	= "#{b:HandsVelocity}"
+LeftyMode			= "Left-Handed Weapon:"
+LeftyModeSetting	= "#{b:LeftyMode}"
+StylizedAnim		= "Low Frequency Animation:"
+StylizedAnimSetting	= "#{b:StylizedAnim}"
+Bloom				= "Bloom:"
+BloomSetting		= "#{b:Bloom}"
+FilmGrain			= "Film Grain:"
+FilmGrainSetting	= "#{b:FilmGrain}"
+DirtyLens			= "Lens Dirt:"
+DirtyLensSetting	= "#{b:DirtyLens}"
+Halos				= "Lens Halo:"
+HalosSetting		= "#{b:Halos}"
+Fog					= "Fog:"
+FogSetting			= "#{b:Fog}"
+VolumeFog			= "Volume Fog:"
+VolumeFogSetting	= "#{b:VolumeFog}"
+ColorGrading		= "Color Grading:"
+ColorGradingSetting	= "#{b:ColorGrading}"
+Volume				= "Master Volume:"
+VolumeValue			= "#{f:MasterVolume}"
+MusicVolume			= "Music Volume:"
+MusicVolumeValue	= "#{f:MusicVolume}"
+AmbienceVolume		= "Ambience Volume:"
+AmbienceVolumeValue	= "#{f:AmbienceVolume}"
+Back				= "#{n:RosaInput:UIBack} Back"
+PrevPage			= "Prev"
+NextPage			= "Next"
+
+BindForward		= "Move Forward:"
+BindBack		= "Move Back:"
+BindLeft		= "Move Left:"
+BindRight		= "Move Right:"
+BindJump		= "Jump:"
+BindFrob		= "Interact:"
+BindLeanLeft	= "Lean Left:"
+BindLeanRight	= "Lean Right:"
+BindRun			= "Sprint:"
+BindCrouch		= "Crouch:"
+BindHeal		= "Use Bandage:"
+BindLight		= "Flashlight:"
+BindUseWeapon	= "Fire:"
+BindShove		= "Melee Shove:"
+BindReload		= "Reload:"
+BindZoom		= "Aim:"
+BindCycleMag	= "Change Ammo:"
+BindRadial		= "Weapon Wheel:"
+BindCycleSlot0	= "Weapon 1:"
+BindCycleSlot1	= "Weapon 2:"
+BindCycleSlot2	= "Weapon 3:"
+BindCycleSlot3	= "Weapon 4:"
+BindCyclePrev	= "Previous Weapon:"
+BindCycleNext	= "Next Weapon:"
+BindQuicksave	= "Quicksave:"
+BindQuickload	= "Quickload:"
+
+BindDialog		= "Press the key to bind.\nPress Esc to cancel."
+
+Paused			= "Paused"
+Resume			= "Resume"
+Death			= "You have failed."
+ReportIssue		= "Report an issue..."
+
+FrobName		= "#{c:HUD:FrobName}"
+FrobLiteralName	= "#{s:HUD:FrobLiteralName}"
+FrobVerb		= "#{n:RosaInput:Frob} #{c:HUD:FrobVerb}"
+FrobHold		= "Hold #{n:RosaInput:Frob} #{c:HUD:HoldVerb}"
+AimName			= "#{l:HUD:AimName}"
+AimLiteralName	= "#{s:HUD:AimLiteralName}"
+SignText		= "#{l:HUD:SignText}"
+SubtitleText	= "#{c:HUD:SubtitleText}"
+
+TitleCardText		= "#{c:HUD:TitleCardText}"
+TitleCardSubText	= "#{c:HUD:TitleCardSubText}"
+
+# Credits
+Credits			= "Credits"
+CreditsScroll	= "#<b>NEON STRUCT: Desperation Column#<>\n\nPublished by\n    Minor Key Games\n\nDeveloped by\n    David Lindsey Pittman\n\nMinor Key Games is\n    David Lindsey Pittman\n    J. Kyle Pittman\n\n\n\nNEON STRUCT: Desperation Column copyright © 2021 Minor Key Games, LLC.\n\nSimple DirectMedia Layer (SDL 2.0) copyright © 1997-2018 Sam Lantinga.\n\nzlib copyright © 1995-2017 Jean-loup Gailly and Mark Adler.\n\nTinyXML copyright © 2000-2006 Lee Thomason.\n\nSoLoud copyright © 2013-2015 Jari Komppa.\n\nOgg Vorbis audio decoder copyright © 2017 Sean Barrett.\n\nExo 2 typeface copyright © 2013 Natanael Gama.\nOpen Sans typeface copyright © 2010-2011 Google Corporation.\nCousine typeface copyright © 2010-2012 Google Corporation.\n\nButton prompts by Nicolae Berbece.\n\nNEON STRUCT: Desperation Column uses Creative Commons licensed sounds from Freesound.org. For the full attribution list, see the readme file.\n\n\n\nThank you for playing!"
+
+# Zeta
+PressStart				= "Press #{n:RosaInput:TitleStart} to begin."
+Quit					= "Quit"
+ConfirmQuit				= "Quit NEON STRUCT: Desperation Column?"
+Begin					= "Begin (UNUSED / DELETE ME)"
+Continue				= "Continue"
+Loading					= "Loading..."
+ReturnToTitle			= "Return to Title"
+ConfirmReturnToTitle	= "Return to the title screen? (Your progress will be saved.)"
+SaveAndQuit				= "Quit"
+ConfirmSaveAndQuit		= "Quit NEON STRUCT: Desperation Column? (Your progress will be saved.)"
+ConfirmSaveOverwrite	= "\nOverwrite this saved game?"
+
+NewGame					= "New Game"
+LoadGame				= "Load Game"
+SaveGame				= "Save Game (UNUSED / DELETE ME)"
+EmptyGame				= "Empty"
+QuicksaveSlot			= "Quicksave: "
+AutosaveSlot			= "Autosave %d: "
+SaveSlot				= "%d: "
+LockedLevelSkip			= "[Mission locked]"
+OpenUserDataPath		= "Go to Folder..."
+
+Quicksaved				= "Game saved."
+Autosaved				= "Game saved."
+
+InputDeviceLost			= "The input device was disconnected. Please reconnect and continue."
+
+LocalSeasons				= "Campaigns"
+LocalSeasons_Notification	= "#{k:LocalSeasons}#{!:RosaCampaign:NewLocalScenarios}"
+LocalSeasons_Pages			= "Page #{i:RosaLocalSeasons:Page} of #{i:RosaLocalSeasons:NumPages}"
+LocalSeasons_Focus			= "#{l:RosaCampaign:FocusedLocalSeason}"
+
+LocalSeasonScenarios		= "#{l:RosaCampaign:ViewingLocalSeasonName}"
+LocalSeasonScenarios_Focus	= "#{l:RosaCampaign:FocusedLocalScenario}"
+
+CloudScenarios				= "Daily Scenarios"
+CloudScenarios_Reload		= "Reload"
+CloudScenarios_Notification	= "#{k:CloudScenarios}#{!:RosaCampaign:NewCloudScenarios}"
+CloudScenarios_Focus		= "#{l:RosaCampaign:FocusedCloudScenario}"
+
+# HUD
+HUDHealth		= "#{i:HUD:Health}"
+HUDBandages		= "#{i:HUD:Bandages} / #{i:HUD:MaxBandages}"
+HUDHeal			= "#{n:RosaInput:Heal} Use Bandage"
+#HUDAmmo			= "#{i:HUD:Ammo} / #{i:HUD:AmmoBag} #{l:HUD:AmmoType}"
+HUDAmmo			= "#{i:HUD:Ammo} / 12"
+HUDCycleMag		= "#{n:RosaInput:CycleMag} Change Ammo"
+HUDMoney		= "#{i:HUD:Money}"
+HUDLog			= "#{s:RosaHUDLog:Entries}"
+HUDArc			= "gen#{i:Campaign:Legacy} s#{i:Campaign:Season}e#{i:Campaign:Episode} - #{i:Campaign:LegacyPoints} LP"
+SaveLoadArc		= "gen%d s%de%d"
+
+AmmoPickupSwitch	= "#{c:AmmoPickup:AmmoPickupSwitch}"	# HACKHACK to select FoundNothing or AmmoPickup, set in ammo bag code
+FoundNothing	= "You found nothing"
+MoneyPickup		= "You received #{i:MoneyPickup:Money} dust."
+MoneyLost		= "You spent #{i:MoneyLost:Money} dust."	# ROSANOTE: This assumes spending is the only way to lose money, which it currently is.
+BandagePickup	= "You received #{i:BandagePickup:Bandages} bandage(s)."
+KeycardPickup	= "You received a keycard: #{l:KeycardPickup:Keycard}"
+KeycardLost		= "You lost a keycard: #{l:KeycardLost:Keycard}"
+KeycardUsed		= "You used a keycard: #{l:KeycardUsed:Keycard}"
+ItemPickup		= "You received an item: #{l:ItemPickup:Item}"
+ItemLost		= "You lost an item: #{l:ItemLost:Item}"
+AmmoPickup		= "You found #{l:AmmoPickup:Type} × #{i:AmmoPickup:Count}"
+AmmoLost		= "You lost ammo: #{l:AmmoLost:Type} × #{i:AmmoLost:Count}"
+LP_Gained		= "You earned #{i:LegacyPointsLog:LegacyPoints} LP."
+LP_Lost			= "You spent #{i:LegacyPointsLog:LegacyPoints} LP."
+BlueprintPickup	= "You received a blueprint: #{l:BlueprintPickup:Blueprint}"
+
+# Weapons screen
+Weapons				= "Weapons and Ammo"
+Weapons_Pages		= "Page #{i:RosaWeapons:Page} of #{i:RosaWeapons:NumPages}"
+Weapons_RefillAmmo		= "Refill Ammo"
+Weapons_RefillAmmo_Desc	= "Refill ammo for all currently equipped weapons."
+Weapon_Equip		= "Equip"
+Weapon_Equipped		= "[Equipped]"
+Ammo_Desc			= "%s (%d/%d)"	# This is resolved in code to display the ammo name, current bag amount, and max
+Weapon_Buy			= "Buy (%d)"	# This string is resolved as the page is initialized in code, and a static literal is used on the actual widget
+Weapon_Full			= "[Full]"
+WeaponStats_Name	= "#{l:RosaWeapons:FocusWeapon}"
+WeaponStats_Desc	= "#{c:RosaWeapons:FocusWeaponDesc}"
+Weapons_ConfirmEquip_Text		= "Equip #{l:RosaWeapons:SelectedWeapon} in which slot?"
+Weapons_ConfirmEquip_MeleeOnly	= "Melee Only"
+Weapons_ConfirmEquip_Cancel		= "Cancel"
+
+# Bracelets screen
+Bracelets			= "Bracelets"
+Bracelets_Pages		= "Page #{i:RosaBracelets:Page} of #{i:RosaBracelets:NumPages}"
+Bracelet_Buy		= "Buy (%d)"	# This string is resolved as the page is initialized in code, and a static literal is used on the actual widget
+Bracelet_Equip		= "Equip"
+Bracelet_Unequip	= "Unequip"
+BraceletStats_Name	= "#{l:RosaBracelets:FocusBracelet}"
+BraceletStats_Desc	= "#{c:RosaBracelets:FocusBraceletDesc}"
+Bracelets_CannotAfford_Text			= "You cannot afford #{l:RosaBracelets:SelectedBracelet}.\n\n(#{i:RosaBracelets:SelectedBraceletPrice} dust needed, #{i:HUD:Money} available.)"
+Bracelets_ConfirmPurchase_Text		= "Confirm purchase of #{l:RosaBracelets:SelectedBracelet} for #{i:RosaBracelets:SelectedBraceletPrice} dust? (#{i:HUD:Money} available.)"
+Bracelets_ConfirmPurchase_OK		= "Buy"
+Bracelets_ConfirmPurchase_Cancel	= "Cancel"
+Bracelets_ConfirmEquip_Text			= "Equip #{l:RosaBracelets:SelectedBracelet} on which wrist?"
+Bracelets_ConfirmEquip_Left			= "Left (#{l:RosaBracelets:CurrentBraceletLeft})"
+Bracelets_ConfirmEquip_Right		= "Right (#{l:RosaBracelets:CurrentBraceletRight})"
+Bracelets_ConfirmEquip_Cancel		= "Cancel"
+Bracelets_Empty						= "Empty"
+
+# Upgrades screen
+Upgrades			= "Upgrades"
+Upgrade_Buy			= "Buy (%d)"	# This string is resolved as the page is initialized in code, and a static literal is used on the actual widget
+Upgrade_Locked		= "[Locked]"
+UpgradeStats_Name	= "#{l:RosaUpgrades:FocusUpgrade}"
+UpgradeStats_Desc	= "#{c:RosaUpgrades:FocusUpgradeDesc}"
+Upgrades_Locked_Text			= "You cannot buy #{l:RosaUpgrades:SelectedUpgrade} yet.\n\nYou must unlock it by buying #{l:RosaUpgrades:SelectedUpgradePrereq} first."
+Upgrades_CannotAfford_Text		= "You cannot afford #{l:RosaUpgrades:SelectedUpgrade}.\n\n(#{i:RosaUpgrades:SelectedUpgradePrice} dust needed, #{i:HUD:Money} available.)"
+Upgrades_ConfirmPurchase_Text	= "Confirm purchase of #{l:RosaUpgrades:SelectedUpgrade} for #{i:RosaUpgrades:SelectedUpgradePrice} dust? (#{i:HUD:Money} available.)"
+Upgrades_ConfirmPurchase_OK		= "Buy"
+Upgrades_ConfirmPurchase_Cancel	= "Cancel"
+
+# Favors screen
+Favors			= "Favors"
+Favors_Pages	= "Page #{i:RosaFavors:Page} of #{i:RosaFavors:NumPages}"
+Favor_Buy		= "Buy (%d LP)"	# This string is resolved as the page is initialized in code, and a static literal is used on the actual widget
+FavorStats_Name	= "#{l:RosaFavors:FocusFavor}"
+FavorStats_Desc	= "#{c:RosaFavors:FocusFavorDesc}"
+Favors_CannotAfford_Text		= "You cannot afford #{l:RosaFavors:SelectedFavor}.\n\n(#{i:RosaFavors:SelectedFavorPrice} LP needed, #{i:Campaign:LegacyPoints} available.)"
+Favors_ConfirmPurchase_Text		= "Confirm purchase of #{l:RosaFavors:SelectedFavor} for #{i:RosaFavors:SelectedFavorPrice} LP? (#{i:Campaign:LegacyPoints} available.)"
+Favors_ConfirmPurchase_OK		= "Buy"
+Favors_ConfirmPurchase_Cancel	= "Cancel"
+
+# Research screen
+Research			= "Research"
+Research_Pages		= "Page #{i:RosaResearch:Page} of #{i:RosaResearch:NumPages}"
+Research_Buy		= "Buy (%d dust, %d days)"	# This string is resolved as the page is initialized in code, and a static literal is used on the actual widget
+Research_InProgress	= "In Progress (%d days left)"
+Research_Read		= "Complete"
+ResearchStats_Name	= "#{l:RosaResearch:FocusResearch}"
+ResearchStats_Desc	= "#{c:RosaResearch:FocusResearchDesc}"
+Research_CannotAfford_Text		= "You cannot afford #{l:RosaResearch:SelectedResearch}.\n\n(#{i:RosaResearch:SelectedResearchPrice} dust needed, #{i:HUD:Money} available.)"
+Research_InProgress_Text		= "You cannot begin researching #{l:RosaResearch:SelectedResearch} until ongoing research is finished.\n\n(#{i:Campaign:ResearchInProgressDays} days remaining for #{l:Campaign:ResearchInProgress}.)"
+Research_Results_Text			= "#{c:RosaResearch:SelectedResearchResults}"
+Research_ConfirmPurchase_Text	= "Confirm purchase of #{l:RosaResearch:SelectedResearch} for #{i:RosaResearch:SelectedResearchPrice} dust? (#{i:HUD:Money} available.)"
+Research_ConfirmPurchase_OK		= "Buy"
+Research_ConfirmPurchase_Cancel	= "Cancel"
+
+ResearchCompletedHeader	= "Research Completed"
+ResearchCompletedText	= "\"#{l:Campaign:ResearchCompleted}\" has been completed. Speak to #{s:Campaign:Researcher0_First} to begin new research.\n\nReport:\n\"#{c:Campaign:ResearchResults}\""
+
+# Character config
+Skin		= "Skin"
+Nails		= "Nails"
+Hue			= "Hue:"
+Saturation	= "Saturation:"
+Value		= "Value:"
+Alpha		= "Alpha:"
+
+Objectives			= "Objectives"
+ObjectivesListLeft	= "#{n:RosaObjectives:ObjectivesLeft}"
+ObjectivesListRight	= "#{n:RosaObjectives:ObjectivesRight}"
+NewObjective		= "New objective added."
+ObjectiveSucceeded	= "Objective completed!"
+ObjectiveFailed		= "Objective failed."
+
+StartScenario			= "Start Scenario"
+CampaignTitleCard		= "#{l:Campaign:RegionType}"
+CampaignTitleCardSub	= "#{l:Campaign:MissionType}"
+
+# ROSATODO: Need to publish the name and line to intermediate variables!
+CatchphraseSubtitle		= "#{s:Catchphrase:Speaker}: #{s:Catchphrase:Line}"
+
+Pronoun_Subject_None			= "it"
+Pronoun_SubjectCap_None			= "It"
+Pronoun_Object_None				= "it"
+Pronoun_ObjectCap_None			= "It"
+Pronoun_Possessive_None			= "its"
+Pronoun_PossessiveCap_None		= "Its"
+Pronoun_Subject_Male			= "he"
+Pronoun_SubjectCap_Male			= "He"
+Pronoun_Object_Male				= "him"
+Pronoun_ObjectCap_Male			= "Him"
+Pronoun_Possessive_Male			= "his"
+Pronoun_PossessiveCap_Male		= "His"
+Pronoun_Subject_Female			= "she"
+Pronoun_SubjectCap_Female		= "She"
+Pronoun_Object_Female			= "her"
+Pronoun_ObjectCap_Female		= "Her"
+Pronoun_Possessive_Female		= "her"
+Pronoun_PossessiveCap_Female	= "Her"
+
+CampaignMissionInfo				= "#{n:Campaign:MissionInfo}"	# This is {n} instead of {c} because the string is assembled in code.
+MissionInfo_Base				= "Neighborhood:\n  #{l:Campaign:Neighborhood} — #{l:Campaign:NeighborhoodDesc}\n\nThreat level:\n  #{i:Campaign:ThreatLevel}/#{i:Campaign:MaxThreatLevel}\n\nMission type:\n  #{l:Campaign:MissionType}\n\n"
+MissionInfo_BigBad				= "A vampire leader has been sighted in this neighborhood!\n\n"
+MissionInfo_Rewards_Start		= "Rewards:\n"
+MissionInfo_Rewards_End			= "\n"
+MissionInfo_Rewards_None		= "  None\n"
+MissionInfo_Rewards_Dust		= "  Vampire Dust: #{i:Campaign:RewardMoney}\n"
+MissionInfo_Rewards_Blueprint_Weapon	= "  Weapon Blueprint: #{l:Campaign:RewardBlueprint}\n"
+MissionInfo_Rewards_Blueprint_Bracelet	= "  Bracelet Blueprint: #{l:Campaign:RewardBlueprint}\n"
+MissionInfo_Rewards_Blueprint_Ammo		= "  Ammo Blueprint: #{l:Campaign:RewardBlueprint}\n"
+MissionInfo_Rewards_Teammate	= "  Teammate: #{l:Campaign:RewardTeammateRole}\n"
+MissionInfo_Dev_Twist			= "[DEV] Twist:\n  #{l:Campaign:Twist}\n\n"
+MissionInfo_Dev_Opportunity		= "[DEV] Opportunity:\n  #{l:Campaign:Opportunity}\n\n"
+MissionInfo_Dev_Challenge		= "[DEV] Challenge:\n  #{f:Campaign:ChallengeScalar}\n\n"
+
+CampaignNeighborhoodLabel0	= "#{l:Campaign:Neighborhood0}\nThreat: #{i:Campaign:ThreatLevel0}/#{i:Campaign:MaxThreatLevel} #{l:Campaign:ThreatTag0}"
+CampaignNeighborhoodLabel1	= "#{l:Campaign:Neighborhood1}\nThreat: #{i:Campaign:ThreatLevel1}/#{i:Campaign:MaxThreatLevel} #{l:Campaign:ThreatTag1}"
+CampaignNeighborhoodLabel2	= "#{l:Campaign:Neighborhood2}\nThreat: #{i:Campaign:ThreatLevel2}/#{i:Campaign:MaxThreatLevel} #{l:Campaign:ThreatTag2}"
+CampaignNeighborhoodLabel3	= "#{l:Campaign:Neighborhood3}\nThreat: #{i:Campaign:ThreatLevel3}/#{i:Campaign:MaxThreatLevel} #{l:Campaign:ThreatTag3}"
+CampaignNeighborhoodLabel4	= "#{l:Campaign:Neighborhood4}\nThreat: #{i:Campaign:ThreatLevel4}/#{i:Campaign:MaxThreatLevel} #{l:Campaign:ThreatTag4}"
+CampaignNeighborhoodLabel5	= "#{l:Campaign:Neighborhood5}\nThreat: #{i:Campaign:ThreatLevel5}/#{i:Campaign:MaxThreatLevel} #{l:Campaign:ThreatTag5}"
+CampaignThreatTag_Lost		= "(LOST)"
+
+PreResultsText		= "You may return to the hub now, or stay here to gather loot. (Use \"Return to Hub\" in the Paused screen to leave when you are ready.)"
+PreResultsContinue	= "Return to Hub"
+PreResultsCancel	= "Not Yet"
+
+ResultsHeader	= "#{l:Campaign:ResultsHeader}"
+ResultsText		= "#{n:Campaign:ResultsText}"	# This is {n} instead of {c} because the string is assembled in code.
+Results_Success	= "Mission Successful"
+Results_Failure	= "Mission Failed"
+ResultsThreatUp			= "\nThe vampire threat has increased here in #{l:Campaign:ResultsNeighborhood}.\n"
+ResultsThreatDown		= "\nThe vampire threat has decreased here in #{l:Campaign:ResultsNeighborhood}.\n"
+ResultsThreatUp1		= "\nMeanwhile, threat has increased in #{l:Campaign:ResultsNeighborhood1}.\n"
+ResultsThreatUp2		= "\nMeanwhile, threat has increased in #{l:Campaign:ResultsNeighborhood1} and #{l:Campaign:ResultsNeighborhood2}.\n"
+ResultsRewardMoney		= "\nYou received #{i:Campaign:ResultsRewardMoney} vampire dust.\n"
+ResultsRewardBlueprint_Weapon	= "\nYou unlocked a weapon blueprint:\n#{l:Campaign:ResultsRewardBlueprint}\n"
+ResultsRewardBlueprint_Bracelet	= "\nYou unlocked a bracelet blueprint:\n#{l:Campaign:ResultsRewardBlueprint}\n"
+ResultsRewardBlueprint_Ammo		= "\nYou unlocked an ammo blueprint:\n#{l:Campaign:ResultsRewardBlueprint}\n"
+ResultsRewardTeammate	= "\nA new member has joined your team: #{l:Campaign:ResultsRewardTeammate}\n"
+
+PlotPointHeader				= "#{l:Campaign:PlotPointHeader}"
+PlotPointText				= "#{c:Campaign:PlotPointText}"	# This is {c} instead of {n} because it references a specific localized config string.
+
+TitleCard_Success			= "VICTORY"
+TitleCard_Failure			= "DEFEAT"
+TitleCardSub_ReturnToHub	= "Hold #{n:RosaInput:Heal} to return to the hub."
+
+FinalReportHeader			= "#{l:Campaign:FinalReportHeader}"
+FinalReportText				= "#{c:Campaign:FinalReportText}"
+FinalReportOK				= "#{c:Campaign:FinalReportOK}"
+FinalReportHeader_Success	= "Victory!"
+FinalReportHeader_Failure	= "Defeat!"
+FinalReportText_Season		= "Lancaster is safe for now.\n\nBut the vampires will return next fall..."
+FinalReportText_Legacy		= "You have defeated the vampires.\n\nBut in time, a new threat may rise...\n\nYou have earned #{i:Campaign:FinalReportLegacyPoints} Legacy Points."
+FinalReportText_Failed_NoLP	= "Lancaster has fallen to the vampires.\n\nBut in time, a new slayer may rise..."
+FinalReportText_Failed		= "Lancaster has fallen to the vampires.\n\nBut in time, a new slayer may rise...\n\nYou have earned #{i:Campaign:FinalReportLegacyPoints} Legacy Points."
+FinalReportOK_Season		= "Continue to Season #{i:Campaign:FinalReportNextSeason}"
+FinalReportOK_Legacy		= "Begin a New Legacy"
+
+# Tutorials/tips
+Help_Lockpicking		= "Lockpicking"
+Help_Bandages			= "Bandages"
+# ROSANOTE: I can't use the actual lockpick inputs here because they'll only be valid in the lockpick input context.
+Tutorial_Lockpicking	= "LOCKPICKING\n\nSpin the lockpick around the lock until it rattles, then press #{n:RosaInput:UseWeapon} to tap a pin into place. Bind every pin in the lock to open it.\n\nYou can also press #{n:RosaInput:Zoom} to force a pin into place, but this is noisy and may knock other pins out of position."
+Tutorial_Bandages		= "BANDAGES\n\nPress #{n:RosaInput:Heal} to apply a bandage and refill your health.\n\nYou have a limited supply of bandages, but may find more in chests."
+Tip_SprintJump			= "Press #{n:RosaInput:Run} while moving to sprint.\nPress #{n:RosaInput:Jump} to jump."
+Tip_Mantel				= "Press and hold #{n:RosaInput:Jump} while moving toward a ledge to climb upon it."
+Tip_Crouch				= "Press #{n:RosaInput:Crouch} to crouch."
+Tip_Flashlight			= "Press #{n:RosaInput:Light} to switch your flashlight on."
+Tip_FindWeapon			= "Find a weapon to destroy this barricade."
+Tip_UseWeapon			= "Press #{n:RosaInput:UseWeapon} to use your equipped weapon.\nPress #{n:RosaInput:Shove} to shove enemies."
+Tip_Lean				= "Press #{n:RosaInput:LeanLeft} and #{n:RosaInput:LeanRight} to peek around corners."
+
+# Lockpicking
+LockpickStatus		= "#{i:RosaLockpicking:PinsCompleted} of #{i:RosaLockpicking:MaxPins} pins bound"
+LockpickControls	= "#{n:RosaInput:LockpickTap} Tap Pin    #{n:RosaInput:LockpickForce} Force Pin    #{n:RosaInput:LockpickExit} Cancel"
+
+# Verbs
+Open		= "Open"
+Close		= "Close"
+Lock		= "Lock"
+Unlock		= "Unlock"
+PickUp		= "Pick Up"
+Talk		= "Confront"
+Shop		= "Shop"
+PickLock	= "Pick Lock (#{l:WBCompRosaLock:LockDef})"
+Rescue		= "Rescue"
+Tag			= "Tag"
+Flush		= "Flush"
+Use			= "Use"
+Fix			= "Fix"
+Read		= "Read"
+Examine		= "Examine"
+Light		= "Light"
+Hack		= "Hack"
+Search		= "Search"
+EndIt		= "End It"
+
+# Lock types
+Lock_VeryEasy	= "Very Easy"
+Lock_Easy		= "Easy"
+Lock_Hard		= "Hard"
+
+# Frobbables
+Door			= "Door"
+Robot_Melee		= "Drone"
+Robot_Ranged	= "Security Drone"
+CEO				= "Manager"
+CEO_1			= "Chief Cowardice Officer"
+CEO_2			= "Chief Harassment Officer"
+CEO_3			= "Chief Obfuscation Officer"
+CEO_4			= "Chief Manipulation Officer"
+CEO_5			= "Chief Greed Officer"
+CEO_6			= "Chief Punishment Officer"
+CEO_7			= "Chief Ritual Officer"
+CEO_8			= "Chief Evil Officer"
+Toilet			= "Toilet"
+TurnOn			= "Turn On"
+TurnOff			= "Turn Off"
+ToiletPaper		= "Toilet Paper"
+Cabinet			= "Filing Cabinet"
+EndingMachine	= "Conference Table"
+
+# Difficulty modes
+Difficulty				= "#{l:HUD:Difficulty}"
+DifficultyDesc			= "#{l:HUD:DifficultyDesc}"
+Difficulty_Tourist		= "Tourist"
+Difficulty_Tourist_Desc	= "Tourist mode affords exploration at your own pace. Enemies will ignore you entirely, and lockpicking is automatic."
+#Difficulty_Easy			= "Easy"
+#Difficulty_Easy_Desc	= "Easy mode offers a less demanding challenge. Enemies are weaker, and you will not lose your teammates to unforeseen circumstances."
+Difficulty_Normal		= "Normal"
+Difficulty_Normal_Desc	= "Normal mode represents the intended experience: challenging but fair."
+#Difficulty_Hard			= "Hard"
+#Difficulty_Hard_Desc	= "Hard mode provides a more intense challenge. Enemies are stronger and more perceptive."
+#Difficulty_Expert		= "Expert"
+#Difficulty_Expert_Desc	= "Expert mode presents the most extreme challenge. Enemies are significantly stronger and preternaturally perceptive."
+
+# Controller types
+ControllerType			= "Controller Images:"
+ControllerTypeSetting	= "#{c:RosaInput:ControllerType}"
+Controller_XB			= "XB Style (#{k:xA})"
+Controller_PS			= "PS Style (#{k:ps_Cross})"
+
+# Using localization to remap mouse buttons and wheels to glyphs
+LMB			= "\ue0dc"
+MMB			= "\ue0dd"
+RMB			= "\ue0de"
+Mouse4		= "M4"
+Mouse5		= "M5"
+WheelUp		= "\ue0df"
+WheelDown	= "\ue0e0"
+
+# Using localization to remap objective system tags to glyphs
+ObjIncomplete	= "\ue0e1"
+ObjSucceeded	= "\ue0e2"
+ObjFailed		= "\ue0e3"
+Notification	= "\ue0db"
+
+# Using localization to remap controller button names to glyphs
+ps_Cross	= "\ue0e4"
+ps_Circle	= "\ue0e5"
+ps_Square	= "\ue0e6"
+ps_Triangle	= "\ue0e7"
+ps_Up		= "\ue0e8"
+ps_Down		= "\ue0e9"
+ps_Left		= "\ue0ea"
+ps_Right	= "\ue0eb"
+ps_L2		= "\ue0ec"
+ps_R2		= "\ue0ed"
+ps_L1		= "\ue0ee"
+ps_R1		= "\ue0ef"
+ps_LS		= "\ue0f0"
+ps_RS		= "\ue0f1"
+xA		= "\ue0f2"
+xB		= "\ue0f3"
+xX		= "\ue0f4"
+xY		= "\ue0f5"
+xUp		= "\ue0f6"
+xDown	= "\ue0f7"
+xLeft	= "\ue0f8"
+xRight	= "\ue0f9"
+LT		= "\ue0fa"
+RT		= "\ue0fb"
+LB		= "\ue0fc"
+RB		= "\ue0fd"
+LS		= "\ue0fe"
+RS		= "\ue0ff"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# TEMPHACK, old stuff from campaign-progression.loom
+# NOTE: These names are for the entity definitions, not the blueprint definitions!
+# NOTE: The _Desc suffix is assumed in WBActionRosaFocusBlueprint, as a description of the item.
+Stake				= "Mr. Pointy"
+Stake_Desc			= "It's a wooden tent stake, sharpened to a fine point."
+Katana_Wood			= "Wooden Katana"
+Katana_Wood_Desc	= "A rare blade made of red oak."
+Katana_Silver		= "Silver Katana"
+Katana_Silver_Desc	= "A unique weapon with a silvered blade."
+Katana_Fanged		= "Fanged Katana"
+Katana_Fanged_Desc	= "A mysterious blade infused with fragments of werewolf fangs."
+NailGun				= "Nail Gun"
+NailGun_Desc		= "A cordless nail gun, modified for range and accuracy."
+Shotgun				= "Shotgun"
+Shotgun_Desc		= "A pump-action boomstick. Super!"
+Crossbow			= "Crossbow"
+Crossbow_Desc		= "Once used to hunt deer. Equally effective for hunting vampires."
+Blaster				= "Foam Dart Blaster"
+Blaster_Desc		= "An off-brand toy gun, modified for range and speed."
+Watergun			= "Water Blaster"
+Watergun_Desc		= "For the vampire hunter who is more concerned with firepower than appearances."
+Vial				= "Vial Bag"
+Vial_Desc			= "A worn leather satchel embossed with the initials \"EC\"."	# Elle Cleary, establishing a possible lineage from Elle to Rosagirl to Jill
+Camera				= "Camera"
+Camera_Desc			= "A hand-me-down camera body that has seen better days."
+
+Bracelet_QuickReload		= "Quick Reload"
+Bracelet_QuickReload_Desc	= "Reload weapons and change ammo types faster."
+Bracelet_HighJump			= "Featherweight"
+Bracelet_HighJump_Desc		= "Jump higher!"
+Bracelet_FastMove			= "Agile"
+Bracelet_FastMove_Desc		= "Run faster!"
+Bracelet_LockpickingA		= "Lock Master"
+Bracelet_LockpickingA_Desc	= "Locks will have fewer pins and wider angles."
+Bracelet_LockpickingB		= "Lock Breaker"
+Bracelet_LockpickingB_Desc	= "Forcing locks will bind more pins. Failing a force will not unbind pins."
+Bracelet_LongSlide			= "Greased Bracer"
+Bracelet_LongSlide_Desc		= "Power Slide goes further."
+Bracelet_ExtraLoot			= "Sticky Fingers"
+Bracelet_ExtraLoot_Desc		= "Find more loot in chests."
+Bracelet_SuperSneak			= "Undead Eye"
+Bracelet_SuperSneak_Desc	= "Deal more damage with sneak attacks."
+Bracelet_ExtraDust			= "Cleaner"
+Bracelet_ExtraDust_Desc		= "Collect more vampire dust from enemies."
+Bracelet_ExtraHeal			= "Iron Stomach"
+Bracelet_ExtraHeal_Desc		= "Recover more health when collecting vampire dust."
+Bracelet_ToughShove			= "Weighted Band"
+Bracelet_ToughShove_Desc	= "Shoving enemies stuns them for longer."
+Bracelet_RangedBuff			= "Sharpshooter"
+Bracelet_RangedBuff_Desc	= "Deal increased damage with ranged weapons."
+
+Upgrade_PowerSlide			= "Power Slide"
+Upgrade_PowerSlide_Desc		= "[ALSO POWER JUMP NOW!] Press #{n:RosaInput:Crouch} while sprinting to slide quickly and silently."
+Upgrade_Stomp				= "Stomp"
+Upgrade_Stomp_Desc			= "Landing on enemies deals more damage and stuns for longer."
+Upgrade_SoftFall			= "Soft Fall"
+Upgrade_SoftFall_Desc		= "Land from any height without taking damage."
+Upgrade_DoubleJump			= "Double Jump"
+Upgrade_DoubleJump_Desc		= "Defy the laws of physics by jumping again in midair."
+
+Upgrade_SneakAttack			= "Sneak Attack"
+Upgrade_SneakAttack_Desc	= "Deal extra damage to unaware enemies."
+Upgrade_SharpStake			= "Tempered Stake"
+Upgrade_SharpStake_Desc		= "Deal increased damage with your stake."
+Upgrade_QuietFootsteps		= "Tiptoe"
+Upgrade_QuietFootsteps_Desc	= "Silence your footsteps for stealthy play."
+Upgrade_Camo				= "Camouflage"
+Upgrade_Camo_Desc			= "You are harder to see."
+
+Upgrade_WeaponSlots1		= "Bigger Backpack"
+Upgrade_WeaponSlots1_Desc	= "Carry 3 weapons."
+Upgrade_SteadyKick			= "Steady Hands"
+Upgrade_SteadyKick_Desc		= "Decrease weapon recoil."
+Upgrade_AmmoCapacity		= "Heavy Hands"
+Upgrade_AmmoCapacity_Desc	= "Carry twice as much ammo."
+Upgrade_WeaponSlots2		= "Biggest Backpack"
+Upgrade_WeaponSlots2_Desc	= "Carry 4 weapons."
+
+Upgrade_HealingDust			= "Dhampir's Curse"
+Upgrade_HealingDust_Desc	= "Recover a small amount of health when collecting vampire dust."
+Upgrade_Medkits1			= "Medium Medkit"
+Upgrade_Medkits1_Desc		= "Carry 3 bandages."
+Upgrade_Medkits2			= "Large Medkit"
+Upgrade_Medkits2_Desc		= "Carry 4 bandages."
+Upgrade_Shield				= "Motorcycle Jacket"
+Upgrade_Shield_Desc			= "Reduce damage taken by 30%."
+
+AmmoType_Lasergun			= "Laser Blaster Batteries"

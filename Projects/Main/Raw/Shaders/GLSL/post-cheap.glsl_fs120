@@ -1,0 +1,82 @@
+#version 120
+
+vec4 SampleSRGBToLinear( sampler2D Sampler, vec2 UV )
+{
+	vec4 Sample = texture2D( Sampler, UV );
+	vec4 Linear = pow( Sample, vec4( 2.2f ) );
+	return vec4( Linear.rgb, Sample.a );
+}
+
+// ****************************************************************
+// BEGIN CALIBRATION
+uniform vec4 Gamma;	// Used as float
+
+float Luma( vec3 Color )
+{
+	return dot( Color, vec3( 0.299f, 0.587f, 0.114f ) );
+}
+
+float Luminance( vec3 Color )
+{
+	return dot( Color, vec3( 0.2126f, 0.7152f, 0.0722f ) );
+}
+
+// i.e. LinearToSRGB
+vec3 Calibrate( vec3 Color )
+{
+	return pow( clamp( Color, 0.0f, 1.0f ), vec3( Gamma.x ) );
+}
+
+// END CALIBRATION
+// ****************************************************************
+
+vec2 FixUV( vec2 UV )
+{
+	return vec2( UV.x, 1.0f - UV.y );
+}
+
+uniform sampler2D Texture0;	// Main
+
+varying vec2	PassUV;
+
+vec3 TonemapReinhardLuminance( vec3 HDRColor )
+{
+	float	WP_Rcp	= 1.5;	// 3/2, whitepoint = 2
+	float	L		= Luminance( HDRColor );
+	float	S		= 1.0f / ( 1.0f + L );
+	return WP_Rcp * S * HDRColor;
+}
+
+vec3 TonemapFilmicHejl2015( vec3 HDRColor )
+{
+	float	WP_Rcp	= 1.32781657212340f;	// Whitepoint = 2
+	vec3	vh		= HDRColor;
+	vec3	va		= ( 1.425f * HDRColor ) + 0.05f;
+	vec3	vf		= ( ( vh * va + 0.004f ) / ( ( vh * ( va + 0.55f ) + 0.0491f ) ) ) - 0.0821f;
+	return vf.rgb * WP_Rcp;
+}
+
+vec3 TonemapFilmicLuminance( vec3 HDRColor )
+{
+	float	WP_Rcp	= 1.32781657212340f;	// Whitepoint = 2
+	float	vh		= Luminance( HDRColor );
+	float	va		= ( 1.425f * vh ) + 0.05f;
+	float	vf		= ( ( vh * va + 0.004f ) / ( ( vh * ( va + 0.55f ) + 0.0491f ) ) ) - 0.0821f;
+	float	s		= vf / vh;
+	return WP_Rcp * s * HDRColor;
+}
+
+void main()
+{
+	vec3 Black			= vec3( 0.0f, 0.0f, 0.0f );
+
+	vec2 FixedUV		= FixUV( PassUV );
+
+	vec3 HDRColor		= texture2D( Texture0, FixedUV ).rgb;
+
+	vec3 LDRColor		= TonemapReinhardLuminance( max( HDRColor, Black ) );
+
+	vec3 sRGBColor		= Calibrate( LDRColor );
+
+	gl_FragColor		= vec4( sRGBColor, Luma( sRGBColor ) );
+}

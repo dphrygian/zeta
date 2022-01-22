@@ -1,0 +1,22 @@
+#version 120
+
+uniform mat4	WVP;
+
+attribute vec4	InPosition;
+
+varying vec4	PassPositionSS;
+varying vec4	PassVPos;
+
+vec4 ConvertToVPos( vec4 p )
+{
+	// For GLSL, don't add RTDims.zw. We don't have a pixel grid offset here.
+	// (Still seems to work after the p.w * fix I did for foreground stuff in HLSL.)
+	return vec4( 0.5f * vec2( p.x + p.w, p.w - p.y ), p.zw );
+}
+
+void main()
+{
+	gl_Position		= InPosition * WVP;
+	PassPositionSS	= gl_Position;
+	PassVPos		= ConvertToVPos( gl_Position );
+}

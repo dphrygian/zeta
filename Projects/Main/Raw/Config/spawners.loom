@@ -1,0 +1,203 @@
+[Spawner_Player]
+Entity		= "Player"
+OffsetZ		= 0.3078125
+Priority	= 100	# Spawn before everything else (higher number takes precedence)
+
+	[Spawner_Player_Invulnerable]
+	Extends	= "Spawner_Player"
+	Entity	= "Player_Invulnerable"
+
+# ****************************************************************
+
+[Spawner_BaseAI]
+OffsetZ	= 0.77
+
+	[Spawner_Elite]
+	Extends			= "Spawner_BaseAI"
+	ResolveGroup	= "EliteAI"
+	Entity			= "Elite"
+	EditorR			= 255
+	EditorG			= 0
+	EditorB			= 128
+
+	[Spawner_Robot_Lower]
+	Extends			= "Spawner_BaseAI"
+	ResolveGroup	= "Robots_Lower"
+	NumSubSpawners	= &
+	@ SubSpawner
+	@@&				= "Spawner_Robot_Melee"
+	@@^Weight		= 3.0
+	@@&				= "Spawner_Robot_Ranged"
+	@@^Weight		= 1.0
+
+		[Spawner_Robot_Melee]
+		Extends	= "Spawner_BaseAI"
+		Entity	= "Robot_Melee"
+
+		[Spawner_Robot_Ranged]
+		Extends	= "Spawner_BaseAI"
+		Entity	= "Robot_Ranged"
+
+	[Spawner_Robot_Mid]
+	Extends			= "Spawner_BaseAI"
+	ResolveGroup	= "Robots_Mid"
+	NumSubSpawners	= &
+	@ SubSpawner
+	@@&				= "Spawner_Robot_Melee"
+	@@^Weight		= 2.0
+	@@&				= "Spawner_Robot_Ranged"
+	@@^Weight		= 2.0
+
+	[Spawner_Robot_Upper]
+	Extends			= "Spawner_BaseAI"
+	ResolveGroup	= "Robots_Upper"
+	NumSubSpawners	= &
+	@ SubSpawner
+	@@&				= "Spawner_Robot_Melee"
+	@@^Weight		= 1.0
+	@@&				= "Spawner_Robot_Ranged"
+	@@^Weight		= 3.0
+
+	[Spawner_CEO]
+	Extends		= "Spawner_BaseAI"
+	Entity		= "CEO"
+
+		[Spawner_CEO_Level1]
+		Extends			= "Spawner_CEO"
+		Entity			= "CEO_1"
+		ResolveGroup	= "CEO_Level1"
+
+		[Spawner_CEO_Level2]
+		Extends			= "Spawner_CEO"
+		Entity			= "CEO_2"
+		ResolveGroup	= "CEO_Level2"
+
+		[Spawner_CEO_Level3]
+		Extends			= "Spawner_CEO"
+		Entity			= "CEO_3"
+		ResolveGroup	= "CEO_Level3"
+
+		[Spawner_CEO_Level4]
+		Extends			= "Spawner_CEO"
+		Entity			= "CEO_4"
+		ResolveGroup	= "CEO_Level4"
+
+		[Spawner_CEO_Level5]
+		Extends			= "Spawner_CEO"
+		Entity			= "CEO_5"
+		ResolveGroup	= "CEO_Level5"
+
+		[Spawner_CEO_Level6]
+		Extends			= "Spawner_CEO"
+		Entity			= "CEO_6"
+		ResolveGroup	= "CEO_Level6"
+
+		[Spawner_CEO_Level7]
+		Extends			= "Spawner_CEO"
+		Entity			= "CEO_7"
+		ResolveGroup	= "CEO_Level7"
+
+		[Spawner_CEO_Level8]
+		Extends			= "Spawner_CEO"
+		Entity			= "CEO_8"
+		ResolveGroup	= "CEO_Level8"
+
+
+# ****************************************************************
+
+[Spawner_DoorRight]
+Entity			= "DoorRight"
+OffsetY			= -0.375
+OffsetZ			= 0.5
+Mesh			= "Meshes/door-right.cms"
+MeshOffsetX		= 0.453125
+# These are now optional, it'll use mesh extents by default.
+HalfExtentsX	= 0.5
+HalfExtentsY	= 0.046875
+HalfExtentsZ	= 1.0
+
+[Spawner_DoorLeft]
+Extends		= "Spawner_DoorRight"
+Entity		= "DoorLeft"
+Mesh		= "Meshes/door-left.cms"
+MeshOffsetX	= -0.453125
+
+[Spawner_DoorRightOpen]
+Extends	= "Spawner_DoorRight"
+Entity	= "DoorRightOpen"
+
+[Spawner_DoorLeftOpen]
+Extends	= "Spawner_DoorLeft"
+Entity	= "DoorLeftOpen"
+
+# ****************************************************************
+
+[Spawner_TrailerCam]
+Entity	= "TrailerCam"
+
+[Spawner_Toilet]
+OffsetZ	= 0.125
+Entity	= "Toilet"
+Mesh	= "Meshes/toilet.cms"
+
+[Spawner_Cabinet]
+Entity	= "Cabinet"
+OffsetZ	= 0.25
+Mesh	= "Meshes/cabinet.cms"
+
+[Spawner_Statue]
+Entity	= "Statue"
+OffsetZ	= 0.5
+Mesh	= "Meshes/statue.cms"
+
+[Spawner_Bookcase]
+Entity	= "Bookcase"
+OffsetZ	= 0.5
+Mesh	= "Meshes/bookcase.cms"
+
+[Spawner_Plant]
+Entity	= "Plant"
+OffsetZ	= 0.375
+Mesh	= "Meshes/plant.cms"
+
+[Spawner_EndingMachine]
+Entity	= "EndingMachine"
+Mesh	= "Meshes/ending-machine.cms"
+
+[Spawner_LightFixture]
+Entity		= "LightFixture"
+Mesh		= "Meshes/light-fixture.cms"
+OffsetZ		= -2.0
+
+[Spawner_Deco_Lower]
+OffsetZ			= 0.5
+Mesh			= "Meshes/Brushes/tall-spawner.cms"
+Chance			= 0.666
+NumSubSpawners	= &
+@ SubSpawner
+@@&				= "Spawner_Cabinet"
+@@^Weight		= 0.5
+@@&				= "Spawner_Plant"
+@@^Weight		= 0.5
+
+[Spawner_Deco_Mid]
+OffsetZ			= 0.5
+Mesh			= "Meshes/Brushes/tall-spawner.cms"
+Chance			= 0.666
+NumSubSpawners	= &
+@ SubSpawner
+@@&				= "Spawner_Cabinet"
+@@^Weight		= 0.5
+@@&				= "Spawner_Bookcase"
+@@^Weight		= 0.5
+
+[Spawner_Deco_Upper]
+OffsetZ			= 0.5
+Mesh			= "Meshes/Brushes/tall-spawner.cms"
+Chance			= 0.666
+NumSubSpawners	= &
+@ SubSpawner
+@@&				= "Spawner_Cabinet"
+@@^Weight		= 0.5
+@@&				= "Spawner_Statue"
+@@^Weight		= 0.5

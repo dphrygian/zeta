@@ -1,0 +1,302 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Final|Win32">
+      <Configuration>Final</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Final|x64">
+      <Configuration>Final</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{D98339FC-D01D-4F2B-8D87-BE5127799B28}</ProjectGuid>
+    <RootNamespace>Rodin</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Final|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v140_xp</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Final|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v140_xp</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v140_xp</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v140_xp</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v140_xp</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v140_xp</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Final|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Final|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>14.0.25431.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Final|Win32'">
+    <OutDir>$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Final|x64'">
+    <OutDir>$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>./src;../Core/src;../Math/src;../Workbench/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <PrecompiledHeader />
+      <WarningLevel>Level4</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>./src;../Core/src;../Math/src;../Workbench/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level4</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>./src;../Core/src;../Math/src;../Workbench/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <PrecompiledHeader />
+      <WarningLevel>Level4</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>./src;../Core/src;../Math/src;../Workbench/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level4</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Final|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>./src;../Core/src;../Math/src;../Workbench/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;_FINAL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <PrecompiledHeader />
+      <WarningLevel>Level4</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Final|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>./src;../Core/src;../Math/src;../Workbench/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;_FINAL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level4</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Actions\wbactionrodinblackboardwrite.h" />
+    <ClInclude Include="src\BTNodes\rodinbtnodeactiondecorator.h" />
+    <ClInclude Include="src\BTNodes\rodinbtnodeblackboardwrite.h" />
+    <ClInclude Include="src\BTNodes\rodinbtnodecastresult.h" />
+    <ClInclude Include="src\BTNodes\rodinbtnodecomposite.h" />
+    <ClInclude Include="src\BTNodes\rodinbtnodecompositesingular.h" />
+    <ClInclude Include="src\BTNodes\rodinbtnodeconditionpe.h" />
+    <ClInclude Include="src\BTNodes\rodinbtnodeconditiontimeout.h" />
+    <ClInclude Include="src\BTNodes\rodinbtnodedecorator.h" />
+    <ClInclude Include="src\BTNodes\rodinbtnodelog.h" />
+    <ClInclude Include="src\BTNodes\rodinbtnodelookup.h" />
+    <ClInclude Include="src\BTNodes\rodinbtnodeloop.h" />
+    <ClInclude Include="src\BTNodes\rodinbtnodenull.h" />
+    <ClInclude Include="src\BTNodes\rodinbtnodeparallel.h" />
+    <ClInclude Include="src\BTNodes\rodinbtnodeplayactions.h" />
+    <ClInclude Include="src\BTNodes\rodinbtnodeselector.h" />
+    <ClInclude Include="src\BTNodes\rodinbtnodesendevent.h" />
+    <ClInclude Include="src\BTNodes\rodinbtnodesequence.h" />
+    <ClInclude Include="src\BTNodes\rodinbtnodesleep.h" />
+    <ClInclude Include="src\BTNodes\rodinbtnodetimeout.h" />
+    <ClInclude Include="src\BTNodes\rodinbtnodeuseresource.h" />
+    <ClInclude Include="src\BTNodes\rodinbtnodeusestatmod.h" />
+    <ClInclude Include="src\BTNodes\rodinbtnodewait.h" />
+    <ClInclude Include="src\BTNodes\rodinbtnodewaitforevent.h" />
+    <ClInclude Include="src\Components\wbcomprodinbehaviortree.h" />
+    <ClInclude Include="src\Components\wbcomprodinblackboard.h" />
+    <ClInclude Include="src\Components\wbcomprodinknowledge.h" />
+    <ClInclude Include="src\Components\wbcomprodinresourcemap.h" />
+    <ClInclude Include="src\irodinresourceuser.h" />
+    <ClInclude Include="src\PEs\wbperodinblackboardget.h" />
+    <ClInclude Include="src\PEs\wbperodingetknowledge.h" />
+    <ClInclude Include="src\PEs\wbperodingetlastknownlocation.h" />
+    <ClInclude Include="src\PEs\wbperodingetlastknowntime.h" />
+    <ClInclude Include="src\rodinbtnode.h" />
+    <ClInclude Include="src\rodinbtnodefactory.h" />
+    <ClInclude Include="src\rodinbtnodes.h" />
+    <ClInclude Include="src\rodinwbactions.h" />
+    <ClInclude Include="src\rodinwbcomponents.h" />
+    <ClInclude Include="src\rodinwbpes.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Actions\wbactionrodinblackboardwrite.cpp" />
+    <ClCompile Include="src\BTNodes\rodinbtnodeactiondecorator.cpp" />
+    <ClCompile Include="src\BTNodes\rodinbtnodeblackboardwrite.cpp" />
+    <ClCompile Include="src\BTNodes\rodinbtnodecastresult.cpp" />
+    <ClCompile Include="src\BTNodes\rodinbtnodecomposite.cpp" />
+    <ClCompile Include="src\BTNodes\rodinbtnodecompositesingular.cpp" />
+    <ClCompile Include="src\BTNodes\rodinbtnodeconditionpe.cpp" />
+    <ClCompile Include="src\BTNodes\rodinbtnodeconditiontimeout.cpp" />
+    <ClCompile Include="src\BTNodes\rodinbtnodedecorator.cpp" />
+    <ClCompile Include="src\BTNodes\rodinbtnodelog.cpp" />
+    <ClCompile Include="src\BTNodes\rodinbtnodelookup.cpp" />
+    <ClCompile Include="src\BTNodes\rodinbtnodeloop.cpp" />
+    <ClCompile Include="src\BTNodes\rodinbtnodenull.cpp" />
+    <ClCompile Include="src\BTNodes\rodinbtnodeparallel.cpp" />
+    <ClCompile Include="src\BTNodes\rodinbtnodeplayactions.cpp" />
+    <ClCompile Include="src\BTNodes\rodinbtnodeselector.cpp" />
+    <ClCompile Include="src\BTNodes\rodinbtnodesendevent.cpp" />
+    <ClCompile Include="src\BTNodes\rodinbtnodesequence.cpp" />
+    <ClCompile Include="src\BTNodes\rodinbtnodesleep.cpp" />
+    <ClCompile Include="src\BTNodes\rodinbtnodetimeout.cpp" />
+    <ClCompile Include="src\BTNodes\rodinbtnodeuseresource.cpp" />
+    <ClCompile Include="src\BTNodes\rodinbtnodeusestatmod.cpp" />
+    <ClCompile Include="src\BTNodes\rodinbtnodewait.cpp" />
+    <ClCompile Include="src\BTNodes\rodinbtnodewaitforevent.cpp" />
+    <ClCompile Include="src\Components\wbcomprodinbehaviortree.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)%(Filename)1.obj</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(IntDir)%(Filename)1.obj</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Final|Win32'">$(IntDir)%(Filename)1.obj</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Final|x64'">$(IntDir)%(Filename)1.obj</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Final|Win32'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Final|x64'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)%(Filename)1.obj</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(IntDir)%(Filename)1.obj</ObjectFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
+      <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(IntDir)%(Filename)1.xdc</XMLDocumentationFileName>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprodinblackboard.cpp" />
+    <ClCompile Include="src\Components\wbcomprodinknowledge.cpp" />
+    <ClCompile Include="src\Components\wbcomprodinresourcemap.cpp" />
+    <ClCompile Include="src\PEs\wbperodinblackboardget.cpp" />
+    <ClCompile Include="src\PEs\wbperodingetknowledge.cpp" />
+    <ClCompile Include="src\PEs\wbperodingetlastknownlocation.cpp" />
+    <ClCompile Include="src\PEs\wbperodingetlastknowntime.cpp" />
+    <ClCompile Include="src\rodinbtnode.cpp" />
+    <ClCompile Include="src\rodinbtnodefactory.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Core\Core.vcxproj">
+      <Project>{35936da7-270b-418c-9386-a4aed70a2049}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\Workbench\Workbench.vcxproj">
+      <Project>{29fbefa5-5f6b-4edc-b7c1-9c1218c109c3}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="Rodin.natvis" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

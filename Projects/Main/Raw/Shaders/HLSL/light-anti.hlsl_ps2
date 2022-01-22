@@ -1,0 +1,39 @@
+#include "common.hlsl_psh"
+#include "lighting.hlsl_psh"
+
+sampler	NormalSampler	: register(s0);
+sampler	DepthSampler	: register(s1);
+
+// SDP variables
+float4	AntiLightPosition;
+float4	AntiLightColor;		// r = antilight intensity, a = antilight radius
+
+struct PS_INPUT 
+{
+	float4 VPos : TEXCOORD0;
+};
+
+float4 Main( PS_INPUT In ) : COLOR
+{
+	// Fix VPos
+	const float2	NormVPos		= In.VPos.xy / In.VPos.w;
+
+	// Unpack normal, smoothness, and reflectance
+	const float4	NormalSpec		= tex2D( NormalSampler, NormVPos );
+	const float4	NormalUnpack	= ( NormalSpec * 2.0f ) - 1.0f;
+	const float		NormalZSign		= NonZeroSign( NormalUnpack.z );
+	const float3	WSNormal		= GetInvStereographicProjection( NormalUnpack.xy, NormalZSign );
+
+	const float		Depth			= tex2D( DepthSampler, NormVPos ).r;
+	const float3	WSPos			= GetWSPos( NormVPos, Depth ).xyz;
+
+	const float3	PosToLight		= AntiLightPosition.xyz - WSPos;
+
+	const float3	AntiLight		= AntiLightColor.r;
+
+	const float		Dist			= sqrt( dot( PosToLight, PosToLight ) );
+	const float		LinearFalloff	= saturate( Dist / AntiLightColor.a );	// 0 at anti-light pos, 1 at radius
+	const float		Falloff			= LinearFalloff * LinearFalloff;		// Square for proper/desirable falloff (since the curve goes 0-1 instead of 1-0, this makes anti-lights have a "fuller" shape)
+
+	return float4( 1.0f - saturate( AntiLight * ( 1.0f - Falloff ) ), 1.0f );
+}

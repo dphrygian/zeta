@@ -1,0 +1,103 @@
+[RosaCampaign]
+
+QueueResultsDelay	= 2.0	# How long after a win/lose condition is the mission results screen shown
+GeoGridMapSize		= 5		# The size of the map shown at once; this should realistically never change, only 3 is an alternative
+NumScenarios		= 15	# This can change freely. This includes an assumed finale scenario.
+
+NumRegionTypes	= &
+@ RegionType
+@@&				= "RegionType_ZetaTest"
+
+NumMissionTypes	= &
+@ MissionType
+@@&				= "MissionType_Zeta"
+
+# ****************************************************************
+# Actions
+
+# Actions which are performed when the campaign is reset
+[RosaCampaign]
+lmActions( Reset )
+{
+}
+
+# Actions which are performed on any turn (start, next episode, next season, or next generation)
+[RosaCampaign]
+lmActions( Turn )
+{
+}
+
+# Actions which are performed on the first turn (i.e., for a new game, before the world is generated)
+[RosaCampaign]
+lmActions( TurnStart )
+{
+}
+
+# Actions which are performed on the first postgen turn (i.e., for a new game, after the world is generated)
+[RosaCampaign]
+lmActions( PostGenStart )
+{
+	SendEvent( "ConditionalGiveInitialLoadout", "PlayerPE" )
+}
+
+
+
+# ****************************************************************
+# Region Types
+
+[RegionType_ZetaTest]
+Level	= "Level_ZetaTest"
+Weight	= 1.0
+
+
+
+# ****************************************************************
+# Mission Types
+
+# CAMTODO: Revisit this as I figure out how missions will work.
+[MissionType_Zeta]
+# Mission properties
+	Weight	= 1.0
+# Mission parameters
+	WinIfArtifactsResolved	= true
+	FailIfPlayerDies		= true
+	NumObjectiveTags	= &
+	@ ObjectiveTag
+	@@&					= "Objective_Zeta_GetKeycards"
+	@@&					= "Objective_Zeta_UseKeycards"
+	NumArtifactTags		= &
+	@ ArtifactTag
+	@@&					= "Objective_Zeta_GetKeycards"
+# Mission rewards
+	# (VAMPTODO: scale with campaign progression [and scale the weapon/blueprint/teammate values too?])
+	# (or don't, because the value of money doesn't change over the course of a campaign?)
+	# VAMPNOTE: Low reward value because these are meant to be mainly open-ended exploration missions
+	#RewardMoneyMin			= 250
+	#RewardMoneyMax			= 350
+	#RewardMoneyStep			= 10
+	#RewardWeaponChance		= 0.0
+	#RewardBlueprintChance	= 0.5
+	#RewardTeammateChance	= 0.0
+# Resolve group overrides
+	#NumResolveGroups		= &
+	#@ ResolveGroup
+	#@@&Name					= "PatrolMarker"
+	#@@^Chance				= 1.0
+	#@@&Name					= "EliteAI"
+	#@@^LimitLowThreat		= 4
+	#@@^LimitHighThreat		= 8
+	#@@^MinRadiusFromPlayer	= 20.0
+	#@@^CriticalPathSampling	= true
+
+
+
+# ****************************************************************
+# Strings
+
+[English]
+RegionType_ZetaTest	= "Zeta Test Region Type"
+
+MissionType_Zeta	= "THIS STRING SHOULD NEVER BE VISIBLE"
+
+Objective_Zeta_GetKeycards	= "Take keycards (#{i:Campaign:ArtifactsResolved}/#{i:Campaign:ArtifactsCapacity})"
+Objective_Zeta_UseKeycards	= "Dissolve the corp"

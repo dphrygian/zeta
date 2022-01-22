@@ -1,0 +1,35 @@
+#include "common.hlsl_vsh"
+
+struct VS_INPUT 
+{
+	float4 Position	: POSITION;
+	float3 Normal	: NORMAL;
+	float4 Tangent	: TANGENT;
+	float2 UV		: TEXCOORD0;
+};
+
+struct VS_OUTPUT
+{
+	float4	Position	: POSITION;
+	float2	UV			: TEXCOORD0;
+	float4	PositionWS	: TEXCOORD1;
+	float4	PositionSS	: TEXCOORD2;
+	float4	PixelPos	: TEXCOORD3;
+	float3	NormalWS	: TEXCOORD4;
+	float4	TangentWS	: TEXCOORD5;
+};
+
+VS_OUTPUT Main( VS_INPUT In )
+{
+	VS_OUTPUT Out;
+
+	Out.Position	= FixHalfPixelOffset( mul( In.Position, WVP ) );
+	Out.UV			= In.UV;
+	Out.PositionWS	= mul( In.Position, WorldMatrix );
+	Out.PositionSS	= Out.Position;
+	Out.PixelPos	= ConvertToPixelPos( mul( In.Position, WVP ) );
+	Out.NormalWS	= mul( float4( In.Normal, 0.0f ), WorldMatrix ).xyz;
+	Out.TangentWS	= float4( mul( float4( In.Tangent.xyz, 0.0f ), WorldMatrix ).xyz, In.Tangent.w );
+
+	return Out;
+}

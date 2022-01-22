@@ -1,0 +1,703 @@
+[Spawner_RenderTest]
+Entity	= "RenderTest"
+OffsetZ	= 0.25
+[RenderTest]
+RosaTransform	= "ImmobileTransform"
+RosaMesh		= "RenderTest_Mesh"
+	[RenderTest_Mesh]
+	Mesh	= "Meshes/render-test.cms"
+
+[Spawner_TESTCrate]
+Entity	= "TESTCrate"
+[TESTCrate]
+RosaTransform	= "TESTCrate_Transform"
+RosaMesh		= "TESTCrate_Mesh"
+RosaCollision	= "TESTCrate_Collision"
+RosaRepulsor	= "TESTCrate_Repulsor"
+Reactions		= "TESTCrate_Reactions"
+	[TESTCrate_Transform]
+	CanMove		= true
+	UseGravity	= true
+	[TESTCrate_Mesh]
+	Mesh		= "Meshes/box.cms"
+	#AlbedoMap	= "Textures/brdf-test-a_NODXT.tga"
+	#NormalMap	= "Textures/brdf-test-n_NODXT.tga"
+	#SpecMap		= "Textures/brdf-test-s_NODXT.tga"
+	[TESTCrate_Collision]
+	HalfExtentsXY	= 0.49
+	HalfExtentsZ	= 0.49
+	IsStatic		= false
+	BlocksEntities	= true	# (Interpreted as "blocks blockers" because !IsStatic)
+	BlocksTrace		= true
+	BlocksOcclusion	= true
+	BlocksRagdolls	= true
+	Surface			= "Concrete"
+	# Non-standard friction, crates should slide a bit
+	FrictionTargetTime				= 0.5
+	FrictionTargetPercentVelocity	= 0.5
+	# High elasticity, crates should bounce off walls a bit
+	Elasticity						= 0.5
+	[TESTCrate_Repulsor]
+	Radius	= 0.707
+	[TESTCrate_Reactions]
+	lmReactions
+	{
+		Reaction( Rule( "OnCollidedWith" ) )
+		{
+			SendEvent( "ApplyImpulse", "SelfPE", Impulse = QueryActionStack( "CollisionVelocity" ) )
+		}
+	}
+
+[Spawner_TESTCollidable]
+Entity	= "TESTCollidable"
+[TESTCollidable]
+RosaTransform	= "TESTCollidable_Transform"
+RosaMesh		= "TESTCollidable_Mesh"
+RosaCollision	= "TESTCollidable_Collision"
+	[TESTCollidable_Transform]
+	CanMove		= true
+	UseGravity	= true
+	[TESTCollidable_Mesh]
+	Mesh		= "Meshes/box.cms"
+	[TESTCollidable_Collision]
+	HalfExtentsXY	= 0.49
+	HalfExtentsZ	= 0.49
+	IsStatic		= false
+	BlocksEntities	= false
+	BlocksTrace		= false
+	BlocksOcclusion	= false
+	BlocksRagdolls	= false
+	Surface			= "Concrete"
+
+[Spawner_TESTSphere]
+Entity	= "TESTSphere"
+[TESTSphere]
+RosaTransform	= "ImmobileTransform"
+RosaMesh		= "TESTSphere_Mesh"
+#RosaHUDMarker	= "TESTSphere_HUDMarker"
+#RosaMapMarker	= "TESTSphere_MapMarker"
+	[TESTSphere_Mesh]
+	Mesh		= "Meshes/sphere.cms"
+	#AlbedoMap	= "Textures/brdf-test-a_NODXT.tga"
+	#NormalMap	= "Textures/brdf-test-n_NODXT.tga"
+	#SpecMap		= "Textures/brdf-test-s_NODXT.tga"
+	[TESTSphere_HUDMarker]
+	Material		= "Material_HUD"
+	UnoccludedImage	= "Textures/UI/radial-icon.tga" #Used as default for occluded image too
+	Size			= 0.025
+	FalloffRadius	= 10.0
+	OffsetZ			= 0.5
+	[TESTSphere_MapMarker]
+	Texture	= "Textures/UI/minimap-marker-chest.tga"
+	Size	= 0.08
+
+[Spawner_TESTSphereMetal]
+Entity	= "TESTSphereMetal"
+[TESTSphereMetal]
+Extends			= "TESTSphere"
+RosaMesh		= "TESTSphereMetal_Mesh"
+	[TESTSphereMetal_Mesh]
+	Extends		= "TESTSphere_Mesh"
+	SpecMap		= "Textures/brdf-test-metal-s_NODXT.tga"
+
+[Spawner_TESTBox]
+Entity	= "TESTBox"
+OffsetX	= 0.25
+OffsetY	= 0.75
+OffsetZ	= 0.5
+[TESTBox]
+ShouldDebugCheckSpawnClearance	= false
+RosaTransform	= "ImmobileTransform"
+RosaMesh		= "TESTBox_Mesh"
+	[TESTBox_Mesh]
+	Mesh		= "Meshes/Brushes/spawner.cms"
+
+# TEMPHACK for deferred tests
+[Spawner_TESTLightCone]
+Entity	= "TESTLightCone"
+[TESTLightCone]
+#ShouldDebugRender	= true
+ShouldDebugCheckSpawnClearance	= false
+RosaTransform	= "ImmobileTransform"
+RosaMesh		= "TESTLightCone_Mesh"
+RosaLight		= "TESTLightCone_Light"
+	[TESTLightCone_Mesh]
+	IsLight	= true
+	Mesh	= "Meshes/_light-cone.cms"
+	[TESTLightCone_Light]
+	Radius	= 8.0
+	ColorH	= 0.5
+	ColorS	= 0.5
+	ColorV	= 0.25
+	ColorFlickerScalar	= 10.0	# Noise time scalar
+	ColorFlickerOctaves	= 3		# Noise octaves
+	ColorFlickerLow		= -0.5	# Low value before saturation
+	ColorFlickerHigh	= 3.5	# High value before saturation
+
+[Spawner_TESTLightSphere]
+Entity	= "TESTLightSphere"
+[TESTLightSphere]
+#ShouldDebugRender	= true
+ShouldDebugCheckSpawnClearance	= false
+RosaTransform	= "ImmobileTransform"
+RosaMesh		= "TESTLightSphere_Mesh"
+RosaLight		= "TESTLightSphere_Light"
+	[TESTLightSphere_Mesh]
+	IsLight	= true
+	Mesh	= "Meshes/_light-sphere.cms"
+	[TESTLightSphere_Light]
+	Radius	= 6.0
+	ColorH	= 0.08333
+	ColorS	= 0.75
+	ColorV	= 0.25
+	ColorFlickerScalar		= 5.0
+	ColorFlickerOctaves		= 5
+	ColorFlickerLow			= 0.5
+	ColorFlickerHigh		= 1.25
+	RadiusFlickerScalar		= 2.0
+	RadiusFlickerOctaves	= 2
+	RadiusFlickerLow		= 0.5
+
+[TESTLightSphereLow]
+#ShouldDebugRender	= true
+ShouldDebugCheckSpawnClearance	= false
+RosaTransform	= "ImmobileTransform"
+RosaMesh		= "TESTLightSphere_Mesh"
+RosaLight		= "TESTLightSphereLow_Light"
+	[TESTLightSphereLow_Light]
+	Radius	= 3.5
+	ColorH	= 0.58333
+	ColorS	= 0.75
+	ColorV	= 0.25
+
+[Spawner_TESTLightSphereShadows]
+Entity	= "TESTLightSphereShadows"
+[TESTLightSphereShadows]
+Extends			= "TESTLightSphere"
+RosaMesh		= "TESTLightSphereShadows_Mesh"
+RosaLight		= "TESTLightSphereShadows_Light"
+	[TESTLightSphereShadows_Mesh]
+	Mesh			= "Meshes/_light-sphere.cms"
+	Scale			= 2.0
+	IsShadowLight	= true
+	[TESTLightSphereShadows_Light]
+	Radius	= 12.0
+	ColorV	= 0.5
+	TranslationDriftRadius	= 0.25
+	TranslationDriftScalar	= 0.5
+	TranslationDriftOctaves	= 2
+
+[TESTLightSphereFog]
+Extends			= "TESTLightSphere"
+RosaMesh		= "TESTLightSphereFog_Mesh"
+RosaLight		= "TESTLightSphereFog_Light"
+	[TESTLightSphereFog_Mesh]
+	Mesh				= "Meshes/_light-sphere.cms"
+	Scale				= 0.5
+	IsShadowLight		= true
+	NumAttachedMeshes	= &
+	@ AttachedMesh
+	@@&					= "Meshes/_light-sphere.cms"
+	@@^IsFogLight		= true
+	@@^Scale			= 0.5
+	[TESTLightSphereFog_Light]
+	Radius	= 3.0
+	ColorH	= 0.08333
+	ColorS	= 0.75
+	ColorV	= 0.25
+
+[TESTFogBox]
+#ShouldDebugRender	= true
+ShouldDebugCheckSpawnClearance	= false
+RosaTransform	= "ImmobileTransform"
+RosaMesh		= "TESTFogBox_Mesh"
+	[TESTFogBox_Mesh]
+	IsFogMesh		= true
+	Mesh			= "Meshes/box.cms"
+	Section			= "TESTFogBox_FogMeshDef"
+		[TESTFogBox_FogMeshDef]
+		FogMeshColorV	= 0.0
+		FogMeshColorA	= 1.0
+		FogMeshFar		= 1.0	# Box width
+
+[TESTFogSphere]
+#ShouldDebugRender	= true
+ShouldDebugCheckSpawnClearance	= false
+RosaTransform	= "ImmobileTransform"
+RosaMesh		= "TESTFogSphere_Mesh"
+	[TESTFogSphere_Mesh]
+	IsFogMesh		= true
+	Mesh			= "Meshes/sphere.cms"
+	Section			= "TESTFogSphere_FogMeshDef"
+		[TESTFogSphere_FogMeshDef]
+		FogMeshColorV	= 0.5
+		FogMeshColorA	= 1.0
+		FogMeshFar		= 1.0	# Sphere diameter
+
+[TESTFogSphere_Blue]
+Extends		= "TESTFogSphere"
+RosaMesh	= "TESTFogSphere_Blue_Mesh"
+	[TESTFogSphere_Blue_Mesh]
+	Extends			= "TESTFogSphere_Mesh"
+	Section			= "TESTFogSphere_Blue_FogMeshDef"
+		[TESTFogSphere_Blue_FogMeshDef]
+		Extends			= "TESTFogSphere_FogMeshDef"
+		FogMeshColorHD	= 240.0
+		FogMeshColorS	= 1.0
+
+[Spawner_TESTDecal]
+Entity	= "TESTDecal"
+
+[TESTDecal]
+ShouldDebugCheckSpawnClearance	= false
+RosaTransform	= "ImmobileTransform"
+RosaMesh		= "TESTDecal_Mesh"
+RosaDecal		= "."
+
+	[TESTDecal_Mesh]
+	IsDecal		= true
+	Mesh		= "Meshes/_decal-box.cms"
+	# Scale is applied to a unit box, so it is 1m on a side by default
+	ScaleX		= 2.5
+	ScaleZ		= 2.5
+	AlbedoMap	= "Textures/Decals/test-a.tga"
+	NormalMap	= "Textures/Decals/test-n.tga"
+	SpecMap		= "Textures/Decals/test-s.tga"
+
+[DoorLeft]
+Extends		= "DoorRight"
+RosaMesh	= "DoorLeftMesh"
+RosaDoor	= "DoorLeftDoor"
+RosaLock	= "DoorLeft_Lock"
+
+	[DoorLeftMesh]
+	Extends	= "DoorRightMesh"
+	Mesh	= "Meshes/door-left.cms"
+
+	[DoorLeftDoor]
+	Extends			= "DoorRightDoor"
+	ClosedOffsetX	= -0.453125
+	OpenOffsetX		= -0.453125
+	OpenYaw			= 82.0
+
+	[DoorLeft_Lock]
+	Extends				= "DoorRight_Lock"
+	CameraTranslationX	= 0.40625
+
+[DoorRight]
+#ShouldDebugRender = true
+IgnoreReport	= true
+ShouldDebugCheckSpawnClearance	= false
+RosaTransform	= "ImmobileTransform"
+RosaCollision	= "DoorCollision"
+RosaMesh		= "DoorRightMesh"
+RosaParticles	= "."
+RosaSound		= "."
+RosaFrobbable	= "DoorFrobbable"
+RosaSwitchable	= "."
+RosaDoor		= "DoorRightDoor"
+RosaLock		= "DoorRight_Lock"
+#RosaHealth		= "Door_Health"
+Reactions		= "DoorReactions"
+
+	# Units:
+	# 1 texel = 1/16 meter = 0.0625
+	# 1/8 texel = 0.0078125
+	[DoorCollision]
+	IsStatic		= true
+	# X and Z extents are slightly shrunk so door clearance tests don't fail
+	HalfExtentsX	= 0.4921875
+	HalfExtentsY	= 0.046875
+	HalfExtentsZ	= 0.9921875
+	BlocksEntities	= true
+	BlocksTrace		= true
+	BlocksOcclusion	= true
+	BlocksNav		= true # ROSANOTE: For Rosa, unlike Eldritch/Neon, I have to explicitly mark things as blocking nav
+	BlocksRagdolls	= true
+	Surface			= "Wood"
+
+	[DoorRightMesh]
+	Mesh	= "Meshes/door-right.cms"
+	
+	[DoorFrobbable]
+	FrobVerb		= "Open"
+	FriendlyName	= "Door"
+
+	[DoorRightDoor]
+	InterpTime		= 0.5
+	ClosedOffsetX	= 0.453125	# 0.5 - (3/64)
+	lmVector( ClosedFrobBox ) { 0.5, 0.0625, 1.0 }
+	OpenOffsetX		= 0.453125
+	OpenYaw			= -82.0
+	OpenFrobOffsetY	= 0.4375	# Center the frob region (compensate for the spawner offset)
+	lmVector( OpenFrobBox ) { 0.5, 0.5, 1.0 }
+	AITryHandleTimeMin		= 1.0	# HACKHACK for AIs to try the handle
+	AITryHandleTimeMax		= 3.0	# HACKHACK for AIs to try the handle
+	AITryHandleDistance		= 2.0	# HACKHACK for AIs to try the handle
+	ClosedFrobPriority		= 0		# Low priority takes precedence
+	OpenFrobPriority		= 1		# Low priority takes precedence
+	UnlockedFriendlyName	= "Door"
+	LockedFriendlyName		= "LockedDoor"
+
+	[DoorRight_Lock]
+	LockDef					= "Lock_Easy"
+	UseCameraOverride		= true
+	CameraTranslationX		= -0.40625
+	CameraTranslationY		= -0.5
+	CameraTranslationZ		= -0.05
+	CameraOrientationPitch	= -21.0
+
+	[Door_Health]
+	Health			= 500
+	ResistanceSet	= "ResistanceSet_InanimateObject"
+
+	[DoorReactions]
+	NumObserveEvents	= &
+	@ ObserveEvent
+	@@&					= "ForceDoorClosed"	# HACKHACK for Zeta
+	lmReactions
+	{
+		Reaction( Rule( "ForceDoorClosed" ) )
+		{
+			SendEvent( "Close", "SelfPE" )
+		}
+
+		// We're looking at a closed door from the outside
+		Reaction( Rule( "OnBecameFrobTarget", QueryActionStack( "Closed" ) ) )
+		{
+			SendEvent( "SetFrobVerb",			"SelfPE",	FrobVerb		= ConstantString( "Open" ) )
+			SendEvent( "SetFrobHoldVerb",		"SelfPE",	FrobHoldVerb	= ConstantString( "PickLock" ) )
+			SendEvent( "SetHoldReleaseMode",	"SelfPE",	HoldReleaseMode	= QueryActionStack( "Locked" ) )
+
+			// DLP 13 Aug 2016: As a hack, I'm just hiding this frob prompt instead
+			// of disabling it, so you can still jiggle the handle.
+			// DLP 11 Aug 2016: Disabling main frob when door is locked because
+			// there is not (currently) a way to just bypass the lock like with
+			// the locksmith kit in Eldritch. If I ever introduce that, then
+			// I'll need to check for it with another reaction and handle it.
+			// (All the "ShowMainFrob" events above are because of this too.)
+			SendEvent( "SetMainFrobHidden",		"SelfPE",	Hidden			= QueryActionStack( "Locked" ) )
+		}
+
+		// We're looking at an open door; closing it is the only option
+		Reaction( Rule( "OnBecameFrobTarget" ) )
+		{
+			SendEvent( "SetFrobVerb",			"SelfPE",	FrobVerb		= ConstantString( "Close" ) )
+			SendEvent( "SetHoldReleaseMode",	"SelfPE",	HoldReleaseMode	= ConstantBool( false ) )
+			SendEvent( "ShowMainFrob",			"SelfPE" )
+		}
+
+		// Frobbing the door attempts to open/close it in all cases
+		Reaction( Rule( "OnFrobbed" ) )
+		{
+			SendEvent( "TryToggle", "SelfPE", Frobber = "FrobberPE" )
+		}
+
+		Reaction( Rule( "OnPushed", PushContext( "PusherPE", QueryActionStack( "CanOpenDoors" ) ) ) )
+		{
+			// RetoggleTime: Close door behind AI after 2 seconds
+			SendEvent( "TryToggle", "SelfPE", Frobber = "PusherPE", RetoggleTime = ConstantFloat( 2.0 ) )
+		}
+
+		Reaction( Rule( "TryToggleFailed" ) )
+		{
+			RosaPlaySound( "DoorLockedSound" )
+			SendEvent( "OnAINoise",
+					NoiseEntity			= "FrobberPE",
+					NoiseLocation		= "LocationPE",
+					NoiseSourceLocation	= RosaGetLocation( "FrobberPE" ),
+					NoiseRadius			= ConstantFloat( 2.5 )
+				)
+		}
+
+		Reaction( Rule( "OnOpened" ) )
+		{
+			RosaPlaySound( "DoorOpenSound" )
+			SendEvent( "OnAINoise",
+					NoiseEntity			= "FrobberPE",
+					NoiseLocation		= "LocationPE",
+					NoiseSourceLocation	= RosaGetLocation( "FrobberPE" ),
+					NoiseRadius			= ConstantFloat( 2.5 )
+				)
+
+			// If we're currently getting lockpicked, cancel it (handled in player reactions)
+			SendEvent( "ConditionalEndLockpicking", "PlayerPE", LockpickTarget = "SelfPE" )
+		}
+
+		Reaction( Rule( "OnClosed" ) )
+		{
+			RosaPlaySound( "DoorCloseSound" )
+			SendEvent( "OnAINoise",
+					NoiseEntity			= "FrobberPE",
+					NoiseLocation		= "LocationPE",
+					NoiseSourceLocation	= RosaGetLocation( "FrobberPE" ),
+					NoiseRadius			= ConstantFloat( 2.5 )
+				)
+		}
+	}
+
+[DoorLeftOpen]
+Extends		= "DoorLeft"
+RosaDoor	= "DoorLeftOpenDoor"
+
+	[DoorLeftOpenDoor]
+	Extends		= "DoorLeftDoor"
+	StartOpen	= true
+
+[DoorRightOpen]
+Extends		= "DoorRight"
+RosaDoor	= "DoorRightOpenDoor"
+
+	[DoorRightOpenDoor]
+	Extends		= "DoorRightDoor"
+	StartOpen	= true
+
+[Toilet]
+ShouldDebugCheckSpawnClearance	= false
+RosaTransform	= "ImmobileTransform"
+RosaCollision	= "Toilet_Collision"
+RosaMesh		= "Toilet_Mesh"
+RosaSound		= "."
+RosaFrobbable	= "Toilet_Frobbable"
+Reactions		= "Toilet_Reactions"
+
+	[Toilet_Collision]
+	IsStatic		= true
+	HalfExtentsXY	= 0.375
+	HalfExtentsZ	= 0.625
+	BlocksEntities	= true
+	BlocksTrace		= true
+	BlocksAudio		= false
+	BlocksNav		= true
+	Surface			= "Concrete"
+
+	[Toilet_Mesh]
+	Mesh	= "Meshes/toilet.cms"
+
+	[Toilet_Frobbable]
+	UseMeshExtents	= true
+	ExtentsFatten	= 0.05
+	FriendlyName	= "Toilet"
+	FrobVerb		= "Flush"
+
+	[Toilet_Reactions]
+	lmReactions
+	{
+		Reaction( Rule( "OnFrobbed" ) )
+		{
+			SendEvent( "BecomeNonFrobbable", "SelfPE" )
+			RosaPlaySound( "Sound_Toilet" )
+			SendEvent( "OnAINoise",
+					NoiseEntity			= "FrobberPE",
+					NoiseLocation		= "LocationPE",
+					NoiseSourceLocation	= RosaGetLocation( "FrobberPE" ),
+					NoiseRadius			= ConstantFloat( 5.0 )
+				)
+			SendEvent( "BecomeFrobbable", "SelfPE", DispatchDelay = 5.0 )
+		}
+	}
+
+[Cabinet]
+ShouldDebugCheckSpawnClearance	= false
+RosaTransform	= "ImmobileTransform"
+RosaCollision	= "Cabinet_Collision"
+RosaMesh		= "Cabinet_Mesh"
+RosaSound		= "."
+RosaFrobbable	= "Cabinet_Frobbable"
+RosaRespawner	= "."
+Reactions		= "Cabinet_Reactions"
+
+	[Cabinet_Collision]
+	IsStatic		= true
+	HalfExtentsX	= 0.375
+	HalfExtentsY	= 0.5
+	HalfExtentsZ	= 0.75
+	BlocksEntities	= true
+	BlocksTrace		= true
+	BlocksAudio		= false
+	BlocksNav		= true
+	Surface			= "Metal"
+
+	[Cabinet_Mesh]
+	Mesh	= "Meshes/cabinet.cms"
+
+	[Cabinet_Frobbable]
+	ExtentsX		= 0.375
+	ExtentsY		= 0.5
+	ExtentsZ		= 0.75
+	ExtentsFatten	= 0.05
+	FriendlyName	= "Cabinet"
+	FrobVerb		= "Search"
+
+	[Cabinet_Reactions]
+	NumObserveEvents	= &
+	@ ObserveEvent
+	@@&					= "ForceContainerRespawn"
+	lmReactions
+	{
+		Reaction( Rule( "ForceContainerRespawn" ) )
+		{
+			SendEvent( "ForceRespawn", "SelfPE" )
+		}
+
+		Reaction( Rule( "OnFrobbed" ) )
+		{
+			SendEvent( "BecomeNonFrobbable", "SelfPE" )
+			RosaPlayAnim( "Open" )
+			RosaPlaySound( "Sound_Search_Cabinet" )
+			"CabinetLootAction"
+		}
+	}
+
+		[CabinetLootAction]
+		lmSelectorAction
+		{
+			Selection( RandomBool( 0.1 ),		RosaAddAmmo( "AmmoType_Lasergun", 3 ) )	// 10% of the time you get 3
+			Selection( RandomBool( 0.444 ),		RosaAddAmmo( "AmmoType_Lasergun", 2 ) )	// 40% of the time you get 2
+			Selection( RandomBool( 0.5 ),		RosaAddAmmo( "AmmoType_Lasergun", 1 ) )	// 25% of the time you get 1
+			Selection( ConstantBool( true ),	RosaAddAmmo( "AmmoType_Lasergun", 0 ) )	// HACKHACK to get the ammo pickup screen
+		}
+
+[Statue]
+ShouldDebugCheckSpawnClearance	= false
+RosaTransform	= "ImmobileTransform"
+RosaCollision	= "Statue_Collision"
+RosaMesh		= "Statue_Mesh"
+
+	[Statue_Collision]
+	IsStatic		= true
+	HalfExtentsXY	= 0.5
+	HalfExtentsZ	= 1.0
+	BlocksEntities	= true
+	BlocksTrace		= true
+	BlocksAudio		= false
+	BlocksNav		= true
+	Surface			= "Concrete"
+
+	[Statue_Mesh]
+	Mesh	= "Meshes/statue.cms"
+
+[Bookcase]
+ShouldDebugCheckSpawnClearance	= false
+RosaTransform	= "ImmobileTransform"
+RosaCollision	= "Bookcase_Collision"
+RosaMesh		= "Bookcase_Mesh"
+
+	[Bookcase_Collision]
+	IsStatic		= true
+	HalfExtentsX	= 0.5
+	HalfExtentsY	= 0.375
+	HalfExtentsZ	= 1.0
+	BlocksEntities	= true
+	BlocksTrace		= true
+	BlocksAudio		= false
+	BlocksNav		= true
+	Surface			= "Wood"
+
+	[Bookcase_Mesh]
+	Mesh	= "Meshes/bookcase.cms"
+
+[Plant]
+ShouldDebugCheckSpawnClearance	= false
+RosaTransform	= "ImmobileTransform"
+RosaCollision	= "Plant_Collision"
+RosaMesh		= "Plant_Mesh"
+
+	[Plant_Collision]
+	IsStatic		= true
+	HalfExtentsXY	= 0.375
+	HalfExtentsZ	= 0.875
+	BlocksEntities	= true
+	BlocksTrace		= false
+	BlocksAudio		= false
+	BlocksNav		= true
+	Surface			= "Grass"
+
+	[Plant_Mesh]
+	Mesh	= "Meshes/plant.cms"
+
+[EndingMachine]
+ShouldDebugCheckSpawnClearance	= false
+RosaTransform	= "ImmobileTransform"
+RosaCollision	= "EndingMachine_Collision"
+RosaMesh		= "EndingMachine_Mesh"
+RosaSound		= "."
+RosaFrobbable	= "EndingMachine_Frobbable"
+RosaRespawner	= "."
+Reactions		= "EndingMachine_Reactions"
+
+	[EndingMachine_Collision]
+	IsStatic		= true
+	HalfExtentsX	= 2.5
+	HalfExtentsY	= 1.5
+	HalfExtentsZ	= 0.5
+	BlocksEntities	= true
+	BlocksTrace		= true
+	BlocksAudio		= false
+	BlocksNav		= true
+	Surface			= "Wood"
+
+	[EndingMachine_Mesh]
+	Mesh	= "Meshes/ending-machine.cms"
+
+	[EndingMachine_Frobbable]
+	UseMeshExtents	= true
+	ExtentsFatten	= 0.05
+	FriendlyName	= "EndingMachine"
+	FrobVerb		= "EndIt"
+	IsFrobbable		= false
+
+	[EndingMachine_Reactions]
+	NumObserveEvents	= &
+	@ ObserveEvent
+	@@&					= "OnObjectiveComplete"
+	lmReactions
+	{
+		Reaction( Rule( "OnObjectiveComplete", Conditional( "E", QueryActionStack( "ObjectiveTag" ), ConstantString( "Objective_Zeta_GetKeycards" ) ) ) )
+		{
+			SendEvent( "BecomeFrobbable", "SelfPE" )
+		}
+	
+		Reaction( Rule( "OnFrobbed" ) )
+		{
+			SendEvent( "BecomeNonFrobbable", "SelfPE" )
+			RosaCompleteObjective( "Objective_Zeta_UseKeycards" )
+			
+			SendEvent( "KillAIs" ) // AIs are registered as observers
+			SendEvent( "DisablePause", "PlayerPE" )
+			SendEvent( "SetInvulnerable", "PlayerPE" )
+
+			SendEvent( "StartSupertitles",
+				"PlayerPE",
+				Supertitles	= ConstantString( "Supertitles_Zeta_Ending_A" ) )
+		}
+	}
+
+[LightFixture]
+RosaTransform	= "ImmobileTransform"
+RosaCollision	= "LightFixture_Collision"
+RosaMesh		= "LightFixture_Mesh"
+RosaLight		= "LightFixture_Light"
+
+	[LightFixture_Collision]
+	IsStatic		= true
+	HalfExtentsXY	= 0.25
+	HalfExtentsZ	= 0.25
+	BlocksEntities	= true
+	BlocksTrace		= true
+	Surface			= "Concrete"
+
+	[LightFixture_Mesh]
+	IsShadowLight		= true
+	Mesh				= "Meshes/_light-sphere-8m.cms"
+	Scale				= 0.8
+	NumAttachedMeshes	= &
+	@ AttachedMesh
+	@@&					= "Meshes/light-fixture.cms"
+	@@^CastsShadows		= false
+
+	[LightFixture_Light]
+	Radius	= 6.0
+	ColorHD	= 51.0
+	ColorS	= 0.05
+	ColorV	= 1.50

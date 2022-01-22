@@ -1,0 +1,38 @@
+#version 120
+
+vec4 sRGBToLinear( vec4 sRGB )
+{
+	vec4 Linear = pow( sRGB, vec4( 2.2f ) );
+	return vec4( Linear.rgb, sRGB.a );
+}
+
+// ****************************************************************
+// BEGIN CALIBRATION
+uniform vec4 Gamma;	// Used as float
+
+// i.e. LinearToSRGB
+vec3 Calibrate( vec3 Color )
+{
+	return pow( clamp( Color, 0.0f, 1.0f ), vec3( Gamma.x ) );
+}
+
+// END CALIBRATION
+// ****************************************************************
+
+uniform sampler2D Texture0;	// Diffuse
+
+uniform vec4	MultiplyColor;
+uniform vec4	ScreenColor;
+uniform vec4	HUDParams;
+
+varying vec2	PassUV;
+varying vec4	PassColor;
+
+void main()
+{
+	vec4	White			= vec4( 1.0f, 1.0f, 1.0f, 1.0f );
+	vec4	BaseColor		= texture2D( Texture0, PassUV ) * mix( White, PassColor, HUDParams.x );
+	vec4	ScreenedColor	= ( BaseColor + ScreenColor ) - ( BaseColor * ScreenColor );
+	vec4	MultipliedColor	= MultiplyColor * ScreenedColor;
+	gl_FragColor			= vec4( Calibrate( sRGBToLinear( MultipliedColor ).rgb ), 1.0f );
+}

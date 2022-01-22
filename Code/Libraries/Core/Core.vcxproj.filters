@@ -1,0 +1,542 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="src\TinyXML\tinyxml.cpp">
+      <Filter>src\TinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TinyXML\tinyxmlerror.cpp">
+      <Filter>src\TinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TinyXML\tinyxmlparser.cpp">
+      <Filter>src\TinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="src\allocator.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\allocatorchunk.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\bufferedfilestream.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\checksum.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\clock.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\configmanager.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\configparser.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\configvar.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\console.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\consoleinput.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\consolemanager.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\customassert.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\customnew.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\datapipe.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\display.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\dynamicmemorystream.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\exceptionhandler.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\exceptiontrace.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\exceptionuploadlog.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\filestream.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\fileutil.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\hashedstring.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\httpsocket.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\inputcontext.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\inputsystem.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\keyboard.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\memorystream.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mouse.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mutex.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\packstream.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\printmanager.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\profiler.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\profilerhook.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\profilertable.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\reversehash.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\simplestring.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stopwatch.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stringmanager.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\test.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\thread.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\timedate.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\timer.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\windowwrapper.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\xinputcontroller.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\SDL2\begin_code.h">
+      <Filter>src\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDL2\close_code.h">
+      <Filter>src\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDL2\SDL.h">
+      <Filter>src\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDL2\SDL_assert.h">
+      <Filter>src\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDL2\SDL_atomic.h">
+      <Filter>src\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDL2\SDL_audio.h">
+      <Filter>src\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDL2\SDL_bits.h">
+      <Filter>src\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDL2\SDL_blendmode.h">
+      <Filter>src\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDL2\SDL_clipboard.h">
+      <Filter>src\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDL2\SDL_config.h">
+      <Filter>src\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDL2\SDL_cpuinfo.h">
+      <Filter>src\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDL2\SDL_endian.h">
+      <Filter>src\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDL2\SDL_error.h">
+      <Filter>src\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDL2\SDL_events.h">
+      <Filter>src\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDL2\SDL_gamecontroller.h">
+      <Filter>src\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDL2\SDL_gesture.h">
+      <Filter>src\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDL2\SDL_haptic.h">
+      <Filter>src\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDL2\SDL_hints.h">
+      <Filter>src\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDL2\SDL_joystick.h">
+      <Filter>src\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDL2\SDL_keyboard.h">
+      <Filter>src\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDL2\SDL_keycode.h">
+      <Filter>src\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDL2\SDL_loadso.h">
+      <Filter>src\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDL2\SDL_log.h">
+      <Filter>src\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDL2\SDL_main.h">
+      <Filter>src\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDL2\SDL_messagebox.h">
+      <Filter>src\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDL2\SDL_mouse.h">
+      <Filter>src\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDL2\SDL_mutex.h">
+      <Filter>src\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDL2\SDL_name.h">
+      <Filter>src\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDL2\SDL_opengl.h">
+      <Filter>src\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDL2\SDL_opengles.h">
+      <Filter>src\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDL2\SDL_opengles2.h">
+      <Filter>src\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDL2\SDL_pixels.h">
+      <Filter>src\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDL2\SDL_platform.h">
+      <Filter>src\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDL2\SDL_power.h">
+      <Filter>src\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDL2\SDL_quit.h">
+      <Filter>src\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDL2\SDL_rect.h">
+      <Filter>src\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDL2\SDL_render.h">
+      <Filter>src\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDL2\SDL_revision.h">
+      <Filter>src\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDL2\SDL_rwops.h">
+      <Filter>src\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDL2\SDL_scancode.h">
+      <Filter>src\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDL2\SDL_shape.h">
+      <Filter>src\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDL2\SDL_stdinc.h">
+      <Filter>src\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDL2\SDL_surface.h">
+      <Filter>src\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDL2\SDL_system.h">
+      <Filter>src\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDL2\SDL_syswm.h">
+      <Filter>src\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDL2\SDL_test.h">
+      <Filter>src\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDL2\SDL_test_assert.h">
+      <Filter>src\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDL2\SDL_test_common.h">
+      <Filter>src\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDL2\SDL_test_compare.h">
+      <Filter>src\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDL2\SDL_test_crc32.h">
+      <Filter>src\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDL2\SDL_test_font.h">
+      <Filter>src\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDL2\SDL_test_fuzzer.h">
+      <Filter>src\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDL2\SDL_test_harness.h">
+      <Filter>src\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDL2\SDL_test_images.h">
+      <Filter>src\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDL2\SDL_test_log.h">
+      <Filter>src\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDL2\SDL_test_md5.h">
+      <Filter>src\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDL2\SDL_test_random.h">
+      <Filter>src\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDL2\SDL_thread.h">
+      <Filter>src\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDL2\SDL_timer.h">
+      <Filter>src\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDL2\SDL_touch.h">
+      <Filter>src\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDL2\SDL_types.h">
+      <Filter>src\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDL2\SDL_version.h">
+      <Filter>src\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDL2\SDL_video.h">
+      <Filter>src\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TinyXML\tinyxml.h">
+      <Filter>src\TinyXML</Filter>
+    </ClInclude>
+    <ClInclude Include="src\allocator.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\allocatorchunk.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\array.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\arraystack.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\bmp-format.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\bufferedfilestream.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\checksum.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\clock.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\color.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\configmanager.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\configparser.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\configvar.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\console.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\consoleinput.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\consolemanager.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\core.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\customassert.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\customnew.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\datapipe.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\display.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\dynamicmemorystream.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\endianutil.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\exceptionhandler.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\exceptiontrace.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\exceptionuploadlog.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\exceptionwritesteamminidump.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\filestream.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\fileutil.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\hashedstring.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\httpsocket.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\icontroller.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\idatastream.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\iinputsystemobserver.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\inputcontext.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\inputsystem.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\interpolator.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\keyboard.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\list.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\map.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\mathcore.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\memorystream.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\mouse.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\multimap.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\mutex.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\packstream.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\printmanager.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\profilertable.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\reversehash.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\set.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\simplestring.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\stopwatch.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\stringmanager.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\thread.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\timedate.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\timer.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\versions.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\windowwrapper.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\xinputcontroller.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDL2\SDL_sensor.h">
+      <Filter>src\SDL2</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="src\profiler.h">
+      <Filter>src</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\profilerhook.h">
+      <Filter>src</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\test.h">
+      <Filter>src</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{e2fbb09c-42d0-4803-a690-384851b056d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\SDL2">
+      <UniqueIdentifier>{7d91e912-2a7e-41bf-a368-1a800b54d000}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\TinyXML">
+      <UniqueIdentifier>{294fd0f4-a29d-4741-9a59-f02ef15fdaed}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="Core.natvis" />
+  </ItemGroup>
+</Project>

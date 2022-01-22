@@ -1,0 +1,72 @@
+#include "common.hlsl_psh"
+#include "calibration.hlsl_psh"
+
+float4						Params;				// x = 1/width,			y = 1/height,			z = 0 (unused),			w = render edges (0/1) (controlled by config var MinimapRenderEdges)
+float4						HeightParams;		// x = player height,	y = sigmoid x scalar,	z = sigmoid y scalar,	w = height threshold for edge detection
+uniform	row_major float4x4	MapTexturesMatrix;
+uniform float4				SkewParams;	// Skew in XY, feet location in Z
+
+sampler MapSampler		: register(s0);	// Non-zero r denotes walkable space; g is world space height; non-zero b means render as unwalkable (for hidden rooms with proper edges)
+sampler TonesSampler	: register(s1);	// Should have three zones: unwalkable space at 0, walkable at 1/2, edge at 1
+sampler FloorSampler	: register(s2);
+sampler SolidSampler	: register(s3);
+
+struct PS_INPUT
+{
+	float2 UV	: TEXCOORD0;
+};
+
+float4 Main( PS_INPUT In ) : COLOR
+{
+	const float4	Center					= tex2D( MapSampler, In.UV );
+	const float4	Neighbor0				= tex2D( MapSampler, In.UV + Params.xz );
+	const float4	Neighbor1				= tex2D( MapSampler, In.UV - Params.xz );
+	const float4	Neighbor2				= tex2D( MapSampler, In.UV + Params.zy );
+	const float4	Neighbor3				= tex2D( MapSampler, In.UV - Params.zy );
+
+	const float		HeightDelta				= Center.g - SkewParams.z;
+	const float2	SkewXY					= float2( SkewParams.x * -HeightDelta, SkewParams.y * HeightDelta );
+	
+	const float4	MapTexturesUV			= mul( float4( In.UV, 0.0f, 1.0f ), MapTexturesMatrix );
+	const float		Floor					= tex2D( FloorSampler, MapTexturesUV.xy + SkewXY ).r;
+	const float		Solid					= tex2D( SolidSampler, MapTexturesUV.xy ).r;
+
+	const float		AllNeighborsWalkable	= Neighbor0.r * Neighbor1.r * Neighbor2.r * Neighbor3.r;
+
+	const float4	CenterHeights			= float4( Center.g,		Center.g,		Center.g,		Center.g );
+	const float4	NeighborHeights			= float4( Neighbor0.g,	Neighbor1.g,	Neighbor2.g,	Neighbor3.g );
+	// Swapped this (from CenterHeights - NeighborHeights) so we get edges around areas occluded on lower levels by unrendered areas above.
+	// The effect is the same, it just moves the edge pixel from the upper walkable space to the lower.
+	//const float4	NeighborsReachable		= step( NeighborHeights - CenterHeights, HeightParams.wwww );
+	// DLP 7 Aug 2021: Swapped back because that caused edges to be hidden by unrevealed rooms below the current room.
+	// This creates the opposite effect: a revealed room below you has edges hidden by an unrevealed one on your level.
+	// I think this is the more acceptable compromise; that occlusion happens either way and this makes more sense.
+	// I could use abs() but that produces heavier lines and I don't know if I like that.
+	const float4	NeighborsReachable		= step( CenterHeights - NeighborHeights, HeightParams.wwww );
+	//const float4	NeighborsReachable		= step( abs( CenterHeights - NeighborHeights ), HeightParams.wwww );
+	const float		AllNeighborsReachable	= NeighborsReachable.r * NeighborsReachable.g * NeighborsReachable.b * NeighborsReachable.a;
+	const float		AllNeighborsValid		= AllNeighborsWalkable * AllNeighborsReachable;
+
+	const float		IsWalkable				= lerp( 0.0f, Center.r, Center.b );	// i.e., 0 if blue is 0, else whatever is in red
+	const float		NotWalkable				= 1.0f - IsWalkable;
+	const float		NoEdge					= lerp( 1.0f, saturate( AllNeighborsValid + NotWalkable ), Params.w );
+	const float		Edge					= 1.0f - NoEdge;
+	
+	const float		HeightDifference		= HeightParams.y * ( Center.g - HeightParams.x );
+	// This is a sigmoid curve centered at 1 and scaled by HeightParams.z (MinimapHeightToneScale).
+	// By default, this curve has limits at 0 and 2, and a value of 1 when HeightDifference is 0.
+	// Control MinimapHeightToneScale to change its limits; e.g., MinimapHeightToneScale=0.25 puts limits at 0.75-1.25
+	const float		HeightTonemap			= 1.0f + ( ( HeightParams.z * HeightDifference ) / ( 1.0f + abs( HeightDifference ) ) );
+	
+	const float		MapTexture				= lerp( Solid, Floor, IsWalkable );
+	const float		TonemappedTexture		= MapTexture * HeightTonemap;
+	const float		TonesU					= Edge + NoEdge * lerp( MapTexture, TonemappedTexture, IsWalkable );	// Use 0 on edges, un-tonemapped texture on solids, and tonemapped texture on floors
+
+	const float3	Value					= tex2D( TonesSampler, float2( TonesU, 0.0f ) ).rgb;
+	const float4	FinalValue				= float4( Value, Luma( Value ) );	// Luma for FXAA.
+	//const float4	FinalValue				= float4( Center.rgb, Luma( Center.rgb ) );	// Uncomment to show the underlying MinimapA texture.
+
+	// This starts with sRGB tones and doesn't do lighting, so there's no conversions.
+	// From here, it goes to FXAA or directly to UI, both of which expect sRGB.
+	return FinalValue;
+}

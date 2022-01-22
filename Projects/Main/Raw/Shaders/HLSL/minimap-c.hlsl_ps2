@@ -1,0 +1,14 @@
+#include "common.hlsl_psh"
+
+sampler Sampler	: register(s0);
+
+struct PS_INPUT
+{
+	float2 UV	: TEXCOORD0;
+};
+
+float4 Main( PS_INPUT In ) : COLOR
+{
+	// This is for rendering markers onto the minimap after the nav geo is drawn.
+	return tex2D( Sampler, In.UV );
+}

@@ -1,0 +1,17 @@
+#include "common.hlsl_psh"
+#include "shadow.hlsl_psh"
+
+sampler AlbedoSampler	: register(s0);
+
+struct PS_INPUT 
+{
+	float2	UV			: TEXCOORD0;
+	float4	PositionWS	: TEXCOORD1;
+};
+
+float4 Main( PS_INPUT In ) : COLOR
+{
+	SampleAndClip( AlbedoSampler, In.UV );
+	
+	return GetShadowDistance( In.PositionWS );
+}

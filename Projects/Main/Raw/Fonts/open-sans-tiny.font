@@ -1,0 +1,11 @@
+NumIncludes	= &
+@ Include
+@@&			= "common.fontheader"
+
+Face		= "Open Sans"
+Size		= 8
+Antialias	= false
+NoCompress	= true
+Width		= 256
+Height		= 256
+Script		= "Script_LatinCyrillic"

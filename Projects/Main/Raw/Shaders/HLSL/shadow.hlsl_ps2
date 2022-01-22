@@ -1,0 +1,12 @@
+#include "common.hlsl_psh"
+#include "shadow.hlsl_psh"
+
+struct PS_INPUT 
+{
+	float4	PositionWS	: TEXCOORD0;
+};
+
+float4 Main( PS_INPUT In ) : COLOR
+{
+	return GetShadowDistance( In.PositionWS );
+}

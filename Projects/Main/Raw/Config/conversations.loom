@@ -1,0 +1,38 @@
+[RosaSupertitles]
+CharsPerSec			= 30.0
+TimeToAutoProgress	= 3.0
+UIScreen			= "SupertitlesScreen"
+UIText				= "SupertitlesText"
+
+
+
+[RosaIncomingCall]
+RingDuration	= 6.0
+
+[RosaConversation]
+CharsPerSec			= 80.0
+
+UIScreen				= "ConversationScreen"
+UISpeaker				= "ConversationSpeakerText"
+UIText					= "ConversationText"
+UIButton				= "ConversationOKButton"
+UIPortraitLeftBackdrop	= "ConversationPortraitLeftBackdrop"
+UIPortraitRightBackdrop	= "ConversationPortraitRightBackdrop"
+UIPortraitLeft			= "ConversationPortraitLeft"
+UIPortraitRight			= "ConversationPortraitRight"
+NumUIChoiceButtons		= &
+@ UIChoiceButton
+@@&						= "ConversationChoice1Button"
+@@&						= "ConversationChoice2Button"
+@@&						= "ConversationChoice3Button"
+@@&						= "ConversationChoice4Button"
+@@&						= "ConversationChoice5Button"
+
+ChoiceSpeaker	= "Speaker_Player"
+NumPortraits	= &
+@ Portrait
+
+[ConvoTargetPE]
+PEType			= "GetVariable"
+EntityPE		= "PlayerPE"
+VariableName	= "ConvoTarget"

@@ -1,0 +1,5450 @@
+[OpenSans-Tiny]
+NumFontSheets	= &
+@ FontSheet
+@@&				= "Fonts/open-sans-tiny.fnp"
+
+[Cousine-Tiny]
+NumFontSheets	= &
+@ FontSheet
+@@&				= "Fonts/cousine-tiny.fnp"
+
+# Added these so I can easily substitute without changing a zillion other definitions!
+[DefaultSerif]
+# HACKHACK: NO SERIF FONTS IN ZETA, same as Cyme
+#Extends			= "IBMPlexSerif"
+#Extends			= "Alegreya"
+#Extends			= "Tinos"
+#Extends			= "OpenDyslexic"
+Extends				= "Exo2"
+
+[DefaultSans]
+#Extends			= "IBMPlexSans"
+#Extends			= "AlegreyaSans"
+#Extends			= "Arimo"
+#Extends			= "OpenDyslexic"
+Extends				= "Exo2"
+
+[OpenDyslexic]
+# These must be ordered smallest to largest
+NumFontSheets	= &
+@ FontSheet
+@@&				= "Fonts/open-dyslexic-16.fnp"
+@@&				= "Fonts/open-dyslexic-24.fnp"
+@@&				= "Fonts/open-dyslexic-32.fnp"
+
+[Tinos]
+# These must be ordered smallest to largest
+NumFontSheets	= &
+@ FontSheet
+@@&				= "Fonts/tinos-16.fnp"
+@@&				= "Fonts/tinos-24.fnp"
+@@&				= "Fonts/tinos-32.fnp"
+
+[Arimo]
+# These must be ordered smallest to largest
+NumFontSheets	= &
+@ FontSheet
+@@&				= "Fonts/arimo-16.fnp"
+@@&				= "Fonts/arimo-24.fnp"
+@@&				= "Fonts/arimo-32.fnp"
+
+[Alegreya]
+# These must be ordered smallest to largest
+NumFontSheets	= &
+@ FontSheet
+@@&				= "Fonts/alegreya-16.fnp"
+@@&				= "Fonts/alegreya-24.fnp"
+@@&				= "Fonts/alegreya-32.fnp"
+
+[AlegreyaSans]
+# These must be ordered smallest to largest
+NumFontSheets	= &
+@ FontSheet
+@@&				= "Fonts/alegreya-sans-16.fnp"
+@@&				= "Fonts/alegreya-sans-24.fnp"
+@@&				= "Fonts/alegreya-sans-32.fnp"
+
+[Exo2]
+# These must be ordered smallest to largest
+NumFontSheets	= &
+@ FontSheet
+@@&				= "Fonts/exo2-16.fnp"
+@@&				= "Fonts/exo2-24.fnp"
+@@&				= "Fonts/exo2-32.fnp"
+
+[IBMPlexSerif]
+# These must be ordered smallest to largest
+NumFontSheets	= &
+@ FontSheet
+@@&				= "Fonts/ibm-plex-serif-16.fnp"
+@@&				= "Fonts/ibm-plex-serif-24.fnp"
+@@&				= "Fonts/ibm-plex-serif-32.fnp"
+
+[IBMPlexSans]
+# These must be ordered smallest to largest
+NumFontSheets	= &
+@ FontSheet
+@@&				= "Fonts/ibm-plex-sans-16.fnp"
+@@&				= "Fonts/ibm-plex-sans-24.fnp"
+@@&				= "Fonts/ibm-plex-sans-32.fnp"
+
+[RosaHUDLog]
+EntryDuration	= 5.0
+
+[UI]
+DefaultClampToPixelGrid			= false
+UsePulsingHighlight				= true
+PulsingHighlightMin				= 0.5
+PulsingHighlightMax				= 1.0
+PulsingHighlightCycleSeconds	= 0.5
+
+[RosaUI]
+NumUIScreens = &
+@ UIScreen
+@@& = "HUD"
+@@&	= "SupertitlesScreen"
+@@& = "ToolsHUD"
+@@& = "TitleScreen"
+@@& = "TitlePressStartScreen"
+@@& = "TitleMenuScreen"
+#@@&	= "NewGameScreen"
+@@& = "OptionsScreen"
+@@& = "GameOptionsScreen"
+@@& = "ControlsOptionsScreen"
+@@& = "DisplayOptionsScreen"
+@@& = "GraphicsOptionsScreen"
+@@& = "AudioOptionsScreen"
+@@& = "ControlsScreen"
+@@& = "BindDialog"
+@@& = "SetResScreen"
+@@& = "PauseScreen"
+#@@&	= "BookScreen"
+#@@&	= "HelpBookScreen"
+#@@& = "TutorialBookScreen"
+@@& = "CreditsScreen"
+@@& = "EndCreditsScreen"
+#@@& = "YearbookScreen"
+#@@&	= "HelpScreen"
+#@@&	= "CampaignScreen"
+#@@&	= "RadialScreen"
+#@@&	= "LockpickScreen"
+#@@&	= "CharacterConfigScreen"
+@@&	= "AmmoPickupScreen"
+@@&	= "ConversationScreen"
+#@@&	= "ResultsScreen"
+#@@&	= "PlotPointScreen"
+#@@&	= "FinalReportBackdropScreen"
+#@@&	= "FinalReportScreen"
+@@&	= "LoadingScreen"
+#@@&	= "LoadGameScreen"
+#@@&	= "SaveGameScreen"
+#@@& = "LanguagesScreen"
+@@&	= "MKGLogoScreen"
+@@&	= "DebugMenuScreen"
+@@&	= "SteamOverlayPauseScreen"
+
+# Let game push initial screens after other systems are initialized.
+PushInitialScreensOnInitialize = false
+NumInitialScreens = &
+@ InitialScreen
+@@& = "TitleScreen"
+@@& = "TitlePressStartScreen"
+
+NumGameScreens = &
+@ GameScreen
+@@&	= "GameFade"
+@@& = "HUD"
+# NOTE: In some game jams, I put game fade on top of HUD, so I could black out the HUD while leaving the supertitles screen visible.
+# This is in contrast to something like NEON where I wanted the game fade to be in-world and keep the HUD visible. I may just need
+# to eventually distinguish between more than two layers of fades.
+
+[PopScreenAction]
+ActionType	= "SendEvent"
+EventName	= "PopUIScreen"
+
+[PrevPageAction]
+ActionType	= "SendEvent"
+EventName	= "PrevUIPage"
+
+[NextPageAction]
+ActionType	= "SendEvent"
+EventName	= "NextUIPage"
+
+[CommonFrameArchetype]
+UIWidgetType	= "Frame"
+Origin			= "Center"
+Image			= "Textures/UI/ui-frame_NODXT.tga"
+ScreenHBorder	= 0.02
+
+[SliderArchetype]
+UIWidgetType	= "Slider"
+ShiftAmount		= 0.05
+NotchRadius		= 0.02
+Focus			= true
+ScreenHH		= 0.020	# Changed from 0.35 to match default button size
+
+[SliderLabelArchetype]
+Extends		= "DefaultSansTextButtonArchetype"
+Origin		= "TopLeft"
+
+[SliderValueArchetype]
+Extends		= "DefaultSansTextButtonArchetype"
+Origin		= "TopRight"
+
+[SliderBackArchetype]
+Extends		= "ImageArchetype"
+Origin		= "CenterRight"
+Image		= "Textures/UI/ui-slider-back_NODXT.tga"
+ParentWX	= 1.0
+ParentHY	= 0.5
+ParentHH	= 0.7
+
+[SliderButtonArchetype]
+Extends		= "ImageButtonArchetype"
+Origin		= "CenterLeft"
+Image		= "Textures/UI/ui-slider_NODXT.tga"
+ParentHY	= 0.5
+ParentHH	= 1.4	# Exceed parent bounds, it's fine (matches the size it used to be when parent was ScreenHH=0.035)
+AspectRatio	= 1.0
+ColorR		= 0.7
+ColorG		= 0.7
+ColorB		= 0.7
+
+[CommonTextArchetype]
+UIWidgetType		= "Text"
+Origin				= "TopLeft"
+LoadString			= true
+lmColorRGBA( Color ) { 1.0 1.0 1.0 1.0 }
+lmColorRGBA( DisabledColor ) { 0.5 0.5 0.5 0.8 }
+HasDropShadow		= true
+ScreenHShadowX		= 0.0015
+ScreenHShadowY		= 0.0015
+lmColorRGBA( DropShadowColor ) { 0.03 0.03 0.03 0.8 }
+
+[CommonTextButtonArchetype]
+Extends		= "CommonTextArchetype"
+Focus		= true
+ColorR		= 0.4 #1.0
+ColorG		= 0.7 #0.4
+ColorB		= 1.0 #0.4
+ColorA		= 1.0
+HighlightR	= 1.0
+HighlightG	= 1.0
+HighlightB	= 1.0
+HighlightA	= 1.0
+
+# Tinos is a Times New Roman-compatible serif font
+[TinosTextArchetype]
+Extends		= "CommonTextArchetype"
+FontTag		= "Tinos"
+ScreenHH	= 0.020
+
+	[TinosLargeTextArchetype]
+	Extends		= "TinosTextArchetype"
+	ScreenHH	= 0.026
+
+# Arimo is an Arial-compatible sans serif font
+[ArimoTextArchetype]
+Extends		= "CommonTextArchetype"
+FontTag		= "Arimo"
+ScreenHH	= 0.020
+
+	[ArimoSmallTextArchetype]
+	Extends		= "ArimoTextArchetype"
+	ScreenHH	= 0.014
+
+[ArimoTextButtonArchetype]
+Extends		= "CommonTextButtonArchetype"
+FontTag		= "Arimo"
+ScreenHH	= 0.020
+
+	[ArimoSmallTextButtonArchetype]
+	Extends		= "ArimoTextButtonArchetype"
+	ScreenHH	= 0.014
+
+[DefaultSerifTextArchetype]
+Extends		= "CommonTextArchetype"
+FontTag		= "DefaultSerif"
+ScreenHH	= 0.020
+
+	[DefaultSerifLargeTextArchetype]
+	Extends		= "DefaultSerifTextArchetype"
+	ScreenHH	= 0.026
+
+[DefaultSansTextArchetype]
+Extends		= "CommonTextArchetype"
+FontTag		= "DefaultSans"
+ScreenHH	= 0.020
+
+	[DefaultSansSmallTextArchetype]
+	Extends		= "DefaultSansTextArchetype"
+	ScreenHH	= 0.014
+
+[DefaultSansTextButtonArchetype]
+Extends		= "CommonTextButtonArchetype"
+FontTag		= "DefaultSans"
+ScreenHH	= 0.020
+
+	[DefaultSansSmallTextButtonArchetype]
+	Extends		= "DefaultSansTextButtonArchetype"
+	ScreenHH	= 0.014
+
+[ImageArchetype]
+UIWidgetType	= "Image"
+
+[ImageButtonArchetype]
+Extends		= "ImageArchetype"
+Focus		= true
+ColorR		= 1.0
+ColorG		= 0.4
+ColorB		= 0.4
+ColorA		= 1.0
+HighlightR	= 1.0
+HighlightG	= 1.0
+HighlightB	= 1.0
+HighlightA	= 1.0
+
+# For video capture (or just rename the real HUD to anything else to completely disable it)
+#!
+[HUD]
+NumWidgets = &
+@ Widget
+@@& = "Crosshair"
+@@& = "Crosshair_Friendly"
+@@& = "Crosshair_Hostile"
+!#
+
+# For real game
+[HUD]
+NumWidgets = &
+@ Widget
+@@& = "CrouchOverlay"
+@@& = "DamageOverlay"
+@@& = "Crosshair"
+@@& = "Crosshair_Friendly"
+@@& = "Crosshair_Hostile"
+#@@&	= "HUDLog" # Removed for Zeta, I don't think I need it
+@@&	= "HealthIcon"
+@@&	= "HealthBarBack"
+@@&	= "HealthBar"
+@@& = "HealthCounter"
+#@@&	= "BandagesIcon"
+#@@&	= "BandagesCounter"
+#@@&	= "BandagesHelp"
+@@&	= "AmmoIcon"
+@@&	= "AmmoCounter"
+#@@& = "AmmoHelp"
+#@@& = "MoneyIcon"
+#@@& = "MoneyCounter"
+#@@& = "AimSpacer"
+#@@& = "AimName"
+#@@& = "AimLiteralName"
+#@@& = "AimHealthBarBack"
+#@@& = "AimHealthBar"
+@@&	= "FrobSpacer"
+@@&	= "FrobName"
+@@&	= "FrobLiteralName"
+@@&	= "FrobVerb"
+@@&	= "FrobHold"
+@@&	= "SignText"
+@@&	= "SubtitleText"
+@@&	= "TitleCard"
+@@&	= "TitleCardSub"
+@@& = "TitleCardSub_ShadowBox"
+#@@&	= "Arc"
+@@&	= "Minimap"
+@@& = "MinimapFrame"
+@@&	= "Maximap"
+@@&	= "Objectives"
+#@@&	= "TitleSmash"
+#@@& = "VersionLabel"	# TEMP
+
+	[CrouchOverlay]
+	Extends			= "ImageArchetype"
+	Hidden			= true
+	Origin			= "TopLeft"
+	Image			= "Textures/UI/crouch-overlay_NODXT.tga"
+	RenderInWorld	= true
+	ParentWW		= 1.0
+	ParentHH		= 1.0
+
+	[DamageOverlay]
+	Extends		= "ImageArchetype"
+	Origin		= "TopLeft"
+	Image		= "Textures/UI/damage-overlay.tga"
+	ColorA		= 0.0
+	ParentWW	= 1.0
+	ParentHH	= 1.0
+
+	[Crosshair]
+	Extends				= "ImageArchetype"
+	Origin				= "Center"
+	Image				= "Textures/UI/crosshair_DXT5.dds"
+	ScreenHW			= 0.008
+	ScreenHH			= 0.008
+	ParentWX			= 0.5
+	ParentHY			= 0.5
+	UseVanishingPointY	= true
+
+	[Crosshair_Friendly]
+	Extends	= "Crosshair"
+	Hidden	= true
+	ColorH	= 0.333
+	ColorS	= 0.9
+	ColorV	= 0.8
+
+	[Crosshair_Hostile]
+	Extends	= "Crosshair_Friendly"
+	ColorH	= 0.0
+
+	[HealthIcon]
+	UseHUDScreen	= true # HACKHACK for ultrawidescreen support, requires user to set HUDDisplayWidth/Height in their prefs.cfg manually to override screen dimensions
+	Extends		= "ImageArchetype"
+	Origin		= "TopLeft"
+	Image		= "Textures/UI/hud-health-icon.tga"
+	ColorHD		= 330.0
+	ColorS		= 1.0
+	ColorV		= 1.0
+	ScreenHW	= 0.04
+	ScreenHH	= 0.04
+	ScreenHX	= 0.025
+	ScreenHY	= 0.025
+
+	[HealthBarBack]
+	UseHUDScreen	= true # HACKHACK for ultrawidescreen support, requires user to set HUDDisplayWidth/Height in their prefs.cfg manually to override screen dimensions
+	Extends		= "ImageArchetype"
+	Origin		= "TopLeft"
+	Image		= "Textures/UI/health-bar-player-back.tga"
+	ScreenHW	= 0.20
+	ScreenHH	= 0.04
+	ScreenHX	= 0.075
+	ScreenHY	= 0.025
+
+	[HealthBar]
+	UseHUDScreen	= true # HACKHACK for ultrawidescreen support, requires user to set HUDDisplayWidth/Height in their prefs.cfg manually to override screen dimensions
+	Extends		= "ImageArchetype"
+	Origin		= "TopLeft"
+	Image		= "Textures/UI/white.tga"
+	ColorHD		= 330.0
+	ColorS		= 1.0
+	ColorV		= 1.0
+	ScreenHW	= 0.192
+	ScreenHH	= 0.032
+	ScreenHX	= 0.079
+	ScreenHY	= 0.029
+
+	[HealthCounter]
+	UseHUDScreen	= true # HACKHACK for ultrawidescreen support, requires user to set HUDDisplayWidth/Height in their prefs.cfg manually to override screen dimensions
+	Extends			= "DefaultSerifTextArchetype"
+	Origin			= "TopLeft"
+	DynamicString	= "HUDHealth"
+	ScreenHX		= 0.083
+	ScreenHY		= 0.035
+
+	[BandagesIcon]
+	UseHUDScreen	= true # HACKHACK for ultrawidescreen support, requires user to set HUDDisplayWidth/Height in their prefs.cfg manually to override screen dimensions
+	Extends		= "ImageArchetype"
+	Origin		= "TopLeft"
+	Image		= "Textures/UI/hud-medkit-icon.tga"
+	ColorH		= 0.0
+	ColorS		= 0.9
+	ColorV		= 0.8
+	ScreenHW	= 0.04
+	ScreenHH	= 0.04
+	ScreenHX	= 0.305
+	ScreenHY	= 0.025
+
+	[BandagesCounter]
+	UseHUDScreen	= true # HACKHACK for ultrawidescreen support, requires user to set HUDDisplayWidth/Height in their prefs.cfg manually to override screen dimensions
+	Extends			= "DefaultSerifLargeTextArchetype"
+	Origin			= "TopLeft"
+	DynamicString	= "HUDBandages"
+	ScreenHX		= 0.363
+	ScreenHY		= 0.025
+
+	[BandagesHelp]
+	UseHUDScreen	= true # HACKHACK for ultrawidescreen support, requires user to set HUDDisplayWidth/Height in their prefs.cfg manually to override screen dimensions
+	Extends			= "DefaultSansSmallTextArchetype"
+	Origin			= "TopLeft"
+	DynamicString	= "HUDHeal"
+	ScreenHX		= 0.363
+	ScreenHY		= 0.0625
+	HasShadowBox			= true
+	ShadowBoxImage			= "Textures/UI/ui-shadowbox-l-r_NODXT.tga"
+	ShadowBoxScreenHBorder	= -0.010
+	ShadowBoxScreenHMargin	= 0.010
+
+	[MoneyIcon]
+	UseHUDScreen	= true # HACKHACK for ultrawidescreen support, requires user to set HUDDisplayWidth/Height in their prefs.cfg manually to override screen dimensions
+	Extends		= "ImageArchetype"
+	Origin		= "TopLeft"
+	Image		= "Textures/UI/hud-dust-icon.tga"
+	ColorH		= 0.0
+	ColorS		= 0.9
+	ColorV		= 0.8
+	ScreenHW	= 0.04
+	ScreenHH	= 0.04
+	ScreenHX	= 0.025
+	ScreenHY	= 0.075
+
+	[MoneyCounter]
+	UseHUDScreen	= true # HACKHACK for ultrawidescreen support, requires user to set HUDDisplayWidth/Height in their prefs.cfg manually to override screen dimensions
+	Extends			= "DefaultSerifLargeTextArchetype"
+	Origin			= "TopLeft"
+	DynamicString	= "HUDMoney"
+	ScreenHX		= 0.083
+	ScreenHY		= 0.075
+
+	[AmmoIcon]
+	UseHUDScreen	= true # HACKHACK for ultrawidescreen support, requires user to set HUDDisplayWidth/Height in their prefs.cfg manually to override screen dimensions
+	Extends		= "ImageArchetype"
+	Origin		= "TopLeft"
+	Image		= "Textures/UI/hud-ammo-icon.tga"
+	ColorHD		= 330.0
+	ColorS		= 1.0
+	ColorV		= 1.0
+	ScreenHW	= 0.04
+	ScreenHH	= 0.04
+	ScreenHX	= 0.025
+	ScreenHY	= 0.075
+
+	[AmmoCounter]
+	UseHUDScreen	= true # HACKHACK for ultrawidescreen support, requires user to set HUDDisplayWidth/Height in their prefs.cfg manually to override screen dimensions
+	Extends			= "DefaultSerifTextArchetype"
+	Origin			= "TopLeft"
+	DynamicString	= "HUDAmmo"
+	ScreenHX		= 0.083
+	ScreenHY		= 0.085
+
+	[AmmoHelp]
+	UseHUDScreen	= true # HACKHACK for ultrawidescreen support, requires user to set HUDDisplayWidth/Height in their prefs.cfg manually to override screen dimensions
+	Extends			= "DefaultSansSmallTextArchetype"
+	Origin			= "TopLeft"
+	DynamicString	= "HUDCycleMag"
+	ScreenHX		= 0.083
+	ScreenHY		= 0.175 # 0.1625
+	HasShadowBox			= true
+	ShadowBoxImage			= "Textures/UI/ui-shadowbox-l-r_NODXT.tga"
+	ShadowBoxScreenHBorder	= -0.010
+	ShadowBoxScreenHMargin	= 0.010
+
+	[HUDLog]
+	UseHUDScreen	= true # HACKHACK for ultrawidescreen support, requires user to set HUDDisplayWidth/Height in their prefs.cfg manually to override screen dimensions
+	Extends			= "DefaultSansSmallTextArchetype"
+	Origin			= "TopLeft"
+	DynamicString	= "HUDLog"
+	ScreenHX		= 0.025
+	ScreenHY		= 0.2
+	HasShadowBox			= true
+	ShadowBoxImage			= "Textures/UI/ui-shadowbox-l-r_NODXT.tga"
+	ShadowBoxScreenHBorder	= -0.010
+	ShadowBoxScreenHMargin	= 0.010
+
+	# Zero height, so all children should be width-relative
+	[AimSpacer]
+	UIWidgetType		= "Spacer"
+	Origin				= "BottomCenter"
+	AllowZeroExtents	= true
+	ParentHW			= 0.125
+	ParentHH			= 0.0
+	ParentWX			= 0.5
+	ParentHY			= 0.34
+
+	[AimName]
+	Extends				= "DefaultSansTextArchetype"
+	Hidden				= true
+	DynamicString		= "AimName"
+	Parent				= "AimSpacer"
+	Origin				= "BottomLeft"
+	ParentWX			= 0.0
+	ParentWY			= -0.15
+	ColorR				= 0.75
+	ColorG				= 0.75
+	ColorB				= 0.75
+	UseVanishingPointY	= true
+
+	[AimLiteralName]
+	Extends			= "AimName"
+	DynamicString	= "AimLiteralName"
+
+	[AimHealthBarBack]
+	Extends				= "ImageArchetype"
+	Hidden				= true
+	Parent				= "AimSpacer"
+	Origin				= "BottomLeft"
+	Image				= "Textures/UI/health-bar-player-back.tga"
+	ParentWW			= 1.0
+	ParentWH			= 0.125
+	ParentWX			= 0.0
+	ParentWY			= 0.0
+	UseVanishingPointY	= true
+
+	[AimHealthBar]
+	Extends				= "ImageArchetype"
+	Hidden				= true
+	Parent				= "AimSpacer"
+	Origin				= "BottomLeft"
+	Image				= "Textures/UI/white.tga"
+	ColorH				= 0.0
+	ColorS				= 0.9
+	ColorV				= 0.8
+	ParentWW			= 0.975
+	ParentWH			= 0.1
+	ParentWX			= 0.0125
+	ParentWY			= -0.0125
+	UseVanishingPointY	= true
+
+	# This is just the right half of the screen
+	[FrobSpacer]
+	UIWidgetType	= "Spacer"
+	Origin			= "TopLeft"
+	ParentWW		= 0.5
+	ParentHH		= 1.0
+	ParentWX		= 0.5
+	ParentHY		= 0.0
+
+	[FrobName]
+	Extends				= "DefaultSansTextArchetype"
+	Hidden				= true
+	Parent				= "FrobSpacer"
+	Origin				= "BottomLeft"
+	DynamicString		= "FrobName"
+	ScreenHX			= 0.06
+	ScreenHY			= 0.455
+	# NOTE: TextColorRGB instead of ColorRGB sets the vertex colors instead of the mesh constant color
+	TextColorR			= 0.75
+	TextColorG			= 0.75
+	TextColorB			= 0.75
+	UseVanishingPointY	= true	# Move all frob elements with reticle
+
+	[FrobLiteralName]
+	Extends			= "FrobName"
+	DynamicString	= "FrobLiteralName"
+
+	[FrobVerb]
+	Extends					= "DefaultSansTextArchetype"
+	Hidden					= true
+	Parent					= "FrobSpacer"
+	Origin					= "BottomLeft"
+	DynamicString			= "FrobVerb"
+	ScreenHX				= 0.08
+	ScreenHY				= 0.5
+	HasShadowBox			= true
+	ShadowBoxImage			= "Textures/UI/ui-shadowbox-l-r_NODXT.tga"
+	ShadowBoxScreenHBorder	= -0.020
+	ShadowBoxScreenHMargin	= 0.020
+	UseVanishingPointY		= true	# Move all frob elements with reticle
+
+	[FrobHold]
+	Extends					= "DefaultSansTextArchetype"
+	Hidden					= true
+	Parent					= "FrobSpacer"
+	Origin					= "BottomLeft"
+	DynamicString			= "FrobHold"
+	ScreenHX				= 0.08
+	ScreenHY				= 0.545
+	HasShadowBox			= true
+	ShadowBoxImage			= "Textures/UI/ui-shadowbox-l-r_NODXT.tga"
+	ShadowBoxScreenHBorder	= -0.020
+	ShadowBoxScreenHMargin	= 0.020
+	UseVanishingPointY		= true	# Move all frob elements with reticle
+
+	[SignText]
+	Extends			= "DefaultSansTextArchetype"
+	Hidden			= true
+	Origin			= "BottomCenter"
+	DynamicString	= "SignText"
+	ScreenWX		= 0.5
+	ScreenHY		= 0.38
+	ColorR			= 0.75
+	ColorG			= 0.75
+	ColorB			= 0.75
+
+	[SubtitleText]
+	Extends			= "DefaultSansTextArchetype"
+	Origin			= "BottomCenter"
+	DynamicString	= "SubtitleText"
+	Alignment		= "Center"	# DLP 10 Aug 2016: This is a late change, can't recall if there was a reason for not doing it before.
+	ParentWX		= 0.5
+	ScreenHY		= -0.19
+	HasShadowBox			= true
+	ShadowBoxImage			= "Textures/UI/ui-shadowbox-l-r_NODXT.tga"
+	ShadowBoxScreenHBorder	= 0.020
+	ShadowBoxScreenHMargin	= 0.010
+
+	[TitleCard]
+	Extends			= "DefaultSerifLargeTextArchetype"
+	Origin			= "BottomCenter"
+	DynamicString	= "TitleCardText"
+	ParentWX		= 0.5
+	ParentHY		= 0.25
+	ColorR			= 1.0
+	ColorG			= 0.0
+	ColorB			= 0.0
+
+	[TitleCardSub]
+	Extends			= "DefaultSerifTextArchetype"
+	Origin			= "TopCenter"
+	DynamicString	= "TitleCardSubText"
+	ParentWX		= 0.5
+	ParentHY		= 0.25
+
+	[TitleCardSub_ShadowBox]
+	Extends			= "TitleCardSub"
+	HasShadowBox			= true
+	ShadowBoxImage			= "Textures/UI/ui-shadowbox-l-r_NODXT.tga"
+	ShadowBoxScreenHBorder	= -0.020
+	ShadowBoxScreenHMargin	= 0.020
+
+	[Arc]
+	Extends			= "DefaultSansTextArchetype"
+	Origin			= "TopCenter"
+	DynamicString	= "HUDArc"
+	ScreenWX		= 0.5
+	ScreenHY		= 0.025
+
+	[Minimap]
+	UseHUDScreen	= true # HACKHACK for ultrawidescreen support, requires user to set HUDDisplayWidth/Height in their prefs.cfg manually to override screen dimensions
+	Extends				= "ImageArchetype"
+	CircleSides			= 32	# I don't like how the edges aren't anti-aliased, and it doesn't feel essential, but this does take up less real estate on the screen.
+	#RenderInWorld		= true	# This doesn't work right because minimap is rendered after in-world HUD pass. Also, all the canvas post FX gets applied over the top.
+	Origin				= "TopRight"
+	Material			= "Material_HUDMinimap"
+	LoadImage			= false
+	Hidden				= true
+	ClampToPixelGrid	= true	# Else we get blurring at certain resolutions
+	ScreenHW			= 0.20
+	ScreenHH			= 0.20
+	ScreenHX			= -0.025
+	ScreenHY			= 0.025
+
+	[MinimapFrame]
+	Extends				= "ImageArchetype"
+	Parent				= "Minimap"
+	Image				= "Textures/UI/minimap-frame.tga"
+	Origin				= "Center"
+	Hidden				= true
+	# 1/0.96875x larger than Minimap (512/496), or 1.032258064516129032258064516129
+	ParentWW			= 1.032258
+	ParentHH			= 1.032258
+	ParentWX			= 0.5
+	ParentHY			= 0.5
+
+	[Maximap]
+	Extends				= "ImageArchetype"
+	DevOnly				= true
+	#RenderInWorld		= true	# This doesn't work right because maximap is rendered after in-world HUD pass. Also, all the canvas post FX gets applied over the top.
+	Origin				= "Center"
+	Material			= "Material_HUDMinimap"
+	LoadImage			= false
+	Hidden				= true
+	ClampToPixelGrid	= true	# Else we get blurring at certain resolutions
+	ScreenHW			= 0.80
+	ScreenHH			= 0.80
+	ScreenWX			= 0.5
+	ScreenHY			= 0.5
+
+	[Objectives]
+	UseHUDScreen	= true # HACKHACK for ultrawidescreen support, requires user to set HUDDisplayWidth/Height in their prefs.cfg manually to override screen dimensions
+	Extends			= "DefaultSansTextArchetype"
+	Origin			= "TopRight"
+	DynamicString	= "ObjectivesListRight"
+	Alignment		= "Right"
+	ScreenHH		= 0.017	# Change font size!!
+	ScreenHX		= -0.025
+	ScreenHY		= 0.25
+	HasShadowBox			= true
+	ShadowBoxImage			= "Textures/UI/ui-shadowbox-l-r_NODXT.tga"
+	ShadowBoxScreenHBorder	= -0.01666
+	ShadowBoxScreenHMargin	= 0.01666
+
+	[TitleSmash]
+	UseHUDScreen	= true # HACKHACK for ultrawidescreen support, requires user to set HUDDisplayWidth/Height in their prefs.cfg manually to override screen dimensions
+	Extends		= "ImageArchetype"
+	Image		= "Textures/UI/title_DXT5.dds"
+	Hidden		= true
+	Origin		= "Center"
+	ScreenWX	= 0.5
+	ScreenHY	= 0.5
+	ScreenWW	= 0.625
+	AspectRatio	= 4.0
+
+[SupertitlesScreen]
+NumWidgets = &
+@ Widget
+@@&	= "SupertitlesText"
+
+	[SupertitlesText]
+	Extends		= "DefaultSerifTextArchetype"
+	ScreenHH	= 0.032	# Larger than DefaultSerifLargeTextArchetype
+	Origin		= "BottomCenter"
+	LoadString	= false
+	Alignment	= "Left"
+	ParentWX	= 0.5
+	#ScreenHY	= 0.3
+	ScreenHY	= 0.37
+	# For Zeta:
+	# ZETANOTE: A la Cyme; TextColorHSV can't exceed 1.0, so multiply higher with ColorRGB
+	TextColorHD		= 330.0
+	TextColorS		= 0.75
+	TextColorV		= 1.0
+	ColorR			= 2.0
+	ColorG			= 2.0
+	ColorB			= 2.0
+	RenderInWorld	= true
+	HasDropShadow	= false
+	UseVanishingPointY	= true
+	HasShadowBox			= true
+	ShadowBoxImage			= "Textures/UI/ui-shadowbox-supertitles_NODXT.tga"
+	ShadowBoxScreenHBorder	= -0.050
+	ShadowBoxScreenHMargin	= 0.050
+
+[ToolsHUD]
+UIScreenType = "Base"
+NumWidgets = &
+@ Widget
+@@& = "Crosshair"
+
+[GameOptionsScreen]
+TakesFocus		= true
+SeizesMouse		= true
+FocusXShift		= 0
+ListMinParentHY	= 0.150
+ListMaxParentHY	= 0.800
+NumWidgets		= &
+@ Widget
+@@&				= "GameOptionsFrame"
+@@&				= "GameOptionsHeader"
+#@@&				= "DifficultyButton"
+@@&				= "ViewBobButton"
+# DLP 12 Oct 2021: I may want to disable this because of crawling edge lines with watercolor shaders?
+@@&				= "ViewSwayButton"
+@@&				= "StrafeRollButton"
+@@&				= "SlideRollButton"
+@@&				= "SprintFOVButton"
+@@&				= "HandsVelocityButton"
+@@&				= "LeftyModeButton"
+#@@&				= "ShowTutorials_Button"
+@@&				= "ShowHUDButton"
+#@@&				= "HUDMarkers_Button"
+@@&				= "MinimapButton"
+#@@&				= "MinimapMarkers_Button"
+@@&				= "FixedDTButton"
+@@&				= "GameOptionsResetButton"
+@@&				= "GameOptionsBackButton"
+
+	[GameOptionsFrame]
+	Extends		= "CommonFrameArchetype"
+	ParentWX	= 0.5
+	ParentHY	= 0.5
+	ParentHW	= 0.6
+	ParentHH	= 0.75
+
+	[GameOptionsHeader]
+	Extends		= "DefaultSansTextArchetype"
+	Parent		= "GameOptionsFrame"
+	Origin		= "TopCenter"
+	String		= "GameOptions"
+	ParentWX	= 0.5
+	ParentHY	= 0.075
+
+	[GameOptionsResetButton]
+	Extends		= "DefaultSansTextButtonArchetype"
+	Parent		= "GameOptionsFrame"
+	Origin		= "BottomLeft"
+	String		= "ResetToDefaults"
+	ParentHX	= 0.075
+	ParentHY	= -0.075
+	lmActions
+	{
+		SendEvent( "ResetGameOptions" )
+	}
+
+	[GameOptionsBackButton]
+	Extends			= "DefaultSansTextButtonArchetype"
+	Parent			= "GameOptionsFrame"
+	Origin			= "BottomRight"
+	DynamicString	= "Back"
+	ParentHX		= -0.075
+	ParentHY		= -0.075
+	NumActions		= &
+	@ Action
+	@@&				= "PopScreenAction"
+
+	[DifficultyButton]
+	UIWidgetType	= "Composite"
+	ListStep		= true
+	Focus			= true
+	NumChildren		= &
+	@ Child
+	@@&				= "DifficultyLabel"
+	@@&				= "DifficultySetting"
+	NumActions		= &
+	@ Action
+	@@&				= "CycleMenuDifficulty"
+
+		[CycleMenuDifficulty]
+		ActionType	= "SendEvent"
+		EventName	= "CycleMenuDifficulty"
+		Recipient	= "PlayerPE"	# Forwarded to game
+
+		[DifficultyLabel]
+		Extends		= "DefaultSansTextButtonArchetype"
+		Parent		= "GameOptionsFrame"
+		Origin		= "TopLeft"
+		String		= "DifficultyOption"
+		ParentWX	= 0.15
+		UseListY	= true
+
+		[DifficultySetting]
+		Extends			= "DefaultSansTextButtonArchetype"
+		Parent			= "GameOptionsFrame"
+		Origin			= "TopRight"
+		DynamicString	= "DifficultyOptionSetting"
+		ParentWX		= -0.15
+		UseListY		= true
+
+	[ViewBobButton]
+	UIWidgetType	= "Composite"
+	ListStep		= true
+	Focus			= true
+	NumChildren		= &
+	@ Child
+	@@&				= "ViewBobButtonLabel"
+	@@&				= "ViewBobButtonSetting"
+	NumActions		= &
+	@ Action
+	@@&				= "ToggleViewBobAction"
+
+		[ToggleViewBobAction]
+		ActionType	= "SendEvent"
+		EventName	= "ToggleViewBob"
+
+		[ViewBobButtonLabel]
+		Extends		= "DefaultSansTextButtonArchetype"
+		Parent		= "GameOptionsFrame"
+		Origin		= "TopLeft"
+		String		= "ViewBob"
+		ParentWX	= 0.15
+		UseListY	= true
+
+		[ViewBobButtonSetting]
+		Extends			= "DefaultSansTextButtonArchetype"
+		Parent			= "GameOptionsFrame"
+		Origin			= "TopRight"
+		DynamicString	= "ViewBobSetting"
+		ParentWX		= -0.15
+		UseListY		= true
+
+	[ViewSwayButton]
+	UIWidgetType	= "Composite"
+	ListStep		= true
+	Focus			= true
+	NumChildren		= &
+	@ Child
+	@@&				= "ViewSwayButtonLabel"
+	@@&				= "ViewSwayButtonSetting"
+	NumActions		= &
+	@ Action
+	@@&				= "ToggleViewSwayAction"
+
+		[ToggleViewSwayAction]
+		ActionType	= "SendEvent"
+		EventName	= "ToggleViewSway"
+
+		[ViewSwayButtonLabel]
+		Extends		= "DefaultSansTextButtonArchetype"
+		Parent		= "GameOptionsFrame"
+		Origin		= "TopLeft"
+		String		= "ViewSway"
+		ParentWX	= 0.15
+		UseListY	= true
+
+		[ViewSwayButtonSetting]
+		Extends			= "DefaultSansTextButtonArchetype"
+		Parent			= "GameOptionsFrame"
+		Origin			= "TopRight"
+		DynamicString	= "ViewSwaySetting"
+		ParentWX		= -0.15
+		UseListY		= true
+
+	[StrafeRollButton]
+	UIWidgetType	= "Composite"
+	ListStep		= true
+	Focus			= true
+	NumChildren		= &
+	@ Child
+	@@&				= "StrafeRollButtonLabel"
+	@@&				= "StrafeRollButtonSetting"
+	NumActions		= &
+	@ Action
+	@@&				= "ToggleStrafeRollAction"
+
+		[ToggleStrafeRollAction]
+		ActionType	= "SendEvent"
+		EventName	= "ToggleStrafeRoll"
+
+		[StrafeRollButtonLabel]
+		Extends		= "DefaultSansTextButtonArchetype"
+		Parent		= "GameOptionsFrame"
+		Origin		= "TopLeft"
+		String		= "StrafeRoll"
+		ParentWX	= 0.15
+		UseListY	= true
+
+		[StrafeRollButtonSetting]
+		Extends			= "DefaultSansTextButtonArchetype"
+		Parent			= "GameOptionsFrame"
+		Origin			= "TopRight"
+		DynamicString	= "StrafeRollSetting"
+		ParentWX		= -0.15
+		UseListY		= true
+
+	[SlideRollButton]
+	UIWidgetType	= "Composite"
+	ListStep		= true
+	Focus			= true
+	NumChildren		= &
+	@ Child
+	@@&				= "SlideRollButtonLabel"
+	@@&				= "SlideRollButtonSetting"
+	NumActions		= &
+	@ Action
+	@@&				= "ToggleSlideRollAction"
+
+		[ToggleSlideRollAction]
+		ActionType	= "SendEvent"
+		EventName	= "ToggleSlideRoll"
+
+		[SlideRollButtonLabel]
+		Extends		= "DefaultSansTextButtonArchetype"
+		Parent		= "GameOptionsFrame"
+		Origin		= "TopLeft"
+		String		= "SlideRoll"
+		ParentWX	= 0.15
+		UseListY	= true
+
+		[SlideRollButtonSetting]
+		Extends			= "DefaultSansTextButtonArchetype"
+		Parent			= "GameOptionsFrame"
+		Origin			= "TopRight"
+		DynamicString	= "SlideRollSetting"
+		ParentWX		= -0.15
+		UseListY		= true
+
+	[SprintFOVButton]
+	UIWidgetType	= "Composite"
+	ListStep		= true
+	Focus			= true
+	NumChildren		= &
+	@ Child
+	@@&				= "SprintFOVButtonLabel"
+	@@&				= "SprintFOVButtonSetting"
+	NumActions		= &
+	@ Action
+	@@&				= "ToggleSprintFOVAction"
+
+		[ToggleSprintFOVAction]
+		ActionType	= "SendEvent"
+		EventName	= "ToggleSprintFOV"
+
+		[SprintFOVButtonLabel]
+		Extends		= "DefaultSansTextButtonArchetype"
+		Parent		= "GameOptionsFrame"
+		Origin		= "TopLeft"
+		String		= "SprintFOV"
+		ParentWX	= 0.15
+		UseListY	= true
+
+		[SprintFOVButtonSetting]
+		Extends			= "DefaultSansTextButtonArchetype"
+		Parent			= "GameOptionsFrame"
+		Origin			= "TopRight"
+		DynamicString	= "SprintFOVSetting"
+		ParentWX		= -0.15
+		UseListY		= true
+
+	[HandsVelocityButton]
+	UIWidgetType	= "Composite"
+	ListStep		= true
+	Focus			= true
+	NumChildren		= &
+	@ Child
+	@@&				= "HandsVelocityButtonLabel"
+	@@&				= "HandsVelocityButtonSetting"
+	NumActions		= &
+	@ Action
+	@@&				= "ToggleHandsVelocityAction"
+
+		[ToggleHandsVelocityAction]
+		ActionType	= "SendEvent"
+		EventName	= "ToggleHandsVelocity"
+
+		[HandsVelocityButtonLabel]
+		Extends		= "DefaultSansTextButtonArchetype"
+		Parent		= "GameOptionsFrame"
+		Origin		= "TopLeft"
+		String		= "HandsVelocity"
+		ParentWX	= 0.15
+		UseListY	= true
+
+		[HandsVelocityButtonSetting]
+		Extends			= "DefaultSansTextButtonArchetype"
+		Parent			= "GameOptionsFrame"
+		Origin			= "TopRight"
+		DynamicString	= "HandsVelocitySetting"
+		ParentWX		= -0.15
+		UseListY		= true
+
+	[LeftyModeButton]
+	UIWidgetType	= "Composite"
+	ListStep		= true
+	Focus			= true
+	NumChildren		= &
+	@ Child
+	@@&				= "LeftyModeButtonLabel"
+	@@&				= "LeftyModeButtonSetting"
+	NumActions		= &
+	@ Action
+	@@&				= "ToggleLeftyModeAction"
+
+		[ToggleLeftyModeAction]
+		ActionType	= "SendEvent"
+		EventName	= "ToggleLeftyMode"
+
+		[LeftyModeButtonLabel]
+		Extends		= "DefaultSansTextButtonArchetype"
+		Parent		= "GameOptionsFrame"
+		Origin		= "TopLeft"
+		String		= "LeftyMode"
+		ParentWX	= 0.15
+		UseListY	= true
+
+		[LeftyModeButtonSetting]
+		Extends			= "DefaultSansTextButtonArchetype"
+		Parent			= "GameOptionsFrame"
+		Origin			= "TopRight"
+		DynamicString	= "LeftyModeSetting"
+		ParentWX		= -0.15
+		UseListY		= true
+
+	[ShowTutorials_Button]
+	UIWidgetType	= "Composite"
+	ListStep		= true
+	Focus			= true
+	NumChildren		= &
+	@ Child
+	@@&				= "ShowTutorials_Label"
+	@@&				= "ShowTutorials_Setting"
+	lmActions
+	{
+		SendEvent( "ToggleShowTutorials" )
+	}
+
+		[ShowTutorials_Label]
+		Extends		= "DefaultSansTextButtonArchetype"
+		Parent		= "GameOptionsFrame"
+		Origin		= "TopLeft"
+		String		= "ShowTutorials"
+		ParentWX	= 0.15
+		UseListY	= true
+
+		[ShowTutorials_Setting]
+		Extends			= "DefaultSansTextButtonArchetype"
+		Parent			= "GameOptionsFrame"
+		Origin			= "TopRight"
+		DynamicString	= "ShowTutorialsSetting"
+		ParentWX		= -0.15
+		UseListY		= true
+
+	[ShowHUDButton]
+	UIWidgetType	= "Composite"
+	ListStep		= true
+	Focus			= true
+	NumChildren		= &
+	@ Child
+	@@&				= "ShowHUDLabel"
+	@@&				= "ShowHUDSetting"
+	NumActions		= &
+	@ Action
+	@@&				= "ToggleShowHUDAction"
+
+		[ToggleShowHUDAction]
+		ActionType	= "SendEvent"
+		EventName	= "ToggleShowHUD"
+
+		[ShowHUDLabel]
+		Extends		= "DefaultSansTextButtonArchetype"
+		Parent		= "GameOptionsFrame"
+		Origin		= "TopLeft"
+		String		= "ShowHUD"
+		ParentWX	= 0.15
+		UseListY	= true
+
+		[ShowHUDSetting]
+		Extends			= "DefaultSansTextButtonArchetype"
+		Parent			= "GameOptionsFrame"
+		Origin			= "TopRight"
+		DynamicString	= "ShowHUDSetting"
+		ParentWX		= -0.15
+		UseListY		= true
+
+	[HUDMarkers_Button]
+	UIWidgetType	= "Composite"
+	ListStep		= true
+	Focus			= true
+	NumChildren		= &
+	@ Child
+	@@&				= "HUDMarkers_Label"
+	@@&				= "HUDMarkers_Setting"
+	NumActions		= &
+	@ Action
+	@@&				= "ToggleHUDMarkersAction"
+
+		[ToggleHUDMarkersAction]
+		ActionType	= "SendEvent"
+		EventName	= "ToggleHUDMarkers"
+
+		[HUDMarkers_Label]
+		Extends		= "DefaultSansTextButtonArchetype"
+		Parent		= "GameOptionsFrame"
+		Origin		= "TopLeft"
+		String		= "HUDMarkers"
+		ParentWX	= 0.15
+		UseListY	= true
+
+		[HUDMarkers_Setting]
+		Extends			= "DefaultSansTextButtonArchetype"
+		Parent			= "GameOptionsFrame"
+		Origin			= "TopRight"
+		DynamicString	= "HUDMarkersSetting"
+		ParentWX		= -0.15
+		UseListY		= true
+
+	[MinimapButton]
+	UIWidgetType	= "Composite"
+	ListStep		= true
+	Focus			= true
+	NumChildren		= &
+	@ Child
+	@@&				= "MinimapLabel"
+	@@&				= "MinimapSetting"
+	NumActions		= &
+	@ Action
+	@@&				= "ToggleMinimapAction"
+
+		[ToggleMinimapAction]
+		ActionType	= "SendEvent"
+		EventName	= "ToggleMinimap"
+
+		[MinimapLabel]
+		Extends		= "DefaultSansTextButtonArchetype"
+		Parent		= "GameOptionsFrame"
+		Origin		= "TopLeft"
+		String		= "Minimap"
+		ParentWX	= 0.15
+		UseListY	= true
+
+		[MinimapSetting]
+		Extends			= "DefaultSansTextButtonArchetype"
+		Parent			= "GameOptionsFrame"
+		Origin			= "TopRight"
+		DynamicString	= "MinimapSetting"
+		ParentWX		= -0.15
+		UseListY		= true
+
+	[MinimapMarkers_Button]
+	UIWidgetType	= "Composite"
+	ListStep		= true
+	Focus			= true
+	NumChildren		= &
+	@ Child
+	@@&				= "MinimapMarkers_Label"
+	@@&				= "MinimapMarkers_Setting"
+	NumActions		= &
+	@ Action
+	@@&				= "ToggleMinimapMarkersAction"
+
+		[ToggleMinimapMarkersAction]
+		ActionType	= "SendEvent"
+		EventName	= "ToggleMinimapMarkers"
+
+		[MinimapMarkers_Label]
+		Extends		= "DefaultSansTextButtonArchetype"
+		Parent		= "GameOptionsFrame"
+		Origin		= "TopLeft"
+		String		= "MinimapMarkers"
+		ParentWX	= 0.15
+		UseListY	= true
+
+		[MinimapMarkers_Setting]
+		Extends			= "DefaultSansTextButtonArchetype"
+		Parent			= "GameOptionsFrame"
+		Origin			= "TopRight"
+		DynamicString	= "MinimapMarkersSetting"
+		ParentWX		= -0.15
+		UseListY		= true
+
+	[FixedDTButton]
+	UIWidgetType	= "Composite"
+	ListStep		= true
+	Focus			= true
+	NumChildren		= &
+	@ Child
+	@@&				= "FixedDTButtonLabel"
+	@@&				= "FixedDTButtonSetting"
+	NumActions		= &
+	@ Action
+	@@&				= "ToggleFixedDTAction"
+
+		[ToggleFixedDTAction]
+		ActionType	= "SendEvent"
+		EventName	= "ToggleFixedDT"
+
+		[FixedDTButtonLabel]
+		Extends		= "DefaultSansTextButtonArchetype"
+		Parent		= "GameOptionsFrame"
+		Origin		= "TopLeft"
+		String		= "FixedDT"
+		ParentWX	= 0.15
+		UseListY	= true
+
+		[FixedDTButtonSetting]
+		Extends			= "DefaultSansTextButtonArchetype"
+		Parent			= "GameOptionsFrame"
+		Origin			= "TopRight"
+		DynamicString	= "FixedDTSetting"
+		ParentWX		= -0.15
+		UseListY		= true
+
+[ControlsOptionsScreen]
+UIScreenType	= "Base"
+TakesFocus		= true
+SeizesMouse		= true
+FocusXShift		= 0
+ListMinParentHY	= 0.200
+ListMaxParentHY	= 0.600
+NumWidgets		= &
+@ Widget
+@@&				= "ControlsOptionsFrame"
+@@&				= "ControlsOptionsHeader"
+@@&				= "MouseSpeedSlider"
+@@&				= "ControllerSpeedSlider"
+@@&				= "InvertYButton"
+@@&				= "AutoAimButton"
+@@&				= "ControllerTypeButton"
+@@&				= "BindControlsButton"
+@@&				= "ControlsOptionsResetButton"
+@@&				= "ControlsOptionsBackButton"
+
+	[ControlsOptionsFrame]
+	Extends		= "CommonFrameArchetype"
+	ParentWX	= 0.5
+	ParentHY	= 0.5
+	ParentHW	= 0.85
+	ParentHH	= 0.5
+
+	[ControlsOptionsHeader]
+	Extends		= "DefaultSansTextArchetype"
+	Parent		= "ControlsOptionsFrame"
+	Origin		= "TopCenter"
+	String		= "Controls"
+	ParentWX	= 0.5
+	ParentHY	= 0.1
+
+	[ControlsOptionsResetButton]
+	Extends		= "DefaultSansTextButtonArchetype"
+	Parent		= "ControlsOptionsFrame"
+	Origin		= "BottomLeft"
+	String		= "ResetToDefaults"
+	ParentHX	= 0.1
+	ParentHY	= -0.1
+	lmActions
+	{
+		SendEvent( "ResetControlsOptions" )
+	}
+
+	[ControlsOptionsBackButton]
+	Extends			= "DefaultSansTextButtonArchetype"
+	Parent			= "ControlsOptionsFrame"
+	Origin			= "BottomRight"
+	DynamicString	= "Back"
+	ParentHX		= -0.1
+	ParentHY		= -0.1
+	NumActions		= &
+	@ Action
+	@@&				= "PopScreenAction"
+
+	[MouseSpeedSlider]
+	Extends		= "SliderArchetype"
+	ListStep	= true
+	Parent		= "ControlsOptionsFrame"
+	Origin		= "TopLeft"
+	ParentWX	= 0.1
+	UseListY	= true
+	ParentWW	= 0.8
+	SliderLabel	= "MouseSpeedLabel"
+	SliderValue	= "MouseSpeedValue"
+	SliderBack	= "MouseSpeedBack"
+	Slider		= "MouseSpeed"
+
+		[MouseSpeedLabel]
+		Extends	= "SliderLabelArchetype"
+		String	= "MouseSpeed"
+
+		[MouseSpeedValue]
+		Extends			= "SliderValueArchetype"
+		DynamicString	= "MouseSpeedValue"
+		ParentWX		= 0.5
+
+		[MouseSpeedBack]
+		Extends		= "SliderBackArchetype"
+		ParentWW	= 0.45
+
+		[MouseSpeed]
+		Extends	= "SliderButtonArchetype"
+
+	[ControllerSpeedSlider]
+	Extends		= "SliderArchetype"
+	ListStep	= true
+	Parent		= "ControlsOptionsFrame"
+	Origin		= "TopLeft"
+	ParentWX	= 0.1
+	UseListY	= true
+	ParentWW	= 0.8
+	SliderLabel	= "ControllerSpeedLabel"
+	SliderValue	= "ControllerSpeedValue"
+	SliderBack	= "ControllerSpeedBack"
+	Slider		= "ControllerSpeed"
+
+		[ControllerSpeedLabel]
+		Extends	= "SliderLabelArchetype"
+		String	= "ControllerSpeed"
+
+		[ControllerSpeedValue]
+		Extends			= "SliderValueArchetype"
+		DynamicString	= "ControllerSpeedValue"
+		ParentWX		= 0.5
+
+		[ControllerSpeedBack]
+		Extends		= "SliderBackArchetype"
+		ParentWW	= 0.45
+
+		[ControllerSpeed]
+		Extends	= "SliderButtonArchetype"
+
+	[InvertYButton]
+	UIWidgetType	= "Composite"
+	ListStep		= true
+	Focus			= true
+	NumChildren		= &
+	@ Child
+	@@&				= "InvertYLabel"
+	@@&				= "InvertYSetting"
+	lmActions
+	{
+		SendEvent( "ToggleInvertY" )
+	}
+
+		[InvertYLabel]
+		Extends		= "DefaultSansTextButtonArchetype"
+		Parent		= "ControlsOptionsFrame"
+		Origin		= "TopLeft"
+		String		= "InvertY"
+		ParentWX	= 0.1
+		UseListY	= true
+
+		[InvertYSetting]
+		Extends			= "DefaultSansTextButtonArchetype"
+		Parent			= "ControlsOptionsFrame"
+		Origin			= "TopRight"
+		DynamicString	= "InvertYSetting"
+		ParentWX		= -0.1
+		UseListY		= true
+
+	[AutoAimButton]
+	UIWidgetType	= "Composite"
+	ListStep		= true
+	Focus			= true
+	NumChildren		= &
+	@ Child
+	@@&				= "AutoAimLabel"
+	@@&				= "AutoAimSetting"
+	lmActions
+	{
+		SendEvent( "ToggleAutoAim" )
+	}
+
+		[AutoAimLabel]
+		Extends		= "DefaultSansTextButtonArchetype"
+		Parent		= "ControlsOptionsFrame"
+		Origin		= "TopLeft"
+		String		= "AutoAim"
+		ParentWX	= 0.1
+		UseListY	= true
+
+		[AutoAimSetting]
+		Extends			= "DefaultSansTextButtonArchetype"
+		Parent			= "ControlsOptionsFrame"
+		Origin			= "TopRight"
+		DynamicString	= "AutoAimSetting"
+		ParentWX		= -0.1
+		UseListY		= true
+
+	[ControllerTypeButton]
+	UIWidgetType	= "Composite"
+	ListStep		= true
+	Focus			= true
+	NumChildren		= &
+	@ Child
+	@@&				= "ControllerTypeLabel"
+	@@&				= "ControllerTypeSetting"
+	lmActions
+	{
+		SendEvent( "CycleControllerType" )
+	}
+
+		[ControllerTypeLabel]
+		Extends		= "DefaultSansTextButtonArchetype"
+		Parent		= "ControlsOptionsFrame"
+		Origin		= "TopLeft"
+		String		= "ControllerType"
+		ParentWX	= 0.1
+		UseListY	= true
+
+		[ControllerTypeSetting]
+		Extends			= "DefaultSansTextButtonArchetype"
+		Parent			= "ControlsOptionsFrame"
+		Origin			= "TopRight"
+		DynamicString	= "ControllerTypeSetting"
+		ParentWX		= -0.1
+		UseListY		= true
+
+	[BindControlsButton]
+	Extends		= "DefaultSansTextButtonArchetype"
+	Parent		= "ControlsOptionsFrame"
+	Origin		= "TopLeft"
+	String		= "BindControls"
+	ParentWX	= 0.1
+	ParentHY	= 0.7
+	NumActions	= &
+	@ Action
+	@@&			= "PushControlsScreenAction"
+
+		[PushControlsScreenAction]
+		ActionType		= "SendEvent"
+		EventName		= "PushUIScreen"
+		NumParameters	= &
+		@ Parameter
+		@@&Name			= "Screen"
+		@@^Value		= "ControlsScreenPE"
+
+			[ControlsScreenPE]
+			PEType	= "ConstantString"
+			Value	= "ControlsScreen"
+
+[DisplayOptionsScreen]
+UIScreenType	= "Base"
+TakesFocus		= true
+SeizesMouse		= true
+FocusXShift		= 0
+ListMinParentHY	= 0.190
+ListMaxParentHY	= 0.470
+NumWidgets		= &
+@ Widget
+@@&				= "DisplayOptionsFrame"
+@@&				= "DisplayOptionsHeader"
+@@&				= "ResolutionButton"
+@@&				= "FullscreenButton"
+@@&				= "VSyncButton"
+@@&				= "BrightnessSlider"
+@@&				= "BrightnessCalibrationImage"
+@@&				= "DisplayOptionsResetButton"
+@@&				= "DisplayOptionsBackButton"
+
+	[DisplayOptionsFrame]
+	Extends		= "CommonFrameArchetype"
+	ParentWX	= 0.5
+	ParentHY	= 0.5
+	ParentHW	= 0.65
+	ParentHH	= 0.60
+
+	[DisplayOptionsHeader]
+	Extends		= "DefaultSansTextArchetype"
+	Parent		= "DisplayOptionsFrame"
+	Origin		= "TopCenter"
+	String		= "Display"
+	ParentWX	= 0.5
+	ParentHY	= 0.1
+
+	[DisplayOptionsResetButton]
+	Extends		= "DefaultSansTextButtonArchetype"
+	Parent		= "DisplayOptionsFrame"
+	Origin		= "BottomLeft"
+	String		= "ResetToDefaults"
+	ParentWX	= 0.05
+	ParentWY	= -0.05
+	lmActions
+	{
+		SendEvent( "ResetDisplayOptions" )
+	}
+	
+	[DisplayOptionsBackButton]
+	Extends			= "DefaultSansTextButtonArchetype"
+	Parent			= "DisplayOptionsFrame"
+	Origin			= "BottomRight"
+	DynamicString	= "Back"
+	ParentWX		= -0.05
+	ParentWY		= -0.05
+	NumActions		= &
+	@ Action
+	@@&				= "PopScreenAction"
+
+	[ResolutionButton]
+	UIWidgetType	= "Composite"
+	ListStep		= true
+	Focus			= true
+	NumChildren		= &
+	@ Child
+	@@&				= "ResolutionButtonLabel"
+	@@&				= "ResolutionButtonSetting"
+	NumActions		= &
+	@ Action
+	@@&				= "PushSetResScreenAction"
+
+		[PushSetResScreenAction]
+		ActionType		= "SendEvent"
+		EventName		= "PushUIScreen"
+		NumParameters	= &
+		@ Parameter
+		@@&Name			= "Screen"
+		@@^Value		= "SetResScreenPE"
+
+			[SetResScreenPE]
+			PEType	= "ConstantString"
+			Value	= "SetResScreen"
+
+		[ResolutionButtonLabel]
+		Extends		= "DefaultSansTextButtonArchetype"
+		Parent		= "DisplayOptionsFrame"
+		Origin		= "TopLeft"
+		String		= "Resolution"
+		ParentWX	= 0.1
+		UseListY	= true
+
+		[ResolutionButtonSetting]
+		Extends			= "DefaultSansTextButtonArchetype"
+		Parent			= "DisplayOptionsFrame"
+		Origin			= "TopRight"
+		DynamicString	= "ResolutionSetting"
+		ParentWX		= -0.1
+		UseListY		= true
+
+	[FullscreenButton]
+	UIWidgetType	= "Composite"
+	ListStep		= true
+	Focus			= true
+	NumChildren		= &
+	@ Child
+	@@&				= "FullscreenButtonLabel"
+	@@&				= "FullscreenButtonSetting"
+	NumActions		= &
+	@ Action
+	@@&				= "ToggleFullscreenAction"
+
+		[ToggleFullscreenAction]
+		ActionType	= "SendEvent"
+		EventName	= "ToggleFullscreen"
+
+		[FullscreenButtonLabel]
+		Extends		= "DefaultSansTextButtonArchetype"
+		Parent		= "DisplayOptionsFrame"
+		Origin		= "TopLeft"
+		String		= "Fullscreen"
+		ParentWX	= 0.1
+		UseListY	= true
+
+		[FullscreenButtonSetting]
+		Extends			= "DefaultSansTextButtonArchetype"
+		Parent			= "DisplayOptionsFrame"
+		Origin			= "TopRight"
+		DynamicString	= "FullscreenSetting"
+		ParentWX		= -0.1
+		UseListY		= true
+
+	[VSyncButton]
+	UIWidgetType	= "Composite"
+	ListStep		= true
+	Focus			= true
+	NumChildren		= &
+	@ Child
+	@@&				= "VSyncButtonLabel"
+	@@&				= "VSyncButtonSetting"
+	NumActions		= &
+	@ Action
+	@@&				= "ToggleVSyncAction"
+
+		[ToggleVSyncAction]
+		ActionType	= "SendEvent"
+		EventName	= "ToggleVSync"
+
+		[VSyncButtonLabel]
+		Extends		= "DefaultSansTextButtonArchetype"
+		Parent		= "DisplayOptionsFrame"
+		Origin		= "TopLeft"
+		String		= "VSync"
+		ParentWX	= 0.1
+		UseListY	= true
+
+		[VSyncButtonSetting]
+		Extends			= "DefaultSansTextButtonArchetype"
+		Parent			= "DisplayOptionsFrame"
+		Origin			= "TopRight"
+		DynamicString	= "VSyncSetting"
+		ParentWX		= -0.1
+		UseListY		= true
+
+	[BrightnessSlider]
+	Extends		= "SliderArchetype"
+	ListStep	= true
+	Parent		= "DisplayOptionsFrame"
+	Origin		= "TopLeft"
+	ParentWX	= 0.1
+	UseListY	= true
+	ParentWW	= 0.8
+	SliderLabel	= "BrightnessLabel"
+	SliderValue	= "BrightnessValue"
+	SliderBack	= "BrightnessBack"
+	Slider		= "Brightness"
+
+		[BrightnessLabel]
+		Extends	= "SliderLabelArchetype"
+		String	= "Brightness"
+
+		[BrightnessValue]
+		Extends			= "SliderValueArchetype"
+		DynamicString	= "BrightnessValue"
+		ParentWX		= 0.5
+
+		[BrightnessBack]
+		Extends		= "SliderBackArchetype"
+		ParentWW	= 0.45
+
+		[Brightness]
+		Extends	= "SliderButtonArchetype"
+
+	[BrightnessCalibrationImage]
+	Extends				= "ImageArchetype"
+	Parent				= "DisplayOptionsFrame"
+	Origin				= "TopCenter"
+	Image				= "Textures/UI/ui-calibration_NODXT.tga"
+	Material			= "Material_HUDCalibration"
+	ParentWW			= 0.8
+	AspectRatio			= 4.0
+	ParentWX			= 0.5
+	ParentHY			= 0.57
+
+[GraphicsOptionsScreen]
+UIScreenType	= "Base"
+TakesFocus		= true
+SeizesMouse		= true
+FocusXShift		= 0
+ListMinParentHY	= 0.150
+ListMaxParentHY	= 0.850
+NumWidgets		= &
+@ Widget
+@@&				= "GraphicsOptionsFrame"
+@@&				= "GraphicsOptionsHeader"
+@@&				= "FOVSlider"
+@@&				= "VanishingPointYSlider"
+@@&				= "LightDistanceSlider"
+#@@&				= "StylizedAnimButton"
+@@&				= "FogButton"
+@@&				= "VolumeFogButton"
+@@&				= "FXAAButton"
+@@&				= "SSAOButton"
+
+@@&				= "GradientButton"
+@@&				= "EdgeButton"
+@@&				= "BloomButton"
+@@&				= "DirtyLensButton"
+@@&				= "HalosButton"
+@@&				= "FilmGrainButton"
+
+#@@&				= "DisplaceButton"
+#@@&				= "BlurButton"
+#@@&				= "BlotButton"
+#@@&				= "CanvasButton"
+#@@&				= "EdgeButton"
+
+#@@&				= "ColorGradingButton"
+@@&				= "PostCheapButton"
+@@&				= "GraphicsOptionsResetButton"
+@@&				= "GraphicsOptionsBackButton"
+
+	[GraphicsOptionsFrame]
+	Extends		= "CommonFrameArchetype"
+	ParentWX	= 0.5
+	ParentHY	= 0.5
+	ParentHW	= 0.75
+	ParentHH	= 0.85
+
+	[GraphicsOptionsHeader]
+	Extends		= "DefaultSansTextArchetype"
+	Parent		= "GraphicsOptionsFrame"
+	Origin		= "TopCenter"
+	String		= "Graphics"
+	ParentWX	= 0.5
+	ParentHY	= 0.05
+
+	[GraphicsOptionsResetButton]
+	Extends		= "DefaultSansTextButtonArchetype"
+	Parent		= "GraphicsOptionsFrame"
+	Origin		= "BottomLeft"
+	String		= "ResetToDefaults"
+	ParentWX	= 0.05
+	ParentWY	= -0.05
+	lmActions
+	{
+		SendEvent( "ResetGraphicsOptions" )
+	}
+
+	[GraphicsOptionsBackButton]
+	Extends			= "DefaultSansTextButtonArchetype"
+	Parent			= "GraphicsOptionsFrame"
+	Origin			= "BottomRight"
+	DynamicString	= "Back"
+	ParentWX		= -0.05
+	ParentWY		= -0.05
+	NumActions		= &
+	@ Action
+	@@&				= "PopScreenAction"
+
+	[FOVSlider]
+	Extends		= "SliderArchetype"
+	ListStep	= true
+	Parent		= "GraphicsOptionsFrame"
+	Origin		= "TopLeft"
+	ParentWX	= 0.1
+	ParentWW	= 0.8
+	UseListY	= true
+	SliderLabel	= "FOVLabel"
+	SliderValue	= "FOVValue"
+	SliderBack	= "FOVBack"
+	Slider		= "FOV"
+
+		[FOVLabel]
+		Extends	= "SliderLabelArchetype"
+		String	= "FOV"
+
+		[FOVValue]
+		Extends			= "SliderValueArchetype"
+		ParentWX		= 0.5
+		DynamicString	= "FOVValue"
+
+		[FOVBack]
+		Extends		= "SliderBackArchetype"
+		ParentWW	= 0.45
+
+		[FOV]
+		Extends	= "SliderButtonArchetype"
+
+	[VanishingPointYSlider]
+	Extends		= "SliderArchetype"
+	ListStep	= true
+	Parent		= "GraphicsOptionsFrame"
+	Origin		= "TopLeft"
+	ParentWX	= 0.1
+	ParentWW	= 0.8
+	UseListY	= true
+	SliderLabel	= "VanishingPointYLabel"
+	SliderValue	= "VanishingPointYValue"
+	SliderBack	= "VanishingPointYBack"
+	Slider		= "VanishingPointY"
+
+		[VanishingPointYLabel]
+		Extends	= "SliderLabelArchetype"
+		String	= "VanishingPointY"
+
+		[VanishingPointYValue]
+		Extends			= "SliderValueArchetype"
+		ParentWX		= 0.5
+		DynamicString	= "VanishingPointYValue"		
+
+		[VanishingPointYBack]
+		Extends		= "SliderBackArchetype"
+		ParentWW	= 0.45
+
+		[VanishingPointY]
+		Extends	= "SliderButtonArchetype"
+
+	[LightDistanceSlider]
+	Extends		= "SliderArchetype"
+	ListStep	= true
+	Parent		= "GraphicsOptionsFrame"
+	Origin		= "TopLeft"
+	ParentWX	= 0.1
+	ParentWW	= 0.8
+	UseListY	= true
+	SliderLabel	= "LightDistanceLabel"
+	SliderValue	= "LightDistanceValue"
+	SliderBack	= "LightDistanceBack"
+	Slider		= "LightDistance"
+
+		[LightDistanceLabel]
+		Extends	= "SliderLabelArchetype"
+		String	= "LightDistance"
+
+		[LightDistanceValue]
+		Extends			= "SliderValueArchetype"
+		ParentWX		= 0.5
+		DynamicString	= "LightDistanceValue"	
+
+		[LightDistanceBack]
+		Extends		= "SliderBackArchetype"
+		ParentWW	= 0.45
+
+		[LightDistance]
+		Extends	= "SliderButtonArchetype"
+
+	[StylizedAnimButton]
+	UIWidgetType	= "Composite"
+	ListStep		= true
+	Focus			= true
+	NumChildren		= &
+	@ Child
+	@@&				= "StylizedAnimButtonLabel"
+	@@&				= "StylizedAnimButtonSetting"
+	NumActions		= &
+	@ Action
+	@@&				= "ToggleStylizedAnimAction"
+
+		[ToggleStylizedAnimAction]
+		ActionType	= "SendEvent"
+		EventName	= "ToggleStylizedAnim"
+
+		[StylizedAnimButtonLabel]
+		Extends		= "DefaultSansTextButtonArchetype"
+		Parent		= "GraphicsOptionsFrame"
+		Origin		= "TopLeft"
+		String		= "StylizedAnim"
+		ParentWX	= 0.1
+		UseListY	= true
+
+		[StylizedAnimButtonSetting]
+		Extends			= "DefaultSansTextButtonArchetype"
+		Parent			= "GraphicsOptionsFrame"
+		Origin			= "TopRight"
+		DynamicString	= "StylizedAnimSetting"
+		ParentWX		= -0.1
+		UseListY		= true
+
+	[FogButton]
+	UIWidgetType	= "Composite"
+	ListStep		= true
+	Focus			= true
+	NumChildren		= &
+	@ Child
+	@@&				= "FogButtonLabel"
+	@@&				= "FogButtonSetting"
+	lmActions
+	{
+		SendEvent( "ToggleFog" )
+	}
+
+		[FogButtonLabel]
+		Extends		= "DefaultSansTextButtonArchetype"
+		Parent		= "GraphicsOptionsFrame"
+		Origin		= "TopLeft"
+		String		= "Fog"
+		ParentWX	= 0.1
+		UseListY	= true
+
+		[FogButtonSetting]
+		Extends			= "DefaultSansTextButtonArchetype"
+		Parent			= "GraphicsOptionsFrame"
+		Origin			= "TopRight"
+		DynamicString	= "FogSetting"
+		ParentWX		= -0.1
+		UseListY		= true
+
+	[VolumeFogButton]
+	UIWidgetType	= "Composite"
+	ListStep		= true
+	Focus			= true
+	NumChildren		= &
+	@ Child
+	@@&				= "VolumeFogButtonLabel"
+	@@&				= "VolumeFogButtonSetting"
+	lmActions
+	{
+		SendEvent( "ToggleVolumeFog" )
+	}
+
+		[VolumeFogButtonLabel]
+		Extends		= "DefaultSansTextButtonArchetype"
+		Parent		= "GraphicsOptionsFrame"
+		Origin		= "TopLeft"
+		String		= "VolumeFog"
+		ParentWX	= 0.1
+		UseListY	= true
+
+		[VolumeFogButtonSetting]
+		Extends			= "DefaultSansTextButtonArchetype"
+		Parent			= "GraphicsOptionsFrame"
+		Origin			= "TopRight"
+		DynamicString	= "VolumeFogSetting"
+		ParentWX		= -0.1
+		UseListY		= true
+
+	[FXAAButton]
+	UIWidgetType	= "Composite"
+	ListStep		= true
+	Focus			= true
+	NumChildren		= &
+	@ Child
+	@@&				= "FXAAButtonLabel"
+	@@&				= "FXAAButtonSetting"
+	NumActions		= &
+	@ Action
+	@@&				= "ToggleFXAAAction"
+
+		[ToggleFXAAAction]
+		ActionType	= "SendEvent"
+		EventName	= "ToggleFXAA"
+
+		[FXAAButtonLabel]
+		Extends		= "DefaultSansTextButtonArchetype"
+		Parent		= "GraphicsOptionsFrame"
+		Origin		= "TopLeft"
+		String		= "FXAA"
+		ParentWX	= 0.1
+		UseListY	= true
+
+		[FXAAButtonSetting]
+		Extends			= "DefaultSansTextButtonArchetype"
+		Parent			= "GraphicsOptionsFrame"
+		Origin			= "TopRight"
+		DynamicString	= "FXAASetting"
+		ParentWX		= -0.1
+		UseListY		= true
+
+	[SSAOButton]
+	UIWidgetType	= "Composite"
+	ListStep		= true
+	Focus			= true
+	NumChildren		= &
+	@ Child
+	@@&				= "SSAOButtonLabel"
+	@@&				= "SSAOButtonSetting"
+	NumActions		= &
+	@ Action
+	@@&				= "ToggleSSAOAction"
+
+		[ToggleSSAOAction]
+		ActionType	= "SendEvent"
+		EventName	= "ToggleSSAO"
+
+		[SSAOButtonLabel]
+		Extends		= "DefaultSansTextButtonArchetype"
+		Parent		= "GraphicsOptionsFrame"
+		Origin		= "TopLeft"
+		String		= "SSAO"
+		ParentWX	= 0.1
+		UseListY	= true
+
+		[SSAOButtonSetting]
+		Extends			= "DefaultSansTextButtonArchetype"
+		Parent			= "GraphicsOptionsFrame"
+		Origin			= "TopRight"
+		DynamicString	= "SSAOSetting"
+		ParentWX		= -0.1
+		UseListY		= true
+
+
+
+	[BloomButton]
+	UIWidgetType	= "Composite"
+	ListStep		= true
+	Focus			= true
+	NumChildren		= &
+	@ Child
+	@@&				= "BloomButtonLabel"
+	@@&				= "BloomButtonSetting"
+	NumActions		= &
+	@ Action
+	@@&				= "ToggleBloomAction"
+
+		[ToggleBloomAction]
+		ActionType	= "SendEvent"
+		EventName	= "ToggleBloom"
+
+		[BloomButtonLabel]
+		Extends		= "DefaultSansTextButtonArchetype"
+		Parent		= "GraphicsOptionsFrame"
+		Origin		= "TopLeft"
+		String		= "Bloom"
+		ParentWX	= 0.1
+		UseListY	= true
+
+		[BloomButtonSetting]
+		Extends			= "DefaultSansTextButtonArchetype"
+		Parent			= "GraphicsOptionsFrame"
+		Origin			= "TopRight"
+		DynamicString	= "BloomSetting"
+		ParentWX		= -0.1
+		UseListY		= true
+
+	[DirtyLensButton]
+	UIWidgetType	= "Composite"
+	ListStep		= true
+	Focus			= true
+	NumChildren		= &
+	@ Child
+	@@&				= "DirtyLensButtonLabel"
+	@@&				= "DirtyLensButtonSetting"
+	lmActions
+	{
+		SendEvent( "ToggleDirtyLens" )
+	}
+
+		[DirtyLensButtonLabel]
+		Extends		= "DefaultSansTextButtonArchetype"
+		Parent		= "GraphicsOptionsFrame"
+		Origin		= "TopLeft"
+		String		= "DirtyLens"
+		ParentWX	= 0.1
+		UseListY	= true
+
+		[DirtyLensButtonSetting]
+		Extends			= "DefaultSansTextButtonArchetype"
+		Parent			= "GraphicsOptionsFrame"
+		Origin			= "TopRight"
+		DynamicString	= "DirtyLensSetting"
+		ParentWX		= -0.1
+		UseListY		= true
+
+	[HalosButton]
+	UIWidgetType	= "Composite"
+	ListStep		= true
+	Focus			= true
+	NumChildren		= &
+	@ Child
+	@@&				= "HalosButtonLabel"
+	@@&				= "HalosButtonSetting"
+	lmActions
+	{
+		SendEvent( "ToggleHalos" )
+	}
+
+		[HalosButtonLabel]
+		Extends		= "DefaultSansTextButtonArchetype"
+		Parent		= "GraphicsOptionsFrame"
+		Origin		= "TopLeft"
+		String		= "Halos"
+		ParentWX	= 0.1
+		UseListY	= true
+
+		[HalosButtonSetting]
+		Extends			= "DefaultSansTextButtonArchetype"
+		Parent			= "GraphicsOptionsFrame"
+		Origin			= "TopRight"
+		DynamicString	= "HalosSetting"
+		ParentWX		= -0.1
+		UseListY		= true
+
+	[FilmGrainButton]
+	UIWidgetType	= "Composite"
+	ListStep		= true
+	Focus			= true
+	NumChildren		= &
+	@ Child
+	@@&				= "FilmGrainButtonLabel"
+	@@&				= "FilmGrainButtonSetting"
+	lmActions
+	{
+		SendEvent( "ToggleFilmGrain" )
+	}
+
+		[FilmGrainButtonLabel]
+		Extends		= "DefaultSansTextButtonArchetype"
+		Parent		= "GraphicsOptionsFrame"
+		Origin		= "TopLeft"
+		String		= "FilmGrain"
+		ParentWX	= 0.1
+		UseListY	= true
+
+		[FilmGrainButtonSetting]
+		Extends			= "DefaultSansTextButtonArchetype"
+		Parent			= "GraphicsOptionsFrame"
+		Origin			= "TopRight"
+		DynamicString	= "FilmGrainSetting"
+		ParentWX		= -0.1
+		UseListY		= true
+
+
+
+	[DisplaceButton]
+	UIWidgetType	= "Composite"
+	ListStep		= true
+	Focus			= true
+	NumChildren		= &
+	@ Child
+	@@&				= "DisplaceButtonLabel"
+	@@&				= "DisplaceButtonSetting"
+	NumActions		= &
+	@ Action
+	@@&				= "ToggleDisplaceAction"
+
+		[ToggleDisplaceAction]
+		ActionType	= "SendEvent"
+		EventName	= "ToggleDisplace"
+
+		[DisplaceButtonLabel]
+		Extends		= "DefaultSansTextButtonArchetype"
+		Parent		= "GraphicsOptionsFrame"
+		Origin		= "TopLeft"
+		String		= "Displace"
+		ParentWX	= 0.1
+		UseListY	= true
+
+		[DisplaceButtonSetting]
+		Extends			= "DefaultSansTextButtonArchetype"
+		Parent			= "GraphicsOptionsFrame"
+		Origin			= "TopRight"
+		DynamicString	= "DisplaceSetting"
+		ParentWX		= -0.1
+		UseListY		= true
+
+	[BlurButton]
+	UIWidgetType	= "Composite"
+	ListStep		= true
+	Focus			= true
+	NumChildren		= &
+	@ Child
+	@@&				= "BlurButtonLabel"
+	@@&				= "BlurButtonSetting"
+	NumActions		= &
+	@ Action
+	@@&				= "ToggleBlurAction"
+
+		[ToggleBlurAction]
+		ActionType	= "SendEvent"
+		EventName	= "ToggleBlur"
+
+		[BlurButtonLabel]
+		Extends		= "DefaultSansTextButtonArchetype"
+		Parent		= "GraphicsOptionsFrame"
+		Origin		= "TopLeft"
+		String		= "Blur"
+		ParentWX	= 0.1
+		UseListY	= true
+
+		[BlurButtonSetting]
+		Extends			= "DefaultSansTextButtonArchetype"
+		Parent			= "GraphicsOptionsFrame"
+		Origin			= "TopRight"
+		DynamicString	= "BlurSetting"
+		ParentWX		= -0.1
+		UseListY		= true
+
+	[BlotButton]
+	UIWidgetType	= "Composite"
+	ListStep		= true
+	Focus			= true
+	NumChildren		= &
+	@ Child
+	@@&				= "BlotButtonLabel"
+	@@&				= "BlotButtonSetting"
+	NumActions		= &
+	@ Action
+	@@&				= "ToggleBlotAction"
+
+		[ToggleBlotAction]
+		ActionType	= "SendEvent"
+		EventName	= "ToggleBlot"
+
+		[BlotButtonLabel]
+		Extends		= "DefaultSansTextButtonArchetype"
+		Parent		= "GraphicsOptionsFrame"
+		Origin		= "TopLeft"
+		String		= "Blot"
+		ParentWX	= 0.1
+		UseListY	= true
+
+		[BlotButtonSetting]
+		Extends			= "DefaultSansTextButtonArchetype"
+		Parent			= "GraphicsOptionsFrame"
+		Origin			= "TopRight"
+		DynamicString	= "BlotSetting"
+		ParentWX		= -0.1
+		UseListY		= true
+
+	[CanvasButton]
+	UIWidgetType	= "Composite"
+	ListStep		= true
+	Focus			= true
+	NumChildren		= &
+	@ Child
+	@@&				= "CanvasButtonLabel"
+	@@&				= "CanvasButtonSetting"
+	NumActions		= &
+	@ Action
+	@@&				= "ToggleCanvasAction"
+
+		[ToggleCanvasAction]
+		ActionType	= "SendEvent"
+		EventName	= "ToggleCanvas"
+
+		[CanvasButtonLabel]
+		Extends		= "DefaultSansTextButtonArchetype"
+		Parent		= "GraphicsOptionsFrame"
+		Origin		= "TopLeft"
+		String		= "Canvas"
+		ParentWX	= 0.1
+		UseListY	= true
+
+		[CanvasButtonSetting]
+		Extends			= "DefaultSansTextButtonArchetype"
+		Parent			= "GraphicsOptionsFrame"
+		Origin			= "TopRight"
+		DynamicString	= "CanvasSetting"
+		ParentWX		= -0.1
+		UseListY		= true
+
+	[GradientButton]
+	UIWidgetType	= "Composite"
+	ListStep		= true
+	Focus			= true
+	NumChildren		= &
+	@ Child
+	@@&				= "GradientButtonLabel"
+	@@&				= "GradientButtonSetting"
+	NumActions		= &
+	@ Action
+	@@&				= "ToggleGradientAction"
+
+		[ToggleGradientAction]
+		ActionType	= "SendEvent"
+		EventName	= "ToggleGradient"
+
+		[GradientButtonLabel]
+		Extends		= "DefaultSansTextButtonArchetype"
+		Parent		= "GraphicsOptionsFrame"
+		Origin		= "TopLeft"
+		String		= "Gradient"
+		ParentWX	= 0.1
+		UseListY	= true
+
+		[GradientButtonSetting]
+		Extends			= "DefaultSansTextButtonArchetype"
+		Parent			= "GraphicsOptionsFrame"
+		Origin			= "TopRight"
+		DynamicString	= "GradientSetting"
+		ParentWX		= -0.1
+		UseListY		= true
+
+	[EdgeButton]
+	UIWidgetType	= "Composite"
+	ListStep		= true
+	Focus			= true
+	NumChildren		= &
+	@ Child
+	@@&				= "EdgeButtonLabel"
+	@@&				= "EdgeButtonSetting"
+	NumActions		= &
+	@ Action
+	@@&				= "ToggleEdgeAction"
+
+		[ToggleEdgeAction]
+		ActionType	= "SendEvent"
+		EventName	= "ToggleEdge"
+
+		[EdgeButtonLabel]
+		Extends		= "DefaultSansTextButtonArchetype"
+		Parent		= "GraphicsOptionsFrame"
+		Origin		= "TopLeft"
+		String		= "Edge"
+		ParentWX	= 0.1
+		UseListY	= true
+
+		[EdgeButtonSetting]
+		Extends			= "DefaultSansTextButtonArchetype"
+		Parent			= "GraphicsOptionsFrame"
+		Origin			= "TopRight"
+		DynamicString	= "EdgeSetting"
+		ParentWX		= -0.1
+		UseListY		= true
+
+
+
+	[ColorGradingButton]
+	UIWidgetType	= "Composite"
+	ListStep		= true
+	Focus			= true
+	NumChildren		= &
+	@ Child
+	@@&				= "ColorGradingButtonLabel"
+	@@&				= "ColorGradingButtonSetting"
+	lmActions
+	{
+		SendEvent( "ToggleColorGrading" )
+	}
+
+		[ColorGradingButtonLabel]
+		Extends		= "DefaultSansTextButtonArchetype"
+		Parent		= "GraphicsOptionsFrame"
+		Origin		= "TopLeft"
+		String		= "ColorGrading"
+		ParentWX	= 0.1
+		UseListY	= true
+
+		[ColorGradingButtonSetting]
+		Extends			= "DefaultSansTextButtonArchetype"
+		Parent			= "GraphicsOptionsFrame"
+		Origin			= "TopRight"
+		DynamicString	= "ColorGradingSetting"
+		ParentWX		= -0.1
+		UseListY		= true
+
+	[PostCheapButton]
+	UIWidgetType	= "Composite"
+	ListStep		= true
+	Focus			= true
+	NumChildren		= &
+	@ Child
+	@@&				= "PostCheapButtonLabel"
+	@@&				= "PostCheapButtonSetting"
+	lmActions
+	{
+		SendEvent( "TogglePostCheap" )
+	}
+
+		[PostCheapButtonLabel]
+		Extends		= "DefaultSansTextButtonArchetype"
+		Parent		= "GraphicsOptionsFrame"
+		Origin		= "TopLeft"
+		String		= "PostCheap"
+		ParentWX	= 0.1
+		UseListY	= true
+
+		[PostCheapButtonSetting]
+		Extends			= "DefaultSansTextButtonArchetype"
+		Parent			= "GraphicsOptionsFrame"
+		Origin			= "TopRight"
+		DynamicString	= "PostCheapSetting"
+		ParentWX		= -0.1
+		UseListY		= true
+
+[AudioOptionsScreen]
+UIScreenType	= "Base"
+TakesFocus		= true
+SeizesMouse		= true
+FocusXShift		= 0
+ListMinParentHY	= 0.350
+ListMaxParentHY	= 0.650
+NumWidgets		= &
+@ Widget
+@@&				= "AudioOptionsFrame"
+@@&				= "AudioOptionsHeader"
+@@&				= "VolumeSlider"
+@@&				= "MusicVolumeSlider"
+@@&				= "AmbienceVolumeSlider"
+@@&				= "AudioOptionsResetButton"
+@@&				= "AudioOptionsBackButton"
+
+	[AudioOptionsFrame]
+	Extends		= "CommonFrameArchetype"
+	ParentWX	= 0.5
+	ParentHY	= 0.5
+	ParentHW	= 0.9
+	ParentHH	= 0.35
+
+	[AudioOptionsHeader]
+	Extends		= "DefaultSansTextArchetype"
+	Parent		= "AudioOptionsFrame"
+	Origin		= "TopCenter"
+	String		= "Audio"
+	ParentWX	= 0.5
+	ParentHY	= 0.15
+
+	[AudioOptionsResetButton]
+	Extends		= "DefaultSansTextButtonArchetype"
+	Parent		= "AudioOptionsFrame"
+	Origin		= "BottomLeft"
+	String		= "ResetToDefaults"
+	ParentHX	= 0.1
+	ParentHY	= -0.1
+	lmActions
+	{
+		SendEvent( "ResetAudioOptions" )
+	}
+
+	[AudioOptionsBackButton]
+	Extends			= "DefaultSansTextButtonArchetype"
+	Parent			= "AudioOptionsFrame"
+	Origin			= "BottomRight"
+	DynamicString	= "Back"
+	ParentHX		= -0.1
+	ParentHY		= -0.1
+	NumActions		= &
+	@ Action
+	@@&				= "PopScreenAction"
+
+	[VolumeSlider]
+	Extends		= "SliderArchetype"
+	ListStep	= true
+	Parent		= "AudioOptionsFrame"
+	Origin		= "TopLeft"
+	ParentWX	= 0.1
+	UseListY	= true
+	ParentWW	= 0.8
+	SliderLabel	= "VolumeLabel"
+	SliderValue	= "VolumeValue"
+	SliderBack	= "VolumeBack"
+	Slider		= "Volume"
+
+		[VolumeLabel]
+		Extends	= "SliderLabelArchetype"
+		String	= "Volume"
+
+		[VolumeValue]
+		Extends			= "SliderValueArchetype"
+		DynamicString	= "VolumeValue"
+		ParentWX		= 0.5
+
+		[VolumeBack]
+		Extends		= "SliderBackArchetype"
+		ParentWW	= 0.45
+
+		[Volume]
+		Extends	= "SliderButtonArchetype"
+
+	[MusicVolumeSlider]
+	Extends		= "SliderArchetype"
+	ListStep	= true
+	Parent		= "AudioOptionsFrame"
+	Origin		= "TopLeft"
+	ParentWX	= 0.1
+	UseListY	= true
+	ParentWW	= 0.8
+	SliderLabel	= "MusicVolumeLabel"
+	SliderValue	= "MusicVolumeValue"
+	SliderBack	= "MusicVolumeBack"
+	Slider		= "MusicVolume"
+
+		[MusicVolumeLabel]
+		Extends			= "SliderLabelArchetype"
+		DynamicString	= "MusicVolume"
+
+		[MusicVolumeValue]
+		Extends			= "SliderValueArchetype"
+		DynamicString	= "MusicVolumeValue"
+		ParentWX		= 0.5
+
+		[MusicVolumeBack]
+		Extends		= "SliderBackArchetype"
+		ParentWW	= 0.45
+
+		[MusicVolume]
+		Extends	= "SliderButtonArchetype"
+
+	[AmbienceVolumeSlider]
+	Extends		= "SliderArchetype"
+	ListStep	= true
+	Parent		= "AudioOptionsFrame"
+	Origin		= "TopLeft"
+	ParentWX	= 0.1
+	UseListY	= true
+	ParentWW	= 0.8
+	SliderLabel	= "AmbienceVolumeLabel"
+	SliderValue	= "AmbienceVolumeValue"
+	SliderBack	= "AmbienceVolumeBack"
+	Slider		= "AmbienceVolume"
+
+		[AmbienceVolumeLabel]
+		Extends			= "SliderLabelArchetype"
+		DynamicString	= "AmbienceVolume"
+
+		[AmbienceVolumeValue]
+		Extends			= "SliderValueArchetype"
+		DynamicString	= "AmbienceVolumeValue"
+		ParentWX		= 0.5
+
+		[AmbienceVolumeBack]
+		Extends		= "SliderBackArchetype"
+		ParentWW	= 0.45
+
+		[AmbienceVolume]
+		Extends	= "SliderButtonArchetype"
+
+[OptionsScreen]
+UIScreenType		= "Base"
+TakesFocus			= true
+SeizesMouse			= true
+FocusXShift			= 0
+ListMinParentHY		= 0.25
+ListMaxParentHY		= 0.70
+NumClosedActions	= &
+@ ClosedAction
+@@&					= "WritePrefsConfigAction"
+NumWidgets			= &
+@ Widget
+@@&					= "OptionsFrame"
+@@&					= "OptionsHeader"
+@@&					= "GameOptionsButton"
+@@&					= "ControlsOptionsButton"
+@@&					= "DisplayOptionsButton"
+@@&					= "GraphicsOptionsButton"
+@@&					= "AudioOptionsButton"
+#@@&				= "LanguagesButton"	# Removing this until loc happens, if it happens
+@@&					= "CreditsButton"
+#@@&					= "HelpButton"
+@@&					= "OptionsOpenUserDataPathButton"
+@@&					= "OptionsBackButton"
+
+	[WritePrefsConfigAction]
+	ActionType	= "SendEvent"
+	EventName	= "WritePrefsConfig"
+
+	[OptionsFrame]
+	Extends		= "CommonFrameArchetype"
+	ParentWX	= 0.5
+	ParentHY	= 0.5
+	ParentHW	= 0.7
+	ParentHH	= 0.55
+
+	[OptionsHeader]
+	Extends		= "DefaultSansTextArchetype"
+	Parent		= "OptionsFrame"
+	Origin		= "TopCenter"
+	String		= "Options"
+	ParentWX	= 0.5
+	ParentHY	= 0.1
+
+	[OptionsOpenUserDataPathButton]
+	Extends		= "DefaultSansTextButtonArchetype"
+	Parent		= "OptionsFrame"
+	Origin		= "BottomLeft"
+	String		= "OpenUserDataPath"
+	ParentHX	= 0.1
+	ParentHY	= -0.1
+	lmActions
+	{
+		RosaOpenUserDataPath()
+	}
+
+	[OptionsBackButton]
+	Extends			= "DefaultSansTextButtonArchetype"
+	Parent			= "OptionsFrame"
+	Origin			= "BottomRight"
+	DynamicString	= "Back"
+	ParentHX		= -0.1
+	ParentHY		= -0.1
+	NumActions		= &
+	@ Action
+	@@&				= "PopScreenAction"
+
+	[GameOptionsButton]
+	Extends		= "DefaultSansTextButtonArchetype"
+	Parent		= "OptionsFrame"
+	Origin		= "TopLeft"
+	String		= "GameOptions"
+	ParentWX	= 0.1
+	ListStep	= true
+	UseListY	= true
+	lmActions
+	{
+		SendEvent( "PushUIScreen", Screen = ConstantString( "GameOptionsScreen" ) )
+	}
+
+	[ControlsOptionsButton]
+	Extends		= "DefaultSansTextButtonArchetype"
+	Parent		= "OptionsFrame"
+	Origin		= "TopLeft"
+	String		= "Controls"
+	ParentWX	= 0.1
+	ListStep	= true
+	UseListY	= true
+	lmActions
+	{
+		SendEvent( "PushUIScreen", Screen = ConstantString( "ControlsOptionsScreen" ) )
+	}
+
+	[DisplayOptionsButton]
+	Extends		= "DefaultSansTextButtonArchetype"
+	Parent		= "OptionsFrame"
+	Origin		= "TopLeft"
+	String		= "Display"
+	ParentWX	= 0.1
+	ListStep	= true
+	UseListY	= true
+	lmActions
+	{
+		SendEvent( "PushUIScreen", Screen = ConstantString( "DisplayOptionsScreen" ) )
+	}
+
+	[GraphicsOptionsButton]
+	Extends		= "DefaultSansTextButtonArchetype"
+	Parent		= "OptionsFrame"
+	Origin		= "TopLeft"
+	String		= "Graphics"
+	ParentWX	= 0.1
+	ListStep	= true
+	UseListY	= true
+	lmActions
+	{
+		SendEvent( "PushUIScreen", Screen = ConstantString( "GraphicsOptionsScreen" ) )
+	}
+
+	[AudioOptionsButton]
+	Extends		= "DefaultSansTextButtonArchetype"
+	Parent		= "OptionsFrame"
+	Origin		= "TopLeft"
+	String		= "Audio"
+	ParentWX	= 0.1
+	ListStep	= true
+	UseListY	= true
+	lmActions
+	{
+		SendEvent( "PushUIScreen", Screen = ConstantString( "AudioOptionsScreen" ) )
+	}
+
+	[LanguagesButton]
+	Extends			= "DefaultSansTextButtonArchetype"
+	Parent			= "OptionsFrame"
+	Origin			= "TopLeft"
+	DynamicString	= "CurrentLanguage"
+	ParentWX		= 0.1
+	ListStep		= true
+	UseListY		= true
+	lmActions
+	{
+		SendEvent( "PushUIScreen", Screen = ConstantString( "LanguagesScreen" ) )
+	}
+
+	[CreditsButton]
+	Extends		= "DefaultSansTextButtonArchetype"
+	Parent		= "OptionsFrame"
+	Origin		= "TopLeft"
+	String		= "Credits"
+	ParentWX	= 0.1
+	ListStep	= true
+	UseListY	= true
+	lmActions
+	{
+		SendEvent( "PushUIScreen", Screen = ConstantString( "CreditsScreen" ) )
+	}
+
+	[HelpButton]
+	Extends		= "DefaultSansTextButtonArchetype"
+	Parent		= "OptionsFrame"
+	Origin		= "TopLeft"
+	String		= "Help"
+	ParentWX	= 0.1
+	ListStep	= true
+	UseListY	= true
+	lmActions
+	{
+		SendEvent( "PushUIScreen", Screen = ConstantString( "HelpScreen" ) )
+	}
+
+[HelpScreen]
+TakesFocus	= true
+SeizesMouse	= true
+NumWidgets	= &
+@ Widget
+@@&	= "HelpScreenFrame"
+@@&	= "HelpHeader"
+@@&	= "Help_Lockpicking"
+@@&	= "Help_Bandages"
+@@&	= "HelpBackButton"
+
+	[HelpScreenFrame]
+	Extends		= "CommonFrameArchetype"
+	ParentWX	= 0.5
+	ParentHY	= 0.5
+	ParentHW	= 0.3
+	ParentHH	= 0.5
+
+	[HelpHeader]
+	Extends		= "DefaultSansTextArchetype"
+	Parent		= "HelpScreenFrame"
+	Origin		= "TopCenter"
+	String		= "Help"
+	ParentWX	= 0.5
+	ParentHY	= 0.1
+
+	[HelpBackButton]
+	Extends			= "DefaultSansTextButtonArchetype"
+	Parent			= "HelpScreenFrame"
+	Origin			= "BottomRight"
+	DynamicString	= "Back"
+	ParentHX		= -0.1
+	ParentHY		= -0.1
+	NumActions		= &
+	@ Action
+	@@&				= "PopScreenAction"
+
+	[Help_Archetype]
+	Extends		= "DefaultSansTextButtonArchetype"
+	Parent		= "HelpScreenFrame"
+	ParentHX	= 0.1
+
+	[Help_Lockpicking]
+	Extends		= "Help_Archetype"
+	ParentHY	= 0.25
+	String		= "Help_Lockpicking"
+	lmActions
+	{
+		RosaShowBook( "Tutorial_Lockpicking", true, BookScreen = "HelpBookScreen" )
+	}
+
+	[Help_Bandages]
+	Extends		= "Help_Archetype"
+	ParentHY	= 0.35
+	String		= "Help_Bandages"
+	lmActions
+	{
+		RosaShowBook( "Tutorial_Bandages", true, BookScreen = "HelpBookScreen" )
+	}
+
+[ControlsTextButtonArchetype]
+Extends		= "DefaultSansTextButtonArchetype"
+Parent		= "ControlsFrame"
+Origin		= "TopLeft"
+ScreenHH	= 0.017	# Smaller font than normal!
+
+[ControlsXButtonArchetype]
+Extends		= "ControlsTextButtonArchetype"
+ColorR		= 0.6
+ColorG		= 0.6
+ColorB		= 0.6
+ColorA		= 1.0
+HighlightR	= 1.0
+HighlightG	= 1.0
+HighlightB	= 1.0
+HighlightA	= 1.0
+
+[ControlsTextButtonRules]
+Archetype			= "ControlsTextButtonArchetype"
+ControllerArchetype	= "ControlsXButtonArchetype"
+Parent				= "ControlsFrame"
+ParentHYBase		= 0.15
+ParentHYStep		= 0.06
+Column0ParentWX		= 0.1
+Column1ParentWX		= 0.5
+Column2ParentWX		= 0.75
+Column3ParentWX		= 0.85
+
+[ControlsScreen]
+UIScreenType	= "RosaBindInputs"
+TakesFocus		= true
+SeizesMouse		= true
+Rules			= "ControlsTextButtonRules"
+FocusXShift		= 0
+NumWidgets		= &
+@ Widget
+@@&				= "ControlsFrame"
+@@&				= "ControlsHeader"
+@@&				= "ControlsResetButton"
+@@&				= "ControlsBackButton"
+# Input widgets are added dynamically
+
+	[ControlsFrame]
+	Extends		= "CommonFrameArchetype"
+	ParentWX	= 0.5
+	ParentHY	= 0.5
+	ParentHW	= 0.7
+	ParentHH	= 0.7
+
+	[ControlsHeader]
+	Extends		= "DefaultSansTextArchetype"
+	Parent		= "ControlsFrame"
+	Origin		= "TopCenter"
+	String		= "Controls"
+	ParentWX	= 0.5
+	ParentHY	= 0.05
+
+	[ControlsResetButton]
+	Extends		= "DefaultSansTextButtonArchetype"
+	Parent		= "ControlsFrame"
+	Origin		= "BottomLeft"
+	String		= "ResetToDefaults"
+	ParentHX	= 0.05
+	ParentHY	= -0.05
+	lmActions
+	{
+		SendEvent( "ResetInputBindings" )
+	}
+
+	[ControlsBackButton]
+	Extends			= "DefaultSansTextButtonArchetype"
+	Parent			= "ControlsFrame"
+	Origin			= "BottomRight"
+	DynamicString	= "Back"
+	ParentHX		= -0.05
+	ParentHY		= -0.05
+	FocusOrder		= 2
+	NumActions		= &
+	@ Action
+	@@&				= "PopScreenAction"
+
+[BindDialog]
+UIScreenType	= "Base"
+TakesFocus		= true
+NumWidgets		= &
+@ Widget
+@@&				= "BindDialogFrame"
+@@&				= "BindDialogText"
+
+	[BindDialogFrame]
+	Extends		= "CommonFrameArchetype"
+	ParentWX	= 0.5
+	ParentHY	= 0.5
+	ParentHW	= 0.4
+	ParentHH	= 0.2
+
+	[BindDialogText]
+	Extends		= "DefaultSansTextArchetype"
+	Parent		= "BindDialogFrame"
+	Origin		= "TopLeft"
+	String		= "BindDialog"
+	ParentHX	= 0.2
+	ParentHY	= 0.2
+	ParentWWrap	= 0.8
+
+# This is an archetype for the dynamically added text
+# (Mainly here for the IsLiteral)
+[SetResTextButtonArchetype]
+Extends		= "DefaultSansTextButtonArchetype"
+IsLiteral	= true
+
+# These are additional rules to define the dynamically added text
+[SetResTextButtonRules]
+Archetype		= "SetResTextButtonArchetype"
+Parent			= "SetResFrame"
+ParentHYBase	= 0.1
+ParentHYStep	= 0.05
+Column0ParentWX	= 0.1
+Column1ParentWX	= 0.6
+
+[SetResScreen]
+UIScreenType	= "RosaSetRes"
+TakesFocus		= true
+SeizesMouse		= true
+Rules			= "SetResTextButtonRules"
+NumWidgets		= &
+@ Widget
+@@&				= "SetResFrame"
+@@&				= "SetResHeader"
+@@&				= "SetResBackButton"
+# Resolution buttons are dynamically added
+
+	[SetResFrame]
+	Extends		= "CommonFrameArchetype"
+	ParentWX	= 0.5
+	ParentHY	= 0.5
+	ParentHW	= 0.6
+	ParentHH	= 0.9
+	
+	[SetResHeader]
+	Extends		= "DefaultSansTextArchetype"
+	Parent		= "SetResFrame"
+	Origin		= "TopCenter"
+	String		= "SetRes"
+	ParentWX	= 0.5
+	ParentHY	= 0.05
+
+	[SetResBackButton]
+	Extends			= "DefaultSansTextButtonArchetype"
+	Parent			= "SetResFrame"
+	Origin			= "BottomRight"
+	DynamicString	= "Back"
+	ParentHX		= -0.05
+	ParentHY		= -0.05
+	FocusOrder		= 1
+	NumActions		= &
+	@ Action
+	@@&				= "PopScreenAction"
+
+[TitlePressStartScreen]
+UIScreenType	= "Base"
+SuppressesInput	= true
+TakesFocus		= true
+SeizesMouse		= true
+AllowClose		= false
+NumWidgets		= &
+@ Widget
+@@&				= "PressStartTitleBack"
+@@&				= "PressStartTitle"
+@@&				= "PressStartButtonComposite"
+@@&				= "VersionLabel"
+
+	[PressStartTitleBack]
+	Extends		= "ImageArchetype"
+	Image		= "Textures/UI/title-back.tga"
+	Origin		= "Center"
+	ScreenWX	= 0.5
+	ScreenHY	= 0.5
+	ScreenHW	= 1.2
+	AspectRatio	= 4.0
+
+	[PressStartTitle]
+	Extends		= "ImageArchetype"
+	Image		= "Textures/UI/title_DXT5.dds"
+	Origin		= "Center"
+	ScreenWX	= 0.5
+	ScreenHY	= 0.5
+	ScreenHW	= 1.111111
+	AspectRatio	= 4.0
+
+	[PressStartButtonComposite]
+	UIWidgetType	= "Composite"
+	Focus			= true
+	NumChildren		= &
+	@ Child
+	@@&				= "PressStartButtonText"
+	@@&				= "PressStartButtonExtents"
+	lmActions
+	{
+		"PopScreenAction"
+		SendEvent( "PushUIScreen", Screen = ConstantString( "TitleMenuScreen" ) )
+		RosaPlaySound( "Sound_TitleEnter", EntityPE = "PlayerPE" )
+		
+		// HACKHACK: Content aware UI scripting!
+		SendEvent(
+			"InterpMoveTo",
+			"PlayerPE",
+			Location = RosaGetLocation( GetEntityByLabel( "CameraMarker_TitleScreen" ) ),
+			Orientation = RosaGetOrientation( GetEntityByLabel( "CameraMarker_TitleScreen" ) ),
+			Duration = ConstantFloat( 0.5 ),
+			EaseIn = ConstantBool( true ),
+			EaseOut = ConstantBool( false )
+			)
+	}
+
+		[PressStartButtonText]
+		Extends			= "DefaultSansTextButtonArchetype"
+		Origin			= "Center"
+		DynamicString	= "PressStart"
+		ParentWX		= 0.5
+		ParentHY		= -0.1
+		RenderPriority	= 3	# Draw above logo (leftover from Neon, maybe irrelevant now)
+		HasShadowBox			= true
+		ShadowBoxImage			= "Textures/UI/ui-shadowbox-l-r_NODXT.tga"
+		ShadowBoxScreenHBorder	= -0.01
+		ShadowBoxScreenHMargin	= 0.10
+
+		[PressStartButtonExtents]
+		UIWidgetType	= "Spacer"
+		ScreenWW		= 1.0
+		ScreenHH		= 1.0
+
+	[VersionLabel]
+	Extends			= "DefaultSansSmallTextArchetype"
+	Origin			= "BottomRight"
+	ParentHX		= -0.025
+	ParentHY		= -0.025
+	DynamicString	= "Version"	# Dynamic so it can pull from actual version number
+	RenderPriority	= 2			# Draw above menu backdrop (leftover from Neon, maybe irrelevant now)
+
+[TitleMenuScreen]
+UIScreenType		= "Base"
+SuppressesInput		= true
+TakesFocus			= true
+SeizesMouse			= true
+AllowClose			= false
+FocusXShift			= 0
+NumPushedActions	= &
+@ PushedAction
+@@&					= "ConditionalShowHideContinueButtonAction"
+NumWidgets			= &
+@ Widget
+@@&					= "MenuSpacer"
+@@&					= "ContinueButton"
+@@&					= "NewGameButton"
+#@@&					= "LoadGameButton"
+@@&					= "OptionsButton"
+@@&					= "QuitButton"
+@@&					= "DebugMenuButton"
+@@&					= "VersionLabelButton"
+
+	[ConditionalShowHideContinueButtonAction]
+	lmSelectorAction
+	{
+		Selection( RosaHasMRUSave(),	UIShowHideWidget( "TitleMenuScreen", "ContinueButton", false ) )
+		Selection( "TruePE",			UIShowHideWidget( "TitleMenuScreen", "ContinueButton", true ) )
+	}
+
+	[MenuSpacer]
+	UIWidgetType	= "Spacer"
+	Origin			= "TopRight"
+	ParentWW		= 0.5
+	ParentHH		= 0.20
+	ParentWX		= 1.0
+	ParentHY		= 0.5
+
+	[ContinueButton]
+	Extends		= "DefaultSansTextButtonArchetype"
+	Parent		= "MenuSpacer"
+	Origin		= "TopLeft"
+	String		= "Continue"
+	ParentHX	= 0.0
+	ParentHY	= 0.0
+	lmActions
+	{
+		RosaLoadGame( "MRU" )
+	}
+
+	[NewGameButton]
+	Extends		= "DefaultSansTextButtonArchetype"
+	Parent		= "MenuSpacer"
+	Origin		= "TopLeft"
+	String		= "NewGame"
+	ParentHX	= 0.0
+	ParentHY	= 0.25
+	lmActions
+	{
+		// Use this to just start a new game immediately
+		RosaGoToLevel( NewGame = true )
+		
+		// Use this for anything that needs a New Game screen... difficulty selection, tutorial skipping, active slot, etc.
+		//SendEvent( "PushUIScreen", Screen = ConstantString( "NewGameScreen" ) )
+	}
+
+	[LoadGameButton]
+	Extends		= "DefaultSansTextButtonArchetype"
+	Parent		= "MenuSpacer"
+	Origin		= "TopLeft"
+	String		= "LoadGame"
+	ParentHX	= 0.0
+	ParentHY	= 0.5
+	lmActions
+	{
+		SendEvent( "PushUIScreen", Screen = ConstantString( "LoadGameScreen" ) )
+	}
+
+	[OptionsButton]
+	Extends		= "DefaultSansTextButtonArchetype"
+	Parent		= "MenuSpacer"
+	Origin		= "TopLeft"
+	String		= "Options"
+	ParentHX	= 0.0
+	ParentHY	= 0.5 #0.75
+	lmActions
+	{
+		SendEvent( "PushUIScreen", Screen = ConstantString( "OptionsScreen" ) )
+	}
+
+	[QuitButton]
+	Extends		= "DefaultSansTextButtonArchetype"
+	Parent		= "MenuSpacer"
+	Origin		= "TopLeft"
+	String		= "Quit"
+	ParentHX	= 0.0
+	ParentHY	= 0.75 #1.0
+	NumActions	= &
+	@ Action
+	@@&			= "ConfirmQuitGameAction"
+
+		[ConfirmQuitGameAction]
+		ActionType		= "UIShowYesNoDialog"
+		YesNoString		= "ConfirmQuit"
+		NumYesActions	= &
+		@ YesAction
+		@@&				= "QuitGameAction"
+
+		[QuitGameAction]
+		ActionType		= "SendEvent"
+		EventName		= "QuitGame"
+
+	[DebugMenuButton]
+	Extends		= "DefaultSansTextButtonArchetype"
+	DevOnly		= true
+	Parent		= "MenuSpacer"
+	Origin		= "TopLeft"
+	IsLiteral	= true
+	String		= "[DEV] Debug Menu"
+	ParentHX	= 0.0
+	ParentHY	= 1.0 #1.25
+	lmActions
+	{
+		SendEvent( "PushUIScreen", Screen = ConstantString( "DebugMenuScreen" ) )
+	}
+
+	[VersionLabelButton]
+	Extends			= "DefaultSansSmallTextButtonArchetype"
+	Origin			= "BottomRight"
+	ParentHX		= -0.025
+	ParentHY		= -0.025
+	DynamicString	= "Version"	# Dynamic so it can pull from actual version number
+	RenderPriority	= 2			# Draw above menu backdrop (leftover from Neon, maybe irrelevant now)
+	ColorR		= 1.0
+	ColorG		= 1.0
+	ColorB		= 1.0
+	ColorA		= 1.0
+	HighlightR	= 0.4 #1.0
+	HighlightG	= 0.7 #0.4
+	HighlightB	= 1.0 #0.4
+	HighlightA	= 1.0
+	lmActions
+	{
+		RosaLaunchWebSite( "https://pastebin.com/raw/R977XN2e" )
+	}
+
+[TitleScreen]
+UIScreenType	= "Base"
+SuppressesInput	= true
+TakesFocus		= true
+SeizesMouse		= true
+AllowClose		= false
+# NOTE: No widgets, currently empty!
+
+[PauseScreen]
+UIScreenType	= "Base"
+TakesFocus		= true
+PausesGame		= true
+SeizesMouse		= true
+FocusXShift		= 0
+NumWidgets		= &
+@ Widget
+@@& = "PauseBackdrop"
+@@& = "LeftHalfSpacer"
+@@& = "RightHalfSpacer"
+@@&	= "PauseHeaderSpacer"
+@@&	= "PauseMenuSpacerSpacer"
+@@& = "PauseMenuSpacer"
+@@& = "PausedText"
+@@& = "PausedResumeButton"
+#@@& = "PausedLoadGameButton"
+#@@& = "PausedSaveGameButton"
+@@& = "PausedOptionsButton"
+@@& = "PausedReturnToTitleButton"
+@@& = "PausedQuitButton"
+@@&	= "PausedDebugMenuButton"
+@@&	= "PausedReportIssueButton"
+
+	[PauseBackdrop]
+	Extends		= "ImageArchetype"
+	Origin		= "TopLeft"
+	Image		= "Textures/UI/pause_NODXT.tga"
+	ParentWW	= 1.0
+	ParentHH	= 1.0
+	ParentWX	= 0.0
+	ParentHY	= 0.0
+
+	[LeftHalfSpacer]
+	UIWidgetType	= "Spacer"
+	Origin			= "TopLeft"
+	ParentWW		= 0.5
+	ParentHH		= 1.0
+	ParentWX		= 0.0
+	ParentHY		= 0.0
+
+	[RightHalfSpacer]
+	UIWidgetType	= "Spacer"
+	Origin			= "TopRight"
+	ParentWW		= 0.5
+	ParentHH		= 1.0
+	ParentWX		= 1.0
+	ParentHY		= 0.0
+
+	[PauseHeaderSpacer]
+	UIWidgetType	= "Spacer"
+	Parent			= "LeftHalfSpacer"
+	Origin			= "TopLeft"
+	ParentWW		= 1.0
+	ParentHH		= 0.5
+	ParentWX		= 0.0
+	ParentHY		= 0.0
+
+	[PauseMenuSpacerSpacer]
+	UIWidgetType	= "Spacer"
+	Parent			= "LeftHalfSpacer"
+	Origin			= "TopLeft"
+	ParentWW		= 1.0
+	ParentHH		= 0.5
+	ParentWX		= 0.0
+	ParentHY		= 0.5
+
+	[PauseMenuSpacer]
+	UIWidgetType	= "Spacer"
+	Parent			= "PauseMenuSpacerSpacer"
+	Origin			= "TopLeft"
+	ParentWW		= 1.0
+	ParentHH		= 1.0
+	ParentWX		= -0.05
+	ParentHY		= 0.05
+
+	[PausedText]
+	Extends		= "DefaultSansTextArchetype"
+	Parent		= "PauseHeaderSpacer"
+	Origin		= "BottomRight"
+	String		= "Paused"
+	ParentWX	= -0.05
+	ParentHY	= -0.1
+
+	[PausedResumeButton]
+	Extends		= "DefaultSansTextButtonArchetype"
+	Parent		= "PauseMenuSpacer"
+	Origin		= "TopRight"
+	String		= "Resume"
+	ParentHY	= 0.0
+	NumActions	= &
+	@ Action
+	@@&			= "PopScreenAction"
+
+	[PausedLoadGameButton]
+	Extends		= "DefaultSansTextButtonArchetype"
+	Parent		= "PauseMenuSpacer"
+	Origin		= "TopRight"
+	String		= "LoadGame"
+	ParentHY	= 0.1
+	lmActions
+	{
+		SendEvent( "PushUIScreen", Screen = ConstantString( "LoadGameScreen" ) )
+	}
+
+	[PausedSaveGameButton]
+	Extends		= "DefaultSansTextButtonArchetype"
+	Parent		= "PauseMenuSpacer"
+	Origin		= "TopRight"
+	String		= "SaveGame"
+	ParentHY	= 0.2
+	lmActions
+	{
+		SendEvent( "PushUIScreen", Screen = ConstantString( "SaveGameScreen" ) )
+	}
+
+	[PausedOptionsButton]
+	Extends		= "DefaultSansTextButtonArchetype"
+	Parent		= "PauseMenuSpacer"
+	Origin		= "TopRight"
+	String		= "Options"
+	ParentHY	= 0.1
+	lmActions
+	{
+		SendEvent( "PushUIScreen", Screen = ConstantString( "OptionsScreen" ) )
+	}
+
+	[PausedReturnToTitleButton]
+	Extends		= "DefaultSansTextButtonArchetype"
+	Parent		= "PauseMenuSpacer"
+	Origin		= "TopRight"
+	String		= "ReturnToTitle"
+	ParentHY	= 0.2
+	NumActions	= &
+	@ Action
+	@@&			= "Action_ConfirmReturnToTitle"
+
+		[Action_ConfirmReturnToTitle]
+		ActionType	= "UIShowYesNoDialog"
+		YesNoString	= "ConfirmReturnToTitle"
+		lmActions( Yes )
+		{
+			"PopScreenAction"	// Pop the yes/no dialog immediately, just feels a bit better (else it's visible under the Loading screen for some reason)
+			RosaReturnToTitle()
+		}
+
+	[PausedQuitButton]
+	Extends		= "DefaultSansTextButtonArchetype"
+	Parent		= "PauseMenuSpacer"
+	Origin		= "TopRight"
+	String		= "SaveAndQuit"
+	ParentHY	= 0.3
+	NumActions	= &
+	@ Action
+	@@&			= "ConfirmSaveAndQuitGameAction"
+
+		[ConfirmSaveAndQuitGameAction]
+		ActionType		= "UIShowYesNoDialog"
+		YesNoString		= "ConfirmSaveAndQuit"
+		NumYesActions	= &
+		@ YesAction
+		@@&				= "QuitGameAction"
+
+	[PausedDebugMenuButton]
+	Extends		= "DefaultSansTextButtonArchetype"
+	DevOnly		= true
+	Parent		= "PauseMenuSpacer"
+	Origin		= "TopRight"
+	IsLiteral	= true
+	String		= "[DEV] Debug Menu"
+	ParentHY	= 0.4
+	lmActions
+	{
+		SendEvent( "PushUIScreen", Screen = ConstantString( "DebugMenuScreen" ) )
+	}
+
+	[PausedReportIssueButton]
+	Extends		= "DefaultSansTextButtonArchetype"
+	Origin		= "BottomLeft"
+	ParentHX	= 0.02
+	ParentHY	= -0.02
+	String		= "ReportIssue"
+	lmActions
+	{
+		RosaLaunchWebSite( "https://forms.gle/7AAeBLixcJFgeV4n6" )
+	}
+
+[CreditsScreen]
+UIScreenType	= "RosaCredits"
+Repeat			= true
+TextWidget		= "CreditsText"
+TakesFocus		= true
+PausesGame		= true
+NumWidgets		= &
+@ Widget
+@@&				= "CreditsBlack"
+@@&				= "CreditsBackdrop"
+@@&				= "CreditsSpacer"
+@@&				= "CreditsText"
+@@&				= "CreditsOverlay"
+
+	[CreditsBlack]
+	Extends		= "ImageArchetype"
+	Origin		= "TopLeft"
+	Image		= "Textures/UI/black_NODXT.tga"
+	ParentWW	= 1.0
+	ParentHH	= 1.0
+	ParentWX	= 0.0
+	ParentHY	= 0.0
+
+	[CreditsBackdrop]
+	Extends		= "ImageArchetype"
+	Origin		= "Center"
+	Image		= "Textures/UI/credits-back_DXT5.dds"
+	ParentHH	= 1.0
+	AspectRatio	= 1.777777
+	ParentWX	= 0.5
+	ParentHY	= 0.5
+
+	[CreditsSpacer]
+	UIWidgetType	= "Spacer"
+	Origin			= "TopCenter"
+	ParentWX		= 0.5
+	ParentWW		= 0.5
+	ParentHH		= 1.0
+
+	[CreditsText]
+	Extends				= "DefaultSerifLargeTextArchetype"
+	# NOTE: TextColorRGB instead of ColorRGB sets the vertex colors instead of the mesh constant color
+	#TextColorR			= 1.0
+	#TextColorG			= 0.2
+	#TextColorB			= 0.2
+	DropShadowColorR	= 0.8
+	DropShadowColorG	= 0.0
+	DropShadowColorB	= 0.0
+	DropShadowColorA	= 0.2
+	Parent				= "CreditsSpacer"
+	Origin				= "TopLeft"
+	ParentWWrap			= 1.0
+	String				= "CreditsScroll"
+	ParentHY			= 1.0
+	ParentHVelocityY	= -0.08
+
+	[CreditsOverlay]
+	Extends		= "ImageArchetype"
+	#Parent		= "CreditsSpacer"
+	RenderPriority	= 3	# Draw above text
+	Origin		= "TopLeft"
+	Image		= "Textures/UI/credits-overlay.tga"
+	Material	= "Material_HUDMultiply"
+	ParentWW	= 1.0
+	ParentHH	= 1.0
+
+[EndCreditsScreen]
+Extends				= "CreditsScreen"
+Repeat				= false	# Close after going through once
+# Copied from Cyme
+lmActions( Popped )
+{
+	SendEvent( "FadeOut" )	// Black out the screen before returning so we don't see the game or loading screen
+	RosaReturnToTitle()
+}
+
+[YearbookScreen]
+UIScreenType	= "RosaCredits"
+Repeat			= true
+TextWidget		= "YearbookText"
+TakesFocus		= true
+PausesGame		= true
+NumWidgets		= &
+@ Widget
+@@&				= "YearbookFrame"
+@@&				= "YearbookSpacer"
+@@&				= "YearbookText"
+
+	[YearbookFrame]
+	Extends		= "CommonFrameArchetype"
+	ParentWX	= 0.5
+	ParentHY	= 0.5
+	ParentHW	= 0.8
+	ParentHH	= 1.1
+
+	[YearbookSpacer]
+	UIWidgetType	= "Spacer"
+	Origin			= "TopCenter"
+	ParentWX		= 0.5
+	ParentHW		= 0.7
+	ParentHH		= 1.0
+
+	[YearbookText]
+	Extends				= "DefaultSerifTextArchetype"
+	#ScreenHH			= 0.017	# Change font size!!
+	Parent				= "YearbookSpacer"
+	Origin				= "TopLeft"
+	ParentWWrap			= 1.0
+	DynamicString		= "Yearbook_Scroll"
+	#Alignment			= "Justify"
+	ParentHY			= 1.0
+	ParentHVelocityY	= -0.08
+
+# Same as BookScreen but prevents closing for a moment
+[TutorialBookScreen]
+Extends		= "BookScreen"
+PopTimeout	= 1.5
+
+# Same as BookScreen but without doubling up the pause backdrop
+[HelpBookScreen]
+Extends		= "BookScreen"
+NumWidgets	= &
+@ Widget
+@@&			= "BookFrame"
+@@&			= "BookText"
+@@&			= "BookCloseButton"
+
+[BookScreen]
+TakesFocus		= true
+PausesGame		= true
+SeizesMouse		= true
+NumWidgets		= &
+@ Widget
+@@&				= "PauseBackdrop"
+@@&				= "BookFrame"
+@@&				= "BookText"
+@@&				= "BookCloseButton"
+
+	[BookFrame]
+	Extends		= "CommonFrameArchetype"
+	ParentWX	= 0.5
+	ParentHY	= 0.5
+	ParentHW	= 0.9
+	ParentHH	= 0.75
+
+	[BookText]
+	Extends		= "DefaultSansTextArchetype"
+	Parent		= "BookFrame"
+	Origin		= "TopLeft"
+	LoadString	= false
+	ParentWX	= 0.05
+	ParentHY	= 0.1
+	ParentWWrap	= 0.9
+
+	[BookCloseButton]
+	Extends			= "DefaultSansTextButtonArchetype"
+	Parent			= "BookFrame"
+	Origin			= "BottomRight"
+	DynamicString	= "Back"
+	ParentHX		= -0.1
+	ParentHY		= -0.1
+	lmActions
+	{
+		"PopScreenAction"
+	}
+
+[ResultsScreen]
+TakesFocus	= true
+PausesGame	= true
+SeizesMouse	= true
+AllowClose	= true
+PopTimeout	= 0.5
+NumWidgets	= &
+@ Widget
+@@&			= "ResultsFrame"
+@@&			= "ResultsHeader"
+@@&			= "ResultsText"
+@@&			= "ResultsContinueButton"
+lmActions( Pushed )
+{
+	"Script_Common_HideTitleCard"
+	SendEvent( "GoToHubLevel", "PlayerPE", QueueEvent = true )
+}
+
+	[ResultsFrame]
+	Extends		= "CommonFrameArchetype"
+	Origin		= "Center"
+	ParentWX	= 0.5
+	ParentHY	= 0.5
+	ParentHW	= 0.6
+	ParentHH	= 0.75
+
+	[ResultsHeader]
+	Extends			= "DefaultSansTextArchetype"
+	Parent			= "ResultsFrame"
+	Origin			= "TopCenter"
+	DynamicString	= "ResultsHeader"
+	ParentWX		= 0.5
+	ParentHY		= 0.05
+
+	[ResultsText]
+	Extends			= "DefaultSansTextArchetype"
+	Parent			= "ResultsFrame"
+	Origin			= "TopLeft"
+	DynamicString	= "ResultsText"
+	#Alignment		= "Justify"
+	ParentWX		= 0.1
+	ParentHY		= 0.15
+	ParentWWrap		= 0.8
+
+	[ResultsContinueButton]
+	Extends			= "DefaultSansTextButtonArchetype"
+	Parent			= "ResultsFrame"
+	Origin			= "BottomRight"
+	String			= "Continue"
+	ParentHX		= -0.05
+	ParentHY		= -0.05
+	lmActions
+	{
+		// NOTE: We don't issue a RosaGoToLevel here anymore; it's queued up behind this screen when it gets pushed.
+		"PopScreenAction"
+	}
+
+[PlotPointScreen]
+TakesFocus	= true
+PausesGame	= true	# Mostly just because FinalReportScreen is paused
+SeizesMouse	= true
+AllowClose	= true
+PopTimeout	= 0.5
+NumWidgets	= &
+@ Widget
+@@&			= "PlotPointFrame"
+@@&			= "PlotPointHeader"
+@@&			= "PlotPointText"
+@@&			= "PlotPointContinueButton"
+
+	[PlotPointFrame]
+	Extends		= "CommonFrameArchetype"
+	Origin		= "Center"
+	ParentWX	= 0.5
+	ParentHY	= 0.5
+	ParentHW	= 0.6
+	ParentHH	= 0.45
+
+	[PlotPointHeader]
+	Extends			= "DefaultSansTextArchetype"
+	Parent			= "PlotPointFrame"
+	Origin			= "TopCenter"
+	DynamicString	= "PlotPointHeader"
+	ParentWX		= 0.5
+	ParentHY		= 0.1
+
+	[PlotPointText]
+	Extends			= "DefaultSansTextArchetype"
+	Parent			= "PlotPointFrame"
+	Origin			= "TopLeft"
+	DynamicString	= "PlotPointText"
+	#Alignment		= "Justify"
+	ParentWX		= 0.1
+	ParentHY		= 0.25
+	ParentWWrap		= 0.8
+
+	[PlotPointContinueButton]
+	Extends			= "DefaultSansTextButtonArchetype"
+	Parent			= "PlotPointFrame"
+	Origin			= "BottomRight"
+	String			= "Continue"
+	ParentHX		= -0.1
+	ParentHY		= -0.1
+	lmActions
+	{
+		"PopScreenAction"
+	}
+
+[FinalReportBackdropScreen]
+TakesFocus	= false
+PausesGame	= false
+SeizesMouse	= false
+AllowClose	= false
+NumWidgets	= &
+@ Widget
+@@&			= "CreditsBlack"
+@@&			= "CreditsBackdrop"
+
+[FinalReportScreen]
+TakesFocus	= true
+PausesGame	= true	# So queued events won't happen immediately!
+SeizesMouse	= true
+AllowClose	= false	# Unlike plot point screen! We don't want this being accidentally skipped.
+NumWidgets	= &
+@ Widget
+@@&			= "FinalReportFrame"
+@@&			= "FinalReportHeader"
+@@&			= "FinalReportText"
+@@&			= "FinalReportContinueButton"
+lmActions( Pushed )
+{
+	// Queue this up behind the screen so it will take if the user quits the game while this screen is displayed
+	SendEvent( "Campaign_ConditionalAdvance", QueueEvent = true )
+	SendEvent( "GoToHubLevel", "PlayerPE", QueueEvent = true )
+}
+
+	[FinalReportFrame]
+	Extends		= "CommonFrameArchetype"
+	Origin		= "Center"
+	ParentWX	= 0.5
+	ParentHY	= 0.5
+	ParentHW	= 0.6
+	ParentHH	= 0.45
+
+	[FinalReportHeader]
+	Extends			= "DefaultSansTextArchetype"
+	Parent			= "FinalReportFrame"
+	Origin			= "TopCenter"
+	DynamicString	= "FinalReportHeader"
+	ParentWX		= 0.5
+	ParentHY		= 0.1
+
+	[FinalReportText]
+	Extends			= "DefaultSansTextArchetype"
+	Parent			= "FinalReportFrame"
+	Origin			= "TopLeft"
+	DynamicString	= "FinalReportText"
+	#Alignment		= "Justify"
+	ParentWX		= 0.1
+	ParentHY		= 0.3
+	ParentWWrap		= 0.8
+
+	[FinalReportContinueButton]
+	Extends			= "DefaultSansTextButtonArchetype"
+	Parent			= "FinalReportFrame"
+	Origin			= "BottomRight"
+	DynamicString	= "FinalReportOK"
+	ParentHX		= -0.1
+	ParentHY		= -0.1
+	lmActions
+	{
+		"PopScreenAction"
+	}
+
+[CampaignRules]
+GeoImageArchetype		= "CampaignGeoImage"
+ScenarioButtonArchetype	= "CampaignScenarioButton"
+
+	[CampaignGeoImage]
+	Extends		= "ImageArchetype"
+	Parent		= "CampaignMapImage"
+	Origin		= "Center"
+	# CAMTODO: Later, the image should be mapped from the region type
+	Image		= "Textures/UI/campaign-zeta-geo.tga"
+	ParentHH	= 0.1
+	AspectRatio	= 1.0
+
+	[CampaignScenarioButton]
+	Extends			= "ImageButtonArchetype"
+	Parent			= "CampaignMapImage"
+	RenderPriority	= 1	# Always draw on top of geo images
+	Origin			= "Center"
+	# CAMTODO: Later, the image should be mapped from the mission type
+	Image			= "Textures/UI/campaign-zeta-scenario.tga"
+	ParentHH		= 0.1
+	AspectRatio		= 1.0
+	lmActions
+	{
+		SendEvent( "Campaign_StartScenario" )
+	}
+
+[CampaignScreen]
+UIScreenType	= "RosaCampaign"
+Rules			= "CampaignRules"
+SuppressesInput	= true
+TakesFocus		= true
+PausesGame		= false
+SeizesMouse		= true
+AllowClose		= true
+NumWidgets		= &
+@ Widget
+@@&				= "CampaignMapImage"
+@@&				= "CampaignNortheastButton"
+@@&				= "CampaignPlayerImage"
+@@&				= "CampaignBackButton"
+
+	[CampaignMapImage]
+	Extends		= "ImageArchetype"
+	Origin		= "Center"
+	ParentWX	= 0.5
+	ParentHY	= 0.5
+	ParentHH	= 0.9
+	AspectRatio	= 1.0
+	Image		= "Textures/UI/campaign-zeta-map.tga"
+
+	[CampaignNortheastButton]
+	Extends		= "CampaignScenarioButton"
+	ParentWX	= 0.64285714285714285714285714285714	# TEMPHACK, 0.5 + (1/7)
+	ParentHY	= 0.35714285714285714285714285714286	# TEMPHACK, 0.5 - (1/7)
+	lmActions( Focus )
+	{
+		// CAMTODO: This event doesn't exist yet, and I dunno what the index should be
+		SendEvent( "Campaign_SelectGeoGrid", GeoGrid = ConstantInt( 0 ) )
+	}
+
+	[CampaignPlayerImage]
+	Extends			= "ImageArchetype"
+	Parent			= "CampaignMapImage"
+	RenderPriority	= 2	# Always draw on top of geo images (and maybe completed scenario?)
+	Origin			= "Center"
+	Image			= "Textures/UI/campaign-zeta-player.tga"
+	ParentWX		= 0.5
+	ParentHY		= 0.5
+	ParentHH		= 0.1
+	AspectRatio		= 1.0
+
+	[CampaignBackButton]
+	Extends			= "DefaultSansTextButtonArchetype"
+	Parent			= "CampaignMapImage"
+	Origin			= "BottomRight"
+	DynamicString	= "Back"
+	ParentWX		= -0.1
+	ParentHY		= -0.1
+	FocusOrder		= 1 # Sequenced after all dynamically added widgets
+	lmActions
+	{
+		"PopScreenAction"
+	}
+
+[Vamp_CampaignScreen]
+UIScreenType	= "Base"
+SuppressesInput	= true
+TakesFocus		= true
+PausesGame		= false
+SeizesMouse		= true
+AllowClose		= true
+NumWidgets		= &
+@ Widget
+@@&				= "Vamp_CampaignSpacer"
+@@&				= "Vamp_CampaignFrame"
+@@&				= "Vamp_CampaignMap"
+@@&				= "Vamp_CampaignNeighborhoodLabel0"
+@@&				= "Vamp_CampaignNeighborhoodLabel1"
+@@&				= "Vamp_CampaignNeighborhoodLabel2"
+@@&				= "Vamp_CampaignNeighborhoodLabel3"
+@@&				= "Vamp_CampaignNeighborhoodLabel4"
+@@&				= "Vamp_CampaignNeighborhoodLabel5"
+@@&				= "Vamp_CampaignNeighborhoodButton0"
+@@&				= "Vamp_CampaignNeighborhoodButton1"
+@@&				= "Vamp_CampaignNeighborhoodButton2"
+@@&				= "Vamp_CampaignNeighborhoodButton3"
+@@&				= "Vamp_CampaignNeighborhoodButton4"
+@@&				= "Vamp_CampaignNeighborhoodButton5"
+@@&				= "Vamp_CampaignMissionFrame"
+@@&				= "Vamp_CampaignMissionText"
+@@&				= "Vamp_CampaignBackButton"
+
+	[Vamp_CampaignSpacer]
+	UIWidgetType	= "Spacer"
+	Origin			= "Center"
+	ParentWX		= 0.5
+	ParentHY		= 0.5
+	ParentHH		= 0.75
+	AspectRatio		= 1.777777
+
+	[Vamp_CampaignMissionFrame]
+	Extends		= "CommonFrameArchetype"
+	Parent		= "Vamp_CampaignSpacer"
+	Origin		= "CenterLeft"
+	ParentWX	= 0.59375
+	ParentHY	= 0.5
+	ParentHH	= 1.0
+	AspectRatio	= 0.666666
+
+	[Vamp_CampaignMissionText]
+	Extends			= "DefaultSerifTextArchetype"
+	ScreenHH		= 0.017	# Change font size!!
+	Parent			= "Vamp_CampaignMissionFrame"
+	Origin			= "TopLeft"
+	DynamicString	= "CampaignMissionInfo"
+	ParentWX		= 0.083333
+	ParentHY		= 0.055555
+	ParentWWrap		= 0.833333
+
+	[Vamp_CampaignBackButton]
+	Extends			= "DefaultSansTextButtonArchetype"
+	Parent			= "Vamp_CampaignMissionFrame"
+	Origin			= "BottomRight"
+	DynamicString	= "Back"
+	ParentWX		= 0.955
+	ParentHY		= 0.97
+	lmActions
+	{
+		"PopScreenAction"
+	}
+
+	[Vamp_CampaignFrame]
+	Extends		= "CommonFrameArchetype"
+	Parent		= "Vamp_CampaignSpacer"
+	Origin		= "CenterRight"
+	ParentWX	= 0.59375
+	ParentHY	= 0.5
+	ParentHH	= 1.0
+	AspectRatio	= 1.0
+
+	[Vamp_CampaignMap]
+	Extends		= "ImageArchetype"
+	Parent		= "Vamp_CampaignFrame"
+	Origin		= "Center"
+	ParentWX	= 0.5
+	ParentHY	= 0.5
+	ParentHH	= 0.95
+	AspectRatio	= 1.0
+	Image		= "Textures/UI/campaign-map.tga"
+
+	[Vamp_CampaignNeighborhoodLabel]
+	Extends	= "DefaultSansTextArchetype"
+	Parent	= "Vamp_CampaignMap"
+	Origin	= "Center"
+
+	[Vamp_CampaignNeighborhoodLabel0]
+	Extends			= "Vamp_CampaignNeighborhoodLabel"
+	ParentWX		= 0.18
+	ParentHY		= 0.08
+	DynamicString	= "CampaignNeighborhoodLabel0"
+
+	[Vamp_CampaignNeighborhoodLabel1]
+	Extends			= "Vamp_CampaignNeighborhoodLabel"
+	ParentWX		= 0.8
+	ParentHY		= 0.05
+	DynamicString	= "CampaignNeighborhoodLabel1"
+
+	[Vamp_CampaignNeighborhoodLabel2]
+	Extends			= "Vamp_CampaignNeighborhoodLabel"
+	ParentWX		= 0.62
+	ParentHY		= 0.28
+	DynamicString	= "CampaignNeighborhoodLabel2"
+
+	[Vamp_CampaignNeighborhoodLabel3]
+	Extends			= "Vamp_CampaignNeighborhoodLabel"
+	ParentWX		= 0.2
+	ParentHY		= 0.8
+	DynamicString	= "CampaignNeighborhoodLabel3"
+
+	[Vamp_CampaignNeighborhoodLabel4]
+	Extends			= "Vamp_CampaignNeighborhoodLabel"
+	ParentWX		= 0.7
+	ParentHY		= 0.65
+	DynamicString	= "CampaignNeighborhoodLabel4"
+
+	[Vamp_CampaignNeighborhoodLabel5]
+	Extends			= "Vamp_CampaignNeighborhoodLabel"
+	ParentWX		= 0.3
+	ParentHY		= 0.4
+	DynamicString	= "CampaignNeighborhoodLabel5"
+
+	[Vamp_CampaignNeighborhoodButton]
+	Extends		= "ImageButtonArchetype"
+	Parent		= "Vamp_CampaignMap"
+	Origin		= "Center"
+	Image		= "Textures/UI/campaign-location.tga"
+	ParentHH	= 0.1
+	AspectRatio	= 1.0
+	lmActions
+	{
+		SendEvent( "Campaign_StartScenario" )
+	}
+
+	[Vamp_CampaignNeighborhoodButton0]
+	Extends	= "Vamp_CampaignNeighborhoodButton"
+	ParentWX	= 0.18
+	ParentHY	= 0.18
+	lmActions( Focus )
+	{
+		SendEvent( "Campaign_SelectNeighborhood", Neighborhood = ConstantInt( 0 ) )
+	}
+
+	[Vamp_CampaignNeighborhoodButton1]
+	Extends	= "Vamp_CampaignNeighborhoodButton"
+	ParentWX	= 0.8
+	ParentHY	= 0.15
+	lmActions( Focus )
+	{
+		SendEvent( "Campaign_SelectNeighborhood", Neighborhood = ConstantInt( 1 ) )
+	}
+
+	[Vamp_CampaignNeighborhoodButton2]
+	Extends	= "Vamp_CampaignNeighborhoodButton"
+	ParentWX	= 0.62
+	ParentHY	= 0.38
+	lmActions( Focus )
+	{
+		SendEvent( "Campaign_SelectNeighborhood", Neighborhood = ConstantInt( 2 ) )
+	}
+
+	[Vamp_CampaignNeighborhoodButton3]
+	Extends	= "Vamp_CampaignNeighborhoodButton"
+	ParentWX	= 0.2
+	ParentHY	= 0.9
+	lmActions( Focus )
+	{
+		SendEvent( "Campaign_SelectNeighborhood", Neighborhood = ConstantInt( 3 ) )
+	}
+
+	[Vamp_CampaignNeighborhoodButton4]
+	Extends	= "Vamp_CampaignNeighborhoodButton"
+	ParentWX	= 0.7
+	ParentHY	= 0.75
+	lmActions( Focus )
+	{
+		SendEvent( "Campaign_SelectNeighborhood", Neighborhood = ConstantInt( 4 ) )
+	}
+
+	[Vamp_CampaignNeighborhoodButton5]
+	Extends	= "Vamp_CampaignNeighborhoodButton"
+	ParentWX	= 0.3
+	ParentHY	= 0.5
+	lmActions( Focus )
+	{
+		SendEvent( "Campaign_SelectNeighborhood", Neighborhood = ConstantInt( 5 ) )
+	}
+
+[RadialScreen]
+UIScreenType	= "RosaRadial"
+PausesGame		= true
+NumWidgets		= &
+@ Widget
+@@&				= "RadialBackdrop"
+@@&				= "RadialRing"
+@@&				= "RadialSlotSpacer"
+@@&				= "RadialSlot0"
+@@&				= "RadialSlot1"
+@@&				= "RadialSlot2"
+@@&				= "RadialSlot3"
+NumSlots		= &
+@ Slot
+@@&				= "WeaponSlot0"
+@@&				= "WeaponSlot1"
+@@&				= "WeaponSlot2"
+@@&				= "WeaponSlot3"
+
+	[RadialBackdrop]
+	Extends		= "ImageArchetype"
+	Origin		= "Center"
+	Image		= "Textures/UI/radial-backdrop.tga"
+	ParentWW	= 1.0
+	ParentWH	= 1.0
+	ParentWX	= 0.5
+	ParentHY	= 0.5
+
+	[RadialRing]
+	Extends		= "ImageArchetype"
+	Origin		= "Center"
+	Image		= "Textures/UI/radial-ring.tga"
+	ParentHW	= 0.5
+	ParentHH	= 0.5
+	ParentWX	= 0.5
+	ParentHY	= 0.5
+	ColorH		= 0.0
+	ColorS		= 0.8
+	ColorV		= 0.6
+
+	[RadialSlotSpacer]
+	UIWidgetType	= "Spacer"
+	Origin			= "Center"
+	ParentHW		= 0.5
+	ParentHH		= 0.5
+	ParentWX		= 0.5
+	ParentHY		= 0.5
+
+	[RadialButtonArchetype]
+	Extends		= "ImageButtonArchetype"
+	Parent		= "RadialSlotSpacer"
+	Origin		= "Center"
+	LoadImage	= false
+	ParentHW	= 0.2
+	ParentHH	= 0.2
+	ColorR		= 1.0
+	ColorG		= 0.4
+	ColorB		= 0.4
+	ScreenColorR	= 0.5
+	ScreenColorG	= 0.2
+	ScreenColorB	= 0.2
+
+	[RadialSlot0]
+	Extends	= "RadialButtonArchetype"
+
+	[RadialSlot1]
+	Extends	= "RadialButtonArchetype"
+
+	[RadialSlot2]
+	Extends	= "RadialButtonArchetype"
+
+	[RadialSlot3]
+	Extends	= "RadialButtonArchetype"
+
+[LockpickScreen]
+NumWidgets	= &
+@ Widget
+@@&			= "LockpickStatus"
+@@&			= "LockpickControls"
+
+	[LockpickStatus]
+	Extends			= "DefaultSansTextArchetype"
+	Origin			= "Top"
+	ParentWX		= 0.5
+	ParentHY		= 0.85
+	Alignment		= "Center"
+	DynamicString	= "LockpickStatus"
+
+	[LockpickControls]
+	Extends			= "DefaultSansTextArchetype"
+	Origin			= "Bottom"
+	ParentWX		= 0.5
+	ParentHY		= 0.95
+	Alignment		= "Center"
+	DynamicString	= "LockpickControls"
+	HasShadowBox			= true
+	ShadowBoxImage			= "Textures/UI/ui-shadowbox-l-r_NODXT.tga"
+	ShadowBoxScreenHBorder	= -0.020
+	ShadowBoxScreenHMargin	= 0.020
+
+[CharacterConfigRules]
+SkinPresetButtonArchetype	= "CharacterConfigSkinPresetButtonArchetype"
+NailsPresetButtonArchetype	= "CharacterConfigNailsPresetButtonArchetype"
+PresetButtonParentWXSpacing	= 0.18
+
+[CharacterConfigSkinPresetButtonArchetype]
+Extends		= "ImageButtonArchetype"
+Parent		= "CharacterConfigSkinSpacer"
+Origin		= "Center"
+ParentHY	= 0.35
+ParentHH	= 0.2
+AspectRatio	= 1.0
+Image		= "Textures/white.tga"
+
+[CharacterConfigNailsPresetButtonArchetype]
+Extends	= "CharacterConfigSkinPresetButtonArchetype"
+Parent	= "CharacterConfigNailsSpacer"
+
+[CharacterConfigScreen]
+UIScreenType	= "RosaCharacterConfig"
+Rules			= "CharacterConfigRules"
+SuppressesInput	= true
+TakesFocus		= true
+PausesGame		= false
+SeizesMouse		= true
+AllowClose		= true
+NumWidgets		= &
+@ Widget
+@@&				= "CharacterConfigFrame"
+@@&				= "CharacterConfigSkinSpacer"
+@@&				= "CharacterConfigNailsSpacer"
+@@&				= "CharacterConfigSkinHeader"
+@@&				= "CharacterConfigNailsHeader"
+@@&				= "CharacterConfigSkinHSlider"
+@@&				= "CharacterConfigSkinSSlider"
+@@&				= "CharacterConfigSkinVSlider"
+@@&				= "CharacterConfigNailsHSlider"
+@@&				= "CharacterConfigNailsSSlider"
+@@&				= "CharacterConfigNailsVSlider"
+@@&				= "CharacterConfigNailsASlider"
+@@&				= "CharacterConfigBackButton"
+
+[CharacterConfigScreen]
+lmActions( Pushed )
+{
+	SendEvent( "BeginModalHands", "PlayerPE", Item = ConstantString( "Hands_Examine" ) )
+	SendEvent( "PlayAnim", GetEntityByLabel( "Hands_Examine" ), AnimationName = ConstantString( "Examine" ), PlayRate = ConstantFloat( 0.2 ), Loop = ConstantBool( true ) )
+}
+lmActions( Popped )
+{
+	SendEvent( "EndModalHands", "PlayerPE" )
+}
+
+	[CharacterConfigFrame]
+	Extends		= "CommonFrameArchetype"
+	Origin		= "TopLeft"
+	ParentHX	= 0.05
+	ParentHY	= 0.05
+	ParentHW	= 0.525
+	ParentHH	= 0.7
+
+	[CharacterConfigSkinSpacer]
+	UIWidgetType	= "Spacer"
+	Parent			= "CharacterConfigFrame"
+	Origin			= "TopLeft"
+	ParentWX		= 0.0
+	ParentHY		= 0.0
+	ParentWW		= 1.0
+	ParentHH		= 0.5
+
+	[CharacterConfigNailsSpacer]
+	UIWidgetType	= "Spacer"
+	Parent			= "CharacterConfigFrame"
+	Origin			= "TopLeft"
+	ParentWX		= 0.0
+	ParentHY		= 0.4
+	ParentWW		= 1.0
+	ParentHH		= 0.5
+
+	[CharacterConfigSkinHeader]
+	Extends		= "DefaultSansTextArchetype"
+	Parent		= "CharacterConfigSkinSpacer"
+	Origin		= "TopCenter"
+	String		= "Skin"
+	ParentWX	= 0.5
+	ParentHY	= 0.1
+
+	[CharacterConfigNailsHeader]
+	Extends		= "DefaultSansTextArchetype"
+	Parent		= "CharacterConfigNailsSpacer"
+	Origin		= "TopCenter"
+	String		= "Nails"
+	ParentWX	= 0.5
+	ParentHY	= 0.1
+
+	[CharacterConfigSkinHSlider]
+	Extends		= "SliderArchetype"
+	Parent		= "CharacterConfigSkinSpacer"
+	Origin		= "TopLeft"
+	ParentWX	= 0.1
+	ParentHY	= 0.5
+	ParentWW	= 0.8
+	SliderLabel	= "CharacterConfigSkinHLabel"
+	SliderBack	= "CharacterConfigSkinHBack"
+	Slider		= "CharacterConfigSkinH"
+
+		[CharacterConfigSkinHLabel]
+		Extends	= "SliderLabelArchetype"
+		String	= "Hue"
+
+		[CharacterConfigSkinHBack]
+		Extends		= "SliderBackArchetype"
+		ParentWW	= 0.625
+
+		[CharacterConfigSkinH]
+		Extends	= "SliderButtonArchetype"
+
+	[CharacterConfigSkinSSlider]
+	Extends		= "SliderArchetype"
+	Parent		= "CharacterConfigSkinSpacer"
+	Origin		= "TopLeft"
+	ParentWX	= 0.1
+	ParentHY	= 0.6
+	ParentWW	= 0.8
+	SliderLabel	= "CharacterConfigSkinSLabel"
+	SliderBack	= "CharacterConfigSkinSBack"
+	Slider		= "CharacterConfigSkinS"
+
+		[CharacterConfigSkinSLabel]
+		Extends	= "SliderLabelArchetype"
+		String	= "Saturation"
+
+		[CharacterConfigSkinSBack]
+		Extends		= "SliderBackArchetype"
+		ParentWW	= 0.625
+
+		[CharacterConfigSkinS]
+		Extends	= "SliderButtonArchetype"
+
+	[CharacterConfigSkinVSlider]
+	Extends		= "SliderArchetype"
+	Parent		= "CharacterConfigSkinSpacer"
+	Origin		= "TopLeft"
+	ParentWX	= 0.1
+	ParentHY	= 0.7
+	ParentWW	= 0.8
+	SliderLabel	= "CharacterConfigSkinVLabel"
+	SliderBack	= "CharacterConfigSkinVBack"
+	Slider		= "CharacterConfigSkinV"
+
+		[CharacterConfigSkinVLabel]
+		Extends	= "SliderLabelArchetype"
+		String	= "Value"
+
+		[CharacterConfigSkinVBack]
+		Extends		= "SliderBackArchetype"
+		ParentWW	= 0.625
+
+		[CharacterConfigSkinV]
+		Extends	= "SliderButtonArchetype"
+
+	[CharacterConfigNailsHSlider]
+	Extends		= "SliderArchetype"
+	Parent		= "CharacterConfigNailsSpacer"
+	Origin		= "TopLeft"
+	ParentWX	= 0.1
+	ParentHY	= 0.5
+	ParentWW	= 0.8
+	SliderLabel	= "CharacterConfigNailsHLabel"
+	SliderBack	= "CharacterConfigNailsHBack"
+	Slider		= "CharacterConfigNailsH"
+
+		[CharacterConfigNailsHLabel]
+		Extends	= "SliderLabelArchetype"
+		String	= "Hue"
+
+		[CharacterConfigNailsHBack]
+		Extends		= "SliderBackArchetype"
+		ParentWW	= 0.625
+
+		[CharacterConfigNailsH]
+		Extends	= "SliderButtonArchetype"
+
+	[CharacterConfigNailsSSlider]
+	Extends		= "SliderArchetype"
+	Parent		= "CharacterConfigNailsSpacer"
+	Origin		= "TopLeft"
+	ParentWX	= 0.1
+	ParentHY	= 0.6
+	ParentWW	= 0.8
+	SliderLabel	= "CharacterConfigNailsSLabel"
+	SliderBack	= "CharacterConfigNailsSBack"
+	Slider		= "CharacterConfigNailsS"
+
+		[CharacterConfigNailsSLabel]
+		Extends	= "SliderLabelArchetype"
+		String	= "Saturation"
+
+		[CharacterConfigNailsSBack]
+		Extends		= "SliderBackArchetype"
+		ParentWW	= 0.625
+
+		[CharacterConfigNailsS]
+		Extends	= "SliderButtonArchetype"
+
+	[CharacterConfigNailsVSlider]
+	Extends		= "SliderArchetype"
+	Parent		= "CharacterConfigNailsSpacer"
+	Origin		= "TopLeft"
+	ParentWX	= 0.1
+	ParentHY	= 0.7
+	ParentWW	= 0.8
+	SliderLabel	= "CharacterConfigNailsVLabel"
+	SliderBack	= "CharacterConfigNailsVBack"
+	Slider		= "CharacterConfigNailsV"
+
+		[CharacterConfigNailsVLabel]
+		Extends	= "SliderLabelArchetype"
+		String	= "Value"
+
+		[CharacterConfigNailsVBack]
+		Extends		= "SliderBackArchetype"
+		ParentWW	= 0.625
+
+		[CharacterConfigNailsV]
+		Extends	= "SliderButtonArchetype"
+
+	[CharacterConfigNailsASlider]
+	Extends		= "SliderArchetype"
+	Parent		= "CharacterConfigNailsSpacer"
+	Origin		= "TopLeft"
+	ParentWX	= 0.1
+	ParentHY	= 0.8
+	ParentWW	= 0.8
+	SliderLabel	= "CharacterConfigNailsALabel"
+	SliderBack	= "CharacterConfigNailsABack"
+	Slider		= "CharacterConfigNailsA"
+
+		[CharacterConfigNailsALabel]
+		Extends	= "SliderLabelArchetype"
+		String	= "Alpha"
+
+		[CharacterConfigNailsABack]
+		Extends		= "SliderBackArchetype"
+		ParentWW	= 0.625
+
+		[CharacterConfigNailsA]
+		Extends	= "SliderButtonArchetype"
+
+	[CharacterConfigBackButton]
+	Extends			= "DefaultSansTextButtonArchetype"
+	Parent			= "CharacterConfigFrame"
+	Origin			= "BottomRight"
+	DynamicString	= "Back"
+	ParentHX		= -0.05
+	ParentHY		= -0.05
+	lmActions
+	{
+		"PopScreenAction"
+	}
+
+[AmmoPickupScreen]
+UIScreenType	= "Base"
+TakesFocus		= true
+AllowClose		= true
+NumWidgets		= &
+@ Widget
+@@&				= "AmmoPickupFrame"
+@@&				= "AmmoPickupText"
+
+	[AmmoPickupFrame]
+	Extends				= "CommonFrameArchetype"
+	Origin				= "TopCenter"
+	ParentWX			= 0.5
+	ParentHY			= 0.55
+	ParentHW			= 0.65
+	ParentHH			= 0.15
+	UseVanishingPointY	= true
+
+	[AmmoPickupText]
+	Extends			= "DefaultSansTextArchetype"
+	Parent			= "AmmoPickupFrame"
+	Origin			= "Center"
+	DynamicString	= "AmmoPickupSwitch"
+	ParentWX		= 0.5
+	ParentHY		= 0.5
+
+[ConversationScreen]
+UIScreenType	= "RosaConversation"
+TakesFocus		= true
+PausesGame		= true
+SeizesMouse		= true
+AllowClose		= false
+NumWidgets		= &
+@ Widget
+@@&				= "ConversationPauseBackdrop"
+@@&				= "ConversationSpacer"
+#@@&				= "ConversationPortraitLeftBackdrop"
+#@@&				= "ConversationPortraitRightBackdrop"
+#@@&				= "ConversationPortraitLeft"
+#@@&				= "ConversationPortraitRight"
+@@&				= "ConversationFrame"
+@@&				= "ConversationSpeakerText"
+@@&				= "ConversationText"
+@@&				= "ConversationOKButton"
+@@&				= "ConversationChoice1Button"
+@@&				= "ConversationChoice2Button"
+@@&				= "ConversationChoice3Button"
+@@&				= "ConversationChoice4Button"
+@@&				= "ConversationChoice5Button"
+
+	[ConversationPauseBackdrop]
+	Extends			= "ImageArchetype"
+	Origin			= "TopLeft"
+	Image			= "Textures/UI/conversation-back_NODXT.tga"
+	RenderInWorld	= true
+	ParentWW		= 1.0
+	ParentHH		= 1.0
+	ParentWX		= 0.0
+	ParentHY		= 0.0
+
+	# This spacer contains the frame and the speaker name
+	[ConversationSpacer]
+	UIWidgetType	= "Spacer"
+	Origin			= "BottomCenter"
+	ParentHW		= 0.8
+	ParentHH		= 0.4
+	ParentWX		= 0.5
+	ParentHY		= -0.05
+
+	[ConversationFrame]
+	Extends		= "CommonFrameArchetype"
+	Parent		= "ConversationSpacer"
+	Origin		= "BottomLeft"
+	ParentWX	= 0.0
+	ParentHY	= 1.0
+	ParentWW	= 1.0
+	ParentHH	= 0.9
+
+	[ConversationSpeakerText]
+	Extends				= "DefaultSansTextArchetype"
+	Parent				= "ConversationSpacer"
+	LoadString			= false
+	Origin				= "TopLeft"
+	ParentWX			= 0.0
+	ParentHY			= 0.0
+
+	[ConversationText]
+	Extends		= "DefaultSansTextArchetype"
+	Parent		= "ConversationFrame"
+	LoadString	= false
+	Origin		= "TopLeft"
+	ParentWWrap	= 0.9
+	ParentWX	= 0.05
+	ParentHY	= 0.1
+
+	[ConversationOKButton]
+	Extends		= "DefaultSansTextButtonArchetype"
+	Parent		= "ConversationFrame"
+	Origin		= "BottomRight"
+	String		= "Continue"
+	ParentHX	= -0.1
+	ParentHY	= -0.1
+	lmActions
+	{
+		RosaProgressConversation()
+	}
+
+	[ConversationChoiceButtonArchetype]
+	Extends		= "DefaultSansTextButtonArchetype"
+	Parent		= "ConversationFrame"
+	Origin		= "TopLeft"
+	LoadString	= false
+	ParentWX	= 0.05
+	lmActions
+	{
+		RosaSelectConversationChoice( 0 )
+	}
+
+	[ConversationChoice1Button]
+	Extends		= "ConversationChoiceButtonArchetype"
+	ParentHY	= 0.1
+	lmActions
+	{
+		RosaSelectConversationChoice( 0 )
+	}
+
+	[ConversationChoice2Button]
+	Extends		= "ConversationChoiceButtonArchetype"
+	ParentHY	= 0.275
+	lmActions
+	{
+		RosaSelectConversationChoice( 1 )
+	}
+
+	[ConversationChoice3Button]
+	Extends		= "ConversationChoiceButtonArchetype"
+	ParentHY	= 0.45
+	lmActions
+	{
+		RosaSelectConversationChoice( 2 )
+	}
+
+	[ConversationChoice4Button]
+	Extends		= "ConversationChoiceButtonArchetype"
+	ParentHY	= 0.625
+	lmActions
+	{
+		RosaSelectConversationChoice( 3 )
+	}
+
+	[ConversationChoice5Button]
+	Extends		= "ConversationChoiceButtonArchetype"
+	ParentHY	= 0.8
+	lmActions
+	{
+		RosaSelectConversationChoice( 4 )
+	}
+
+[LoadingScreen]
+UIScreenType	= "Base"
+AllowClose		= false
+TakesFocus		= true
+PausesGame		= true
+NumWidgets		= &
+@ Widget
+@@&				= "LoadingFrame"
+@@&				= "LoadingText"
+
+	[LoadingFrame]
+	Extends		= "CommonFrameArchetype"
+	ParentWX	= 0.5
+	ParentHY	= 0.5
+	ParentHW	= 0.3
+	ParentHH	= 0.15
+
+	[LoadingText]
+	Extends			= "DefaultSansTextArchetype"
+	Parent			= "LoadingFrame"
+	Origin			= "Center"
+	String			= "Loading"
+	ParentWX		= 0.5
+	ParentHY		= 0.5
+
+[NewGameTextButtonArchetype]
+Extends	= "DefaultSansTextButtonArchetype"
+Parent	= "NewGameFrame"
+Origin	= "TopLeft"
+
+[NewGameRules]
+Archetype				= "NewGameTextButtonArchetype"
+ConfirmOverwriteAction	= "ConfirmNewGameOverwriteAction"
+ParentHYBase			= 0.40
+ParentHYStep			= 0.048
+ParentWX				= 0.1
+
+	[ConfirmNewGameOverwriteAction]
+	ActionType		= "UIShowYesNoDialog"
+	YesNoString		= "ConfirmSaveOverwrite"
+	lmActions( Yes )
+	{
+		RosaGoToLevel( NewGame = true, NewGameUseActiveSlot = true )
+	}
+
+[NewGameScreen]
+UIScreenType	= "RosaNewGame"
+TakesFocus		= true
+SeizesMouse		= true
+Rules			= "NewGameRules"
+FocusXShift		= 0
+NumWidgets		= &
+@ Widget
+@@&				= "NewGameFrame"
+@@&				= "NewGameHeader"
+@@&				= "NewGameDifficultyButton"
+#@@&				= "NewGameTouristButton"
+#@@&				= "NewGameEasyButton"
+#@@&				= "NewGameNormalButton"
+#@@&				= "NewGameHardButton"
+#@@&				= "NewGameExpertButton"
+@@&				= "NewGameDifficultyDesc"
+#@@&				= "NewGame_PlayIntroLevel"
+@@&				= "NewGame_ShowTutorials"
+@@&				= "NewGameOpenUserDataPathButton"
+@@&				= "NewGameBackButton"
+# NOTE: Slot widgets are added dynamically
+
+	[NewGameFrame]
+	Extends		= "CommonFrameArchetype"
+	ParentWX	= 0.5
+	ParentHY	= 0.5
+	ParentHW	= 1.0
+	ParentHH	= 0.75
+
+	[NewGameHeader]
+	Extends		= "DefaultSansTextArchetype"
+	Parent		= "NewGameFrame"
+	Origin		= "TopCenter"
+	String		= "NewGame"
+	ParentWX	= 0.5
+	ParentHY	= 0.05
+
+	[NewGameOpenUserDataPathButton]
+	Extends		= "DefaultSansTextButtonArchetype"
+	Parent		= "NewGameFrame"
+	Origin		= "BottomLeft"
+	String		= "OpenUserDataPath"
+	ParentHX	= 0.05
+	ParentHY	= -0.05
+	FocusOrder	= 1	# Revisit after dynamic widgets are in
+	lmActions
+	{
+		RosaOpenUserDataPath()
+	}
+
+	[NewGameBackButton]
+	Extends			= "DefaultSansTextButtonArchetype"
+	Parent			= "NewGameFrame"
+	Origin			= "BottomRight"
+	DynamicString	= "Back"
+	ParentHX		= -0.05
+	ParentHY		= -0.05
+	FocusOrder		= 2	# Revisit after dynamic widgets are in
+	NumActions		= &
+	@ Action
+	@@&				= "PopScreenAction"
+
+	[NewGameDifficultyButton]
+	UIWidgetType	= "Composite"
+	Focus			= true
+	NumChildren		= &
+	@ Child
+	@@&				= "NewGameDifficultyLabel"
+	@@&				= "NewGameDifficultySetting"
+	NumActions		= &
+	@ Action
+	@@&				= "CycleMenuDifficulty"
+
+		[NewGameDifficultyLabel]
+		Extends		= "DefaultSansTextButtonArchetype"
+		Parent		= "NewGameFrame"
+		Origin		= "TopLeft"
+		String		= "DifficultyOption"
+		ParentWX	= 0.25
+		ParentHY	= 0.10
+
+		[NewGameDifficultySetting]
+		Extends			= "DefaultSansTextButtonArchetype"
+		Parent			= "NewGameFrame"
+		Origin			= "TopRight"
+		DynamicString	= "DifficultyOptionSetting"
+		ParentWX		= -0.25
+		ParentHY		= 0.10
+
+	[NewGameTouristButton]
+	Extends		= "DefaultSansTextButtonArchetype"
+	Parent		= "NewGameFrame"
+	Origin		= "TopCenter"
+	String		= "Difficulty_Tourist"
+	ParentWX	= 0.5
+	ParentHY	= 0.18
+	lmActions
+	{
+		RosaGoToLevel( NewGame = true )
+	}
+	lmActions( Focus )
+	{
+		SendEvent( "SetMenuDifficulty", "PlayerPE", Difficulty = ConstantInt( 0 ) )
+	}
+
+	[NewGameEasyButton]
+	Extends		= "DefaultSansTextButtonArchetype"
+	Parent		= "NewGameFrame"
+	Origin		= "TopCenter"
+	String		= "Difficulty_Easy"
+	ParentWX	= 0.5
+	ParentHY	= 0.24
+	lmActions
+	{
+		RosaGoToLevel( NewGame = true )
+	}
+	lmActions( Focus )
+	{
+		SendEvent( "SetMenuDifficulty", "PlayerPE", Difficulty = ConstantInt( 1 ) )
+	}
+
+	[NewGameNormalButton]
+	Extends		= "DefaultSansTextButtonArchetype"
+	Parent		= "NewGameFrame"
+	Origin		= "TopCenter"
+	String		= "Difficulty_Normal"
+	ParentWX	= 0.5
+	ParentHY	= 0.3
+	lmActions
+	{
+		RosaGoToLevel( NewGame = true )
+	}
+	lmActions( Focus )
+	{
+		SendEvent( "SetMenuDifficulty", "PlayerPE", Difficulty = ConstantInt( 2 ) )
+	}
+
+	[NewGameHardButton]
+	Extends		= "DefaultSansTextButtonArchetype"
+	Parent		= "NewGameFrame"
+	Origin		= "TopCenter"
+	String		= "Difficulty_Hard"
+	ParentWX	= 0.5
+	ParentHY	= 0.36
+	lmActions
+	{
+		RosaGoToLevel( NewGame = true )
+	}
+	lmActions( Focus )
+	{
+		SendEvent( "SetMenuDifficulty", "PlayerPE", Difficulty = ConstantInt( 3 ) )
+	}
+
+	[NewGameExpertButton]
+	Extends		= "DefaultSansTextButtonArchetype"
+	Parent		= "NewGameFrame"
+	Origin		= "TopCenter"
+	String		= "Difficulty_Expert"
+	ParentWX	= 0.5
+	ParentHY	= 0.42
+	lmActions
+	{
+		RosaGoToLevel( NewGame = true )
+	}
+	lmActions( Focus )
+	{
+		SendEvent( "SetMenuDifficulty", "PlayerPE", Difficulty = ConstantInt( 4 ) )
+	}
+
+	[NewGameDifficultyDesc]
+	Extends			= "DefaultSansTextArchetype"
+	ScreenHH		= 0.017	# New font size! Midway between medium and small
+	Parent			= "NewGameFrame"
+	Origin			= "TopCenter"
+	DynamicString	= "DifficultyDesc"
+	ParentWX		= 0.5
+	ParentHY		= 0.15
+	ParentWWrap		= 0.50
+	ColorR			= 0.8
+	ColorG			= 0.8
+	ColorB			= 0.8
+
+	[NewGame_PlayIntroLevel]
+	UIWidgetType	= "Composite"
+	Focus			= true
+	NumChildren		= &
+	@ Child
+	@@&				= "NewGame_PlayIntroLevel_Label"
+	@@&				= "NewGame_PlayIntroLevel_Setting"
+	lmActions
+	{
+		SendEvent( "TogglePlayIntroLevel" )
+	}
+
+		[NewGame_PlayIntroLevel_Label]
+		Extends		= "DefaultSansTextButtonArchetype"
+		Parent		= "NewGameFrame"
+		Origin		= "TopLeft"
+		String		= "PlayIntroLevel"
+		ParentWX	= 0.25
+		ParentHY	= 0.30
+
+		[NewGame_PlayIntroLevel_Setting]
+		Extends			= "DefaultSansTextButtonArchetype"
+		Parent			= "NewGameFrame"
+		Origin			= "TopRight"
+		DynamicString	= "PlayIntroLevelSetting"
+		ParentWX		= -0.25
+		ParentHY		= 0.30
+
+	[NewGame_ShowTutorials]
+	UIWidgetType	= "Composite"
+	Focus			= true
+	NumChildren		= &
+	@ Child
+	@@&				= "NewGame_ShowTutorials_Label"
+	@@&				= "NewGame_ShowTutorials_Setting"
+	lmActions
+	{
+		SendEvent( "ToggleShowTutorials" )
+	}
+
+		[NewGame_ShowTutorials_Label]
+		Extends		= "DefaultSansTextButtonArchetype"
+		Parent		= "NewGameFrame"
+		Origin		= "TopLeft"
+		String		= "ShowTutorials"
+		ParentWX	= 0.25
+		ParentHY	= 0.35
+
+		[NewGame_ShowTutorials_Setting]
+		Extends			= "DefaultSansTextButtonArchetype"
+		Parent			= "NewGameFrame"
+		Origin			= "TopRight"
+		DynamicString	= "ShowTutorialsSetting"
+		ParentWX		= -0.25
+		ParentHY		= 0.35
+
+[LoadGameTextButtonArchetype]
+Extends	= "DefaultSansTextButtonArchetype"
+Parent	= "LoadGameFrame"
+Origin	= "TopLeft"
+
+[LoadGameRules]
+Archetype		= "LoadGameTextButtonArchetype"
+ParentHYBase	= 0.15
+ParentHYStep	= 0.048
+ParentWX		= 0.1
+
+[LoadGameScreen]
+UIScreenType	= "RosaLoad"
+TakesFocus		= true
+SeizesMouse		= true
+Rules			= "LoadGameRules"
+FocusXShift		= 0
+NumWidgets		= &
+@ Widget
+@@&				= "LoadGameFrame"
+@@&				= "LoadGameHeader"
+@@&				= "LoadGameOpenUserDataPathButton"
+@@&				= "LoadGameBackButton"
+# NOTE: Slot widgets are added dynamically
+
+	[LoadGameFrame]
+	Extends		= "CommonFrameArchetype"
+	ParentWX	= 0.5
+	ParentHY	= 0.5
+	ParentHW	= 1.0
+	ParentHH	= 0.75
+
+	[LoadGameHeader]
+	Extends		= "DefaultSansTextArchetype"
+	Parent		= "LoadGameFrame"
+	Origin		= "TopCenter"
+	String		= "LoadGame"
+	ParentWX	= 0.5
+	ParentHY	= 0.05
+
+	[LoadGameOpenUserDataPathButton]
+	Extends		= "DefaultSansTextButtonArchetype"
+	Parent		= "LoadGameFrame"
+	Origin		= "BottomLeft"
+	String		= "OpenUserDataPath"
+	ParentHX	= 0.05
+	ParentHY	= -0.05
+	FocusOrder	= 1
+	lmActions
+	{
+		RosaOpenUserDataPath()
+	}
+
+	[LoadGameBackButton]
+	Extends			= "DefaultSansTextButtonArchetype"
+	Parent			= "LoadGameFrame"
+	Origin			= "BottomRight"
+	DynamicString	= "Back"
+	ParentHX		= -0.05
+	ParentHY		= -0.05
+	FocusOrder		= 2
+	lmActions
+	{
+		"PopScreenAction"
+	}
+
+[SaveGameTextButtonArchetype]
+Extends	= "LoadGameTextButtonArchetype"
+Parent	= "SaveGameFrame"
+
+[SaveGameRules]
+Archetype				= "SaveGameTextButtonArchetype"
+ConfirmOverwriteAction	= "ConfirmSaveOverwriteAction"
+ParentHYBase			= 0.15
+ParentHYStep			= 0.048
+ParentWX				= 0.1
+
+	[ConfirmSaveOverwriteAction]
+	ActionType		= "UIShowYesNoDialog"
+	YesNoString		= "ConfirmSaveOverwrite"
+	lmActions( Yes )
+	{
+		RosaSaveGame( SaveToPendingSlot = true )
+	}
+	# Leaving this here commented out because I don't actually
+	# have this screen anymore and can't test it.
+	#NumYesActions	= &
+	#@ YesAction
+	#@@&				= "SaveOverwriteAction"
+
+		#[SaveOverwriteAction]
+		#ActionType			= "RosaSaveGame"
+		#SaveToPendingSlot	= true
+
+[SaveGameScreen]
+UIScreenType	= "RosaSave"
+TakesFocus		= true
+SeizesMouse		= true
+Rules			= "SaveGameRules"
+FocusXShift		= 0
+NumWidgets		= &
+@ Widget
+@@&				= "SaveGameFrame"
+@@&				= "SaveGameHeader"
+@@&				= "SaveGameOpenUserDataPathButton"
+@@&				= "SaveGameBackButton"
+# NOTE: Slot widgets are added dynamically
+
+	[SaveGameFrame]
+	Extends		= "CommonFrameArchetype"
+	ParentWX	= 00.5
+	ParentHY	= 0.5
+	ParentHW	= 1.0
+	ParentHH	= 0.75
+
+	[SaveGameHeader]
+	Extends		= "DefaultSansTextArchetype"
+	Parent		= "SaveGameFrame"
+	Origin		= "TopCenter"
+	String		= "SaveGame"
+	ParentWX	= 0.5
+	ParentHY	= 0.05
+
+	[SaveGameOpenUserDataPathButton]
+	Extends		= "DefaultSansTextButtonArchetype"
+	Parent		= "SaveGameFrame"
+	Origin		= "BottomLeft"
+	String		= "OpenUserDataPath"
+	ParentHX	= 0.05
+	ParentHY	= -0.05
+	FocusOrder	= 1
+	lmActions
+	{
+		RosaOpenUserDataPath()
+	}
+
+	[SaveGameBackButton]
+	Extends			= "DefaultSansTextButtonArchetype"
+	Parent			= "SaveGameFrame"
+	Origin			= "BottomRight"
+	DynamicString	= "Back"
+	ParentHX		= -0.05
+	ParentHY		= -0.05
+	FocusOrder		= 2
+	lmActions
+	{
+		"PopScreenAction"
+	}
+
+[LanguagesTextButtonArchetype]
+Extends	= "DefaultSansTextButtonArchetype"
+Parent	= "LanguagesFrame"
+Origin	= "TopLeft"
+
+[LanguagesRules]
+Archetype		= "LanguagesTextButtonArchetype"
+ParentHYBase	= 0.2
+ParentHYStep	= 0.1
+ParentWX		= 0.1
+
+[LanguagesScreen]
+UIScreenType	= "RosaLanguages"
+TakesFocus		= true
+SeizesMouse		= true
+Rules			= "LanguagesRules"
+FocusXShift		= 0
+NumWidgets		= &
+@ Widget
+@@&				= "LanguagesFrame"
+@@&				= "LanguagesHeader"
+@@&				= "LanguagesBackButton"
+# NOTE: Name widgets are added dynamically
+
+	[LanguagesFrame]
+	Extends		= "CommonFrameArchetype"
+	ParentWX	= 0.5
+	ParentHY	= 0.5
+	ParentHW	= 0.55
+	ParentHH	= 0.35
+
+	[LanguagesHeader]
+	Extends		= "DefaultSansTextArchetype"
+	Parent		= "LanguagesFrame"
+	Origin		= "TopCenter"
+	String		= "Language"
+	ParentWX	= 0.5
+	ParentHY	= 0.1
+
+	[LanguagesBackButton]
+	Extends			= "DefaultSansTextButtonArchetype"
+	Parent			= "LanguagesFrame"
+	Origin			= "BottomRight"
+	DynamicString	= "Back"
+	ParentHX		= -0.1
+	ParentHY		= -0.1
+	FocusOrder		= 1
+	lmActions
+	{
+		"PopScreenAction"
+	}
+
+[MKGLogoScreen]
+UIScreenType	= "Base"
+TakesFocus		= true
+AllowClose		= false
+# NOTE: Remaining fades are sequenced by code because ugh hacks.
+NumWidgets		= &
+@ Widget
+@@&				= "MKGLogoBackdrop"
+@@&				= "MKGLogoImg"
+
+	[MKGLogoBackdrop]
+	Extends			= "ImageArchetype"
+	Origin			= "TopLeft"
+	Image			= "Textures/UI/black_NODXT.tga"
+	ParentWW		= 1.0
+	ParentHH		= 1.0
+	ParentWX		= 0.0
+	ParentHY		= 0.0
+	
+	[MKGLogoImg]
+	Extends			= "ImageArchetype"
+	Origin			= "Center"
+	Image			= "Textures/UI/mkg-logo_NODXT.tga"
+	ParentHH		= 0.474074	# 512 pixels at 1080p
+	ParentWX		= 0.5
+	ParentHY		= 0.5
+
+[DebugMenuScreen]
+TakesFocus	= true
+SeizesMouse	= true
+ListMinParentHY	= 0.100
+ListMaxParentHY	= 0.900
+NumWidgets	= &
+@ Widget
+@@&	= "DebugMenuFrame"
+@@& = "DM_Difficulty"
+@@&	= "DM_ToggleInvisible"
+@@&	= "DM_ToggleInvulnerable"
+@@&	= "DM_GoToHub"
+@@&	= "DM_SucceedScenario"
+@@&	= "DM_FailScenario"
+@@&	= "DM_GiveMoney"
+@@&	= "DM_GiveAmmo"
+@@& = "DM_GiveLoadoutA"
+@@& = "DM_GiveLoadoutB"
+@@&	= "DM_ToggleSpawnManager"
+@@& = "DM_Suicide"
+
+	[DebugMenuFrame]
+	Extends		= "CommonFrameArchetype"
+	ParentWX	= 0.5
+	ParentHY	= 0.5
+	ParentHW	= 0.7
+	ParentHH	= 0.9
+
+	[DM_Archetype]
+	Extends		= "DefaultSansTextButtonArchetype"
+	Parent		= "DebugMenuFrame"
+	ParentHX	= 0.1
+	IsLiteral	= true
+
+	[DM_Difficulty]
+	UIWidgetType	= "Composite"
+	Focus			= true
+	ListStep		= true
+	NumChildren		= &
+	@ Child
+	@@&				= "DM_DifficultyLabel"
+	@@&				= "DM_DifficultySetting"
+	NumActions		= &
+	@ Action
+	@@&				= "CycleMenuDifficulty"
+
+		[DM_DifficultyLabel]
+		Extends		= "DM_Archetype"
+		IsLiteral	= false
+		Origin		= "TopLeft"
+		String		= "DifficultyOption"
+		ParentHX	= 0.1
+		UseListY	= true
+
+		[DM_DifficultySetting]
+		Extends			= "DM_Archetype"
+		IsLiteral		= false
+		Origin			= "TopRight"
+		DynamicString	= "DifficultyOptionSetting"
+		ParentHX		= -0.1
+		UseListY	= true
+
+	[DM_ToggleInvisible]
+	Extends		= "DM_Archetype"
+	ListStep	= true
+	UseListY	= true
+	String		= "Toggle Invisibility/Footsteps"
+	lmActions
+	{
+		SendEvent( "ToggleVisible",		"PlayerPE" )
+		SendEvent( "ToggleFootsteps",	"PlayerPE" )
+	}
+
+	[DM_ToggleInvulnerable]
+	Extends		= "DM_Archetype"
+	ListStep	= true
+	UseListY	= true
+	String		= "Toggle Invulnerability"
+	lmActions
+	{
+		SendEvent( "ToggleInvulnerable", "PlayerPE" )
+	}
+
+	[DM_GoToHub]
+	Extends		= "DM_Archetype"
+	ListStep	= true
+	UseListY	= true
+	String		= "Go to Hub (advance episode)"
+	lmActions
+	{
+		RosaGoToLevel( GoToHubLevel = true )
+	}
+
+	[DM_SucceedScenario]
+	Extends		= "DM_Archetype"
+	ListStep	= true
+	UseListY	= true
+	String		= "Succeed Scenario"
+	lmActions
+	{
+		SendEvent( "Campaign_SucceedScenario" )
+	}
+
+	[DM_FailScenario]
+	Extends		= "DM_Archetype"
+	ListStep	= true
+	UseListY	= true
+	String		= "Fail Scenario"
+	lmActions
+	{
+		SendEvent( "Campaign_FailScenario", AllowContinue = ConstantBool( true ) )
+	}
+
+	[DM_GiveMoney]
+	Extends		= "DM_Archetype"
+	ListStep	= true
+	UseListY	= true
+	String		= "Give Money"
+	lmActions
+	{
+		RosaAddMoney( 100000 )	// Limit is 999999
+	}
+
+	[DM_GiveAmmo]
+	Extends		= "DM_Archetype"
+	ListStep	= true
+	UseListY	= true
+	String		= "Give Ammo"
+	lmActions
+	{
+		RosaAddAmmo( "AmmoType_Arrows", 999 )
+	}
+
+	[DM_GiveLoadoutA]
+	Extends		= "DM_Archetype"
+	ListStep	= true
+	UseListY	= true
+	String		= "Give Loadout A (min)"
+	lmActions
+	{
+		// ROSANOTE: These should be given in the order they can be purchased to avoid asserts
+		//SendEvent( "GiveUpgrade",	"PlayerPE",	UpgradeTag	= ConstantString( "Upgrade_PowerSlide" ) )
+		//SendEvent( "GiveUpgrade",	"PlayerPE",	UpgradeTag	= ConstantString( "Upgrade_Stomp" ) )
+		//SendEvent( "GiveUpgrade",	"PlayerPE",	UpgradeTag	= ConstantString( "Upgrade_SoftFall" ) )
+		//SendEvent( "GiveUpgrade",	"PlayerPE",	UpgradeTag	= ConstantString( "Upgrade_DoubleJump" ) )
+
+		//SendEvent( "GiveUpgrade",	"PlayerPE",	UpgradeTag	= ConstantString( "Upgrade_SneakAttack" ) )
+		//SendEvent( "GiveUpgrade",	"PlayerPE",	UpgradeTag	= ConstantString( "Upgrade_SharpStake" ) )
+		//SendEvent( "GiveUpgrade",	"PlayerPE",	UpgradeTag	= ConstantString( "Upgrade_Camo" ) )
+		//SendEvent( "GiveUpgrade",	"PlayerPE",	UpgradeTag	= ConstantString( "Upgrade_QuietFootsteps" ) )
+
+		//SendEvent( "GiveUpgrade",	"PlayerPE",	UpgradeTag	= ConstantString( "Upgrade_WeaponSlots1" ) )
+		//SendEvent( "GiveUpgrade",	"PlayerPE",	UpgradeTag	= ConstantString( "Upgrade_SteadyKick" ) )
+		//SendEvent( "GiveUpgrade",	"PlayerPE",	UpgradeTag	= ConstantString( "Upgrade_AmmoCapacity" ) )
+		//SendEvent( "GiveUpgrade",	"PlayerPE",	UpgradeTag	= ConstantString( "Upgrade_WeaponSlots2" ) )
+
+		//SendEvent( "GiveUpgrade",	"PlayerPE",	UpgradeTag	= ConstantString( "Upgrade_HealingDust" ) )
+		//SendEvent( "GiveUpgrade",	"PlayerPE",	UpgradeTag	= ConstantString( "Upgrade_Medkits1" ) )
+		//SendEvent( "GiveUpgrade",	"PlayerPE",	UpgradeTag	= ConstantString( "Upgrade_Medkits2" ) )
+		//SendEvent( "GiveUpgrade",	"PlayerPE",	UpgradeTag	= ConstantString( "Upgrade_Shield" ) )
+
+		// Give blueprints, then the weapons they unlock
+		//SendEvent( "Campaign_GiveBlueprint",	Blueprint	= ConstantString( "Blueprint_Weapon_Stake" ) )
+		//SendEvent( "Campaign_GiveBlueprint",	Blueprint	= ConstantString( "Blueprint_Weapon_Crossbow" ) )
+		//SendEvent( "Campaign_GiveBlueprint",	Blueprint	= ConstantString( "Blueprint_Weapon_Blaster" ) )
+		//SendEvent( "Campaign_GiveBlueprint",	Blueprint	= ConstantString( "Blueprint_Weapon_Vial" ) )
+		//SendEvent( "AddItem",		"PlayerPE",	ItemDef		= ConstantString( "Stake" ),	Slot = RosaGetBestCycleSlot() )
+		SendEvent( "AddItem",		"PlayerPE",	ItemDef		= ConstantString( "Lasergun" ),	Slot = RosaGetBestCycleSlot() )
+		//SendEvent( "AddItem",		"PlayerPE",	ItemDef		= ConstantString( "Blaster" ),	Slot = RosaGetBestCycleSlot() )
+		//SendEvent( "AddItem",		"PlayerPE",	ItemDef		= ConstantString( "Vial" ),		Slot = RosaGetBestCycleSlot() )
+
+		// Give blueprints, then the ammo they unlock
+		RosaAddAmmo( "AmmoType_Lasergun",			999 )
+		//RosaAddAmmo( "AmmoType_Darts",			999 )
+		//RosaAddAmmo( "AmmoType_HolyVials",		999 )
+	}
+
+	[DM_GiveLoadoutB]
+	Extends		= "DM_Archetype"
+	ListStep	= true
+	UseListY	= true
+	String		= "Give Loadout B (max)"
+	lmActions
+	{
+		// ROSANOTE: These should be given in the order they can be purchased to avoid asserts
+		//SendEvent( "GiveUpgrade",	"PlayerPE",	UpgradeTag	= ConstantString( "Upgrade_PowerSlide" ) )
+		//SendEvent( "GiveUpgrade",	"PlayerPE",	UpgradeTag	= ConstantString( "Upgrade_Stomp" ) )
+		//SendEvent( "GiveUpgrade",	"PlayerPE",	UpgradeTag	= ConstantString( "Upgrade_SoftFall" ) )
+		//SendEvent( "GiveUpgrade",	"PlayerPE",	UpgradeTag	= ConstantString( "Upgrade_DoubleJump" ) )
+
+		//SendEvent( "GiveUpgrade",	"PlayerPE",	UpgradeTag	= ConstantString( "Upgrade_SneakAttack" ) )
+		//SendEvent( "GiveUpgrade",	"PlayerPE",	UpgradeTag	= ConstantString( "Upgrade_SharpStake" ) )
+		//SendEvent( "GiveUpgrade",	"PlayerPE",	UpgradeTag	= ConstantString( "Upgrade_Camo" ) )
+		//SendEvent( "GiveUpgrade",	"PlayerPE",	UpgradeTag	= ConstantString( "Upgrade_QuietFootsteps" ) )
+
+		//SendEvent( "GiveUpgrade",	"PlayerPE",	UpgradeTag	= ConstantString( "Upgrade_WeaponSlots1" ) )
+		//SendEvent( "GiveUpgrade",	"PlayerPE",	UpgradeTag	= ConstantString( "Upgrade_SteadyKick" ) )
+		//SendEvent( "GiveUpgrade",	"PlayerPE",	UpgradeTag	= ConstantString( "Upgrade_AmmoCapacity" ) )
+		//SendEvent( "GiveUpgrade",	"PlayerPE",	UpgradeTag	= ConstantString( "Upgrade_WeaponSlots2" ) )
+
+		//SendEvent( "GiveUpgrade",	"PlayerPE",	UpgradeTag	= ConstantString( "Upgrade_HealingDust" ) )
+		//SendEvent( "GiveUpgrade",	"PlayerPE",	UpgradeTag	= ConstantString( "Upgrade_Medkits1" ) )
+		//SendEvent( "GiveUpgrade",	"PlayerPE",	UpgradeTag	= ConstantString( "Upgrade_Medkits2" ) )
+		//SendEvent( "GiveUpgrade",	"PlayerPE",	UpgradeTag	= ConstantString( "Upgrade_Shield" ) )
+
+		// Give blueprints, then the bracelets they unlock
+		//SendEvent( "Campaign_GiveBlueprint",	Blueprint	= ConstantString( "Blueprint_Bracelet_LockpickingA" ) )
+		//SendEvent( "Campaign_GiveBlueprint",	Blueprint	= ConstantString( "Blueprint_Bracelet_LockpickingB" ) )
+		//SendEvent( "Campaign_GiveBlueprint",	Blueprint	= ConstantString( "Bracelet_FastMove" ) )
+		//SendEvent( "AddItem",		"PlayerPE",	ItemDef		= ConstantString( "Bracelet_LockpickingA" ),	Slot = ConstantString( "BraceletLeft" ) )
+		//SendEvent( "AddItem",		"PlayerPE",	ItemDef		= ConstantString( "Bracelet_LockpickingB" ),	Slot = ConstantString( "BraceletRight" ) )
+		//SendEvent( "AddItem",		"PlayerPE",	ItemDef		= ConstantString( "Bracelet_FastMove" ),	Slot = ConstantString( "BraceletRight" ) )
+
+		// Give blueprints, then the weapons they unlock
+		SendEvent( "Campaign_GiveBlueprint",	Blueprint	= ConstantString( "Blueprint_Weapon_Katana_Silver" ) )
+		SendEvent( "Campaign_GiveBlueprint",	Blueprint	= ConstantString( "Blueprint_Weapon_Watergun" ) )
+		SendEvent( "Campaign_GiveBlueprint",	Blueprint	= ConstantString( "Blueprint_Weapon_Camera" ) )
+		SendEvent( "Campaign_GiveBlueprint",	Blueprint	= ConstantString( "Blueprint_Weapon_Shotgun" ) )
+		SendEvent( "AddItem",		"PlayerPE",	ItemDef		= ConstantString( "Katana_Silver" ),	Slot = RosaGetBestCycleSlot() )
+		SendEvent( "AddItem",		"PlayerPE",	ItemDef		= ConstantString( "Watergun" ),			Slot = RosaGetBestCycleSlot() )
+		SendEvent( "AddItem",		"PlayerPE",	ItemDef		= ConstantString( "Camera" ),			Slot = RosaGetBestCycleSlot() )
+		SendEvent( "AddItem",		"PlayerPE",	ItemDef		= ConstantString( "Shotgun" ),			Slot = RosaGetBestCycleSlot() )
+		
+		//SendEvent( "AddBandages",	"PlayerPE",	Bandages	= ConstantInt( 99 ) )
+
+		// Give blueprints, then the ammo they unlock
+		SendEvent( "Campaign_GiveBlueprint",	Blueprint	= ConstantString( "Blueprint_Ammo_SilverArrows" ) )
+		SendEvent( "Campaign_GiveBlueprint",	Blueprint	= ConstantString( "Blueprint_Ammo_FangedArrows" ) )
+		SendEvent( "Campaign_GiveBlueprint",	Blueprint	= ConstantString( "Blueprint_Ammo_SilverDarts" ) )
+		SendEvent( "Campaign_GiveBlueprint",	Blueprint	= ConstantString( "Blueprint_Ammo_FangedDarts" ) )
+		SendEvent( "Campaign_GiveBlueprint",	Blueprint	= ConstantString( "Blueprint_Ammo_GarlicShot" ) )
+		SendEvent( "Campaign_GiveBlueprint",	Blueprint	= ConstantString( "Blueprint_Ammo_SilverShot" ) )
+		SendEvent( "Campaign_GiveBlueprint",	Blueprint	= ConstantString( "Blueprint_Ammo_GarlicSpray" ) )
+		SendEvent( "Campaign_GiveBlueprint",	Blueprint	= ConstantString( "Blueprint_Ammo_RoseSpray" ) )
+		SendEvent( "Campaign_GiveBlueprint",	Blueprint	= ConstantString( "Blueprint_Ammo_GarlicVials" ) )
+		SendEvent( "Campaign_GiveBlueprint",	Blueprint	= ConstantString( "Blueprint_Ammo_RoseVials" ) )
+		SendEvent( "Campaign_GiveBlueprint",	Blueprint	= ConstantString( "Blueprint_Ammo_Flash" ) )
+		SendEvent( "Campaign_GiveBlueprint",	Blueprint	= ConstantString( "Blueprint_Ammo_UVFlash" ) )
+		SendEvent( "Campaign_GiveBlueprint",	Blueprint	= ConstantString( "Blueprint_Ammo_IRFlash" ) )
+		RosaAddAmmo( "AmmoType_Nails",			999 )
+		RosaAddAmmo( "AmmoType_Arrows",			999 )
+		RosaAddAmmo( "AmmoType_SilverArrows",	999 )
+		RosaAddAmmo( "AmmoType_FangedArrows",	999 )
+		RosaAddAmmo( "AmmoType_Darts",			999 )
+		RosaAddAmmo( "AmmoType_SilverDarts",	999 )
+		RosaAddAmmo( "AmmoType_FangedDarts",	999 )
+		RosaAddAmmo( "AmmoType_SaltShot",		999 )
+		RosaAddAmmo( "AmmoType_GarlicShot",		999 )
+		RosaAddAmmo( "AmmoType_SilverShot",		999 )
+		RosaAddAmmo( "AmmoType_HolySpray",		999 )
+		RosaAddAmmo( "AmmoType_GarlicSpray",	999 )
+		RosaAddAmmo( "AmmoType_RoseSpray",		999 )
+		RosaAddAmmo( "AmmoType_HolyVials",		999 )
+		RosaAddAmmo( "AmmoType_GarlicVials",	999 )
+		RosaAddAmmo( "AmmoType_RoseVials",		999 )
+		RosaAddAmmo( "AmmoType_Flash",			999 )
+		RosaAddAmmo( "AmmoType_UVFlash",		999 )
+		RosaAddAmmo( "AmmoType_IRFlash",		999 )
+
+		RosaAddMoney( 100000 )	// Limit is 999999
+	}
+
+	[DM_ToggleSpawnManager]
+	Extends		= "DM_Archetype"
+	ListStep	= true
+	UseListY	= true
+	String		= "Toggle Spawn Manager"
+	lmActions
+	{
+		SendEvent( "SpawnManager_Toggle", "PlayerPE" )
+	}
+
+	[DM_Suicide]
+	Extends		= "DM_Archetype"
+	ListStep	= true
+	UseListY	= true
+	String		= "Suicide"
+	lmActions
+	{
+		SendEvent( "Kill", "PlayerPE" )
+	}
+
+# This is used for "input device lost" notifications at least.
+[OKDialog]
+TakesFocus	= true
+SeizesMouse	= true
+NumWidgets	= &
+@ Widget
+@@&			= "OKDialogFrame"
+@@&			= "OKDialogText"
+@@&			= "OKButton"
+
+	[OKDialogFrame]
+	Extends		= "CommonFrameArchetype"
+	ParentWX	= 0.5
+	ParentHY	= 0.5
+	ParentHW	= 0.7
+	ParentHH	= 0.3
+
+	[OKDialogText]
+	Extends		= "DefaultSansTextArchetype"
+	LoadString	= false
+	Parent		= "OKDialogFrame"
+	Origin		= "BottomCenter"
+	ParentWX	= 0.5
+	ParentHY	= -0.5
+	ParentWWrap	= 0.9
+
+	[OKButton]
+	Extends		= "DefaultSansTextButtonArchetype"
+	String		= "OK"
+	Parent		= "OKDialogFrame"
+	Origin		= "BottomCenter"
+	ParentWX	= 0.5
+	ParentHY	= -0.15
+
+[YesNoDialog]
+TakesFocus	= true
+SeizesMouse	= true
+NumWidgets	= &
+@ Widget
+@@&			= "YesNoDialogFrame"
+@@&			= "YesNoDialogText"
+@@&			= "YesButton"
+@@&			= "NoButton"
+
+	[YesNoDialogFrame]
+	Extends		= "CommonFrameArchetype"
+	ParentWX	= 0.5
+	ParentHY	= 0.5
+	ParentHW	= 0.7
+	ParentHH	= 0.3
+
+	[YesNoDialogText]
+	Extends		= "DefaultSansTextArchetype"
+	LoadString	= false
+	Parent		= "YesNoDialogFrame"
+	Origin		= "BottomCenter"
+	ParentWX	= 0.5
+	ParentHY	= -0.5
+	ParentWWrap	= 0.9
+
+	[YesButton]
+	Extends		= "DefaultSansTextButtonArchetype"
+	String		= "Yes"
+	Parent		= "YesNoDialogFrame"
+	Origin		= "BottomCenter"
+	ParentWX	= 0.5
+	ParentHY	= -0.30
+
+	[NoButton]
+	Extends		= "DefaultSansTextButtonArchetype"
+	String		= "No"
+	Parent		= "YesNoDialogFrame"
+	Origin		= "BottomCenter"
+	ParentWX	= 0.5
+	ParentHY	= -0.15
+
+# DLP 19 Oct 2021: I don't think this is used anymore. LoadingScreen is its own thing.
+# This was used in the very old pre-Steam "check for updates" stuff. Not even used for Eld leaderboards.
+[WaitDialog]
+TakesFocus	= true
+SeizesMouse	= true	# TODO: Is this necessary since it doesn't expect input?
+NumWidgets	= &
+@ Widget
+@@&			= "WaitDialogFrame"
+@@&			= "WaitDialogText"
+
+	[WaitDialogFrame]
+	Extends		= "CommonFrameArchetype"
+	ParentWX	= 0.5
+	ParentHY	= 0.5
+	ParentHW	= 0.6
+	ParentHH	= 0.3
+
+	[WaitDialogText]
+	Extends		= "DefaultSansTextArchetype"
+	LoadString	= false
+	Parent		= "WaitDialogFrame"
+	Origin		= "TopCenter"
+	ParentWX	= 0.5
+	ParentHY	= 0.1
+	# ROSATODO: Left-align and add wrap width?
+
+[Fade]
+NumWidgets	= &
+@ Widget
+@@&			= "FadeImage"
+
+	[FadeImage]
+	Extends		= "ImageArchetype"
+	Origin		= "TopLeft"
+	Image		= "Textures/default-a.tga"
+	ParentWW	= 1.0
+	ParentHH	= 1.0
+	ParentWX	= 0.0
+	ParentHY	= 0.0
+
+[GameFade]
+GameTick	= true
+NumWidgets	= &
+@ Widget
+@@&			= "FadeImage"
+
+[SteamOverlayPauseScreen]
+TakesFocus	= true
+PausesGame	= true
+SeizesMouse	= true
+AllowClose	= true
+# Empty screen that mostly just exists to pause the game
+# Can be closed by input in case it somehow gets stuck on

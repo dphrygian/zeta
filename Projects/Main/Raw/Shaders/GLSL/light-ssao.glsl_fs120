@@ -1,0 +1,73 @@
+#version 120
+
+uniform sampler2D Texture0;	// Depth (G-buffer)
+uniform sampler2D Texture1;	// Random kernel
+
+uniform	mat4x4	RandomMatrix;
+uniform vec4	OffsetScalar;
+
+uniform vec4	ClipValues;
+
+float DepthBias		= 0.0001f;
+float DepthRange	= 0.02f;
+float MinAO			= 0.15f;
+float MaxAO			= 1.0f;
+
+// Some older drivers have problems with const arrays, so I'm doing this instead.
+vec2 Offsets[16];
+
+float GetLinearDepth( float Z )
+{
+	return ClipValues.x / ( Z * ClipValues.z - ClipValues.y );
+}
+
+vec2 FixUV( vec2 UV )
+{
+	return vec2( UV.x, 1.0f - UV.y );
+}
+
+varying vec2	PassUV;
+
+void main()
+{
+	// HACKHACK: Init this here because of OS X 10.6.8.
+	Offsets[0]  = vec2(  0.000000,  0.062500 );
+	Offsets[1]  = vec2(  0.047835,  0.115485 );
+	Offsets[2]  = vec2(  0.132583,  0.132583 );
+	Offsets[3]  = vec2(  0.230970,  0.095671 );
+	Offsets[4]  = vec2(  0.312500,  0.000000 );
+	Offsets[5]  = vec2(  0.346455, -0.143506 );
+	Offsets[6]  = vec2(  0.309359, -0.309359 );
+	Offsets[7]  = vec2(  0.191342, -0.461940 );
+	Offsets[8]  = vec2(  0.000000, -0.562500 );
+	Offsets[9]  = vec2( -0.239177, -0.577425 );
+	Offsets[10]  = vec2( -0.486136, -0.486136 );
+	Offsets[11]  = vec2( -0.692910, -0.287013 );
+	Offsets[12]  = vec2( -0.812500, -0.000000 );
+	Offsets[13]  = vec2( -0.808395,  0.334848 );
+	Offsets[14]  = vec2( -0.662913,  0.662913 );
+	Offsets[15]  = vec2( -0.382683,  0.923880 );
+
+	vec2	FixedUV			= FixUV( PassUV );
+	float  	Depth			= texture2D( Texture0, FixedUV ).r - DepthBias;
+	
+	vec4	RandomUV		= vec4( PassUV, 0.0f, 1.0f ) * RandomMatrix;
+	vec4	Random			= texture2D( Texture1, RandomUV.xy );
+	vec4	Angles			= Random * 2.0f - 1.0f;
+	mat2x2	RotationMatrix	= mat2x2( Angles.r, -Angles.g, Angles.g, Angles.r );
+
+	float UnoccludedSum	= 0.0f;
+	float RelevantSum	= 1.0f;
+	for( int i = 0; i < 16; ++i )
+	{
+		float	TapDepth	= texture2D( Texture0, FixedUV + OffsetScalar.xy * ( Offsets[i] * RotationMatrix ).xy ).r;
+		float	DepthDiff	= Depth - TapDepth;
+
+		float	Unoccluded	= ( DepthDiff > 0.0f ) ? 0.0f : 1.0f;
+		float	Relevant	= ( DepthDiff > DepthRange ) ? 0.0f : 1.0f;
+		UnoccludedSum		+= Unoccluded * Relevant;
+		RelevantSum			+= Relevant;
+	}
+
+	gl_FragColor = vec4( mix( MinAO, MaxAO, clamp( UnoccludedSum / ( RelevantSum * 0.5f ), 0.0f, 1.0f ) ) );
+}

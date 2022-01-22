@@ -1,0 +1,97 @@
+#include "common.hlsl_psh"
+#include "lighting.hlsl_psh"
+
+sampler	ShadowSampler	: register(s0);
+sampler	NormalSampler	: register(s1);
+sampler	DepthSampler	: register(s2);
+
+// SDP variables
+float4	LightPosition;
+float4	ShadowFarClip;	// x = far
+
+static float	NormalOffset	= 0.025f;	// Push shadowed surface along normal 2.5cm from actual location
+static float	DepthBias		= 1.015f;
+static float	OffsetScalar	= 0.0015f;
+
+// Samples form a tetrahedron
+static float3	CubeOffsets[4]	=
+{
+	float3(	 1.0f,  1.0f,  1.0f ),
+	float3(	 1.0f, -1.0f, -1.0f ),
+	float3(	-1.0f,  1.0f, -1.0f ),
+	float3(	-1.0f, -1.0f,  1.0f ),
+};
+
+// Leaving this here commented out in case I want to try it again.
+//static float3	CubeOffsets[16] =
+//{
+//	float3(  0.0f,  0.0f,  1.0f ),	// 14
+//	float3( -1.0f, -1.0f, -1.0f ),	// 1
+//	float3( -1.0f,  0.0f,  0.0f ),	// 9
+//	float3( -1.0f,  1.0f, -1.0f ),	// 3
+//	float3( -1.0f, -1.0f,  1.0f ),	// 5
+//	float3(  0.0f,  0.0f,  0.0f ),	// 0
+//	float3( -1.0f,  1.0f,  1.0f ),	// 7
+//	float3(  0.0f, -1.0f,  0.0f ),	// 11
+//	float3(  0.0f,  1.0f,  0.0f ),	// 12
+//	float3(  1.0f,  1.0f, -1.0f ),	// 4
+//	float3(  0.0f,  0.0f, -1.0f ),	// 13
+//	float3(  1.0f, -1.0f, -1.0f ),	// 2
+//	float3(  1.0f,  1.0f,  1.0f ),	// 8
+//	float3(  1.0f,  0.0f,  0.0f ),	// 10
+//	float3(  1.0f, -1.0f,  1.0f ),	// 6
+//	float3(  0.0f,  0.0f,  0.0f ),	// 0
+//};
+
+struct PS_INPUT
+{
+	float4 VPos		: TEXCOORD0;
+	//float4 PixelPos	: TEXCOORD1;
+};
+
+float4 Main( PS_INPUT In ) : COLOR
+{
+	// Fix VPos
+	const float2	NormVPos		= In.VPos.xy / In.VPos.w;
+	
+	// Unpack normal, smoothness, and reflectance
+	const float4	NormalSpec		= tex2D( NormalSampler, NormVPos );
+	const float4	NormalUnpack	= ( NormalSpec * 2.0f ) - 1.0f;
+	const float		NormalZSign		= NonZeroSign( NormalUnpack.z );
+	const float3	WSNormal		= GetInvStereographicProjection( NormalUnpack.xy, NormalZSign );
+
+	const float		Depth			= tex2D( DepthSampler, NormVPos ).r;
+	const float3	WSPos			= GetWSPos( NormVPos, Depth ).xyz + WSNormal * NormalOffset;
+
+	const float3	LightToPos		= WSPos - LightPosition.xyz;
+	const float		LightDist		= sqrt( dot( LightToPos, LightToPos ) );
+	const float3	Light			= LightToPos / LightDist;
+
+	// Leaving this here commented out in case I want to try it again.
+	//const float2	PixelPos		= ( In.PixelPos.xy / In.PixelPos.w ) % 4;
+	//const float3	CubeOffset		= CubeOffsets[ PixelPos.x ][ PixelPos.y ];
+
+	// Do multiple taps for pseudo-PCF, still binary result
+	// Initialize to 0.5 so we don't end up with a zero Difference (since we have an even number of taps now)
+	// Cases:
+	//   4 taps shadowed, Difference = 4.5
+	//   3 taps shadowed, Difference = 2.5
+	//   2 taps shadowed, Difference = 0.5
+	//   1 taps shadowed, Difference = -1.5
+	//   0 taps shadowed, Difference = -3.5
+	// So if at least 2 taps are shadowed, we don't light the pixel
+	float	Difference	= 0.5f;
+	for( int i = 0; i < 4; ++i )
+	{
+		const float3	SampleDirection = Light + OffsetScalar * CubeOffsets[i];
+		// Multiply by light view's far clip to bring back into world units
+		const float		ShadowDist		= ShadowFarClip.x * SampleCubeDepth( ShadowSampler, SampleDirection );
+		Difference						+= sign( LightDist - ( ShadowDist * DepthBias ) );	// Positive means shadowed, negative means lit
+	}
+	
+	// Clip/discard if this is *not* in shadow
+	// No need to divide by samples, we're comparing to 0
+	clip( Difference );
+
+	return float4( 0.0f, 0.0f, 0.0f, 0.0f );
+}

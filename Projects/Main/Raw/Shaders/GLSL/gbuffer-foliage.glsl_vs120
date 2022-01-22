@@ -1,0 +1,56 @@
+#version 120
+
+uniform mat4	VP;
+uniform mat4	WorldMatrix;
+uniform mat4	WindMatrix;
+uniform vec4	WindPhaseTime;
+uniform vec4	WindPhaseSpace;
+uniform vec4	EyePosition;
+
+attribute vec4	InPosition;
+attribute vec3	InNormal;
+attribute vec3	InNormalB;
+attribute vec4	InTangent;
+attribute vec2	InUV;
+attribute vec4	InColor;
+
+varying vec2	PassUV;
+varying vec4	PassPositionSS;
+varying vec3	PassNormalWS;
+varying vec4	PassTangentWS;
+
+vec3 Hermite_EaseInOut( vec3 x )
+{
+	return x * x * ( 3.0f - ( 2.0f * x ) );
+}
+
+void main()
+{
+	vec4	PositionWS		= InPosition * WorldMatrix;
+	vec3	Phase			= WindPhaseTime.xyz * WindPhaseTime.w + WindPhaseSpace.xyz * dot( PositionWS.xyz, vec3( 1.0f, 1.0f, 1.0f ) );
+	vec4	AppliedPhase	= vec4( Hermite_EaseInOut( abs( ( fract( Phase ) * 2.0f ) - 1.0f ) ), 0.0f );
+
+	mat4	WindFlapMatrix	= WindMatrix;
+	vec3	FlapNormal		= ( vec4( InNormal, 0.0f ) * WorldMatrix ).xyz;
+	WindFlapMatrix[0][2]	*= FlapNormal.x;
+	WindFlapMatrix[1][2]	*= FlapNormal.y;
+	WindFlapMatrix[2][2]	*= FlapNormal.z;
+	WindFlapMatrix[0][0]	*= AppliedPhase.x;
+	WindFlapMatrix[1][0]	*= AppliedPhase.x;
+	WindFlapMatrix[2][0]	*= AppliedPhase.x;
+	WindFlapMatrix[0][1]	*= AppliedPhase.y;
+	WindFlapMatrix[1][1]	*= AppliedPhase.y;
+	WindFlapMatrix[2][1]	*= AppliedPhase.y;
+	WindFlapMatrix[0][2]	*= AppliedPhase.z;
+	WindFlapMatrix[1][2]	*= AppliedPhase.z;
+	WindFlapMatrix[2][2]	*= AppliedPhase.z;
+
+	vec4	FoliagePosition	= PositionWS + ( InColor * WindFlapMatrix );
+	vec3	ToEye			= normalize( EyePosition.xyz - FoliagePosition.xyz );
+
+	gl_Position		= FoliagePosition * VP;
+	PassUV			= InUV;
+	PassPositionSS	= gl_Position;
+	PassNormalWS	= normalize( ToEye + ( vec4( InNormalB, 0.0f ) * WorldMatrix ).xyz );
+	PassTangentWS	= vec4( ( vec4( InTangent.xyz, 0.0f ) * WorldMatrix ).xyz, InTangent.w );
+}

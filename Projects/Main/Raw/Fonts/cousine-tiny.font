@@ -1,0 +1,13 @@
+# Monospaced version of OpenSans-Tiny, effectively
+
+NumIncludes	= &
+@ Include
+@@&			= "common.fontheader"
+
+Face		= "Cousine"
+Size		= 8
+Antialias	= false
+NoCompress	= true
+Width		= 256
+Height		= 256
+Script		= "Script_LatinCyrillic"

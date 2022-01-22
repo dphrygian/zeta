@@ -1,0 +1,26 @@
+#version 120
+
+varying vec4 PassPositionSS;
+
+vec4 EncodeFloatRGBA( float F )
+{
+	vec4 Encoded = vec4( 1.0f, 255.0f, 65025.0f, 16581375.0f ) * F;
+	Encoded = fract( Encoded );
+	Encoded -= Encoded.yzww * vec4( 1.0f / 255.0f, 1.0f / 255.0f, 1.0f / 255.0f, 0.0f );
+	return Encoded;
+}
+
+void main()
+{
+	float	Depth		= PassPositionSS.z / PassPositionSS.w;
+	
+	// GL clip space is [-1,1] unlike D3D. This isn't usually a problem,
+	// but values less than 0 can't be encoded into RGBA.
+	if( Depth < 0.0f )
+	{
+		discard;
+	}
+
+	vec4	DepthRGBA	= EncodeFloatRGBA( Depth );
+	gl_FragColor = DepthRGBA;
+}

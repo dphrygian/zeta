@@ -1,0 +1,80 @@
+#include "common.hlsl_psh"
+
+sampler AlbedoSampler	: register(s0);
+sampler NormalSampler	: register(s1);
+sampler SpecSampler		: register(s2);
+
+float4	Highlight;	// Set from code. Multiplicative to albedo and additive to emissive.
+
+// 4 float4s, presented as a matrix for possibly faster multiply
+//row_major float4x4 CharacterColors;	// Set from code; primary, secondary, accent, and skin colors (in linear space, not sRGB)
+
+struct PS_INPUT 
+{
+	float2	UV			: TEXCOORD0;
+	float4	PositionSS	: TEXCOORD1;
+	float3	NormalWS	: TEXCOORD2;
+	float4	TangentWS	: TEXCOORD3;
+};
+
+struct PS_OUTPUT
+{
+	float4	Normal	: COLOR0;
+	float4	Albedo	: COLOR1;
+	float4	Depth	: COLOR2;
+};
+
+PS_OUTPUT Main( PS_INPUT In )
+{
+	PS_OUTPUT Out;
+
+	// Spec map surface notes:
+	// SpecMap.r: reflectance (diffuse-specular and ambient-cubemap lerp)
+	// SpecMap.g: smoothness (specular power, mapped to [0,1])
+	// SpecMap.b: emissive
+	// SpecMap.a: metal/dielectric (binary)
+	
+	// G-buffer notes:
+	// Normal.r: stereographic normal X
+	// Normal.g: stereographic normal Y
+	// Normal.b: smoothness + normal Z sign
+	// Normal.a: reflectance + metal/dielectric
+
+	// Renormalize normal and tangent before creating TBN matrix
+	const float3	Normal		= normalize( In.NormalWS );
+	const float3	Tangent		= normalize( In.TangentWS.xyz );
+	const float3	Bitangent	= GetBitangent( Normal, Tangent, In.TangentWS.w );
+	const float4x4	InvTBN		= GetInverseTBNMatrix( Tangent, Bitangent, Normal );
+
+	const float4	RawAlbedo		= tex2D( AlbedoSampler, In.UV );		// Sample as linear space weights, not sRGB colors
+	const float4	BaseAlbedo		= sRGBToLinear( RawAlbedo );
+	// Hacked up for Zeta, I'm not using ConfigAlbedo
+	const float4	UsingAlbedo		= BaseAlbedo;
+	//const float4	ConfigAlbedo	= mul( RawAlbedo, CharacterColors );	// Assume character colors are in linear space already
+	//const float4	UsingAlbedo		= ( RawAlbedo.a > 0.0f ) ? ConfigAlbedo : BaseAlbedo;
+	const float3	Albedo			= UsingAlbedo.rgb * Highlight.rgb;
+
+	// Skin bit; -1 for skin, and 1 for no-skin (doing it this way saves me having to fix a bunch of implicit Vector -> Vector4 conversions adding a skin bit)
+	const float		Skin			= ( RawAlbedo.a > 0.0f ) ? -1.0f : 1.0f;
+	//const float		Skin			= ( RawAlbedo.a > 0.0f ) ? ( ConfigAlbedo.a > 0.0f ? 1.0f : -1.0f ) : 1.0f;
+
+	const float3	NormalMapTS	= SampleNormal( NormalSampler, In.UV );
+	const float3	NormalMapWS	= mul( float4( NormalMapTS, 0.0f ), InvTBN ).xyz;
+
+	const float4	SpecMap		= tex2D( SpecSampler, In.UV );
+	const float2	ReflSmooth	= Pack( float2( SpecMap.r, SpecMap.g * SpecMap.g ) );	// Square for perceptually linear smoothness. ROSAHACK: Pack because we need these to be non-zero for multiplying with sign bits.
+	const float		Emissive	= Pack( SpecMap.b + Highlight.a );	// Pack for multiplying with skin bit
+	const float		Dielectric	= SpecMap.a * 2.0f - 1.0f;	// ROSANOTE: Dielectric/metal is binary. -1 if metal, 1 if dielectric.
+
+	const float		Depth		= In.PositionSS.z / In.PositionSS.w;
+
+	const float		NormalZSign	= NonZeroSign( NormalMapWS.z );
+	const float4	NormalPack	= float4( GetStereographicProjection( NormalMapWS ), NormalZSign * ReflSmooth.y, Dielectric * ReflSmooth.x ) * 0.5f + 0.5f;
+	const float4	AlbedoPack	= float4( Albedo, ( Skin * Emissive ) * 0.5f + 0.5f );	// Emissive also stores skin bit
+
+	Out.Normal	= NormalPack;
+	Out.Albedo	= AlbedoPack;
+	Out.Depth	= float4( Depth, Depth, Depth, Depth );
+	
+	return Out;
+}

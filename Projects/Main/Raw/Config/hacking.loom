@@ -1,0 +1,114 @@
+[RosaHacking]
+InputContext		= "Context_Hacking"
+Material			= "Material_HUD"
+#Material			= "Material_Hacking_MRTTest"	# TEMPHACK for testing MRTs
+Texture				= "Textures/UI/hacking-atlas_NODXT.tga"
+RTWidth				= 512
+RTHeight			= 512
+UVAdjustment		= 0.00390625	# For atlas; 1/2 of a texel for 128x128 tiles (1/(2*128))
+PaddleSound			= "Sound_HackTone"
+BrickSound			= "Sound_HackTone"
+BallOffset			= 0.02	# How high the ball floats above the paddle
+PaddleOrigin		= 0.05	# Origin for reflecting the ball off paddle; should be > ( PaddleExtentsY + BallExtents )
+PaddleExtentsY		= 0.02
+BallExtents			= 0.02
+BrickColorH			= 0.91667
+BrickColorS			= 0.75
+BrickColorV			= 4.0
+BarrierColorH		= 0.58333
+BarrierColorS		= 0.75
+BarrierColorV		= 4.0
+PaddleColorH		= 0.58333
+PaddleColorS		= 0.75
+PaddleColorV		= 4.0
+BallColorH			= 0.58333
+BallColorS			= 0.75
+BallColorV			= 4.0
+GameEndDelay		= 0.25
+NumSuccessActions	= &
+@ SuccessAction
+@@&					= "NotifyHackTargetSuccess"
+@@&					= "IncrementNumHacks"
+@@&					= "CheckHackAchievement"
+NumFailureActions	= &
+@ FailureAction
+@@&					= "NotifyHackTargetFailure"
+
+		[NotifyHackTargetSuccess]
+		ActionType	= "SendEvent"
+		EventName	= "OnHackSuccess"
+		Recipient	= "HackTargetPE"
+		EventOwner	= "HackTargetPE"
+
+			[HackTargetPE]
+			PEType			= "GetVariable"
+			EntityPE		= "PlayerPE"
+			VariableName	= "HackTarget"
+
+		[NotifyHackTargetFailure]
+		ActionType	= "SendEvent"
+		EventName	= "OnHackFailure"
+		Recipient	= "HackTargetPE"
+		EventOwner	= "HackTargetPE"
+
+		[IncrementNumHacks]
+		lmAction
+		{
+			RosaSetPersistentVar( "NumHacks", Add( ConstantInt( 1 ), RosaGetPersistentVar( "NumHacks" ) ) )
+		}
+
+		[CheckHackAchievement]
+		lmSelectorAction
+		{
+			Selection( Conditional( "E", ConstantInt( 10 ), RosaGetPersistentVar( "NumHacks" ) ), RosaAwardAchievement( "ACH_Hack" ) )
+		}
+
+[Board_Basic]
+NumBricksX		= 5
+NumBricksY		= 3
+BoardHeight		= 8
+PaddleSpeed		= 0.8
+BallSpeed		= 1.0
+PaddleExtentsX	= 0.1
+
+[Board_VeryEasy]
+NumBricksX		= 3
+NumBricksY		= 1
+BoardHeight		= 8
+PaddleSpeed		= 1.0
+BallSpeed		= 1.0
+PaddleExtentsX	= 0.1
+
+[Board_Easy]
+NumBricksX		= 4
+NumBricksY		= 2
+BoardHeight		= 8
+PaddleSpeed		= 0.8
+BallSpeed		= 1.0
+PaddleExtentsX	= 0.1
+
+[Board_Medium]
+NumBricksX		= 4
+NumBricksY		= 3
+BoardHeight		= 8
+PaddleSpeed		= 0.8
+BallSpeed		= 1.0
+PaddleExtentsX	= 0.1
+
+[Board_Hard]
+NumBricksX		= 5
+NumBricksY		= 4
+BoardHeight		= 9
+PaddleSpeed		= 0.8
+BallSpeed		= 1.0
+PaddleExtentsX	= 0.1
+
+[Board_VeryHard]
+NumBricksX		= 6
+NumBricksY		= 5
+BrickType3,1	= "Barrier"
+BrickType3,4	= "Barrier"
+BoardHeight		= 9
+PaddleSpeed		= 0.8
+BallSpeed		= 1.2
+PaddleExtentsX	= 0.1

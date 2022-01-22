@@ -1,0 +1,22 @@
+#include "common.hlsl_vsh"
+
+struct VS_INPUT 
+{
+	float4 Position	: POSITION;
+};
+
+struct VS_OUTPUT
+{
+	float4	Position	: POSITION;
+	float4	PositionWS	: TEXCOORD0;
+};
+
+VS_OUTPUT Main( VS_INPUT In )
+{
+	VS_OUTPUT Out;
+
+	Out.Position	= FixHalfPixelOffset( mul( In.Position, WVP ) );
+	Out.PositionWS	= mul( In.Position, WorldMatrix );
+
+	return Out;
+}

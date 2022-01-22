@@ -1,0 +1,64 @@
+#include "common.hlsl_psh"
+
+uniform float4 MultiplyColor;
+
+sampler AlbedoSampler	: register(s0);
+sampler OverlaySampler	: register(s1);
+
+struct PS_INPUT 
+{
+	float2	UV			: TEXCOORD0;
+	float3	Normal		: TEXCOORD1;
+	float4	PositionWS	: TEXCOORD2;
+};
+
+static float Lights[6] =
+{
+	0.8333,	// X+
+	0.8333,	// X-
+	0.6667,	// Y+
+	0.6667,	// Y-
+	1.0,	// Z+
+	0.5		// Z-
+};
+
+float GetNormalLight( const float3 Normal )
+{
+	const float3	NormalSquared	= Normal * Normal;
+	const int3		IsNegative		= Normal < 0.0f;
+
+	return
+		NormalSquared.x * Lights[ IsNegative.x ] +
+		NormalSquared.y * Lights[ IsNegative.y + 2 ] +
+		NormalSquared.z * Lights[ IsNegative.z + 4 ];
+}
+
+float4 Main( PS_INPUT In ) : COLOR
+{
+	// Modify the position like in gbuffer-static-overlay
+	float4			AdjustedPosWS	= In.PositionWS;
+	AdjustedPosWS.z					*= -1.0f;
+	AdjustedPosWS.z					+= 0.5f;
+
+	// Hard-coded scale and sharpness because I don't expect to use this much anyway.
+	// Scale controls how the worldspace position maps; 4.0f means a texture spans 4m.
+	// Sharpness controls how the triplanar mapping blends on angled normals.
+	const float		OverlayScale	= 4.0f;
+	const float		OverlaySharp	= 2.0f;
+	const float3	OverlayUVW		= AdjustedPosWS.xyz / OverlayScale;
+	const float4	OverlayX		= tex2D( OverlaySampler, OverlayUVW.yz );
+	const float4	OverlayY		= tex2D( OverlaySampler, OverlayUVW.xz );
+	const float4	OverlayZ		= tex2D( OverlaySampler, OverlayUVW.xy );
+	float3			OverlayWeights	= pow( abs( In.Normal ), OverlaySharp );
+	// Make weights sum to 1
+	OverlayWeights					= OverlayWeights / ( OverlayWeights.x + OverlayWeights.y + OverlayWeights.z );
+	const float4	Overlay			= OverlayWeights.x * OverlayX +
+									  OverlayWeights.y * OverlayY +
+									  OverlayWeights.z * OverlayZ;
+
+	const float4	Albedo			= sRGBToLinear( tex2D( AlbedoSampler, In.UV ) * Overlay );
+
+	const float		Light			= GetNormalLight( normalize( In.Normal ) );
+
+	return MultiplyColor * Light * Albedo;
+}

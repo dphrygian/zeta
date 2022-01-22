@@ -1,0 +1,174 @@
+#version 120
+
+vec4 SampleSRGBToLinear( sampler2D Sampler, vec2 UV )
+{
+	vec4 Sample = texture2D( Sampler, UV );
+	vec4 Linear = pow( Sample, vec4( 2.2f ) );
+	return vec4( Linear.rgb, Sample.a );
+}
+
+// ****************************************************************
+// BEGIN CALIBRATION
+uniform vec4 Gamma;	// Used as float
+
+float Luma( vec3 Color )
+{
+	return dot( Color, vec3( 0.299f, 0.587f, 0.114f ) );
+}
+
+float Luminance( vec3 Color )
+{
+	return dot( Color, vec3( 0.2126f, 0.7152f, 0.0722f ) );
+}
+
+// i.e. LinearToSRGB
+vec3 Calibrate( vec3 Color )
+{
+	return pow( clamp( Color, 0.0f, 1.0f ), vec3( Gamma.x ) );
+}
+
+// END CALIBRATION
+// ****************************************************************
+
+// ****************************************************************
+// BEGIN COLOR GRADING
+
+float CGTexSize		= 16.0f;
+float CGTexSizeSq	= CGTexSize * CGTexSize;
+
+// TODO: Vectorize all of this?
+
+// Red is the easiest value; it is just scaled from [0, 1] to [1/d, 1-1/d].
+float OffsetR		= 0.5f / CGTexSize;
+float ScaleR		= ( CGTexSize - 1.0f ) / CGTexSize;
+
+// Green is scaled from [0, 1] to [1/dd, (1/d)-1/dd]
+float OffsetG		= 0.5f / CGTexSizeSq;
+float ScaleG		= ( CGTexSize - 1.0f ) / CGTexSizeSq;
+
+// Blue is trickiest.
+// Scale from [0, 1] to [0, d-1].
+// Floor to get the low slice for lerp.
+// Add 1 to get the high slice for lerp.
+// Use remainder of floor as alpha for lerp.
+float ScaleB1		= CGTexSize - 1.0f;
+float ScaleB2		= 1.0f / CGTexSize;
+
+vec3 ColorGrade( vec3 InColor, sampler2D Sampler )
+{
+	vec3		Saturated	= clamp( InColor, 0.0f, 1.0f );
+
+	float		CoordR		= Saturated.r * ScaleR + OffsetR;
+	float		CoordG		= Saturated.g * ScaleG + OffsetG;
+
+	float		ScaledB		= Saturated.b * ScaleB1;
+	float		LoB			= floor( ScaledB );
+	float		HiB			= LoB + 1.0f;
+	float		AlphaB		= ScaledB - LoB;
+	float		CoordLoB	= LoB * ScaleB2;
+	float		CoordHiB	= HiB * ScaleB2;
+
+	vec2	LoUV		= vec2( CoordLoB + CoordG, CoordR );
+	vec3	LoColor		= texture2D( Sampler, LoUV ).rgb;
+
+	vec2	HiUV		= vec2( CoordHiB + CoordG, CoordR );
+	vec3	HiColor		= texture2D( Sampler, HiUV ).rgb;
+
+	return mix( LoColor, HiColor, AlphaB );
+}
+
+// END COLOR GRADING
+// ****************************************************************
+
+vec2 FixUV( vec2 UV )
+{
+	return vec2( UV.x, 1.0f - UV.y );
+}
+
+uniform sampler2D Texture0;	// Diffuse
+uniform sampler2D Texture1;	// Color grading LUT
+uniform sampler2D Texture2;	// Noise
+uniform sampler2D Texture3;	// Bloom
+uniform sampler2D Texture4;	// Ghost
+uniform sampler2D Texture5;	// Lens
+
+uniform vec4	PostLevels;
+uniform vec4	LensUVAdjustment;
+uniform mat4	NoiseMatrix;
+uniform vec4	NoiseParams;
+
+// Some older drivers have problems with const arrays, so I'm doing this instead.
+vec2 DirtyLens0 = vec2( 0.30f, -0.7f );
+vec2 DirtyLens1 = vec2( 0.45f, -0.3f );
+vec2 DirtyLens2 = vec2( 0.25f, -0.4f );
+vec2 DirtyLens3 = vec2( 0.20f,  0.6f );
+
+varying vec2	PassUV;
+
+vec3 TonemapFilmicHejl2015( vec3 HDRColor )
+{
+	float	WP_Rcp	= 1.32781657212340f;	// Whitepoint = 2
+	vec3	vh		= HDRColor;
+	vec3	va		= ( 1.425f * HDRColor ) + 0.05f;
+	vec3	vf		= ( ( vh * va + 0.004f ) / ( ( vh * ( va + 0.55f ) + 0.0491f ) ) ) - 0.0821f;
+	return vf.rgb * WP_Rcp;
+}
+
+vec3 TonemapFilmicLuminance( vec3 HDRColor )
+{
+	float	WP_Rcp	= 1.32781657212340f;	// Whitepoint = 2
+	float	vh		= Luminance( HDRColor );
+	float	va		= ( 1.425f * vh ) + 0.05f;
+	float	vf		= ( ( vh * va + 0.004f ) / ( ( vh * ( va + 0.55f ) + 0.0491f ) ) ) - 0.0821f;
+	float	s		= vf / vh;
+	return WP_Rcp * s * HDRColor;
+}
+
+vec2 GetGhostUV( vec2 UV, float Scalar )
+{
+	vec2 RangeUV = UV * 2.0f - 1.0f;
+	vec2 ScaleUV = Scalar * RangeUV;
+	vec2 GhostUV = ScaleUV * 0.5f + 0.5f;
+	return GhostUV;
+}
+
+vec2 GetHaloUV( vec2 UV, float Scalar )
+{
+	vec2 RangeUV = UV * 2.0f - 1.0f;
+	vec2 ScaleUV = ( Scalar * RangeUV ) * length( RangeUV );
+	vec2 GhostUV = ScaleUV * 0.5f + 0.5f;
+	return GhostUV;
+}
+
+void main()
+{
+	vec2 FixedUV		= FixUV( PassUV );
+
+	vec4 MainColor		= texture2D( Texture0, FixedUV );
+	vec4 BloomColor		= texture2D( Texture3, FixedUV );
+	vec2 LensUV			= ( PassUV * LensUVAdjustment.xy ) + LensUVAdjustment.zw;
+	vec4 LensColor		= SampleSRGBToLinear( Texture5, LensUV );
+	vec4 GhostsColor	=
+							DirtyLens0.x * texture2D( Texture4, GetGhostUV( FixedUV, DirtyLens0.y ) ) +
+							DirtyLens1.x * texture2D( Texture4, GetGhostUV( FixedUV, DirtyLens1.y ) );
+	vec4 HalosColor		=
+							DirtyLens2.x * texture2D( Texture4, GetHaloUV( FixedUV, DirtyLens2.y ) ) +
+							DirtyLens3.x * texture2D( Texture4, GetHaloUV( FixedUV, DirtyLens3.y ) );
+	vec4 HDRColor		= MainColor +
+							( PostLevels.x * BloomColor ) +
+							( PostLevels.y * ( LensColor * GhostsColor ) ) +
+							( PostLevels.w * HalosColor );
+
+	vec4 NoiseUV		= vec4( FixedUV, 0.0f, 1.0f ) * NoiseMatrix;
+	vec3 NoiseColor		= texture2D( Texture2, NoiseUV.xy ).rgb * NoiseParams.x;
+
+	vec3 Black			= vec3( 0.0f, 0.0f, 0.0f );
+	vec3 LDRColor		= TonemapFilmicHejl2015( max( HDRColor.rgb - ( PostLevels.z * NoiseColor ), Black ) );
+	
+	vec3 GradedColor	= ColorGrade( LDRColor, Texture1 );
+	//vec3 GradedBlend	= mix( LDRColor, GradedColor, PostLevels.w );
+
+	vec3 GammaColor		= Calibrate( GradedColor );
+
+	gl_FragColor		= vec4( GammaColor, Luma( GammaColor ) );
+}

@@ -1,0 +1,17 @@
+#include "common.hlsl_psh"
+
+float4	Params;	// x = render walkable (0/1)
+
+struct PS_INPUT 
+{
+	float Height : TEXCOORD0;
+};
+
+float4 Main( PS_INPUT In ) : COLOR
+{
+	// MinimapA target is cleared to black.
+	// Red will denote walkable space.
+	// Green will store world-space height.
+	// Blue will denote a hidden space (walkable but not rendered).
+	return float4( 1.0f, In.Height, Params.x, 1.0f );
+}

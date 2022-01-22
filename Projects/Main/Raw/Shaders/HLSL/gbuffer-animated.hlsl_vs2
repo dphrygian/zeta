@@ -1,0 +1,42 @@
+#include "common.hlsl_vsh"
+#include "animated.hlsl_vsh"
+
+struct VS_INPUT 
+{
+	float4	Position	: POSITION;
+	float3	Normal		: NORMAL;
+	float4	Tangent		: TANGENT;
+	float2	UV			: TEXCOORD0;
+	float4	BoneWeights	: BLENDWEIGHT;
+	int4	BoneIndices	: BLENDINDICES;
+};
+
+struct VS_OUTPUT
+{
+	float4	Position	: POSITION;
+	float2	UV			: TEXCOORD0;
+	float4	PositionSS	: TEXCOORD1;
+	float3	NormalWS	: TEXCOORD2;
+	float4	TangentWS	: TEXCOORD3;
+};
+
+VS_OUTPUT Main( VS_INPUT In )
+{
+	VS_OUTPUT Out;
+
+	const float4 SkinnedPosition	= ApplyBones( In.Position, In.BoneWeights, In.BoneIndices );
+	const float4 Normal4			= float4( In.Normal, 0.0f );
+	const float4 SkinnedNormal		= ApplyBones( Normal4, In.BoneWeights, In.BoneIndices );
+	const float4 Tangent4			= float4( In.Tangent.xyz, 0.0f );	// Ignore the bitangent sign component
+	const float4 SkinnedTangent		= ApplyBones( Tangent4, In.BoneWeights, In.BoneIndices );
+
+	Out.Position	= FixHalfPixelOffset( mul( SkinnedPosition, WVP ) );
+	Out.UV			= In.UV;
+	Out.PositionSS	= Out.Position;
+	// DLP 5 Dec 2021: Flip normals and tangents in view X if we're in lefty mode.
+	// I'm only doing this in this shader because anything in the FG view should be animated.
+	Out.NormalWS	= LeftyModeReflect( mul( SkinnedNormal, WorldMatrix ).xyz );
+	Out.TangentWS	= LeftyModeReflect( float4( mul( SkinnedTangent, WorldMatrix ).xyz, In.Tangent.w ) );
+
+	return Out;
+}

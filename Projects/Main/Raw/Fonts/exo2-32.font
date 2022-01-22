@@ -1,0 +1,16 @@
+NumIncludes	= &
+@ Include
+@@&			= "common.fontheader"
+@@&			= "glyphs-64.fontheader"
+
+Face		= "Exo 2 Regular"
+BoldFace	= "Exo 2 Bold"
+ItalicFace	= "Exo 2 Italic"
+Size		= 32
+MinHeight	= 64
+CapHeight	= 28	# Override the metrics because they're wrong
+Antialias	= true
+NoCompress	= true
+Width		= 2048
+Height		= 2048
+Script		= "Script_LatinCyrillic_Glyphs"

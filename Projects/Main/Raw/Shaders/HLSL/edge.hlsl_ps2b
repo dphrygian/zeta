@@ -1,0 +1,105 @@
+#include "common.hlsl_psh"
+#include "fog.hlsl_psh"
+
+static const float skDepthThresholdLo	= 0.10f;
+static const float skDepthThresholdHi	= 0.20f;
+static const float skNormalThresholdLo	= 0.05f;
+static const float skNormalThresholdHi	= 0.25f;
+
+sampler SamplerNormal	: register(s0);
+sampler SamplerDepth	: register(s1);
+
+// x = 1/width, y = 1/height, z = 0.5/width, w = 0.5/height
+uniform float4	RTDims;
+// x = -1/width, y = -1/height, z = 1/width, w = 1/height
+uniform float4	RTDims2;
+
+uniform float4	SunVector;
+
+uniform float4	BackColor;
+uniform float4	EdgeColor;
+
+struct PS_INPUT
+{
+	float2 UV	: TEXCOORD0;
+};
+
+float3 SampleAndUnpackNormal( sampler Sampler, const float2 UV )
+{
+	const float4	NormalSpec		= tex2D( Sampler, UV );
+	const float4	NormalUnpack	= ( NormalSpec * 2.0f ) - 1.0f;
+	const float		NormalZSign		= NonZeroSign( NormalUnpack.z );
+	const float3	WSNormal		= GetInvStereographicProjection( NormalUnpack.xy, NormalZSign );
+	return WSNormal;
+}
+
+float4 Main( PS_INPUT In ) : COLOR
+{
+	// Sampling on diagonals produces thicker lines and some artifacts but also tends to work better with stipled transparency.
+	// Maybe try some established operators like Roberts cross, Sobel, Prewitt, whatever. This works, though.
+	const float2	NW_UV	= In.UV + float2( RTDims2.x, RTDims2.y );
+	const float2	NE_UV	= In.UV + float2( RTDims.x,  RTDims2.y );
+	const float2	SW_UV	= In.UV + float2( RTDims2.x, RTDims.y );
+	const float2	SE_UV	= In.UV + float2( RTDims.x,  RTDims.y );
+
+	const float		DepthZ	= tex2D( SamplerDepth, In.UV ).r;
+	const float		DepthA	= GetLinearDepth( DepthZ );
+	const float		DepthB	= GetLinearDepth( tex2D( SamplerDepth, NW_UV ).r );
+	const float		DepthC	= GetLinearDepth( tex2D( SamplerDepth, NE_UV ).r );
+	const float		DepthD	= GetLinearDepth( tex2D( SamplerDepth, SW_UV ).r );
+	const float		DepthE	= GetLinearDepth( tex2D( SamplerDepth, SE_UV ).r );
+	const float		DepthF	=
+							max(
+								max(
+									abs( DepthB - DepthA ),
+									abs( DepthC - DepthA ) 
+								),
+								max(
+									abs( DepthD - DepthA ),
+									abs( DepthE - DepthA )
+								)
+							);
+
+	// DLP 16 Aug 2020: Unpacking to WS normal to stabilize compared to just using the stereographic projection.
+	const float3	NormalA	= SampleAndUnpackNormal( SamplerNormal, In.UV );
+	const float3	NormalB	= SampleAndUnpackNormal( SamplerNormal, NW_UV );
+	const float3	NormalC	= SampleAndUnpackNormal( SamplerNormal, NE_UV );
+	const float3	NormalD	= SampleAndUnpackNormal( SamplerNormal, SW_UV );
+	const float3	NormalE	= SampleAndUnpackNormal( SamplerNormal, SE_UV );
+	const float		NormalF	=
+							( 1.0f - dot( NormalB, NormalA ) ) +
+							( 1.0f - dot( NormalC, NormalA ) ) + 
+							( 1.0f - dot( NormalD, NormalA ) ) +
+							( 1.0f - dot( NormalE, NormalA ) );
+
+	// Linear depth term, not related to fog. This would be used so edges
+	// always fade out completely where blur is maximum.
+	// (I experimented with using min(DistTerm, FogTerm) as the coefficient,
+	// but I think I actually like it better when lines don't fade all the
+	// way out. There's no reason they have to just because the distant scene
+	// is blurry.
+	//const float		DistTerm	= 1.0f - ScaleDistance( DepthA * ClipValues.y );
+
+	// Take fog params into consideration, including height params *and alpha*!
+	// This means edges do not fade out at distance anymore, unless fog is 100% opaque at far.
+	const float4	WSPos		= GetWSPos( In.UV, DepthZ );
+	const float3	ViewToPos	= WSPos.xyz - EyePosition.xyz;
+	const float		Distance	= length( ViewToPos );
+	const float3	ViewToPosN	= ViewToPos / Distance;
+	const float		SunValue	= 0.5f * ( 1.0f + dot( ViewToPosN, SunVector.xyz ) );
+	const float		SunValueT	= SunValue * SunValue;
+	const float4	Fog			= GetFog_Deferred( Distance, WSPos.z, SunValueT );
+	const float		FogTerm		= 1.0f - Fog.a;
+
+	const float		DepthTerm	= smoothstep( skDepthThresholdLo, skDepthThresholdHi, DepthF / DepthA );
+	const float		NormalTerm	= smoothstep( skNormalThresholdLo, skNormalThresholdHi, NormalF );
+	
+	// Debug view: depth deltas (prototype gradient)
+	//const float DepthDelta = smoothstep( 0.0001f, 0.0100f, saturate( 0.25f * DepthF / DepthA ) );
+	//return float4( DepthDelta, DepthDelta, DepthDelta, 1.0f );
+
+	// Debug view: depth edges in red, normal edges in blue
+	//return float4( DepthTerm, 0.0f, NormalTerm, 1.0f );
+
+	return lerp( BackColor, EdgeColor, FogTerm * max( DepthTerm, NormalTerm ) );
+}

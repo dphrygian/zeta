@@ -1,0 +1,25 @@
+#include "common.hlsl_psh"
+#include "calibration.hlsl_psh"
+
+sampler MainSampler	: register(s0);
+
+struct PS_INPUT
+{
+	float2 UV	: TEXCOORD0;
+};
+
+float4 Main( PS_INPUT In ) : COLOR
+{
+	const float3 HDRColor		= tex2D( MainSampler, In.UV ).rgb;
+
+	// Switching to Reinhard for softer, desaturated look
+	const float3 LDRColor		= TonemapReinhardLuminance( HDRColor );
+
+	const float3 sRGBColor		= Calibrate( LDRColor );
+
+	// NOTE: Luma() is meant for nonlinear values, but not meant for sRGB?
+	// Not sure how to interpret that since I use those terms interchangeably.
+	const float4 FinalColor 	= float4( sRGBColor, Luma( sRGBColor ) );
+
+	return FinalColor;
+}

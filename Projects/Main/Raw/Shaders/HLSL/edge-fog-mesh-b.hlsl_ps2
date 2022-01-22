@@ -1,0 +1,40 @@
+#include "common.hlsl_psh"
+
+sampler	FogDepthRGBASampler	: register(s0);
+sampler	SceneDepthSampler	: register(s1);
+
+// SDP variables
+float4	FogMeshColor;	// only used for alpha here
+float4	FogMeshParams;	// x = 1/far, y = exp (NOTE: "far" is relative to distance through mesh, not viewer)
+
+struct PS_INPUT 
+{
+	float4	PositionSS	: TEXCOORD0;
+	float4	VPos		: TEXCOORD1;
+};
+
+float4 Main( PS_INPUT In ) : COLOR
+{
+	// Fix VPos
+	const float2	NormVPos		= In.VPos.xy / In.VPos.w;
+
+	const float4	FogDepthRBGA	= tex2D( FogDepthRGBASampler, NormVPos );
+	const float		FogNearDepth	= DecodeFloatRGBA( FogDepthRBGA );
+	const float		FogFarDepth		= In.PositionSS.z / In.PositionSS.w;
+	const float		SceneDepth		= tex2D( SceneDepthSampler, NormVPos ).r;
+	
+	// Discard if front face is occluded
+	clip( SceneDepth - FogNearDepth );
+	
+	// Use the mesh's far depth or the scene depth, whichever is nearer to the camera
+	const float		UsingFarDepth	= min( FogFarDepth, SceneDepth );
+
+	const float3	FogNearWSPos	= GetWSPos( NormVPos, FogNearDepth ).xyz;
+	const float3	FogFarWSPos		= GetWSPos( NormVPos, UsingFarDepth ).xyz;
+	const float		FogDistance		= length( FogFarWSPos - FogNearWSPos );
+	const float		FogFalloff		= pow( saturate( FogDistance * FogMeshParams.x ), FogMeshParams.y );
+
+	const float		FogAlpha		= FogFalloff * FogMeshColor.a;
+
+	return float4( 1.0f, 1.0f, 1.0f, FogAlpha );
+}

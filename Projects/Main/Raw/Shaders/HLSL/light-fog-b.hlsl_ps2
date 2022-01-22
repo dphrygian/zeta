@@ -1,0 +1,58 @@
+#include "common.hlsl_psh"
+
+sampler	LightDepthRGBASampler	: register(s0);
+sampler	SceneDepthSampler		: register(s1);
+
+// SDP variables
+float4	LightPosition;
+float4	LightColor;
+float4	FogLightParams;	// x = fog density, y = exposure (since this is done after light combine)
+
+struct PS_INPUT 
+{
+	float4	PositionSS	: TEXCOORD0;
+	float4	VPos		: TEXCOORD1;
+};
+
+float3 NearestPointOnSegment( const float3 SegmentA, const float3 SegmentB, const float3 Point )
+{
+	const float3	Extent			= SegmentB - SegmentA;
+	const float		ExtentLengthSq	= dot( Extent, Extent );
+
+	const float3	Offset			= Point - SegmentA;
+	const float		OffsetDot		= dot( Offset, Extent );
+
+	const float		T				= saturate( OffsetDot / ExtentLengthSq );
+	return SegmentA + Extent * T;
+}
+
+float4 Main( PS_INPUT In ) : COLOR
+{
+	// Fix VPos
+	const float2	NormVPos		= In.VPos.xy / In.VPos.w;
+
+	const float4	LightDepthRBGA	= tex2D( LightDepthRGBASampler, NormVPos );
+	const float		LightNearDepth	= DecodeFloatRGBA( LightDepthRBGA );
+	const float		LightFarDepth	= In.PositionSS.z / In.PositionSS.w;
+	const float		SceneDepth		= tex2D( SceneDepthSampler, NormVPos ).r;
+	
+	// Discard if front face is occluded
+	clip( SceneDepth - LightNearDepth );
+	
+	// Use the light's far depth or the scene depth, whichever is nearer to the camera
+	const float		UsingFarDepth	= min( LightFarDepth, SceneDepth );
+
+	const float3	LightNearWSPos	= GetWSPos( NormVPos, LightNearDepth ).xyz;
+	const float3	LightFarWSPos	= GetWSPos( NormVPos, UsingFarDepth ).xyz;
+	const float		FogDistance		= length( LightFarWSPos - LightNearWSPos );
+	const float		FogFalloff		= saturate( FogDistance / ( 2.0f * LightColor.a ) );
+
+	const float3	NearestPoint	= NearestPointOnSegment( LightNearWSPos, LightFarWSPos, LightPosition.xyz );
+	const float		Dist			= length( NearestPoint - LightPosition.xyz );
+	const float		LinearFalloff	= saturate( 1.0f - ( Dist / LightColor.a ) );	// 1 at light pos, 0 at light radius
+	const float		LightFalloff	= pow( LinearFalloff, 4.0f );	// Instead of squaring, do this because... volumetric? Not sure this is right but it looks fine.
+	
+	const float		FogLight		= LightFalloff * FogFalloff * FogLightParams.x;
+
+	return FogLightParams.y * float4( FogLight * LightColor.rgb, 1.0f );	// FogLightParams.y is exposure scalar
+}

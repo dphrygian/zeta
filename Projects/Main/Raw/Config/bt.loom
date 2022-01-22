@@ -1,0 +1,1277 @@
+# ******************************** Null ********************************
+[NullBT]
+lmBT
+{
+	Null
+}
+
+# ******************************** Root ********************************
+[CommonBT_Root]
+lmBT
+{
+	// Top level of tree; core behaviors and interrupting reactions in parallel
+	Parallel( Name = "TopLevelParallel" )
+	{
+		Loop( Name = "BehaveLoop" )
+		{
+			UseResource( "Body", Name = "UseResource_Body_Behave" ) { Lookup( "Behave", Name = "Lookup_Behave" ) }
+		}
+
+		Loop( Name = "ReactLoop", CollapseDebug = true )
+		{
+			Lookup( "React", Name = "Lookup_React" )
+		}
+	}
+}
+
+# ******************************** Base Enemy AI ********************************
+
+[BaseEnemyBT_React]
+lmBT
+{
+	// Reaction tree: parallel of possible reactions waiting for triggering events
+	Parallel( Name = "ReactParallel" )
+	{
+		// Play hit react
+		Loop( Name = "HitReactLoop" )
+		{
+			Sequence( Name = "HitReactSequence" )
+			{
+				WaitForEvent( Rule( "OnDamaged" ), Name = "Wait_OnDamaged" )
+				Timeout( RandomFloat( 0.5, 1.5 ) )
+				{
+					RosaPlayBark( Lookup( "DamageBark", WarnFailure = false ), "VO" )
+				}
+				Selector
+				{
+					Sequence
+					{
+						// DLP 26 Apr 2020: Changed this from a timeout decorator to a condition so it will fail and fall through to the additive anim
+						ConditionTimeout( Lookup( "HitReactTimeout" ) )
+
+						// Unstagger if needed before playing hit react
+						SendEvent( "Unstagger", "SelfPE" )
+
+						UseResource( "Body", true, Name = "UseResource_Body_HitReact" )
+						{
+							// I don't actually want this to interrupt headtracking after all. It blends correctly.
+							//UseResource( "Head", true, Name = "UseResource_Head_HitReact" )
+							//{
+								UseResource( "Anim", true, Name = "UseResource_Anim_HitReact" )
+								{
+									RosaPlayAnim( "HitReact", BlendTime = 0.1, Name = "PlayAnim_HitReact" )
+								}
+							//}
+						}
+					}
+				
+					// Fall back to additive if we can't play the full hit react
+					// NOTE: Additive anims do not use blend time (because they don't interrupt)
+					Sequence
+					{
+						// I don't actually want this to interrupt headtracking after all. It blends correctly.
+						//UseResource( "Head", true, Name = "UseResource_Head_HitReactAdditive" )
+						//{
+							RosaPlayAnim( "HitReactAdditive", Additive = true, Name = "PlayAnim_HitReactAdditive" )
+						//}
+					}
+				}
+			}
+		}
+
+		// Stop staggered: steal resource from staggered reaction to unfreeze BT
+		Loop( Name = "StopStaggeredLoop" )
+		{
+			Sequence( Name = "StopStaggeredSequence" )
+			{
+				WaitForEvent( Rule( "StopStaggered" ), Name = "Wait_StopStaggered" )
+				UseResource( "Stagger", true )
+				{
+					SendEvent( "OnUnstaggered", "SelfPE" )
+				}
+			}
+		}
+
+		// Play staggered
+		Loop( Name = "PlayStaggeredLoop" )
+		{
+			Sequence( Name = "PlayStaggeredSequence" )
+			{
+				WaitForEvent( Rule( "PlayStaggered" ), Name = "Wait_PlayStaggered" )
+				Timeout( Lookup( "StaggerTimeout" ) )
+				{
+					Sequence( Name = "Staggered" )
+					{
+						SendEvent( "StopLooking", "SelfPE" )
+						UseResource( "Stagger", Name = "UseResource_Stagger_PlayStaggered" )
+						{
+							UseResource( "Body", true, Name = "UseResource_Body_PlayStaggered" )
+							{
+								UseResource( "Anim", true, Name = "UseResource_Anim_PlayStaggered" )
+								{
+									Sequence
+									{
+										SendEvent( "OnStaggered", "SelfPE" )
+										RosaPlayAnim( "Staggered", true, Name = "PlayAnim_Staggered" )
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+		// Flush BT when faction changes
+		Loop
+		{
+			Sequence
+			{
+				WaitForEvent( Rule( "OnFactionChanged" ) )
+				SendEvent( "TickThinkers", "SelfPE" )	// Tick thinkers so we immediately find a new target
+				// Then steal the body resource to flush the Behave branch
+				UseResource( "Body", true )
+				{
+					Null
+				}
+			}
+		}
+	}
+}
+
+# This basically just adds a scripting behavior in priority before combat;
+# I could put it in the normal tree but I just don't need the overhead.
+[BaseEnemyBT_Behave_Scripted]
+lmBT
+{
+	Selector
+	{
+		// Scripted behavior
+		Sequence
+		{
+			ConditionPE( GetVariable( "SelfPE", "Scripted" ) )
+			Lookup( "ScriptedBehavior" )
+		}
+
+		// Continue to normal behavior
+		"BaseEnemyBT_Behave"
+	}
+}
+
+[BaseEnemyBT_Behave]
+lmBT
+{
+	// Behavior tree: selector of primary behaviors in priority order: combat, search, notice, wander
+	Selector
+	{
+		// Combat
+		Sequence
+		{
+			ConditionPE( RodinBlackboardGet( "BestCombatTarget" ) )
+			UseStatMod( "Combat" )
+			{
+				// ROSANOTE: Can't currently inline child because it has start/finish actions, not supported in Loom
+				"BaseEnemyBT_CombatActionDecorator"
+			}
+		}
+		
+		// Search
+		Parallel( NumChildrenToSucceed = 1 )
+		{
+			// Monitor: run search as long as we have no combat target
+			Loop( CanFail = true )
+			{
+				ConditionPE( NOT( RodinBlackboardGet( "BestCombatTarget" ) ) )
+			}
+			
+			// Sequence: search behavior
+			Sequence
+			{
+				ConditionPE( RodinBlackboardGet( "BestSearchTarget" ) )
+				UseStatMod( "Search" )
+				{
+					"BaseEnemyBT_SearchActionDecorator"
+				}
+			}
+		}
+		
+		// Notice
+		Parallel( NumChildrenToSucceed = 1 )
+		{
+			// Monitor: run notice as long as we have no search target
+			Loop( CanFail = true )
+			{
+				ConditionPE( NOT( RodinBlackboardGet( "BestSearchTarget" ) ) )
+			}
+			
+			// Notice sequence
+			Sequence
+			{
+				ConditionPE( RodinBlackboardGet( "BestNoticeTarget" ) )
+				// ROSANOTE: Don't repeat notice too often at perception threshold.
+				// IMPORTANT: This should match timeout in wander parallel just below
+				ConditionTimeout( ConstantFloat( 8.0 ) )
+				UseStatMod( "Notice" )
+				{
+					Sequence
+					{
+						BlackboardWrite( "NoticeTarget", RodinBlackboardGet( "BestNoticeTarget" ) )
+						RosaLookAt( "NoticeTarget" )
+						RosaPlayBark( Lookup( "NoticeBark", WarnFailure = false ), "VO" )
+						Wait( ConstantFloat( 3.0 ) )
+					}
+				}
+			}
+		}
+		
+		// Wander
+		Parallel( NumChildrenToSucceed = 1 )
+		{
+			// Monitor: run wander as long as we have no notice, search, or combat targets
+			Loop( CanFail = true )
+			{
+				Sequence
+				{
+					ConditionPE( AND( NOT( RodinBlackboardGet( "BestCombatTarget" ) ), NOT( RodinBlackboardGet( "BestSearchTarget" ) ) ) )
+					// ROSANOTE: Don't check notice target too often; let us run wander at perception threshold.
+					// IMPORTANT: Should match timeout in notice parallel just above
+					Timeout( ConstantFloat( 8.0 ) )
+					{
+						ConditionPE( NOT( RodinBlackboardGet( "BestNoticeTarget" ) ) )
+					}
+				}
+			}
+			
+			// Sequence
+			UseStatMod( "Wander" )
+			{
+				Lookup( "IdleBehavior" )
+			}
+		}
+	}
+}
+
+[CommonBT_Wander]
+lmBT
+{
+	Parallel( NumChildrenToSucceed = 1 )
+	{
+		Loop
+		{
+			Timeout( RandomFloat( 6.0, 8.0 ) )
+			{
+				RosaPlayBark( Lookup( "WanderBark", WarnFailure = false ), "VO" )
+			}
+		}
+
+		Sequence
+		{
+			SendEvent( "StopLooking", "SelfPE" )
+			SendEvent( "StopAIMotion", "SelfPE" )	// HACKHACK: Forces idle animation to play again
+			Wait( RandomFloat( 1.0, 3.0 ) )
+			Lookup( "WanderMove" )
+		}
+	}
+}
+
+	[CommonBT_WanderMove]
+	lmBT
+	{
+		RosaMoveTo(
+			Wander					= true,
+			WanderTargetDistance	= 15.0,
+			Cautious				= true,
+			ReachedThresholdMin		= 1.0,
+			ReachedThresholdMax		= 1.5 )
+	}
+
+	[CommonBT_WanderMove_Tethered]
+	lmBT
+	{
+		RosaMoveTo(
+			Wander					= true,
+			WanderTargetDistance	= 15.0,
+			Cautious				= true,
+			TetherLocationPE		= RodinBlackboardGet( "SpawnLocation" ),
+			TetherDistanceZ			= 4.0,	// Only tethered in Z axis!
+			ReachedThresholdMin		= 1.0,
+			ReachedThresholdMax		= 1.5 )
+	}
+
+[CommonBT_Idle]
+lmBT
+{
+	Parallel( NumChildrenToSucceed = 1 )
+	{
+		Loop
+		{
+			Timeout( RandomFloat( 6.0, 8.0 ) )
+			{
+				RosaPlayBark( Lookup( "WanderBark", WarnFailure = false ), "VO" )
+			}
+		}
+
+		Sequence
+		{
+			SendEvent( "StopLooking", "SelfPE" )
+			SendEvent( "StopAIMotion", "SelfPE" )	// HACKHACK: Forces idle animation to play again
+			Wait( 999.0 )
+		}
+	}
+}
+
+# ******************************** Combat ********************************
+[BaseEnemyBT_CombatActionDecorator]
+NodeType	= "ActionDecorator"
+Child		= "BaseEnemyBT_CombatSequence"
+lmActions( Start )
+{
+	SendEvent( "AddAutosaveSuppression", "PlayerPE" )
+	//SendEvent( "BecomeNonFrobbable", "SelfPE" )
+	
+	// Notify the intended combat target (ROSANOTE: In Neon, this always notified the player)
+	SendEvent( "CombatStart", RodinBlackboardGet( "BestCombatTarget" ) )
+	
+	// Also notify ourselves
+	SendEvent( "OnCombat", "SelfPE" )
+}
+lmActions( Finish )
+{
+	SendEvent( "RemoveAutosaveSuppression", "PlayerPE" )
+	//SendEvent( "BecomeFrobbable", "SelfPE" )
+
+	// Notify the combat target (ROSANOTE: In Neon, this always notified the player)
+	// ROSANOTE: This depends on promoting BestCombatTarget -> CombatTarget in the behavior!
+	SendEvent( "CombatEnd", RodinBlackboardGet( "CombatTarget" ) )
+}
+
+[BaseEnemyBT_CombatSequence]
+lmBT
+{
+	Sequence
+	{
+		// Promote best known target to be our combat target
+		BlackboardWrite( "CombatTarget", RodinBlackboardGet( "BestCombatTarget" ) )
+		RosaLookAt( "CombatTarget" )
+
+		// Pursue them into melee range or desired approach distance
+		Lookup( "PursuitBehavior" )
+		
+		// DLP 29 Dec 2018: Always try to dodge before attacking, we don't care if this fails
+		CastResult( ConstantBool( true ) )
+		{
+			"CommonBT_TryDodge"
+		}
+		
+		// Finally, do our attack (melee/ranged selector for AIs that can do both)
+		Lookup( "AttackBehavior" )
+	}
+}
+
+# ROSATODO: Convert to inline Loom
+# Let other AIs know about this target when we attack.
+[CommonBT_WarningAINoise]
+NodeType		= "SendEvent"
+EventName		= "OnAINoise"
+NumParameters	= &
+@ Parameter
+# NOTE: Report the last known location of the combat target as the source.
+@@&Name			= "NoiseEntity"
+@@^Value		= "CommonBT_GetCombatTargetPE"
+@@&Name			= "NoiseLocation"
+@@^Value		= "LocationPE"
+@@&Name			= "NoiseSourceLocation"
+@@^Value		= "CommonBT_GetCombatTargetLocationPE"
+@@&Name			= "NoiseRadius"
+@@^Value		= "CommonBT_WarningNoiseRadiusPE"
+@@&Name			= "NoiseUpdateTime"
+@@^Value		= "CommonBT_GetCombatTargetLastKnownTimePE"
+
+	[CommonBT_GetCombatTargetPE]
+	PEType			= "RodinBlackboardGet"
+	BlackboardKey	= "CombatTarget"
+
+	[CommonBT_WarningNoiseRadiusPE]
+	PEType	= "ConstantFloat"
+	Value	= 8.0
+
+	[CommonBT_GetCombatTargetLocationPE]
+	PEType	= "RodinGetLastKnownLocation"
+	Entity	= "CommonBT_GetCombatTargetPE"
+
+	[CommonBT_GetCombatTargetLastKnownTimePE]
+	PEType	= "RodinGetLastKnownTime"
+	Entity	= "CommonBT_GetCombatTargetPE"
+
+[CommonBT_PursueAndWarn]
+lmBT
+{
+	// Finish the parallel iff the pursue target loop succeeds (see notes there).
+	// This behavior is not meant to loop forever, it is meant to end when the
+	// agent has finished a single "pursuit", whatever that means for it.
+	Parallel( NumChildrenToSucceed = 1 )
+	{
+		"CommonBT_PursueMonitor"
+		"CommonBT_PursueLoop"	// This is the only child that can succeed
+
+		Loop
+		{
+			Sequence
+			{
+				"CommonBT_WarningAINoise"	// Not coupled to a bark, so they're constantly alerting other AIs!
+
+				// DLP 30 Dec 2018: Made this a selector instead of separate loops
+				// so dodge and attack don't compete for resources.
+				Selector
+				{
+					// Combat bark takes priority
+					Sequence
+					{
+						ConditionTimeout( RandomFloat( 6.0, 10.0 ) )
+						RosaPlayBark( Lookup( "CombatBark", WarnFailure = false ), "VO" )
+					}
+
+					// Then dodge, if we need to
+					"CommonBT_TryDodge"
+				}
+			}
+		}
+	}
+}
+
+	[CommonBT_PursueMonitor]
+	lmBT
+	{
+		// Monitor: run behavior as long as we are still pursuing our best combat target
+		Loop( Name = "PursueMonitor", CanFail = true )
+		{
+			Sequence
+			{
+				ConditionPE(
+					Conditional( "NE",
+						RodinBlackboardGet( "CombatTarget" ),
+						"NullPE"
+						)
+					)
+
+				// NOTE: This used to fail when BestCombatTarget became null, which would immediately
+				// interrupt the pursuit. I don't actually want that, especially when "pursuit" is
+				// actually fleeing. So check if they're equal OR BestCombatTarget is null. If it's
+				// null, we'll eventually fall out of combat when the current pursue move is done and
+				// we still don't have a target.
+				ConditionPE(
+					OR(
+						NOT( RodinBlackboardGet( "BestCombatTarget" ) ),
+						Conditional( "E",
+							RodinBlackboardGet( "BestCombatTarget" ),
+							RodinBlackboardGet( "CombatTarget" )
+							)
+						)
+					)
+			}
+		}
+	}
+
+	[CommonBT_PursueLoop]
+	lmBT
+	{
+		// Move toward target; this behavior manages success of the parent parallel
+		Loop( CanSucceed = true )
+		{
+			Selector
+			{
+				Lookup( "PursueCombatTarget" )
+				Lookup( "PursueCombatTargetFallback" )
+			}
+		}
+	}
+
+[CommonBT_PursueAndAttack]
+lmBT
+{
+	Parallel( NumChildrenToSucceed = 1 )
+	{
+		"CommonBT_PursueMonitor"
+		
+		// This is the only child that can succeed; it succeeds when the pursuit is completed
+		// DLP 30 Dec 2018: This is now dependent on getting the animation resource back, which
+		// means that any active dodge or attack must finish before the move is considered done.
+		"CommonBT_PursueLoop"
+
+		Loop
+		{
+			Sequence
+			{
+				"CommonBT_WarningAINoise"	// Not coupled to a bark, so they're constantly alerting other AIs!
+
+				// DLP 30 Dec 2018: Made this a selector instead of separate loops
+				// so dodge and attack don't compete for resources.
+				Selector
+				{
+					// Combat bark takes priority
+					Sequence
+					{
+						ConditionTimeout( RandomFloat( 8.0, 12.0 ) )
+						RosaPlayBark( Lookup( "CombatBark", WarnFailure = false ), "VO" )
+					}
+
+					// Then dodge, if we need to
+					"CommonBT_TryDodge"
+
+					// Finally, attack if we can
+					// DLP 29 Dec 2018: Moved this to a timeout from a wait, which should give better results
+					// DLP 30 Dec 2018: Ignore the timeout if this fails, so that any other behavior wanting to do a ranged attack can
+					// (because this will fail if interrupted by the pursuit movement finishing; though is probably unnecessary now
+					// that the pursue move doesn't finish until it gets the anim resource back! But it's still good to not time out
+					// due to other possible failures like no LOS to target.)
+					Timeout( Lookup( "RangedAttackWarmupTime" ), BlackboardKey = "Timeout_RangedAttack", IgnoreIfFailed = true )
+					{
+						"CommonBT_RangedAttackSequence"
+					}
+				}
+			}
+		}
+	}
+}
+
+[CommonBT_PursueAndCharge]
+lmBT
+{
+	Parallel( NumChildrenToSucceed = 1 )
+	{
+		"CommonBT_PursueMonitor"
+		"CommonBT_PursueLoop"	// This is the only child that can succeed
+
+		Loop
+		{
+			Sequence
+			{
+				"CommonBT_WarningAINoise"	// Not coupled to a bark, so they're constantly alerting other AIs!
+
+				// DLP 30 Dec 2018: Made this a selector instead of separate loops
+				// so dodge and attack don't compete for resources.
+				Selector
+				{
+					// Combat bark takes priority
+					Sequence
+					{
+						ConditionTimeout( RandomFloat( 8.0, 12.0 ) )
+						RosaPlayBark( Lookup( "CombatBark", WarnFailure = false ), "VO" )
+					}
+
+					// Then dodge, if we need to
+					"CommonBT_TryDodge"
+
+					// Finally, charge if we can
+					"CommonBT_TryCharge"
+				}
+			}
+		}
+	}
+}
+
+[CommonBT_PursueCombatTarget]
+lmBT
+{
+	UseResource( "PursueMove", false )
+	{
+		RosaMoveTo(
+			"CombatTarget",
+			"Run",
+			UseActualTargetLocation	= true,	// HACKHACK to help AIs not lose the target around corners, without changing their actual knowledge
+			ApproachDistancePE		= Lookup( "PursueRange", WarnFailure = false ),
+			ReachedThresholdMin		= 1.0,
+			ReachedThresholdMax		= 1.5 )
+	}
+}
+
+[CommonBT_PursueCombatTargetFallback]
+lmBT
+{
+	// Random wander if pursuit failed
+	UseResource( "PursueMove", false )
+	{
+		RosaMoveTo(
+			Stance					= "Run",
+			Wander					= true,
+			WanderTargetDistance	= 5.0,
+			Cautious				= true,
+			ReachedThresholdMin		= 0.5,
+			ReachedThresholdMax		= 1.0 )
+	}
+}
+
+[CommonBT_AttackSelector]
+lmBT
+{
+	Selector
+	{
+		"CommonBT_MeleeAttackSequence"
+
+		// DLP 29 Dec 2018: Moved this to a timeout from a wait, which should give better results
+		Timeout( Lookup( "RangedAttackWarmupTime" ), BlackboardKey = "Timeout_RangedAttack", IgnoreIfFailed = true )
+		{
+			Sequence
+			{
+				RosaTurnToward( "CombatTarget" )
+				"CommonBT_RangedAttackSequence"
+			}
+		}
+
+		// HACKHACK: If attack fails for any reason, try to dodge or move into a better position
+		// This is to fix the occasional case where an AI very close to a wall and out of melee
+		// range would continue to fail its projectile clearance trace checks and stall out.
+		// (NOTE: The timeout above returns success if still waiting, so these will only happen
+		// if the ranged attack itself fails.)
+		"CommonBT_TryDodge"
+		"CommonBT_TryDodgeBack"
+		Lookup( "PursueCombatTargetFallback" )
+	}
+}
+
+[CommonBT_RangedAttackSequence]
+lmBT
+{
+	Sequence
+	{
+		// Still targeting our best target?
+		ConditionPE( Conditional( "E", RodinBlackboardGet( "BestCombatTarget" ), RodinBlackboardGet( "CombatTarget" ) ) )
+
+		// Make sure we have approximate clearance to throw projectile
+		// Note that this isn't exact because projectile comes from hands during animation
+		Selector
+		{
+			Sequence
+			{
+				// Use dead reckoning for this check if we can
+				ConditionPE( Lookup( "UseDeadReckoning", WarnFailure = false ) )
+				RosaCheckTrace(
+						StartPE		= RosaGetLocation( "SelfPE" ),
+						EndPE		= Add(
+										RosaGetLocation( "SelfPE" ),
+										RosaDeadReckoning(
+											RosaGetLocation( "SelfPE" ),								// Location
+											Lookup( "RangedAttackSpeed" ),								// Speed
+											RosaGetLocation( RodinBlackboardGet( "CombatTarget" ) ),	// Target location
+											Mul(														// Target velocity, ignoring Z
+												ConstantVector( 1.0, 1.0, 0.0 ),
+												RosaGetVelocity( RodinBlackboardGet( "CombatTarget" ) )
+												)
+											)
+										),
+						ExtentsPE	= ConstantVector( 0.2, 0.2, 0.2 ),	// Test a slightly larger region than the actual projectile
+						TargetPE	= RodinBlackboardGet( "CombatTarget" )
+					)
+			}
+			Sequence
+			{
+				// *Don't* do this side of the selector if we do dead reckoning but that trace failed
+				ConditionPE( NOT( Lookup( "UseDeadReckoning", WarnFailure = false ) ) )
+				RosaCheckTrace(
+						StartPE		= RosaGetLocation( "SelfPE" ),
+						EndPE		= RosaGetLocation( RodinBlackboardGet( "CombatTarget" ) ),
+						ExtentsPE	= ConstantVector( 0.2, 0.2, 0.2 ),	// Test a slightly larger region than the actual projectile
+						TargetPE	= RodinBlackboardGet( "CombatTarget" )
+					)
+			}
+		}
+
+		// DLP 30 Dec 2018: Moved this to *after* the trace check so we don't start attack bark unless we're, y'know, attacking
+		RosaPlayBark( Lookup( "AttackBark", WarnFailure = false ), "VO" )
+		"CommonBT_WarningAINoise"
+
+		// DLP 5 Dec 2021: Trying a new layered approach
+		// NOTE: This means that hit reacts won't interrupt this animation,
+		// which means shooting an enemy during their wind-up doesn't cancel
+		// their attack! They can even fire during their death animation
+		// because this is still playing!
+		// This is probably worth solving later but I'm in the middle of 7DFPS.
+		// Maybe I make HitReact also upper body, and I do a proper upper body
+		// state machine instead of ad hoc layered animations, so they can be
+		// interrupted and blend out like full body animations do. I dunno.
+		UseResource( "Anim", true ) { RosaPlayAnim( "RangedAttack", Layered = true ) }
+
+		// If we've done everything else, we don't care if teleport fails
+		CastResult( ConstantBool( true ) )
+		{
+			"CommonBT_TryTeleport"
+		}
+	}
+}
+
+[CommonBT_MeleeAttackSequence]
+lmBT
+{
+	Sequence
+	{
+		// Still targeting our best target?
+		ConditionPE( Conditional( "E", RodinBlackboardGet( "BestCombatTarget" ), RodinBlackboardGet( "CombatTarget" ) ) )
+
+		// Close enough for melee attack?
+		ConditionPE( Conditional( "LT", RosaDistance( "SelfPE", RodinBlackboardGet( "CombatTarget" ) ), ConstantFloat( 1.5 ) ) )
+
+		RosaTurnToward( "CombatTarget" )
+
+		// Make sure we have approximate clearance so we don't attack a buddy's back
+		RosaCheckTrace(
+				StartPE		= RosaGetLocation( "SelfPE" ),
+				EndPE		= RosaGetLocation( RodinBlackboardGet( "CombatTarget" ) ),
+				ExtentsPE	= ConstantVector( 0.1, 0.1, 0.1 ),	// Test a non-zero region even though the melee trace itself is zero-extent
+				TargetPE	= RodinBlackboardGet( "CombatTarget" )
+			)
+
+		// DLP 30 Dec 2018: Moved this to *after* the trace check so we don't start attack bark unless we're, y'know, attacking
+		RosaPlayBark( Lookup( "AttackBark", WarnFailure = false ), "VO" )
+		"CommonBT_WarningAINoise"
+
+		// DLP 5 Dec 2021: Trying a new layered approach
+		UseResource( "Anim", true ) { RosaPlayAnim( "MeleeAttack", Layered = true ) }
+
+		Wait( Lookup( "MeleeAttackCooldownTime", WarnFailure = false ) )	// Don't warn, because PE not found in map just means no cooldown
+
+		// If we've done everything else, we don't care if teleport or dodge-back fails
+		CastResult( ConstantBool( true ) )
+		{
+			Selector
+			{
+				"CommonBT_TryTeleport"
+				"CommonBT_TryDodgeBack"
+			}
+		}
+	}
+}
+
+# ******************************** Charge ********************************
+
+[CommonBT_TryCharge]
+lmBT
+{
+	// Short timeout for the check trace
+	Timeout( ConstantFloat( 0.5 ) )
+	{
+		Sequence
+		{
+			// Still targeting our best target?
+			ConditionPE( Conditional( "E", RodinBlackboardGet( "BestCombatTarget" ), RodinBlackboardGet( "CombatTarget" ) ) )
+
+			// Close enough for charge?
+			ConditionPE( Conditional( "LT", RosaDistance( "SelfPE", RodinBlackboardGet( "CombatTarget" ) ), ConstantFloat( 9.0 ) ) )
+
+			// Make sure we have approximate clearance so we don't attack a buddy's back
+			RosaCheckTrace(
+					StartPE		= RosaGetLocation( "SelfPE" ),
+					EndPE		= RosaGetLocation( RodinBlackboardGet( "CombatTarget" ) ),
+					ExtentsPE	= ConstantVector( 0.4, 0.4, 0.4 ),	// Tarrare has 0.35m extents, so check a bit wider
+					TargetPE	= RodinBlackboardGet( "CombatTarget" )
+				)
+
+			// Actual timeout on the charge
+			Timeout( ConstantFloat( 6.0 ) )
+			{
+				Sequence
+				{
+					RosaPlayBark( Lookup( "AttackBark", WarnFailure = false ), "VO" )
+					"CommonBT_WarningAINoise"
+					UseResource( "PursueMove", true )
+					{
+						Sequence
+						{
+							RosaStopMoving()
+							RosaTurnToward( "CombatTarget" )
+							UseStatMod( "Charging" )
+							{
+								UseResource( "Anim", true ) { RosaPlayAnim( "Charge" ) }
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+# ******************************* Teleport ******************************
+
+[CommonBT_TryTeleport]
+lmBT
+{
+	Sequence
+	{
+		// PE not found just means we can't dodge, it's not a cause for alarm
+		ConditionPE( Lookup( "CanTeleport", WarnFailure = false ) )
+
+		Timeout( Lookup( "TeleportTimeout" ) )
+		{
+			Sequence
+			{
+				// Start a running teleport to ~12m away, tethered to within 16m of the combat target's location
+				RosaMoveTo(
+					Stance					= "Run",
+					TeleportDelay			= 0.5,
+					Wander					= true,
+					WanderTargetDistance	= 12.0,
+					Cautious				= true,
+					TetherLocationPE		= RosaGetLocation( RodinBlackboardGet( "CombatTarget" ) ),
+					TetherDistance			= 16.0 )
+
+				// Turn back toward the combat target (wander won't finish with a turn-toward, so we'll be facing however we were moving at teleport time)
+				RosaTurnToward( "CombatTarget" )
+			}
+		}
+	}
+}
+
+# ******************************** Dodge ********************************
+
+[CommonBT_TryDodge]
+lmBT
+{
+	Sequence
+	{
+		// PE not found just means we can't dodge, it's not a cause for alarm
+		ConditionPE( Lookup( "CanDodge", WarnFailure = false ) )
+		
+		// Check if our target is aiming at us
+		ConditionPE( RodinGetKnowledge( RodinBlackboardGet( "CombatTarget" ), "IsAiming" ) )
+
+		// Ignore if failed so we don't apply the timeout if the trace checks fail
+		Timeout( ConstantFloat( 3.0 ), BlackboardKey = "Timeout_Dodge", IgnoreIfFailed = true )
+		{
+			Selector
+			{
+				// Try to dodge left
+				Sequence
+				{
+					ConditionPE( RandomBool( 0.5 ) )
+					// Zero-extent trace 2m left to make sure a dodge would make sense right now
+					RosaCheckTrace(
+							StartPE	= RosaGetLocation( "SelfPE" ),
+							EndPE	= Add(
+										RosaGetLocation( "SelfPE" ),
+										Mul(
+											ConstantFloat( 2.0 ),
+											Cross(
+												RosaGetOrientation( "SelfPE" ),
+												ConstantVector( 0.0, 0.0, -1.0 )
+												)
+											)
+										)
+						)
+					UseResource( "Anim", true ) { RosaPlayAnim( "DodgeLeft" ) }
+				}
+
+				// Try to dodge right
+				Sequence
+				{
+					// Zero-extent trace 2m right to make sure a dodge would make sense right now
+					RosaCheckTrace(
+							StartPE	= RosaGetLocation( "SelfPE" ),
+							EndPE	= Add(
+										RosaGetLocation( "SelfPE" ),
+										Mul(
+											ConstantFloat( 2.0 ),
+											Cross(
+												RosaGetOrientation( "SelfPE" ),
+												ConstantVector( 0.0, 0.0, 1.0 )
+												)
+											)
+										)
+						)
+					UseResource( "Anim", true ) { RosaPlayAnim( "DodgeRight" ) }
+				}
+			}
+		}
+	}
+}
+
+[CommonBT_TryDodgeBack]
+lmBT
+{
+	Sequence
+	{
+		// PE not found just means we can't dodge, it's not a cause for alarm
+		ConditionPE( Lookup( "CanDodge", WarnFailure = false ) )
+
+		// DLP 22 Aug 2016: Disabling this check because it doesn't really matter and I want more dodge backs.
+		// Check if our target is aiming at us
+		//ConditionPE( RodinGetKnowledge( RodinBlackboardGet( "CombatTarget" ), "IsAiming" ) )
+
+		// DLP 22 Aug 2016: Increasing range on this check from 2m to 3m because I want more dodge backs.
+		// Check if we're still in melee-ish range (compare to the test in CommonBT_MeleeAttackSequence)
+		ConditionPE( Conditional( "LT", RosaDistance( "SelfPE", RodinBlackboardGet( "CombatTarget" ) ), ConstantFloat( 3.0 ) ) )
+
+		// Zero-extent trace 2m back to make sure a dodge would make sense right now
+		RosaCheckTrace(
+				StartPE	= RosaGetLocation( "SelfPE" ),
+				EndPE	= Sub(
+							RosaGetLocation( "SelfPE" ),
+							Mul(
+								ConstantFloat( 2.0 ),
+								RosaGetOrientation( "SelfPE" )
+								)
+							)
+			)
+
+		Timeout( ConstantFloat( 3.0 ) )
+		{
+			UseResource( "Anim", true ) { RosaPlayAnim( "DodgeBack" ) }
+		}
+	}
+}
+
+# ******************************** Search ********************************
+[BaseEnemyBT_SearchActionDecorator]
+NodeType	= "ActionDecorator"
+Child		= "CommonBT_SearchSequence_StatModded"
+lmActions( Start )
+{
+	SendEvent( "AddAutosaveSuppression", "PlayerPE" )
+}
+lmActions( Finish )
+{
+	SendEvent( "RemoveAutosaveSuppression", "PlayerPE" )
+}
+
+[CommonBT_SearchSequence_StatModded]
+lmBT
+{
+	Parallel( NumChildrenToSucceed = 1 )
+	{
+		Loop
+		{
+			Timeout( RandomFloat( 3.0, 6.0 ) )
+			{
+				RosaPlayBark( Lookup( "SearchBark", WarnFailure = false ), "VO" )
+			}
+		}
+
+		Sequence
+		{
+			BlackboardWrite( "SearchTarget", RodinBlackboardGet( "BestSearchTarget" ) )
+
+			RosaLookAt( "SearchTarget" )
+			"CommonBT_AlertSearchTarget"
+
+			Selector
+			{
+				Sequence
+				{
+					RosaMoveTo(
+						"SearchTarget",
+						"Search",
+						Cautious = true,
+						ReachedThresholdMin = 0.25,
+						ReachedThresholdMax = 0.5,
+						Name = "TargetedSearch" )
+
+					// Wandering search without look-at, if we reached the target and
+					// haven't shifted into combat (mainly for investigating allied bodies)
+					SendEvent( "StopLooking", "SelfPE" )
+					"CommonBT_AlertSearchTarget"
+					RosaMoveTo(
+						Stance = "Search",
+						Wander = true,
+						WanderTargetDistance = 8.0,
+						Cautious = true,
+						ReachedThresholdMin = 0.25,
+						ReachedThresholdMax = 0.5
+						Name = "WanderingSearch" )
+				}
+
+				// Do a wandering search (still looking at target) if targeted moves
+				// fails because the target was off navmesh or whatever.
+				RosaMoveTo(
+					Stance = "Search",
+					Wander = true,
+					WanderTargetDistance = 8.0,
+					Cautious = true,
+					ReachedThresholdMin = 0.25,
+					ReachedThresholdMax = 0.5
+					Name = "WanderingSearch" )
+			}
+		}
+	}
+}
+
+	# ROSATODO: Inline with Loom
+	[CommonBT_AlertSearchTarget]
+	NodeType		= "SendEvent"
+	EventName		= "OnAINoise"
+	NumParameters	= &
+	@ Parameter
+	@@&Name			= "NoiseEntity"
+	@@^Value		= "CommonBT_GetSearchTargetPE"
+	@@&Name			= "NoiseLocation"
+	@@^Value		= "LocationPE"
+	@@&Name			= "NoiseSourceLocation"
+	@@^Value		= "CommonBT_GetSearchTargetLocationPE"
+	@@&Name			= "NoiseRadius"
+	@@^Value		= "CommonBT_AlertNoiseRadiusPE"
+	@@&Name			= "NoiseUpdateTime"
+	@@^Value		= "CommonBT_GetSearchTargetLastKnownTimePE"
+
+		[CommonBT_GetSearchTargetPE]
+		PEType			= "RodinBlackboardGet"
+		BlackboardKey	= "SearchTarget"
+
+		[CommonBT_GetSearchTargetLocationPE]
+		PEType	= "RodinGetLastKnownLocation"
+		Entity	= "CommonBT_GetSearchTargetPE"
+
+		[CommonBT_GetSearchTargetLastKnownTimePE]
+		PEType	= "RodinGetLastKnownTime"
+		Entity	= "CommonBT_GetSearchTargetPE"
+
+		[CommonBT_AlertNoiseRadiusPE]
+		PEType	= "ConstantFloat"
+		Value	= 8.0
+
+# ******************************** NPC ********************************
+
+# ROSANOTE: There is no support for wander/patrol here because NPCs should probably just sit still.
+[BaseNPCBT_Root]
+lmBT
+{
+	// Look at target if we have one
+	Selector
+	{
+		Sequence
+		{
+			ConditionPE( RodinBlackboardGet( "BestTarget" ) )
+			BlackboardWrite( "Target", RodinBlackboardGet( "BestTarget" ) )
+			RosaLookAt( "Target" )
+		}
+
+		SendEvent( "StopLooking", "SelfPE" )
+	}
+}
+
+# CEO for Zeta
+
+[CommonBT_FleeCombatTarget]
+lmBT
+{
+	// NOTE: This is currently being used within the Combat stat mod too, so I'm just tuning for that.
+	UseStatMod( "Flee" )
+	{
+		RosaMoveTo(
+			Stance					= "Run",
+			MoveTargetBlackboardKey	= "CombatTarget",
+			Flee					= true,
+			FleeTargetDistance		= 24.0,
+			ReachedThresholdMin		= 0.25,		// Don't stop moving unless we're at least this close
+			ReachedThresholdMax		= 0.0 )		// Don't start moving unless we're at least this far
+	}
+}
+
+# ******************************** Hostage ********************************
+
+[HostageBT_Root]
+lmBT
+{
+	Selector
+	{
+		Sequence
+		{
+			// Are we rescued and free to flee?
+			ConditionPE( Conditional( "E", "StatePE", ConstantString( "Rescued" ) ) )
+
+			// Stop looking at player
+			SendEvent( "StopLooking", "SelfPE" )
+
+			// HACKHACK: Give fleeing hostage magical knowledge of player's location
+			// so they'll keep fleeing even after they lose sight of her
+			"HostageBT_FakeBumpPlayer"
+
+			BlackboardWrite( "FleeTarget", "PlayerPE" )
+			UseStatMod( "Flee" )
+			{
+				RosaMoveTo(
+					Stance					= "Run",
+					MoveTargetBlackboardKey	= "FleeTarget",
+					Flee					= true,
+					FleeTargetDistance		= 24.0,
+					ReachedThresholdMin		= 0.25,		// Don't stop moving unless we're at least this close
+					ReachedThresholdMax		= 0.0 )		// Don't start moving unless we're at least this far
+			}
+		}
+
+		// Else, fall back to NPC behavior
+		Parallel( NumChildrenToSucceed = 1 )
+		{
+			Loop
+			{
+				Timeout( RandomFloat( 4.0, 6.0 ) )
+				{
+					RosaPlayBark( Lookup( "IdleBark", WarnFailure = false ), "VO" )
+				}
+			}
+
+			"BaseNPCBT_Root"
+		}
+	}
+}
+
+	# ROSATODO: Convert to inline Loom (with other BT SendEvents)
+	[HostageBT_FakeBumpPlayer]
+	NodeType		= "SendEvent"
+	EventName		= "FakeBump"
+	Recipient		= "SelfPE"
+	NumParameters	= &
+	@ Parameter
+	@@&Name			= "Target"
+	@@^Value		= "PlayerPE"
+
+# ******************************** PORTED FROM NEON ********************************
+# ******************************** Security Camera ********************************
+
+# CAMTODO: Convert to Loom
+
+[SecCamBT_Root]
+NodeType	= "Selector"
+NumChildren	= &
+@ Child
+@@&			= "SecCamBT_AlarmBehavior"
+@@&			= "SecCamBT_TrackBehavior"
+@@&			= "SecCamBT_OscillateBehavior"
+
+[SecCamBT_AlarmBehavior]
+NodeType	= "Sequence"
+NumChildren	= &
+@ Child
+@@&			= "SecCamBT_HasAlarmTarget"
+@@&			= "SecCamBT_AlarmSequence"
+
+	[SecCamBT_HasAlarmTarget]
+	NodeType	= "ConditionPE"
+	ValuePE		= "SecCamBT_GetBBAlarmTarget"
+
+	[SecCamBT_AlarmSequence]
+	NodeType	= "Sequence"
+	NumChildren	= &
+	@ Child
+	# NOTE: No need to promote the best target to another variable;
+	# cameras only ever track the player, so there's only the one.
+	@@&			= "SecCamBT_TripAlarm"
+	@@&			= "SecCamBT_LookAtAlarmTarget"
+	@@&			= "SecCamBT_Wait"
+
+		[SecCamBT_TripAlarm]
+		NodeType		= "SendEvent"
+		EventName		= "TripAlarm"
+		Recipient		= "SelfPE"
+		NumParameters	= &
+		@ Parameter
+		@@&Name			= "AlarmTarget"
+		@@^Value		= "SecCamBT_GetBBAlarmTarget"
+		@@&Name			= "AlarmTargetLocation"
+		@@^Value		= "SecCamBT_GetAlarmTargetLocationPE"
+
+			[SecCamBT_GetAlarmTargetLocationPE]
+			PEType	= "RodinGetLastKnownLocation"
+			Entity	= "SecCamBT_GetBBAlarmTarget"
+
+		[SecCamBT_LookAtAlarmTarget]
+		NodeType				= "RosaLookAt"
+		LookTargetBlackboardKey	= "AlarmTarget"
+
+		# Just wait a bit before finishing the action and notifying alarm box again
+		# NEONNOTE: This implicitly defines the re-notify period for the alarm box!
+		[SecCamBT_Wait]
+		NodeType	= "Wait"
+		TimePE		= "SecCamBT_WaitTimePE"
+
+			[SecCamBT_WaitTimePE]
+			PEType	= "ConstantFloat"
+			Value	= 1.0
+
+[SecCamBT_TrackBehavior]
+NodeType				= "Parallel"
+NumChildrenToSucceed	= 1	# Sequence can succeed; Monitor will loop forever
+NumChildren				= &
+@ Child
+@@&						= "SecCamBT_TrackMonitor"
+@@&						= "SecCamBT_TrackSequence"
+
+	[SecCamBT_TrackMonitor]
+	NodeType	= "Loop"
+	Child		= "SecCamBT_TrackConditions"
+	CanFail		= true
+
+		[SecCamBT_TrackConditions]
+		NodeType	= "ConditionPE"
+		ValuePE		= "SecCamBT_NoAlarmTarget"
+
+	[SecCamBT_TrackSequence]
+	NodeType	= "Sequence"
+	NumChildren	= &
+	@ Child
+	# NOTE: No need to promote the best target to another variable;
+	# cameras only ever track the player, so there's only the one.
+	@@&			= "SecCamBT_HasTrackTarget"
+	@@&			= "SecCamBT_Track"
+	@@&			= "SecCamBT_LookAtTrackTarget"
+	@@&			= "SecCamBT_Wait"
+
+		[SecCamBT_HasTrackTarget]
+		NodeType	= "ConditionPE"
+		ValuePE		= "SecCamBT_GetBBTrackTarget"
+
+		[SecCamBT_Track]
+		NodeType	= "SendEvent"
+		EventName	= "Track"
+		Recipient	= "SelfPE"
+
+		[SecCamBT_LookAtTrackTarget]
+		NodeType				= "RosaLookAt"
+		LookTargetBlackboardKey	= "TrackTarget"
+
+[SecCamBT_OscillateBehavior]
+NodeType				= "Parallel"
+NumChildrenToSucceed	= 1	# Sequence can succeed; Monitor will loop forever
+NumChildren				= &
+@ Child
+@@&						= "SecCamBT_OscillateMonitor"
+@@&						= "SecCamBT_OscillateSequence"
+
+	[SecCamBT_OscillateMonitor]
+	NodeType	= "Loop"
+	Child		= "SecCamBT_OscillateConditions"
+	CanFail		= true
+
+		[SecCamBT_OscillateConditions]
+		NodeType	= "ConditionPE"
+		ValuePE		= "SecCamBT_NoTargets"
+
+			[SecCamBT_NoTargets]
+			PEType	= "AND"
+			InputA	= "SecCamBT_NoAlarmTarget"
+			InputB	= "SecCamBT_NoTrackTarget"
+
+				[SecCamBT_NoAlarmTarget]
+				PEType	= "NOT"
+				Input	= "SecCamBT_GetBBAlarmTarget"
+
+					[SecCamBT_GetBBAlarmTarget]
+					PEType			= "RodinBlackboardGet"
+					BlackboardKey	= "AlarmTarget"
+
+				[SecCamBT_NoTrackTarget]
+				PEType	= "NOT"
+				Input	= "SecCamBT_GetBBTrackTarget"
+
+					[SecCamBT_GetBBTrackTarget]
+					PEType			= "RodinBlackboardGet"
+					BlackboardKey	= "TrackTarget"
+
+	[SecCamBT_OscillateSequence]
+	NodeType	= "Sequence"
+	NumChildren	= &
+	@ Child
+	@@&			= "SecCamBT_Oscillate"
+	@@&			= "SecCamBT_Wait"
+
+		[SecCamBT_Oscillate]
+		NodeType	= "SendEvent"
+		EventName	= "Oscillate"
+		Recipient	= "SelfPE"

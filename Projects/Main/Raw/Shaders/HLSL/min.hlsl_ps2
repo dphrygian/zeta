@@ -1,0 +1,11 @@
+#include "common.hlsl_psh"
+
+struct PS_INPUT 
+{
+	float4 Color : COLOR;
+};
+
+float4 Main( PS_INPUT In ) : COLOR
+{
+	return In.Color;
+}

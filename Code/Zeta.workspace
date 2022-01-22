@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_workspace_file>
+	<Workspace title="Rosa workspace">
+		<Project filename="Libraries/zlib/zlib.cbp" />
+		<Project filename="Libraries/Core/Core.cbp">
+			<Depends filename="Libraries/zlib/zlib.cbp" />
+		</Project>
+		<Project filename="Libraries/Math/Math.cbp">
+			<Depends filename="Libraries/zlib/zlib.cbp" />
+			<Depends filename="Libraries/Core/Core.cbp" />
+		</Project>
+		<Project filename="Libraries/GLEW/GLEW.cbp" />
+		<Project filename="Libraries/3D/3D.cbp">
+			<Depends filename="Libraries/zlib/zlib.cbp" />
+			<Depends filename="Libraries/Core/Core.cbp" />
+			<Depends filename="Libraries/Math/Math.cbp" />
+			<Depends filename="Libraries/GLEW/GLEW.cbp" />
+		</Project>
+		<Project filename="Libraries/Audio/Audio.cbp">
+			<Depends filename="Libraries/zlib/zlib.cbp" />
+			<Depends filename="Libraries/Core/Core.cbp" />
+			<Depends filename="Libraries/Math/Math.cbp" />
+			<Depends filename="Libraries/SoLoud/SoLoud.cbp" />
+		</Project>
+		<Project filename="Libraries/Workbench/Workbench.cbp">
+			<Depends filename="Libraries/zlib/zlib.cbp" />
+			<Depends filename="Libraries/Core/Core.cbp" />
+			<Depends filename="Libraries/Math/Math.cbp" />
+		</Project>
+		<Project filename="Libraries/Rodin/Rodin.cbp">
+			<Depends filename="Libraries/zlib/zlib.cbp" />
+			<Depends filename="Libraries/Core/Core.cbp" />
+			<Depends filename="Libraries/Math/Math.cbp" />
+			<Depends filename="Libraries/Workbench/Workbench.cbp" />
+		</Project>
+		<Project filename="Libraries/UI/UI.cbp">
+			<Depends filename="Libraries/zlib/zlib.cbp" />
+			<Depends filename="Libraries/Core/Core.cbp" />
+			<Depends filename="Libraries/Math/Math.cbp" />
+			<Depends filename="Libraries/Workbench/Workbench.cbp" />
+			<Depends filename="Libraries/Rodin/Rodin.cbp" />
+		</Project>
+		<Project filename="Libraries/Framework/Framework.cbp">
+			<Depends filename="Libraries/zlib/zlib.cbp" />
+			<Depends filename="Libraries/Core/Core.cbp" />
+			<Depends filename="Libraries/Math/Math.cbp" />
+			<Depends filename="Libraries/GLEW/GLEW.cbp" />
+			<Depends filename="Libraries/3D/3D.cbp" />
+			<Depends filename="Libraries/Audio/Audio.cbp" />
+			<Depends filename="Libraries/Workbench/Workbench.cbp" />
+			<Depends filename="Libraries/Rodin/Rodin.cbp" />
+			<Depends filename="Libraries/UI/UI.cbp" />
+		</Project>
+		<Project filename="Projects/Rosa/Rosa.cbp" active="1">
+			<Depends filename="Libraries/zlib/zlib.cbp" />
+			<Depends filename="Libraries/Core/Core.cbp" />
+			<Depends filename="Libraries/Math/Math.cbp" />
+			<Depends filename="Libraries/GLEW/GLEW.cbp" />
+			<Depends filename="Libraries/3D/3D.cbp" />
+			<Depends filename="Libraries/Audio/Audio.cbp" />
+			<Depends filename="Libraries/Workbench/Workbench.cbp" />
+			<Depends filename="Libraries/Rodin/Rodin.cbp" />
+			<Depends filename="Libraries/UI/UI.cbp" />
+			<Depends filename="Libraries/Framework/Framework.cbp" />
+			<Depends filename="Libraries/SoLoud/SoLoud.cbp" />
+		</Project>
+		<Project filename="Tools/ConfigCompiler/ConfigCompiler.cbp">
+			<Depends filename="Libraries/zlib/zlib.cbp" />
+			<Depends filename="Libraries/Core/Core.cbp" />
+		</Project>
+		<Project filename="Libraries/SoLoud/SoLoud.cbp" />
+	</Workspace>
+</CodeBlocks_workspace_file>

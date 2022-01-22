@@ -1,0 +1,30 @@
+#include "common.hlsl_psh"
+
+struct PS_INPUT 
+{
+	float3 Normal	: TEXCOORD0;
+};
+
+struct PS_OUTPUT
+{
+	float4	Normal	: COLOR0;
+	float4	Albedo	: COLOR1;
+	float4	Depth	: COLOR2;
+};
+
+PS_OUTPUT Main( PS_INPUT In )
+{
+	PS_OUTPUT Out;
+	
+	const float3	Normal		= normalize( In.Normal );
+	const float		NormalZSign	= NonZeroSign( Normal.z );
+	const float		ZeroPack	= Pack( 0.0f );
+	const float4	NormalPack	= float4( Normal.xy, NormalZSign * ZeroPack, ZeroPack ) * 0.5f + 0.5f;
+	const float4	AlbedoPack	= float4( 0.0f, 0.0f, 0.0f, ZeroPack * 0.5f + 0.5f );
+
+	Out.Normal	= NormalPack;
+	Out.Albedo	= AlbedoPack;
+	Out.Depth	= float4( 1.0f, 1.0f, 1.0f, 1.0f );
+
+	return Out;
+}

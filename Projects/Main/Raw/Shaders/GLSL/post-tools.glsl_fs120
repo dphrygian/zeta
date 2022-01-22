@@ -1,0 +1,39 @@
+#version 120
+
+float Luma( vec3 Color )
+{
+	return dot( Color, vec3( 0.299f, 0.587f, 0.114f ) );
+}
+
+float Luminance( vec3 Color )
+{
+	return dot( Color, vec3( 0.2126f, 0.7152f, 0.0722f ) );
+}
+
+vec2 FixUV( vec2 UV )
+{
+	return vec2( UV.x, 1.0f - UV.y );
+}
+
+uniform sampler2D Texture0;	// Diffuse
+
+varying vec2	PassUV;
+
+vec3 TonemapFilmicLuminance( vec3 HDRColor )
+{
+	float	WP_Rcp	= 1.32781657212340f;	// Whitepoint = 2
+	float	vh		= Luminance( HDRColor );
+	float	va		= ( 1.425f * vh ) + 0.05f;
+	float	vf		= ( ( vh * va + 0.004f ) / ( ( vh * ( va + 0.55f ) + 0.0491f ) ) ) - 0.0821f;
+	float	s		= vf / vh;
+	return WP_Rcp * s * HDRColor;
+}
+
+void main()
+{
+	vec2 FixedUV		= FixUV( PassUV );
+
+	vec4 MainColor		= texture2D( Texture0, FixedUV );
+	vec3 sRGBColor		= TonemapFilmicLuminance( MainColor.rgb );
+	gl_FragColor		= vec4( sRGBColor, Luma( sRGBColor ) );
+}

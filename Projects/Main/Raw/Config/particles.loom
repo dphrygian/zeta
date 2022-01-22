@@ -1,0 +1,693 @@
+[PS_Blood]
+ImmediateSpawnMax		= true
+LifetimeMin				= 0.2
+LifetimeMax				= 0.3
+MaxParticles			= 8
+AlbedoMap				= "Textures/FX/blood-a.tga"
+NormalMap				= "Textures/FX/blood-n.tga"
+SpecMap					= "Textures/FX/blood-s.tga"
+SpawnExtentsX			= 0.1
+SpawnExtentsY			= 0.1
+SpawnExtentsZ			= 0.1
+InitialVelocityOSMinX	= -0.1
+InitialVelocityOSMaxX	= 0.1
+InitialVelocityOSMinY	= 2.0
+InitialVelocityOSMinZ	= -0.1
+InitialVelocityOSMaxZ	= 0.1
+AccelerationWSZ			= -10.0
+ViewBoundRadius			= 2.0
+InitialRollMax			= 360.0
+InitialSizeMin			= 0.05
+SizeVelocityMin			= 2.0
+
+	[PS_Blood_Vulnerable]
+	Extends					= "PS_Blood"
+	LifetimeMin				= 0.5
+	LifetimeMax				= 0.6
+	MaxParticles			= 24
+	SpecMap					= "Textures/FX/blood-vulnerable-s.tga"
+	SpawnExtentsX			= 0.3
+	SpawnExtentsY			= 0.3
+	SpawnExtentsZ			= 0.3
+	InitialVelocityWSMinZ	= 2.0
+	AccelerationWSZ			= -8.0
+	InitialSizeMin			= 0.25
+
+[PS_Blood_Player]
+ImmediateSpawnMax		= true
+LifetimeMin				= 0.8
+LifetimeMax				= 1.0
+MaxParticles			= 10
+AlbedoMap				= "Textures/FX/blood-a.tga"
+NormalMap				= "Textures/FX/blood-n.tga"
+SpecMap					= "Textures/FX/blood-s.tga"
+ForegroundDraw			= true
+SpawnExtentsX			= 0.5
+SpawnExtentsY			= 0.5
+SpawnExtentsZ			= 0.5
+SpawnOffsetOSY			= 0.5
+SpawnOffsetOSZ			= 0.4
+InitialVelocityOSXY		= 0.1
+InitialVelocityOSMinZ	= 0.6
+InitialVelocityOSMaxZ	= 1.2
+AccelerationWSZ			= -15.0
+ViewBoundRadius			= 2.0
+InitialSizeMin			= 0.3
+InitialSizeMax			= 0.6
+
+[PS_VampireDust]
+ImmediateSpawnMax		= true
+LifetimeMin				= 0.5
+LifetimeMax				= 1.5
+MaxParticles			= 10
+AlbedoMap				= "Textures/FX/vampiredust-a.tga"
+NormalMap				= "Textures/FX/vampiredust-n.tga"
+SpecMap					= "Textures/FX/vampiredust-s.tga"
+SpawnExtentsX			= 0.2
+SpawnExtentsY			= 0.2
+SpawnExtentsZ			= 0.1
+InitialVelocityOSXY		= 0.2
+InitialVelocityOSMinZ	= 0.6
+AccelerationWSZ			= -0.4
+ViewBoundRadius			= 2.0
+InitialSizeMin			= 0.3
+SizeVelocityMin			= 0.3
+InitialRollMax			= 360.0
+RollVelocityMin			= 15.0
+RollVelocityMax			= 45.0
+FadeOutTime				= 1.0	# It's fine if this is higher than LifetimeMin, some particles will just spawn half-faded
+
+[PS_VampireDustPickup]
+LifetimeMin				= 1.0
+LifetimeMax				= 2.0
+SpawnRate				= 4.0
+AlbedoMap				= "Textures/FX/vampiredust-a.tga"
+NormalMap				= "Textures/FX/vampiredust-n.tga"
+SpecMap					= "Textures/FX/vampiredust-s.tga"
+SpawnExtentsX			= 0.25
+SpawnExtentsY			= 0.25
+InitialVelocityOSMinZ	= 0.125
+InitialVelocityOSMaxZ	= 0.25
+ViewBoundRadius			= 1.0
+InitialSizeMin			= 0.3
+InitialSizeMax			= 0.5
+InitialRollMax			= 360.0
+RollVelocityMin			= 5.0
+RollVelocityMax			= 15.0
+FadeOutTime				= 1.0
+
+[PS_TracerTest]
+IsTracer				= true	# Implies ImmediateSpawnMax=true, MaxParticles=1, must be used as a beam
+LifetimeMin				= 10.0
+AlbedoMap				= "Textures/FX/arrowbeam-a.tga"
+NormalMap				= "Textures/FX/arrowbeam-n.tga"
+SpecMap					= "Textures/FX/arrowbeam-s.tga"
+SpawnExtentsX			= 0.02
+SpawnExtentsZ			= 0.02
+ViewBoundRadius			= 1.0
+InitialSizeMin			= 0.2
+TracerLength			= 2.0
+#BeamVelocityMin			= 50.0
+BeamVelocityMin			= 20.0
+
+[PS_LaserTracer]
+IsTracer				= true	# Implies ImmediateSpawnMax=true, MaxParticles=1, must be used as a beam
+LifetimeMin				= 10.0
+AlbedoMap				= "Textures/FX/lasergun-tracer-a.tga"
+NormalMap				= "Textures/FX/lasergun-tracer-n.tga"
+SpecMap					= "Textures/FX/lasergun-tracer-s.tga"
+#SpawnExtentsX			= 0.02
+#SpawnExtentsZ			= 0.02
+ViewBoundRadius			= 2.0
+InitialSizeMin			= 0.2
+TracerLength			= 2.0
+BeamVelocityMin			= 20.0
+
+[PS_ArrowBeam]
+ImmediateSpawnMax		= true
+LifetimeMin				= 0.8
+LifetimeMax				= 1.2
+MaxParticles			= 50
+ParticlesPerMeter		= 2.0	# For scaling number of particles by beam length
+AlbedoMap				= "Textures/FX/arrowbeam-a.tga"
+NormalMap				= "Textures/FX/arrowbeam-n.tga"
+SpecMap					= "Textures/FX/arrowbeam-s.tga"
+SpawnExtentsX			= 0.02
+SpawnExtentsZ			= 0.02
+AccelerationWSZ			= 0.05
+ViewBoundRadius			= 1.0
+InitialSizeMin			= 0.02
+SizeVelocityMin			= 0.08
+InitialRollMax			= 360.0
+RollVelocityMin			= -45.0
+RollVelocityMax			= -15.0
+FadeInTime				= 0.1
+FadeOutTime				= 0.7
+
+	[PS_ArrowBeam_Silver]
+	Extends		= "PS_ArrowBeam"
+	AlbedoMap	= "Textures/FX/arrowbeam-silver-a.tga"
+	NormalMap	= "Textures/FX/arrowbeam-silver-n.tga"
+	SpecMap		= "Textures/FX/arrowbeam-silver-s.tga"
+
+	[PS_ArrowBeam_Fanged]
+	Extends		= "PS_ArrowBeam"
+	AlbedoMap	= "Textures/FX/arrowbeam-fanged-a.tga"
+	SpecMap		= "Textures/FX/arrowbeam-fanged-s.tga"
+
+	[PS_NailBeam]
+	Extends				= "PS_ArrowBeam"
+	InitialSizeMin		= 0.015
+	ParticlesPerMeter	= 2.5
+	LifetimeMin			= 0.6
+	LifetimeMax			= 0.9
+	FadeOutTime			= 0.5
+
+	[PS_ShotgunBeam_SaltShot]
+	Extends				= "PS_ArrowBeam"
+	AlbedoMap			= "Textures/FX/shot-salt-a.tga"
+	NormalMap			= "Textures/FX/shot-salt-n.tga"
+	SpecMap				= "Textures/FX/shot-salt-s.tga"
+	InitialSizeMin		= 0.003
+	ParticlesPerMeter	= 1.5
+	LifetimeMin			= 0.3
+	LifetimeMax			= 0.7
+	RollVelocityMin		= 0.0
+	RollVelocityMax		= 0.0
+	FadeOutTime			= 0.4
+
+		[PS_ShotgunBeam_GarlicShot]
+		Extends		= "PS_ShotgunBeam_SaltShot"
+		AlbedoMap	= "Textures/FX/shot-garlic-a.tga"
+
+		[PS_ShotgunBeam_SilverShot]
+		Extends		= "PS_ShotgunBeam_SaltShot"
+		AlbedoMap	= "Textures/FX/shot-silver-a.tga"
+		NormalMap	= "Textures/FX/shot-silver-n.tga"
+		SpecMap		= "Textures/FX/shot-silver-s.tga"
+
+	[PS_DartBeam]
+	Extends				= "PS_ArrowBeam"
+	InitialSizeMin		= 0.01
+	ParticlesPerMeter	= 3.0
+	LifetimeMin			= 0.4
+	LifetimeMax			= 0.6
+	FadeOutTime			= 0.3
+
+		[PS_DartBeam_Silver]
+		Extends		= "PS_DartBeam"
+		AlbedoMap	= "Textures/FX/arrowbeam-silver-a.tga"
+		NormalMap	= "Textures/FX/arrowbeam-silver-n.tga"
+		SpecMap		= "Textures/FX/arrowbeam-silver-s.tga"
+
+		[PS_DartBeam_Fanged]
+		Extends		= "PS_DartBeam"
+		AlbedoMap	= "Textures/FX/arrowbeam-fanged-a.tga"
+		SpecMap		= "Textures/FX/arrowbeam-fanged-s.tga"
+
+	[PS_WaterSpray_Holy]
+	Extends				= "PS_ArrowBeam"
+	#Material			= "Material_ParticlesTransparent"
+	AlbedoMap			= "Textures/FX/waterspray-holy-a.tga"
+	NormalMap			= "Textures/FX/waterspray-holy-n.tga"
+	SpecMap				= "Textures/FX/waterspray-holy-s.tga"
+	InitialSizeMin		= 0.02
+	ParticlesPerMeter	= 4.0
+	AccelerationWSZ		= -0.05
+	LifetimeMin			= 0.5
+	LifetimeMax			= 1.0
+	FadeInTime			= 0.1
+	FadeOutTime			= 0.4
+	RollVelocityMin		= 0.0
+	RollVelocityMax		= 0.0
+
+		[PS_WaterSpray_Garlic]
+		Extends		= "PS_WaterSpray_Holy"
+		AlbedoMap	= "Textures/FX/waterspray-garlic-a.tga"
+
+		[PS_WaterSpray_Rose]
+		Extends		= "PS_WaterSpray_Holy"
+		AlbedoMap	= "Textures/FX/waterspray-rose-a.tga"
+
+[PS_Hitspang]
+ImmediateSpawnMax		= true
+LifetimeMin				= 0.3
+LifetimeMax				= 0.4
+MaxParticles			= 10
+AlbedoMap				= "Textures/FX/sparks-a.tga"
+NormalMap				= "Textures/FX/sparks-n.tga"
+SpecMap					= "Textures/FX/sparks-s.tga"
+InitialVelocityOSMinX	= -1.0
+InitialVelocityOSMaxX	= 1.0
+InitialVelocityOSMinY	= -1.0
+InitialVelocityOSMaxY	= 3.0
+InitialVelocityOSMinZ	= -1.0
+InitialVelocityOSMaxZ	= 1.0
+AccelerationWSZ			= -2.0 # Was -10.0
+ViewBoundRadius			= 3.0
+InitialSizeMin			= 0.1
+InitialSizeMax			= 0.2
+SizeVelocityMin			= 1.0
+SizeVelocityMax			= 1.5
+FadeOutTime				= 0.3
+
+	[PS_Hitspang_Water]
+	Extends		= "PS_Hitspang"
+	AlbedoMap	= "Textures/FX/hitspang-water-a.tga"
+	NormalMap	= "Textures/FX/hitspang-water-n.tga"
+	SpecMap		= "Textures/FX/hitspang-water-s.tga"
+
+[PS_BamfBats]
+ImmediateSpawnMax		= true
+LifetimeMin				= 0.8
+LifetimeMax				= 1.2
+MaxParticles			= 8
+AlbedoMap				= "Textures/FX/bamfbat-a.tga"
+NormalMap				= "Textures/FX/bamfbat-n.tga"
+SpecMap					= "Textures/FX/bamfbat-s.tga"
+SpawnExtentsX			= 0.2
+SpawnExtentsY			= 0.2
+SpawnExtentsZ			= 0.2
+InitialVelocityOSXY		= 0.8
+InitialVelocityOSMinZ	= 0.1
+InitialVelocityOSMaxZ	= 0.5
+ViewBoundRadius			= 3.0
+InitialSizeMin			= 0.2
+SizeVelocityMin			= 0.5
+FadeOutTime				= 0.6
+
+	[PS_BamfBats_Fire]
+	Extends		= "PS_BamfBats"
+	AlbedoMap	= "Textures/FX/firebat-a.tga"
+	NormalMap	= "Textures/FX/firebat-n.tga"
+	SpecMap		= "Textures/FX/firebat-s.tga"
+
+[PS_Fireball]
+LifetimeMin				= 0.35
+LifetimeMax				= 0.35
+SpawnRate				= 100.0
+AlbedoMap				= "Textures/FX/firebat-a.tga"
+NormalMap				= "Textures/FX/firebat-n.tga"
+SpecMap					= "Textures/FX/firebat-s.tga"
+SpawnExtentsX			= 0.1
+SpawnExtentsY			= 0.1
+SpawnExtentsZ			= 0.1
+InitialVelocityOSXY		= 1.2
+InitialVelocityOSMinZ	= 0.2
+InitialVelocityOSMaxZ	= 0.6
+ViewBoundRadius			= 3.0
+InitialSizeMin			= 0.5
+SizeVelocityMin			= -0.8
+FadeOutTime				= 0.35
+
+	[PS_Fireball_Explosion]
+	Extends					= "PS_Fireball"
+	ImmediateSpawnMax		= true
+	SpawnRate				= 0.0
+	MaxParticles			= 24
+	LifetimeMin				= 0.5
+	LifetimeMax				= 0.8
+	InitialVelocityOSMinZ	= -0.6
+	InitialVelocityOSMaxZ	= 0.6
+	AccelerationWSZ			= 2.0
+	SizeVelocityMin			= 0.8
+	FadeOutTime				= 0.5
+
+[PS_Chest]
+SystemLifetime			= 0.5
+LifetimeMin				= 0.6
+LifetimeMax				= 1.2
+SpawnRate				= 25.0
+AlbedoMap				= "Textures/FX/chest-a.tga"
+NormalMap				= "Textures/FX/chest-n.tga"
+SpecMap					= "Textures/FX/chest-s.tga"
+SpawnExtentsX			= 0.625
+SpawnExtentsY			= 0.25
+SpawnExtentsZ			= 0.125
+SpawnOffsetOSZ			= -0.125
+InitialVelocityOSMinZ	= 0.4
+InitialVelocityOSMaxZ	= 0.8
+ViewBoundRadius			= 3.0
+InitialSizeMin			= 0.5
+FadeOutTime				= 0.8
+
+	[PS_Chest_Relic]
+	Extends					= "PS_Chest"
+	LifetimeMin				= 0.9
+	LifetimeMax				= 1.8
+	AlbedoMap				= "Textures/FX/chest-relic-a.tga"
+	SpecMap					= "Textures/FX/chest-relic-s.tga"
+	InitialVelocityOSMinZ	= 0.6
+	InitialVelocityOSMaxZ	= 1.2
+	FadeOutTime				= 1.2
+
+[PS_CoffinBreak]
+ImmediateSpawnMax		= true
+LifetimeMin				= 0.8
+LifetimeMax				= 1.2
+MaxParticles			= 20
+AlbedoMap				= "Textures/FX/coffin-beam-a.tga"
+NormalMap				= "Textures/FX/coffin-beam-n.tga"
+SpecMap					= "Textures/FX/coffin-beam-s.tga"
+SpawnExtentsX			= 0.5
+SpawnExtentsY			= 0.5
+SpawnExtentsZ			= 0.75
+InitialVelocityOSMinX	= -1.0
+InitialVelocityOSMaxX	= 1.0
+InitialVelocityOSMinY	= 0.0
+InitialVelocityOSMaxY	= 2.0
+InitialVelocityOSMinZ	= 0.5
+InitialVelocityOSMaxZ	= 2.5
+AccelerationWSZ			= -10.0
+ViewBoundRadius			= 3.0
+InitialRollMax			= 360.0
+RollVelocityMin			= -1440.0
+RollVelocityMax			= 1440.0
+InitialSizeMin			= 0.5
+InitialSizeMax			= 1.0
+
+	[PS_CoffinBreak_Small]
+	Extends					= "PS_CoffinBreak"
+	MaxParticles			= 6
+	SpawnExtentsX			= 0.1
+	SpawnExtentsY			= 0.1
+	SpawnExtentsZ			= 0.1
+	InitialVelocityOSMinX	= -0.2
+	InitialVelocityOSMaxX	= 0.2
+	InitialVelocityOSMinY	= 1.0
+	InitialVelocityOSMaxY	= 2.0
+	InitialVelocityOSMinZ	= -0.2
+	InitialVelocityOSMaxZ	= 0.2
+	InitialSizeMin			= 0.1
+	InitialSizeMax			= 0.2
+
+[PS_CottonwoodSeeds]
+SpawnRate				= 20.0
+LifetimeMin				= 3.5
+LifetimeMax				= 4.0
+AlbedoMap				= "Textures/FX/cottonwood-seeds-a.tga"
+NormalMap				= "Textures/FX/cottonwood-seeds-n.tga"
+SpecMap					= "Textures/FX/cottonwood-seeds-s.tga"
+SpawnExtentsX			= 4.0
+SpawnExtentsY			= 4.0
+SpawnExtentsZ			= 4.0
+InitialVelocityWindMin	= 1.5
+InitialVelocityWindMax	= 3.0
+InitialVelocityWSMinZ	= -0.8
+ViewBoundRadius			= 16.0
+InitialSizeMin			= 0.2
+FadeOutTime				= 1.0
+InitialRollMax			= 360.0
+RollVelocityMin			= -45.0
+RollVelocityMax			= -15.0
+
+[PS_PumpkinBreak]
+ImmediateSpawnMax		= true
+LifetimeMin				= 0.8
+LifetimeMax				= 1.2
+MaxParticles			= 8
+AlbedoMap				= "Textures/FX/pumpkin-a.tga"
+NormalMap				= "Textures/FX/pumpkin-n.tga"
+SpecMap					= "Textures/FX/pumpkin-s.tga"
+SpawnExtentsX			= 0.2
+SpawnExtentsY			= 0.2
+SpawnExtentsZ			= 0.1
+InitialVelocityOSXY		= 0.8
+InitialVelocityOSMinZ	= 2.0
+InitialVelocityOSMaxZ	= 3.0
+AccelerationWSZ			= -10.0
+ViewBoundRadius			= 2.0
+InitialRollMax			= 360.0
+RollVelocityMin			= -720.0
+RollVelocityMax			= 720.0
+InitialSizeMin			= 0.15
+InitialSizeMax			= 0.25
+
+[PS_VialGlass]
+ImmediateSpawnMax		= true
+LifetimeMin				= 0.8
+LifetimeMax				= 1.2
+MaxParticles			= 8
+AlbedoMap				= "Textures/FX/vial-glass-a.tga"
+NormalMap				= "Textures/FX/vial-glass-n.tga"
+SpecMap					= "Textures/FX/vial-glass-s.tga"
+SpawnExtentsX			= 0.1
+SpawnExtentsY			= 0.1
+SpawnExtentsZ			= 0.1
+InitialVelocityWSXY		= 1.5
+InitialVelocityWSMinZ	= 1.5
+InitialVelocityWSMaxZ	= 3.0
+AccelerationWSZ			= -10.0
+ViewBoundRadius			= 2.0
+InitialRollMax			= 360.0
+RollVelocityMin			= -720.0
+RollVelocityMax			= 720.0
+InitialSizeMin			= 0.3
+
+	[PS_VialGlass_Transparent]
+	Extends		= "PS_VialGlass"
+	Material	= "Material_ParticlesTransparent"
+	AlbedoMap	= "Textures/FX/vial-glass-1-a.tga"
+	SpecMap		= "Textures/FX/vial-glass-1-s.tga"
+
+[PS_VialWater_Base]
+ImmediateSpawnMax		= true
+LifetimeMin				= 1.0
+LifetimeMax				= 1.5
+MaxParticles			= 20
+Material				= "Material_ParticlesTransparent"
+NormalMap				= "Textures/FX/vial-water-n.tga"
+SpecMap					= "Textures/FX/vial-water-s.tga"
+SpawnExtentsX			= 0.5
+SpawnExtentsY			= 0.5
+SpawnExtentsZ			= 0.5
+InitialVelocityWSXY		= 1.5
+InitialVelocityWSMinZ	= 2.5
+InitialVelocityWSMaxZ	= 3.5
+AccelerationWSZ			= -10.0
+ViewBoundRadius			= 4.0
+InitialRollMax			= 360.0
+RollVelocityMin			= -180.0
+RollVelocityMax			= 180.0
+InitialSizeMin			= 0.10
+InitialSizeMax			= 0.30
+SizeVelocityMin			= 0.70
+#FadeOutTime				= 1.5
+
+	[PS_VialWater_Holy]
+	Extends		= "PS_VialWater_Base"
+	AlbedoMap	= "Textures/FX/vial-water-holy-a.tga"
+
+	[PS_VialWater_Garlic]
+	Extends		= "PS_VialWater_Base"
+	AlbedoMap	= "Textures/FX/vial-water-garlic-a.tga"
+
+	[PS_VialWater_Rose]
+	Extends		= "PS_VialWater_Base"
+	AlbedoMap	= "Textures/FX/vial-water-rose-a.tga"
+
+[PS_WaterSpray_Hitspang_Holy]
+ImmediateSpawnMax		= true
+LifetimeMin				= 0.5
+LifetimeMax				= 1.0
+MaxParticles			= 10
+AlbedoMap				= "Textures/FX/vial-water-holy-a.tga"
+NormalMap				= "Textures/FX/vial-water-n.tga"
+SpecMap					= "Textures/FX/vial-water-s.tga"
+InitialVelocityOSMinX	= -0.5
+InitialVelocityOSMaxX	= 0.5
+InitialVelocityOSMinY	= 1.0
+InitialVelocityOSMaxY	= 2.0
+InitialVelocityOSMinZ	= -0.5
+InitialVelocityOSMaxZ	= 0.5
+InitialVelocityWSMinZ	= 1.0
+AccelerationWSZ			= -5.0
+ViewBoundRadius			= 2.0
+InitialRollMax			= 360.0
+RollVelocityMin			= -45.0
+RollVelocityMax			= 45.0
+InitialSizeMin			= 0.15
+SizeVelocityMin			= 0.25
+FadeOutTime				= 1.0
+
+	[PS_WaterSpray_Hitspang_Garlic]
+	Extends		= "PS_WaterSpray_Hitspang_Holy"
+	AlbedoMap	= "Textures/FX/vial-water-garlic-a.tga"
+
+	[PS_WaterSpray_Hitspang_Rose]
+	Extends		= "PS_WaterSpray_Hitspang_Holy"
+	AlbedoMap	= "Textures/FX/vial-water-rose-a.tga"
+
+[PS_Taboo_DeathAttack]
+ImmediateSpawnMax		= true
+LifetimeMin				= 0.6
+LifetimeMax				= 0.8
+MaxParticles			= 20
+AlbedoMap				= "Textures/FX/taboo-burst-a.tga"
+NormalMap				= "Textures/FX/taboo-burst-n.tga"
+SpecMap					= "Textures/FX/taboo-burst-s.tga"
+SpawnExtentsX			= 0.125
+SpawnExtentsY			= 0.125
+SpawnExtentsZ			= 0.25
+InitialVelocityWSXY		= 4.0
+InitialVelocityWSMinZ	= -4.0
+InitialVelocityWSMaxZ	= 4.0
+ViewBoundRadius			= 5.0
+InitialRollMax			= 360.0
+InitialSizeMin			= 0.5
+SizeVelocityMin			= 1.0
+FadeOutTime				= 0.6
+
+[PS_WindowBreak]
+ImmediateSpawnMax		= true
+LifetimeMin				= 0.8
+LifetimeMax				= 1.2
+MaxParticles			= 12
+Material				= "Material_ParticlesTransparent"
+AlbedoMap				= "Textures/FX/vial-glass-1-a.tga"
+NormalMap				= "Textures/FX/vial-glass-n.tga"
+SpecMap					= "Textures/FX/vial-glass-1-s.tga"
+SpawnExtentsX			= 0.375
+SpawnExtentsY			= 0.0
+SpawnExtentsZ			= 0.625
+InitialVelocityOSMinY	= -3.0
+InitialVelocityOSMaxY	= 3.0
+InitialVelocityWSXY		= 0.5
+InitialVelocityWSMinZ	= 1.5
+InitialVelocityWSMaxZ	= 3.0
+AccelerationWSZ			= -10.0
+ViewBoundRadius			= 2.0
+InitialRollMax			= 360.0
+RollVelocityMin			= -720.0
+RollVelocityMax			= 720.0
+InitialSizeMin			= 0.5
+
+	[PS_WindowBreak_Small]
+	Extends			= "PS_WindowBreak"
+	MaxParticles	= 8
+	SpawnExtentsZ	= 0.375
+	SpawnOffsetWSZ	= 0.375
+
+[PS_WindowBreak_Wood]
+Extends			= "PS_WindowBreak"
+MaxParticles	= 6
+AlbedoMap		= "Textures/FX/coffin-beam-a.tga"
+NormalMap		= "Textures/FX/coffin-beam-n.tga"
+SpecMap			= "Textures/FX/coffin-beam-s.tga"
+SpawnExtentsX	= 0.25
+SpawnExtentsZ	= 0.5
+InitialSizeMin	= 0.333
+
+[PS_Debuff_Base]
+LifetimeMin				= 0.8
+LifetimeMax				= 1.0
+SpawnRate				= 6.0
+SpawnExtentsX			= 0.1
+SpawnExtentsY			= 0.1
+SpawnExtentsZ			= 0.1
+InitialVelocityWindMin	= 0.2
+InitialVelocityWindMax	= 0.4
+InitialVelocityWSXY		= 0.5
+InitialVelocityWSMinZ	= 0.5
+ViewBoundRadius			= 3.0
+InitialSizeMin			= 0.15
+SizeVelocityMin			= 0.25
+#InitialRollMax			= 360.0
+#RollVelocityMin			= 5.0
+#RollVelocityMax			= 15.0
+FadeOutTime				= 0.6
+
+	[PS_Debuff_Fanged]
+	Extends		= "PS_Debuff_Base"
+	AlbedoMap	= "Textures/FX/debuff-fanged-a.tga"
+	NormalMap	= "Textures/FX/debuff-fanged-n.tga"
+	SpecMap		= "Textures/FX/debuff-fanged-s.tga"
+
+	[PS_Debuff_Rose]
+	Extends		= "PS_Debuff_Base"
+	AlbedoMap	= "Textures/FX/debuff-rose-a.tga"
+	NormalMap	= "Textures/FX/debuff-rose-n.tga"
+	SpecMap		= "Textures/FX/debuff-rose-s.tga"
+
+	[PS_Debuff_IR]
+	Extends		= "PS_Debuff_Base"
+	AlbedoMap	= "Textures/FX/debuff-ir-a.tga"
+	NormalMap	= "Textures/FX/debuff-ir-n.tga"
+	SpecMap		= "Textures/FX/debuff-ir-s.tga"
+
+[PS_Rage]
+LifetimeMin				= 0.8
+LifetimeMax				= 1.0
+SpawnRate				= 6.0
+AlbedoMap				= "Textures/FX/rage-a.tga"
+NormalMap				= "Textures/FX/rage-n.tga"
+SpecMap					= "Textures/FX/rage-s.tga"
+SpawnExtentsX			= 0.1
+SpawnExtentsY			= 0.1
+SpawnExtentsZ			= 0.1
+InitialVelocityWindMin	= 0.2
+InitialVelocityWindMax	= 0.4
+InitialVelocityWSXY		= 0.5
+InitialVelocityWSMinZ	= 0.5
+ViewBoundRadius			= 3.0
+InitialSizeMin			= 0.25
+SizeVelocityMin			= 0.40
+FadeOutTime				= 0.6
+
+[PS_Sink]
+SpawnRate				= 26.0
+LifetimeMin				= 0.5
+LifetimeMax				= 0.5
+AlbedoMap				= "Textures/FX/waterspray-holy-a.tga"
+NormalMap				= "Textures/FX/waterspray-holy-n.tga"
+SpecMap					= "Textures/FX/waterspray-holy-s.tga"
+SpawnExtentsX			= 0.005
+SpawnExtentsY			= 0.005
+SpawnOffsetOSY			= -0.11
+SpawnOffsetOSZ			= 0.47
+InitialVelocityOSMinZ	= -0.3
+ViewBoundRadius			= 1.0
+InitialSizeMin			= 0.02
+InitialRollMax			= 360.0
+FadeOutTime				= 0.25
+
+[PS_Torch]
+LifetimeMin				= 0.50
+LifetimeMax				= 0.75
+SpawnRate				= 20.0
+AlbedoMap				= "Textures/FX/torch-a.tga"
+NormalMap				= "Textures/FX/torch-n.tga"
+SpecMap					= "Textures/FX/torch-s.tga"
+SpawnExtentsX			= 0.0625
+SpawnExtentsY			= 0.0625
+SpawnExtentsZ			= 0.0625
+InitialVelocityOSMinZ	= 0.4
+InitialVelocityOSMaxZ	= 0.6
+AccelerationWSZ			= 1.0
+ViewBoundRadius			= 1.0
+InitialSizeMin			= 0.125
+InitialSizeMax			= 0.250
+InitialRollMax			= 360.0
+RollVelocityMin			= 60.0
+RollVelocityMax			= 120.0
+FadeOutTime				= 0.40
+
+[PS_PumpkinKing]
+LifetimeMin				= 0.30
+LifetimeMax				= 0.45
+SpawnRate				= 20.0
+AlbedoMap				= "Textures/FX/torch-a.tga"
+NormalMap				= "Textures/FX/torch-n.tga"
+SpecMap					= "Textures/FX/torch-s.tga"
+SpawnExtentsX			= 0.1
+SpawnExtentsY			= 0.1
+SpawnExtentsZ			= 0.1
+InitialVelocityOSMinZ	= 0.4
+InitialVelocityOSMaxZ	= 0.6
+ViewBoundRadius			= 3.0
+InitialSizeMin			= 0.125
+InitialSizeMax			= 0.250
+InitialRollMax			= 360.0
+RollVelocityMin			= 60.0
+RollVelocityMax			= 120.0
+FadeOutTime				= 0.25

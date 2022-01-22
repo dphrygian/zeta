@@ -1,0 +1,451 @@
+[RosaSteamStats]
+lmArray( StatTag, NumStats )
+{
+	( "NumPlayers" )
+	( "NumFootsteps" )
+}
+
+lmArray( AchievementTag, NumAchievements )
+{
+	( "ACH_Prog_Intro" )
+	( "ACH_Prog_S1" )
+	( "ACH_Prog_S2" )
+	( "ACH_Prog_S3" )
+	( "ACH_Prog_S4" )
+	( "ACH_Prog_S5" )
+	( "ACH_Skills_1" )
+	( "ACH_Skills_2" )
+	( "ACH_Skills_3" )
+	( "ACH_Skills_4" )
+	( "ACH_Ghost" )
+	( "ACH_NoForcedFailure" )
+	( "ACH_BigBad_Lupus" )
+	( "ACH_LastChance" )
+	( "ACH_CampaignRush" )
+}
+
+[RosaTools]
+
+# Append categories for cloud levels if that doesn't already happen?
+# Or just use categories instead of level stuff because most levels won't have
+# unique elements.
+# Automatically append all categories for these levels
+lmArray( AppendLevel )
+{
+	( "Level_TitleScreen" )
+	( "Level_Zeta" )
+}
+
+lmArray( PortalCategory, NumPortalCategories )
+{
+	( "PortalCategory_Basics" )
+}
+
+lmArray( GeoCategory, NumGeoCategories )
+{
+	( "GeoCategory_Blockout" )
+	( "GeoCategory_Deco" )
+	( "GeoCategory_Core" )
+}
+
+lmArray( MatCategory, NumMatCategories )
+{
+	( "MatCategory_Basics" )
+	( "MatCategory_Core" )
+}
+
+lmArray( SpawnerCategory, NumSpawnerCategories )
+{
+	( "SpawnerCategory_Basics" )
+	( "SpawnerCategory_Doors" )
+	( "SpawnerCategory_Ladders" )
+	( "SpawnerCategory_AIs" )
+	( "SpawnerCategory_Deco" )
+	( "SpawnerCategory_Security" )
+}
+
+lmArray( PrefabCategory, NumPrefabCategories )
+{
+	( "PrefabCategory_Basics" )
+}
+
+# DLP 28 Nov 2021: Portal defs are now initialized at runtime; I can change these and not need to rebake levels.
+[PortalCategory_Basics]
+lmArray( PortalDef )
+{
+	( "Portal_None" )
+	( "Portal_Core" )
+	( "Portal_Fill" )
+	( "Portal_FillRoom" )
+	( "Portal_FillRoom_Left" )
+	( "Portal_FillRoom_Right" )
+	( "Portal_FillRoom_Vertical" )
+	( "Portal_FillRoom_NoExpand" )			// Used for emplaced rooms at the top so they don't expand
+	( "Portal_FillRoom_Vertical_NoExpand" )	// Used for the top of stairwells, maybe not needed anymore
+	( "Portal_SpacerRoom" )
+	( "Portal_SpacerRoom_Left" )
+	( "Portal_SpacerRoom_Right" )
+	( "Portal_ConnectiveRoom" )
+}
+
+	# This should always be the first entry because it is the default.
+	[Portal_None]
+	# Empty
+
+	# Basic "join to any other portal" portal.
+	[Portal_Core]
+	Front		= "Core"
+	NumBacks	= &
+	@ Back
+	@@&			= "Core"
+
+	# Used to extend the size of any portal that doesn't need more defined tags.
+	# We don't expand through Fill portals because they're only meant to mark
+	# the portal space, not define anything about what is on the other side.
+	# Fill portals should be positioned next to properly tagged portals.
+	[Portal_Fill]
+	Front		= "Fill"
+	NoExpand	= true
+
+	[Portal_FillRoom]
+	Front		= "FillRoom"
+	# Fill rooms CANNOT connect to other fill rooms
+	NumBacks	= &
+	@ Back
+	@@&			= "SpacerRoom"
+	@@&			= "ConnectiveRoom"	# Fill rooms are allowed to connect to ConnectiveRooms, but there should be none available in the normal modules list
+
+	[Portal_FillRoom_Left]
+	Front		= "FillRoom_Left"
+	NumBacks	= &
+	@ Back
+	@@&			= "SpacerRoom_Left"
+	@@&			= "ConnectiveRoom"
+
+	[Portal_FillRoom_Right]
+	Front		= "FillRoom_Right"
+	NumBacks	= &
+	@ Back
+	@@&			= "SpacerRoom_Right"
+	@@&			= "ConnectiveRoom"
+
+	[Portal_FillRoom_Vertical]
+	Front		= "FillRoom"
+	# Fill rooms can only connect to other fill rooms vertically
+	NumBacks	= &
+	@ Back
+	@@&			= "FillRoom"
+
+	[Portal_FillRoom_NoExpand]
+	Extends		= "Portal_FillRoom"
+	NoExpand	= true
+
+	[Portal_FillRoom_Vertical_NoExpand]
+	Extends		= "Portal_FillRoom_Vertical"
+	NoExpand	= true
+
+	[Portal_SpacerRoom]
+	Front			= "SpacerRoom"
+	# Spacers CANNOT connect to other spacers
+	NumBacks		= &
+	@ Back
+	@@&				= "FillRoom"
+	MustClose		= true	# If a spacer's portal can't close, the spacer is removed and replaced with connective rooms
+	ExpandPriority	= 100
+
+	[Portal_SpacerRoom_Left]
+	Front			= "SpacerRoom_Left"
+	# Spacers CANNOT connect to other spacers
+	NumBacks		= &
+	@ Back
+	@@&				= "FillRoom_Left"
+	MustClose		= true	# If a spacer's portal can't close, the spacer is removed and replaced with connective rooms
+	ExpandPriority	= 100
+
+	[Portal_SpacerRoom_Right]
+	Front			= "SpacerRoom_Right"
+	# Spacers CANNOT connect to other spacers
+	NumBacks		= &
+	@ Back
+	@@&				= "FillRoom_Right"
+	MustClose		= true	# If a spacer's portal can't close, the spacer is removed and replaced with connective rooms
+	ExpandPriority	= 100
+
+	[Portal_ConnectiveRoom]
+	Front		= "ConnectiveRoom"
+	NumBacks	= &
+	@ Back
+	@@&			= "FillRoom"
+	@@&			= "FillRoom_Left"
+	@@&			= "FillRoom_Right"
+	
+	
+
+[GeoCategory_Blockout]
+lmArray( GeoDef )
+{
+}
+
+[GeoCategory_Deco]
+NumGeoDefs = &
+@ GeoDef
+
+[GeoCategory_Core]
+GeoDir	= "Brushes/Core/"
+
+# ROSATODO: Find a better place for this data to live
+[MatCategory_Basics]
+NumMatDefs = &
+@ MatDef
+@@&	= "Mat_NULL"
+@@& = "Mat_Concrete"
+@@&	= "Mat_WetConcrete"
+@@& = "Mat_Gold"
+@@& = "Mat_Brick"
+@@& = "Mat_Brick_Overlay"
+@@&	= "Mat_Brick_Trim"
+@@&	= "Mat_Brick_Trim_2m"
+@@&	= "Mat_Brick_Trim_4m"
+@@&	= "Mat_Brick_2"
+@@&	= "Mat_Asphalt"
+@@&	= "Mat_Wood0"
+@@& = "Mat_Carpet"
+@@&	= "Mat_Plaster1"
+@@&	= "Mat_Tile_Light"
+@@&	= "Mat_Tile_Dark"
+@@&	= "Mat_Tile_Checker"
+
+	[Mat_NULL]
+	# Hack for invisible walls (NOTE: prefer Mat_Core_Invisible, the Basics category should go away)
+	Albedo			= "Textures/Brushes/null.tga"
+	Surface			= "NULL"	# If this is the null hash, it is ignored in favor of the geo's default surface
+	Invisible		= true
+	BlocksOcclusion	= false
+
+	[Mat_Concrete]
+	Albedo	= "Textures/Brushes/Blockout/concrete-a.tga"
+	Normal	= "Textures/Brushes/Blockout/concrete-n.tga"
+	Spec	= "Textures/Brushes/Blockout/concrete-s.tga"
+	Surface	= "Concrete"
+
+	[Mat_WetConcrete]
+	Albedo	= "Textures/Brushes/Blockout/concrete-a.tga"
+	Normal	= "Textures/Brushes/Blockout/concrete-n.tga"
+	Spec	= "Textures/Brushes/Blockout/concrete-wet-s.tga"
+	Surface	= "WetConcrete"
+
+	[Mat_Gold]
+	Albedo	= "Textures/Brushes/Blockout/gold-a.tga"
+	Normal	= "Textures/Brushes/Blockout/gold-n.tga"
+	Spec	= "Textures/Brushes/Blockout/gold-s.tga"
+	Surface	= "Metal"
+
+	[Mat_Brick]
+	Albedo	= "Textures/Brushes/Blockout/brick-a.tga"
+	Normal	= "Textures/Brushes/Blockout/brick-n.tga"
+	Spec	= "Textures/Brushes/Blockout/brick-s.tga"
+	Surface	= "Concrete"
+
+		[Mat_Brick_Overlay]
+		Extends		= "Mat_Brick"
+		Material	= "Material_WorldOverlay"
+		Overlay		= "Textures/Brushes/Blockout/brick-o.tga"
+
+			[Mat_Brick_Trim]
+			Extends		= "Mat_Brick_Overlay"
+			Albedo		= "Textures/default-a.tga"
+			Overlay		= "Textures/Brushes/Blockout/brick-trim-o.tga"
+
+				[Mat_Brick_Trim_2m]
+				Extends		= "Mat_Brick_Trim"
+				Overlay		= "Textures/Brushes/Blockout/brick-trim-2m-o.tga"
+
+				[Mat_Brick_Trim_4m]
+				Extends		= "Mat_Brick_Trim"
+				Overlay		= "Textures/Brushes/Blockout/brick-trim-4m-o.tga"
+
+	[Mat_Brick_2]
+	Extends	= "Mat_Brick"
+	Albedo	= "Textures/Brushes/Blockout/brick-2-a.tga"
+
+	[Mat_Asphalt]
+	Albedo	= "Textures/Brushes/Blockout/asphalt-a.tga"
+	Normal	= "Textures/Brushes/Blockout/asphalt-n.tga"
+	Spec	= "Textures/Brushes/Blockout/asphalt-s.tga"
+	Surface	= "Concrete"
+
+	[Mat_Wood0]
+	Albedo	= "Textures/Brushes/Blockout/wood-0-a.tga"
+	Normal	= "Textures/Brushes/Blockout/wood-0-n.tga"
+	Spec	= "Textures/Brushes/Blockout/wood-0-s.tga"
+	Surface	= "Wood"
+
+	[Mat_Plaster1]
+	Albedo	= "Textures/Brushes/Blockout/plaster-a.tga"
+	Normal	= "Textures/Brushes/Blockout/plaster-1-n.tga"
+	Spec	= "Textures/Brushes/Blockout/plaster-s.tga"
+	Surface	= "Concrete"
+
+	[Mat_Carpet]
+	Albedo	= "Textures/Brushes/Blockout/carpet-a.tga"
+	Normal	= "Textures/Brushes/Blockout/carpet-n.tga"
+	Spec	= "Textures/Brushes/Blockout/carpet-s.tga"
+	Surface	= "Carpet"
+
+	[Mat_Tile_Light]
+	Albedo	= "Textures/Brushes/Blockout/marble-a.tga"
+	Normal	= "Textures/Brushes/Blockout/marble-n.tga"
+	Spec	= "Textures/Brushes/Blockout/marble-s.tga"
+	Surface	= "Concrete"
+
+	[Mat_Tile_Dark]
+	Albedo	= "Textures/Brushes/Blockout/marble-dark-a.tga"
+	Normal	= "Textures/Brushes/Blockout/marble-n.tga"
+	Spec	= "Textures/Brushes/Blockout/marble-dark-s.tga"
+	Surface	= "Concrete"
+
+	[Mat_Tile_Checker]
+	Albedo	= "Textures/Brushes/Blockout/marble-checker-a.tga"
+	Normal	= "Textures/Brushes/Blockout/marble-checker-n.tga"
+	Spec	= "Textures/Brushes/Blockout/marble-checker-s.tga"
+	Surface	= "Concrete"
+
+[MatCategory_Core]
+lmArray( MatDef )
+{
+	( "Mat_Core_Greybox" )
+	( "Mat_Core_Greybox_Overlay" )
+	( "Mat_Core_Glass" )
+	( "Mat_Core_Water" )
+	( "Mat_Core_Water_NoCollide" )
+	( "Mat_Core_Water_Flow" )
+	( "Mat_Core_RosaTest" )
+	( "Mat_Core_MetalTest" )
+	( "Mat_Core_Invisible" )
+	( "Mat_Core_Mirror" )
+}
+
+	[Mat_Core_Greybox]
+	Albedo	= "Textures/Brushes/Core/greybox-a.tga"
+	Normal	= "Textures/Brushes/Core/greybox-n.tga"
+	Spec	= "Textures/Brushes/Core/greybox-s.tga"
+	Surface	= "Concrete"
+	
+		[Mat_Core_Greybox_Overlay]
+		Extends		= "Mat_Core_Greybox"
+		Material	= "Material_WorldOverlay"
+		Overlay		= "Textures/Brushes/Core/greybox-o.tga"
+
+	[Mat_Core_Glass]
+	Material		= "Material_WorldTransparent"
+	Albedo			= "Textures/Brushes/Core/glass-a.tga"
+	Normal			= "Textures/Brushes/Core/glass-n.tga"
+	Spec			= "Textures/Brushes/Core/glass-s.tga"
+	Surface			= "Concrete"
+	# I'll rarely use this flag for anything else, but for an all-glass material,
+	# there's no reason to bother with the shadow buffer draw calls, it'll never render.
+	CastsShadows	= false
+	BlocksOcclusion	= false
+
+	# This is now a brick surface under water!
+	[Mat_Core_Water]
+	Material	= "Material_WorldWater"
+	Albedo		= "Textures/Brushes/Core/water-a.tga"
+	Normal		= "Textures/Brushes/Core/water-n.tga"
+	Spec		= "Textures/Brushes/Core/water-s.tga"
+	Surface		= "Water"
+
+		[Mat_Core_Water_NoCollide]
+		Extends		= "Mat_Core_Water"
+		Collision	= false	# Override any hulls on the brush
+
+		[Mat_Core_Water_Flow]
+		Extends		= "Mat_Core_Water"
+		Material	= "Material_WorldWaterFlow"
+		Spec		= "Textures/Brushes/Core/water-n-2.tga"
+		Flow		= "Textures/Brushes/Core/water-f.tga"
+
+	[Mat_Core_RosaTest]
+	Material	= "Material_WorldOverlay_LinearNormal"
+	Albedo		= "Textures/Brushes/Core/rosatest-a.tga"
+	Normal		= "Textures/Brushes/Core/rosatest-n.tga"
+	Spec		= "Textures/Brushes/Core/rosatest-s.tga"
+	Overlay		= "Textures/Brushes/Core/rosatest-o.tga"
+	Surface		= "Concrete"
+
+	[Mat_Core_MetalTest]
+	Material	= "Material_WorldOverlay"
+	Albedo		= "Textures/Brushes/Core/metaltest-a.tga"
+	Normal		= "Textures/Brushes/Core/metaltest-n.tga"
+	Spec		= "Textures/Brushes/Core/metaltest-s.tga"
+	Overlay		= "Textures/Brushes/Core/metaltest-o.tga"
+	Surface		= "Metal"
+
+	[Mat_Core_Invisible]
+	Albedo			= "Textures/Brushes/Core/invisible-a.tga"	# Only needed for tools
+	Surface			= "NULL"	# If this is the null hash, it is ignored in favor of the geo's default surface
+	Invisible		= true		# RoomBaker will not export an invisible mesh (so no need to mark as CastsShadows=false)
+	BlocksOcclusion	= false		# NOTE: These properties are applied at room baker time now; Mat is only referenced for its textures at runtime
+
+	[Mat_Core_Mirror]
+	Albedo			= "Textures/Brushes/Core/mirror-a.tga"
+	Normal			= "Textures/Brushes/Core/mirror-n.tga"
+	Spec			= "Textures/Brushes/Core/mirror-s.tga"
+	Surface			= "Metal"
+
+[SpawnerCategory_Basics]
+NumSpawnerDefs = &
+@ SpawnerDef
+@@& = "Spawner_Player"
+@@&	= "Spawner_Player_Invulnerable"
+@@&	= "Spawner_Script_Intro"
+@@&	= "Spawner_TESTLightSphereShadows"
+
+[SpawnerCategory_Doors]
+NumSpawnerDefs = &
+@ SpawnerDef
+@@& = "Spawner_DoorLeft"
+@@& = "Spawner_DoorRight"
+@@& = "Spawner_DoorLeftOpen"
+@@& = "Spawner_DoorRightOpen"
+
+[SpawnerCategory_Ladders]
+NumSpawnerDefs = &
+@ SpawnerDef
+
+[SpawnerCategory_AIs]
+NumSpawnerDefs = &
+@ SpawnerDef
+@@&	= "Spawner_Robot_Lower"
+@@&	= "Spawner_Robot_Mid"
+@@&	= "Spawner_Robot_Upper"
+@@&	= "Spawner_CEO_Level1"
+@@&	= "Spawner_CEO_Level2"
+@@&	= "Spawner_CEO_Level3"
+@@&	= "Spawner_CEO_Level4"
+@@&	= "Spawner_CEO_Level5"
+@@&	= "Spawner_CEO_Level6"
+@@&	= "Spawner_CEO_Level7"
+@@&	= "Spawner_CEO_Level8"
+
+[SpawnerCategory_Deco]
+NumSpawnerDefs = &
+@ SpawnerDef
+@@&	= "Spawner_LightFixture"
+@@&	= "Spawner_Cabinet"
+@@&	= "Spawner_Toilet"
+@@&	= "Spawner_Statue"
+@@&	= "Spawner_Bookcase"
+@@&	= "Spawner_Plant"
+@@&	= "Spawner_EndingMachine"
+@@&	= "Spawner_Deco_Lower"
+@@&	= "Spawner_Deco_Mid"
+@@&	= "Spawner_Deco_Upper"
+
+[SpawnerCategory_Security]
+NumSpawnerDefs = &
+@ SpawnerDef
+
+[PrefabCategory_Basics]
+NumPrefabDefs = &
+@ PrefabDef

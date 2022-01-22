@@ -1,0 +1,10 @@
+#version 120
+
+uniform vec4 Params;
+
+varying float PassHeight;
+
+void main()
+{
+	gl_FragColor = vec4( 1.0f, PassHeight, Params.x, 1.0f );
+}

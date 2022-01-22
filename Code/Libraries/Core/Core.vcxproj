@@ -1,0 +1,420 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Final|Win32">
+      <Configuration>Final</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Final|x64">
+      <Configuration>Final</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{35936DA7-270B-418C-9386-A4AED70A2049}</ProjectGuid>
+    <RootNamespace>Core</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Final|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v140_xp</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Final|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v140_xp</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v140_xp</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v140_xp</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v140_xp</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v140_xp</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Final|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Final|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC71.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>14.0.25431.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Final|Win32'">
+    <OutDir>$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Final|x64'">
+    <OutDir>$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>../zlib/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <PrecompiledHeader />
+      <PrecompiledHeaderFile />
+      <WarningLevel>Level4</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <Lib>
+      <OutputFile>$(OutDir)Core.lib</OutputFile>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>../zlib/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <PrecompiledHeaderFile>
+      </PrecompiledHeaderFile>
+      <WarningLevel>Level4</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Lib>
+      <OutputFile>$(OutDir)Core.lib</OutputFile>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>../zlib/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <PrecompiledHeader />
+      <PrecompiledHeaderFile />
+      <WarningLevel>Level4</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Lib>
+      <OutputFile>$(OutDir)Core.lib</OutputFile>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>../zlib/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <PrecompiledHeaderFile>
+      </PrecompiledHeaderFile>
+      <WarningLevel>Level4</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Lib>
+      <OutputFile>$(OutDir)Core.lib</OutputFile>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Final|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>../zlib/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;_FINAL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <PrecompiledHeader />
+      <PrecompiledHeaderFile />
+      <WarningLevel>Level4</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Lib>
+      <OutputFile>$(OutDir)Core.lib</OutputFile>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Final|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>../zlib/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;_FINAL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <PrecompiledHeaderFile>
+      </PrecompiledHeaderFile>
+      <WarningLevel>Level4</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Lib>
+      <OutputFile>$(OutDir)Core.lib</OutputFile>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="src\allocator.cpp" />
+    <ClCompile Include="src\allocatorchunk.cpp" />
+    <ClCompile Include="src\bufferedfilestream.cpp" />
+    <ClCompile Include="src\checksum.cpp" />
+    <ClCompile Include="src\clock.cpp" />
+    <ClCompile Include="src\configmanager.cpp" />
+    <ClCompile Include="src\configparser.cpp" />
+    <ClCompile Include="src\configvar.cpp" />
+    <ClCompile Include="src\console.cpp" />
+    <ClCompile Include="src\consoleinput.cpp" />
+    <ClCompile Include="src\consolemanager.cpp" />
+    <ClCompile Include="src\customassert.cpp" />
+    <ClCompile Include="src\customnew.cpp" />
+    <ClCompile Include="src\datapipe.cpp" />
+    <ClCompile Include="src\display.cpp" />
+    <ClCompile Include="src\dynamicmemorystream.cpp" />
+    <ClCompile Include="src\exceptionhandler.cpp" />
+    <ClCompile Include="src\exceptiontrace.cpp" />
+    <ClCompile Include="src\exceptionuploadlog.cpp" />
+    <ClCompile Include="src\filestream.cpp" />
+    <ClCompile Include="src\fileutil.cpp" />
+    <ClCompile Include="src\hashedstring.cpp" />
+    <ClCompile Include="src\httpsocket.cpp" />
+    <ClCompile Include="src\inputcontext.cpp" />
+    <ClCompile Include="src\inputsystem.cpp" />
+    <ClCompile Include="src\keyboard.cpp" />
+    <ClCompile Include="src\memorystream.cpp" />
+    <ClCompile Include="src\mouse.cpp" />
+    <ClCompile Include="src\mutex.cpp" />
+    <ClCompile Include="src\packstream.cpp" />
+    <ClCompile Include="src\printmanager.cpp" />
+    <ClCompile Include="src\profiler.cpp" />
+    <ClCompile Include="src\profilerhook.cpp" />
+    <ClCompile Include="src\profilertable.cpp" />
+    <ClCompile Include="src\reversehash.cpp" />
+    <ClCompile Include="src\simplestring.cpp" />
+    <ClCompile Include="src\stopwatch.cpp" />
+    <ClCompile Include="src\stringmanager.cpp" />
+    <ClCompile Include="src\test.cpp" />
+    <ClCompile Include="src\thread.cpp" />
+    <ClCompile Include="src\timedate.cpp" />
+    <ClCompile Include="src\timer.cpp" />
+    <ClCompile Include="src\TinyXML\tinyxml.cpp" />
+    <ClCompile Include="src\TinyXML\tinyxmlerror.cpp" />
+    <ClCompile Include="src\TinyXML\tinyxmlparser.cpp" />
+    <ClCompile Include="src\windowwrapper.cpp" />
+    <ClCompile Include="src\xinputcontroller.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\allocator.h" />
+    <ClInclude Include="src\allocatorchunk.h" />
+    <ClInclude Include="src\array.h" />
+    <ClInclude Include="src\arraystack.h" />
+    <ClInclude Include="src\bmp-format.h" />
+    <ClInclude Include="src\bufferedfilestream.h" />
+    <ClInclude Include="src\checksum.h" />
+    <ClInclude Include="src\clock.h" />
+    <ClInclude Include="src\color.h" />
+    <ClInclude Include="src\configmanager.h" />
+    <ClInclude Include="src\configparser.h" />
+    <ClInclude Include="src\configvar.h" />
+    <ClInclude Include="src\console.h" />
+    <ClInclude Include="src\consoleinput.h" />
+    <ClInclude Include="src\consolemanager.h" />
+    <ClInclude Include="src\core.h" />
+    <ClInclude Include="src\customassert.h" />
+    <ClInclude Include="src\customnew.h" />
+    <ClInclude Include="src\datapipe.h" />
+    <ClInclude Include="src\display.h" />
+    <ClInclude Include="src\dynamicmemorystream.h" />
+    <ClInclude Include="src\endianutil.h" />
+    <ClInclude Include="src\exceptionhandler.h" />
+    <ClInclude Include="src\exceptiontrace.h" />
+    <ClInclude Include="src\exceptionuploadlog.h" />
+    <ClInclude Include="src\exceptionwritesteamminidump.h" />
+    <ClInclude Include="src\filestream.h" />
+    <ClInclude Include="src\fileutil.h" />
+    <ClInclude Include="src\hashedstring.h" />
+    <ClInclude Include="src\httpsocket.h" />
+    <ClInclude Include="src\icontroller.h" />
+    <ClInclude Include="src\idatastream.h" />
+    <ClInclude Include="src\iinputsystemobserver.h" />
+    <ClInclude Include="src\inputcontext.h" />
+    <ClInclude Include="src\inputsystem.h" />
+    <ClInclude Include="src\interpolator.h" />
+    <ClInclude Include="src\keyboard.h" />
+    <ClInclude Include="src\list.h" />
+    <ClInclude Include="src\map.h" />
+    <ClInclude Include="src\mathcore.h" />
+    <ClInclude Include="src\memorystream.h" />
+    <ClInclude Include="src\mouse.h" />
+    <ClInclude Include="src\multimap.h" />
+    <ClInclude Include="src\mutex.h" />
+    <ClInclude Include="src\packstream.h" />
+    <ClInclude Include="src\printmanager.h" />
+    <CustomBuild Include="src\profiler.h" />
+    <CustomBuild Include="src\profilerhook.h" />
+    <ClInclude Include="src\profilertable.h" />
+    <ClInclude Include="src\reversehash.h" />
+    <ClInclude Include="src\SDL2\begin_code.h" />
+    <ClInclude Include="src\SDL2\close_code.h" />
+    <ClInclude Include="src\SDL2\SDL.h" />
+    <ClInclude Include="src\SDL2\SDL_assert.h" />
+    <ClInclude Include="src\SDL2\SDL_atomic.h" />
+    <ClInclude Include="src\SDL2\SDL_audio.h" />
+    <ClInclude Include="src\SDL2\SDL_bits.h" />
+    <ClInclude Include="src\SDL2\SDL_blendmode.h" />
+    <ClInclude Include="src\SDL2\SDL_clipboard.h" />
+    <ClInclude Include="src\SDL2\SDL_config.h" />
+    <ClInclude Include="src\SDL2\SDL_cpuinfo.h" />
+    <ClInclude Include="src\SDL2\SDL_endian.h" />
+    <ClInclude Include="src\SDL2\SDL_error.h" />
+    <ClInclude Include="src\SDL2\SDL_events.h" />
+    <ClInclude Include="src\SDL2\SDL_gamecontroller.h" />
+    <ClInclude Include="src\SDL2\SDL_gesture.h" />
+    <ClInclude Include="src\SDL2\SDL_haptic.h" />
+    <ClInclude Include="src\SDL2\SDL_hints.h" />
+    <ClInclude Include="src\SDL2\SDL_joystick.h" />
+    <ClInclude Include="src\SDL2\SDL_keyboard.h" />
+    <ClInclude Include="src\SDL2\SDL_keycode.h" />
+    <ClInclude Include="src\SDL2\SDL_loadso.h" />
+    <ClInclude Include="src\SDL2\SDL_log.h" />
+    <ClInclude Include="src\SDL2\SDL_main.h" />
+    <ClInclude Include="src\SDL2\SDL_messagebox.h" />
+    <ClInclude Include="src\SDL2\SDL_mouse.h" />
+    <ClInclude Include="src\SDL2\SDL_mutex.h" />
+    <ClInclude Include="src\SDL2\SDL_name.h" />
+    <ClInclude Include="src\SDL2\SDL_opengl.h" />
+    <ClInclude Include="src\SDL2\SDL_opengles.h" />
+    <ClInclude Include="src\SDL2\SDL_opengles2.h" />
+    <ClInclude Include="src\SDL2\SDL_pixels.h" />
+    <ClInclude Include="src\SDL2\SDL_platform.h" />
+    <ClInclude Include="src\SDL2\SDL_power.h" />
+    <ClInclude Include="src\SDL2\SDL_quit.h" />
+    <ClInclude Include="src\SDL2\SDL_rect.h" />
+    <ClInclude Include="src\SDL2\SDL_render.h" />
+    <ClInclude Include="src\SDL2\SDL_revision.h" />
+    <ClInclude Include="src\SDL2\SDL_rwops.h" />
+    <ClInclude Include="src\SDL2\SDL_scancode.h" />
+    <ClInclude Include="src\SDL2\SDL_sensor.h" />
+    <ClInclude Include="src\SDL2\SDL_shape.h" />
+    <ClInclude Include="src\SDL2\SDL_stdinc.h" />
+    <ClInclude Include="src\SDL2\SDL_surface.h" />
+    <ClInclude Include="src\SDL2\SDL_system.h" />
+    <ClInclude Include="src\SDL2\SDL_syswm.h" />
+    <ClInclude Include="src\SDL2\SDL_test.h" />
+    <ClInclude Include="src\SDL2\SDL_test_assert.h" />
+    <ClInclude Include="src\SDL2\SDL_test_common.h" />
+    <ClInclude Include="src\SDL2\SDL_test_compare.h" />
+    <ClInclude Include="src\SDL2\SDL_test_crc32.h" />
+    <ClInclude Include="src\SDL2\SDL_test_font.h" />
+    <ClInclude Include="src\SDL2\SDL_test_fuzzer.h" />
+    <ClInclude Include="src\SDL2\SDL_test_harness.h" />
+    <ClInclude Include="src\SDL2\SDL_test_images.h" />
+    <ClInclude Include="src\SDL2\SDL_test_log.h" />
+    <ClInclude Include="src\SDL2\SDL_test_md5.h" />
+    <ClInclude Include="src\SDL2\SDL_test_random.h" />
+    <ClInclude Include="src\SDL2\SDL_thread.h" />
+    <ClInclude Include="src\SDL2\SDL_timer.h" />
+    <ClInclude Include="src\SDL2\SDL_touch.h" />
+    <ClInclude Include="src\SDL2\SDL_types.h" />
+    <ClInclude Include="src\SDL2\SDL_version.h" />
+    <ClInclude Include="src\SDL2\SDL_video.h" />
+    <ClInclude Include="src\set.h" />
+    <ClInclude Include="src\simplestring.h" />
+    <ClInclude Include="src\stopwatch.h" />
+    <ClInclude Include="src\stringmanager.h" />
+    <CustomBuild Include="src\test.h" />
+    <ClInclude Include="src\thread.h" />
+    <ClInclude Include="src\timedate.h" />
+    <ClInclude Include="src\timer.h" />
+    <ClInclude Include="src\TinyXML\tinyxml.h" />
+    <ClInclude Include="src\versions.h" />
+    <ClInclude Include="src\windowwrapper.h" />
+    <ClInclude Include="src\xinputcontroller.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\zlib\zlib.vcxproj">
+      <Project>{4b63c350-2556-47f2-838e-cb349499c1c6}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="Core.natvis">
+      <SubType>Designer</SubType>
+    </Natvis>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

@@ -1,0 +1,43 @@
+static float CGTexSize		= 16.0f;
+static float CGTexSizeSq	= CGTexSize * CGTexSize;
+
+// TODO: Vectorize all of this?
+
+// Red is the easiest value; it is just scaled from [0, 1] to [1/d, 1-1/d].
+static float OffsetR		= 0.5f / CGTexSize;
+static float ScaleR			= ( CGTexSize - 1.0f ) / CGTexSize;
+
+// Green is scaled from [0, 1] to [1/dd, (1/d)-1/dd]
+static float OffsetG		= 0.5f / CGTexSizeSq;
+static float ScaleG			= ( CGTexSize - 1.0f ) / CGTexSizeSq;
+
+// Blue is trickiest.
+// Scale from [0, 1] to [0, d-1].
+// Floor to get the low slice for lerp.
+// Add 1 to get the high slice for lerp.
+// Use remainder of floor as alpha for lerp.
+static float ScaleB1		= CGTexSize - 1.0f;
+static float ScaleB2		= 1.0f / CGTexSize;
+
+float3 ColorGrade( const float3 InColor, sampler Sampler )
+{
+	const float3	Saturated	= saturate( InColor );
+
+	const float		CoordR		= Saturated.r * ScaleR + OffsetR;
+	const float		CoordG		= Saturated.g * ScaleG + OffsetG;
+
+	const float		ScaledB		= Saturated.b * ScaleB1;
+	const float		LoB			= floor( ScaledB );
+	const float		HiB			= LoB + 1.0f;
+	const float		AlphaB		= ScaledB - LoB;
+	const float		CoordLoB	= LoB * ScaleB2;
+	const float		CoordHiB	= HiB * ScaleB2;
+
+	const float2	LoUV		= float2( CoordLoB + CoordG, CoordR );
+	const float3	LoColor		= tex2D( Sampler, LoUV ).rgb;
+
+	const float2	HiUV		= float2( CoordHiB + CoordG, CoordR );
+	const float3	HiColor		= tex2D( Sampler, HiUV ).rgb;
+
+	return lerp( LoColor, HiColor, AlphaB );
+}

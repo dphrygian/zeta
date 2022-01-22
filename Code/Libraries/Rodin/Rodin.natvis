@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<!-- See https://docs.microsoft.com/en-us/previous-versions/visualstudio/visual-studio-2015/debugger/create-custom-views-of-native-objects?view=vs-2015 for guide -->
+<!-- See https://docs.microsoft.com/en-us/previous-versions/visualstudio/visual-studio-2015/debugger/format-specifiers-in-cpp?view=vs-2015 for formatting -->
+<AutoVisualizer xmlns="http://schemas.microsoft.com/vstudio/debugger/natvis/2010">
+
+  <Type Name="RodinBTNode">
+    <DisplayString>{{{m_DEV_Name} depth={m_DEV_Depth}}}</DisplayString>
+  </Type>
+
+  <Type Name="WBCompRodinBehaviorTree::SScheduledNode">
+    <!-- This is identical to the default display but uses na to suppress the pointer addresses -->
+    <DisplayString>{{m_Node={m_Node, na} m_ParentNode={m_ParentNode, na}}}</DisplayString>
+  </Type>
+
+</AutoVisualizer>

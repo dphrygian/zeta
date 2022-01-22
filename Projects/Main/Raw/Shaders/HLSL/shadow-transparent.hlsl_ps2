@@ -1,0 +1,21 @@
+#include "common.hlsl_psh"
+#include "shadow.hlsl_psh"
+
+sampler AlbedoSampler	: register(s0);
+
+struct PS_INPUT 
+{
+	float2	UV			: TEXCOORD0;
+	float4	PositionWS	: TEXCOORD1;
+};
+
+static float AlphaThreshold = 0.9f;
+
+float4 Main( PS_INPUT In ) : COLOR
+{
+	// NOTE: I tried the Bayer matrix stipple thing but it just looked too jank.
+	const float Alpha = tex2D( AlbedoSampler, In.UV ).a;
+	clip( Alpha - AlphaThreshold );
+
+	return GetShadowDistance( In.PositionWS );
+}

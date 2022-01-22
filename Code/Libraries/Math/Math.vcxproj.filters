@@ -1,0 +1,177 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="src\aabb.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\angles.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\box2d.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\collisioninfo.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\collisioninfo2d.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\convexhull.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\crypto.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cylinder.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ellipsoid.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\frustum.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\hsv.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\line.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mathfunc.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\matrix.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\noise.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\plane.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\quat.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\random.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ray.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\segment.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\segment2d.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\sphere.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\triangle.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\triangle2d.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\vector.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\vector2.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\vector4.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\aabb.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\angles.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\box2d.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\collisioninfo.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\collisioninfo2d.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\convexhull.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\crypto.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cylinder.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ellipsoid.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\frustum.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\hsv.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\line.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\mathfunc.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\matrix.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\noise.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\plane.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\quat.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\random.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ray.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\segment.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\segment2d.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\sphere.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\triangle.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\triangle2d.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\vector.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\vector2.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\vector4.h">
+      <Filter>src</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{1828462a-9082-4ca5-81d5-b9b80b33608a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="Math.natvis" />
+  </ItemGroup>
+</Project>

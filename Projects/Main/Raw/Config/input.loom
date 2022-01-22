@@ -1,0 +1,284 @@
+[RosaInput]
+KeyboardContext			= "RosaKeyboard"
+MouseContext			= "RosaMouse"
+ControllerContext		= "RosaController"
+ControllerTypeContext	= "RosaControllerType"
+
+HoldTime			= 0.25
+
+# HACKHACK for things that only need to be displayed (e.g. UI input prompts)
+NumDisplayInputs	= &
+@ DisplayInput
+@@&Name				= "TitleStart"
+@@^KeyboardInput	= "Enter"
+@@^ControllerInput	= "xA"
+@@&Name				= "UIBack"
+@@^KeyboardInput	= "Esc"
+@@^ControllerInput	= "xB"
+
+# These aren't used internally, but represent what will be visible
+# to the player, e.g. on the binds screen or in input strings.
+NumExposedInputs = &
+@ ExposedInput
+@@& = "Forward"
+@@& = "Back"
+@@& = "Left"
+@@& = "Right"
+@@& = "Run"
+@@& = "Jump"
+@@& = "Crouch"
+@@& = "UseWeapon"
+@@& = "Frob"
+@@& = "LeanLeft"
+@@& = "LeanRight"
+#@@&	= "Heal"
+#@@&	= "Light"
+#@@& = "Shove"
+#@@&	= "Reload"
+#@@&	= "Zoom"
+#@@&	= "CycleMag"
+#@@& = "Radial"
+#@@&	= "CycleSlot0"
+#@@&	= "CycleSlot1"
+#@@&	= "CycleSlot2"
+#@@&	= "CycleSlot3"
+#@@&	= "CyclePrev"
+#@@&	= "CycleNext"
+# ZETASAVE: Quicksave/quickload are dev-only now
+#@@&	= "Quicksave"
+#@@&	= "Quickload"
+# Maximap is dev-only for now
+#@@&	= "Maximap"
+
+NumInputs = &
+@ Input
+@@& = "Forward"
+@@& = "Back"
+@@& = "Left"
+@@& = "Right"
+@@& = "Jump"
+@@& = "Frob"
+@@& = "LeanLeft"
+@@& = "LeanRight"
+@@& = "Run"
+@@& = "Crouch"
+@@& = "Heal"
+@@&	= "Light"
+@@& = "ClimbForward"
+@@& = "ClimbBack"
+@@&	= "ClimbDown"
+@@& = "ClimbJump"
+@@& = "Mantle"
+@@& = "UseWeapon"
+@@&	= "Shove"
+@@&	= "Reload"
+@@&	= "Zoom"
+@@& = "CycleMag"
+@@& = "Radial"
+@@&	= "CycleSlot0"
+@@&	= "CycleSlot1"
+@@&	= "CycleSlot2"
+@@&	= "CycleSlot3"
+@@&	= "CyclePrev"
+@@&	= "CycleNext"
+@@&	= "LockpickTap"
+@@&	= "LockpickForce"
+@@&	= "LockpickExit"
+@@&	= "LockpickExitAlt"
+@@&	= "Quicksave"
+@@&	= "Quickload"
+@@&	= "Maximap"
+
+NumAnalogInputs = &
+@ AnalogInput
+@@&			= "MoveX"
+@@^Clamp	= true
+@@^ClampMin	= -1.0
+@@^ClampMax	= 1.0
+@@&			= "MoveY"
+@@^Clamp	= true
+@@^ClampMin	= -1.0
+@@^ClampMax	= 1.0
+@@&			= "ClimbY"
+@@^Clamp	= true
+@@^ClampMin	= -1.0
+@@^ClampMax	= 1.0
+@@&			= "TurnX"
+@@^Clamp	= false
+@@&			= "TurnY"
+@@^Clamp	= false
+
+NumInputContexts = &
+@ InputContext
+@@& = "Context_PowerSlide"
+@@& = "Context_Climb"
+@@& = "Context_Mantle"
+@@& = "Context_Death"
+@@&	= "Context_Look"
+@@& = "Context_Null"
+@@& = "Context_Ending"
+@@& = "Context_Lockpicking"
+
+NumControllerTypes	= &
+@ ControllerType
+@@&	= "Controller_XB"
+@@&	= "Controller_PS"
+
+[Controller_XB]
+# Nothing; the default names (e.g. "xA") will be used
+
+[Controller_PS]
+xA		= "ps_Cross"
+xB		= "ps_Circle"
+xX		= "ps_Square"
+xY		= "ps_Triangle"
+xUp		= "ps_Up"
+xDown	= "ps_Down"
+xLeft	= "ps_Left"
+xRight	= "ps_Right"
+LT		= "ps_L2"
+RT		= "ps_R2"
+LB		= "ps_L1"
+RB		= "ps_R1"
+LS		= "ps_LS"
+RS		= "ps_RS"
+
+[Defaults_RosaKeyboard]
+Forward		= "W"
+Back		= "S"
+Left		= "A"
+Right		= "D"
+Jump		= "Space"
+Frob		= "F"
+LeanLeft	= "Q"
+LeanRight	= "E"
+Run			= "Left Shift"
+Crouch		= "C"
+Quicksave	= "F6"
+Quickload	= "F9"
+Maximap		= "M"
+
+[Defaults_RosaMouse]
+TurnX			= "MouseX"
+TurnY			= "MouseY"
+UseWeapon		= "LMB"
+
+[Defaults_RosaController]
+MoveX		= "xLeftX"
+MoveY		= "xLeftY"
+TurnX		= "xRightX"
+TurnY		= "xRightY"
+Jump		= "xA"
+Crouch		= "xB"
+Frob		= "xX"	# Doubles as reload
+LeanLeft	= "LB"
+LeanRight	= "RB"
+UseWeapon	= "RT"
+Run			= "LS"
+
+# These are the defaults which must always be applied even if the RosaController context already exists.
+# (This was previously just called "RosaController" but that made the defaults above not get applied so
+# as not to cause double-bound inputs... it's a mess.)
+[Consts_RosaController]
+NumUnbindableInputs = &
+@ UnbindableInput
+@@& = "Forward"
+@@& = "Back"
+@@& = "Left"
+@@& = "Right"
+NumGearConfigs	= &
+@ GearConfig
+@@&Input			= "TurnX"
+@@^HighScalar		= 1.0		# Analog input scalar in high gear
+@@^HighThreshold	= 0.75		# Threshold to shift into high gear (after applying controller dead zones, but before applying any scale/power/invert stuff)
+@@^HighShiftTime	= 0.1		# Time spent shifting *into* high gear
+@@^LowScalar		= 0.5		# Analog input scalar in low gear
+@@^LowThreshold		= 0.2		# Threshold to shift into low gear
+@@^LowShiftTime		= 0.2		# Time spent shifting *into* low gear
+@@&Input			= "TurnY"
+@@^HighScalar		= 1.0
+@@^HighThreshold	= 0.75
+@@^HighShiftTime	= 0.1
+@@^LowScalar		= 0.5
+@@^LowThreshold		= 0.2
+@@^LowShiftTime		= 0.2
+
+[]
+# These really belong somewhere else. Maybe update XInput config code.
+LeftThumbDeadZone			= 0.240
+RightThumbDeadZone			= 0.265
+LeftThumbSaturationPoint	= 0.900
+RightThumbSaturationPoint	= 0.900
+TriggerDeadZone				= 0.117
+TriggerSaturationPoint		= 0.900
+LeftThumbBoolThreshold		= 0.900
+RightThumbBoolThreshold		= 0.900
+LeftTriggerBoolThreshold	= 0.800
+RightTriggerBoolThreshold	= 0.800
+
+[Context_PowerSlide]
+Suppress	= false
+Forward		= ""
+Back		= ""
+Left		= ""
+Right		= ""
+MoveX		= ""
+MoveY		= ""
+
+[Context_Climb]
+Suppress	= true
+Jump		= "ClimbJump"
+Forward		= "ClimbForward"
+Back		= "ClimbBack"
+Crouch		= "ClimbDown"
+MoveY		= "ClimbY"
+Heal		= "Heal"
+Light		= "Light"
+TurnX		= "TurnX"
+TurnY		= "TurnY"
+Quicksave	= "Quicksave"
+Quickload	= "Quickload"
+Maximap		= "Maximap"
+
+[Context_Mantle]
+Suppress	= true
+Jump		= "Mantle"
+TurnX		= "TurnX"
+TurnY		= "TurnY"
+Heal		= "Heal"
+Light		= "Light"
+Quicksave	= "Quicksave"
+Quickload	= "Quickload"
+Maximap		= "Maximap"
+
+[Context_Death]
+Suppress	= true
+TurnX		= "TurnX"
+TurnY		= "TurnY"
+Quickload	= "Quickload"
+Maximap		= "Maximap"
+
+[Context_Look]
+Suppress	= true
+TurnX		= "TurnX"
+TurnY		= "TurnY"
+
+[Context_Null]
+Suppress	= true
+
+[Context_Ending]
+Suppress	= true
+
+[Context_Lockpicking]
+Suppress	= true
+UseWeapon	= "LockpickTap"
+Zoom		= "LockpickForce"
+Crouch		= "LockpickExit"
+Frob		= "LockpickExitAlt"
+Heal		= "Heal"
+Light		= "Light"
+Quickload	= "Quickload"
+# Don't allow quicksaving in lockpicking, it causes problems because some (but not all)
+# of the player's state gets serialized in lockpicking mode. (In particular, CanMove.)
+# Exiting the game cleans up lockpicking before saving. Also, you can still save through
+# the menu while lockpicking but that's a rare edge case and I don't care too much.

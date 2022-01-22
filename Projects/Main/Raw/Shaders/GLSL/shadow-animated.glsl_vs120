@@ -1,0 +1,40 @@
+#version 120
+
+// ****************************************************************
+// BEGIN ANIMATED
+uniform mat4 BoneMatrices[32];
+
+// To transform a direction instead of a point, make sure Point.w = 0
+vec4 ApplyBones( vec4 Point, vec4 Weights, ivec4 Indices )
+{
+	vec4 TransformedPoint =
+		( Point * BoneMatrices[ Indices.x ] ) * Weights.x +
+		( Point * BoneMatrices[ Indices.y ] ) * Weights.y +
+		( Point * BoneMatrices[ Indices.z ] ) * Weights.z +
+		( Point * BoneMatrices[ Indices.w ] ) * Weights.w;
+
+	// Badness can creep in if we don't do this. I don't exactly understand why.
+	TransformedPoint.w = Point.w;
+
+	return TransformedPoint;
+}
+// END ANIMATED
+// ****************************************************************
+
+uniform mat4	WVP;
+uniform mat4	WorldMatrix;
+
+attribute vec4	InPosition;
+attribute vec4	InBoneWeights;
+attribute vec4	InBoneIndices;
+
+varying vec4	PassPositionWS;
+
+void main()
+{
+	ivec4	BoneIndices		= ivec4( InBoneIndices );
+	vec4	SkinnedPosition	= ApplyBones( InPosition, InBoneWeights, BoneIndices );
+	
+	gl_Position		= SkinnedPosition * WVP;
+	PassPositionWS	= SkinnedPosition * WorldMatrix;
+}

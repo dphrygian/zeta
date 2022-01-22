@@ -1,0 +1,26 @@
+#version 120
+
+varying vec3	PassNormal;
+
+float NonZeroSign( float x )
+{
+	return ( step( 0.0f, x ) * 2.0f ) - 1.0f;
+}
+
+float Pack( float Unpacked )
+{
+	return ( Unpacked * 0.9375f ) + 0.0625f;
+}
+
+void main()
+{
+	vec3	Normal		= normalize( PassNormal );
+	float	NormalZSign	= NonZeroSign( Normal.z );
+	float	ZeroPack	= Pack( 0.0f );
+	vec4	NormalPack	= vec4( Normal.xy, NormalZSign * ZeroPack, ZeroPack ) * 0.5f + 0.5f;
+	vec4	AlbedoPack	= vec4( 0.0f, 0.0f, 0.0f, ZeroPack * 0.5f + 0.5f );
+
+	gl_FragData[0]	= NormalPack;
+	gl_FragData[1]	= AlbedoPack;
+	gl_FragData[2]	= vec4( 1.0f, 1.0f, 1.0f, 1.0f );
+}

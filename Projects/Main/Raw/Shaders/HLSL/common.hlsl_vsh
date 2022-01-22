@@ -1,0 +1,68 @@
+row_major float4x4	WVP;
+row_major float4x4	VP;
+row_major float4x4	WorldMatrix;
+float4				ViewPosition;	// float3 as float4
+float4				ReflectVector;	// For lefty mode fixes; this is the view's right vector in WS. w is 0 (normal) or 1 (mirrored)
+float4				EyePosition;	// main camera position, *not* actual rendered view location (so it can be used with FS quads)
+
+// Used for ConvertToVPos/PixelPos
+// x = 0.5*width, y = 0.5*height, z = 0.5/width, w = 0.5/height
+float4 RTDims;
+
+// x = -1/w, y = 1/h
+float4 HalfPixelOffsetFix;
+
+// Uses ReflectVector as described above
+float3 LeftyModeReflect( const float3 Normal )
+{
+	const float3 Reflected = reflect( Normal, ReflectVector.xyz );
+	return lerp( Normal, Reflected, ReflectVector.w );
+}
+
+// For reflecting a tangent with the bitangent sign
+float4 LeftyModeReflect( const float4 Tangent )
+{
+	return float4( LeftyModeReflect( Tangent.xyz ), lerp( Tangent.w, -Tangent.w, ReflectVector.w ) );
+}
+
+float3 GetBitangent( const float3 Normal, const float3 Tangent, const float Sign )
+{
+	return Sign * cross( Normal, Tangent );
+}
+
+// TBN matrix transforms world space to tangent space
+float4x4 GetTBNMatrix( const float3 Tangent, const float3 Bitangent, const float3 Normal )
+{
+	return float4x4(
+		Tangent.x,	Bitangent.x,	Normal.x,	0.0f,
+		Tangent.y,	Bitangent.y,	Normal.y,	0.0f,
+		Tangent.z,	Bitangent.z,	Normal.z,	0.0f,
+		0.0f,		0.0f,			0.0f,		1.0f );
+}
+
+// TBN matrix transforms tangent space to world space
+float4x4 GetInverseTBNMatrix( const float3 Tangent, const float3 Bitangent, const float3 Normal )
+{
+	return float4x4(
+		Tangent.x,		Tangent.y,		Tangent.z,		0.0f,
+		Bitangent.x,	Bitangent.y,	Bitangent.z,	0.0f,
+		Normal.x,		Normal.y,		Normal.z,		0.0f,
+		0.0f,			0.0f,			0.0f,			1.0f );
+}
+
+// Return in range 0..1, not -1..1
+float4 ConvertToVPos( const float4 p )
+{
+	return float4( 0.5f * float2( p.x + p.w, p.w - p.y ) + p.w * RTDims.zw, p.zw );
+}
+
+// Returns screen pixel coords (0..n)
+float4 ConvertToPixelPos( const float4 p )
+{
+	return float4( RTDims.xy * float2( p.x + p.w, p.w - p.y ), p.zw );
+}
+
+float4 FixHalfPixelOffset( const float4 p )
+{
+	return float4( p.xy + HalfPixelOffsetFix.xy * p.w, p.zw );
+}

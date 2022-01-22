@@ -1,0 +1,175 @@
+[RosaWorldGen]
+NumStatsIterations		= 2500
+PrintStatsCycles		= 200
+DebugWorldGen			= false
+AllowUnfinishedWorlds	= false
+AllowUnconnectedWorlds	= false
+
+[RosaWorld]
+SkyMesh			= "Meshes/skysphere.cms"	# This gets lit by itself
+# Defaulting to no bounce; it was intended for things like reflecting a bright sky through a window in a cubemap,
+# but isn't necessary and doesn't play great with artificial ambient irradiance because it smooths everything out.
+BounceScalar	= 0.0
+
+DebugRenderSectors			= false
+DebugRenderPortals			= false
+DebugRenderPortalRecursion	= false	# This is the 2D boxes in GatherVisibleSectors, which is what I usually want
+DebugRenderNavMesh			= false
+DebugRenderNavMeshInner		= false
+DebugRenderNavMeshHeight	= false
+
+TitleScreenLevel	= "Level_TitleScreen"
+#HubLevel			= "Level_Hub"
+HubLevel			= "Level_Overworld"	# CAMTODO: The meaning of "hub" may change, I dunno.
+InitialLevel		= "Level_Zeta"
+
+# ******************************** Level defs ********************************
+
+# ******************************** World defs ********************************
+
+# ****************************** Test Worlds ******************************
+
+# ******************************** Sky defs ********************************
+
+# Default sky is a simple blue scheme that should generally be replaced.
+[Sky_Default]
+SunVectorYaw	= 0.0	# Degrees from north (Y+)
+SunVectorPitch	= -90.0	# Degrees from level (XY-plane)
+SkyColorHiH		= 0.666
+SkyColorHiS		= 0.8
+SkyColorHiV		= 1.0
+SkyColorLoH		= 0.666
+SkyColorLoS		= 0.8
+SkyColorLoV		= 0.02
+
+# ******************************** Wind defs ********************************
+
+[Wind_None]
+
+[Wind_Default]
+# NOTE: SwayDirectionXY and SwayIntensity also drive water shaders!
+SwayDirectionX		= -1.0
+SwayDirectionY		= 1.0
+SwayIntensity		= 0.12
+SwayNoiseScalar		= 0.5
+SwayNoiseOctaves	= 1
+LiftIntensity		= 0.06
+LiftNoiseScalar		= 1.0
+LiftNoiseOctaves	= 2
+FlapIntensity		= 0.03
+FlapNoiseScalar		= 5.0
+FlapNoiseOctaves	= 2
+LiftPhaseTime		= 1.0
+LiftPhaseSpace		= 2.0
+SwayPhaseTime		= 4.0
+SwayPhaseSpace		= 4.0
+FlapPhaseTime		= 0.5
+FlapPhaseSpace		= 2.0
+
+[Wind_Default_Low]
+Extends			= "Wind_Default"
+SwayIntensity	= 0.08
+LiftIntensity	= 0.02
+LiftNoiseScalar	= 2.0
+FlapIntensity	= 0.01
+FlapNoiseScalar	= 4.0
+
+# ******************************** Fog/emissive defs ********************************
+
+[Fog_None]
+Texture	= "Textures/Post/fog-none.tga"
+
+# ******************************** Bloom defs ********************************
+
+# This is the bloom that I'm using for a typical level in Rosa.
+# AspectRatio is the multiplier for the horizontal radius.
+# Threshold is applied in linear space (pre-tonemapping)
+[Bloom_Default]
+Kernel		= "Textures/Post/bloom-default.tga"
+Radius		= 0.0074 # Pixel-perfect at 1080p
+AspectRatio	= 1.0
+ThresholdR	= 0.01
+ThresholdG	= 0.01
+ThresholdB	= 0.01
+Scalar		= 0.25	# Applied after clipping at threshold; generally should be <= 1.0 (to reduce bloom when applied to whole scene)
+# For watercolor shader, we want no threshold or scalar, so we just get a blurred scene
+#ThresholdR	= 0.0
+#ThresholdG	= 0.0
+#ThresholdB	= 0.0
+#Scalar		= 1.0
+
+# ******************************** Post defs ********************************
+
+[]
+# HACKHACK: This really belongs somewhere else
+FilmGrainDisabledTexture	= "Textures/Post/noise-none.tga"
+DirtyLensDisabledTexture	= "Textures/Post/lens-none.tga"
+ColorGradingDisabledTexture	= "Textures/Post/color-grading-default.tga"
+# Watercolor stuff
+DisplaceDisabledTexture		= "Textures/Post/displace-none.tga"
+BlotDisabledTexture			= "Textures/Post/blot-none.tga"
+CanvasDisabledTexture		= "Textures/Post/canvas-none.tga"
+EdgeDisabledTexture			= "Textures/Post/edge-none.tga"
+
+# A post setting with no color grading, lens effects, noise, etc.
+# Shouldn't generally be used except for testing.
+[Post_None]
+MinimapTones	= "Textures/Post/minimap-tones-default.tga"
+MinimapFloor	= "Textures/Post/minimap-floor-default.tga"
+MinimapSolid	= "Textures/Post/minimap-solid-default.tga"
+ColorGrading	= "Textures/Post/color-grading-default.tga"
+Lens			= "Textures/Post/lens-none.tga"
+Noise			= "Textures/Post/noise-none.tga"
+EmissiveMax		= 1.0
+Exposure		= 1.0
+
+# This is the post that I'm using for a typical level in Rosa.
+[Post_Default]
+MinimapTones	= "Textures/Post/minimap-tones-default.tga"
+MinimapFloor	= "Textures/Post/minimap-floor-default.tga"
+MinimapSolid	= "Textures/Post/minimap-solid-default.tga"
+ColorGrading	= "Textures/Post/color-grading-default.tga"
+EmissiveMax		= 2.0
+Exposure		= 1.0
+
+# Filmic stuff
+Lens			= "Textures/Post/lens-default.tga"
+Noise			= "Textures/Post/noise-default.tga"
+NoiseScaleLo	= 6.0
+NoiseScaleHi	= 8.0
+NoiseRange		= 0.015
+
+# Watercolor stuff
+Displace		= "Textures/Post/displace-default.tga"
+Blot			= "Textures/Post/blot-default.tga"
+Canvas			= "Textures/Post/canvas-default.tga"
+DisplacePct		= 0.00275	# About +/-3px at 1080p; scales by distance
+BlurSharp		= 10.0
+BlurBlend		= 0.5		# (0 means blur everywhere, 1 means use main scene at max difference)
+BlotSharp		= 10.0
+BlotBlend		= 0.8
+EdgeColorHD		= 225.0
+EdgeColorS		= 1.0
+EdgeColorV		= 1.5
+EdgeLuminanceLo	= 0.1		# Scene luminance at which outlines are fully visible
+EdgeLuminanceHi	= 0.3		# Scene luminance at which outlines are invisible
+
+# ******************************** Cubemap defs ********************************
+
+[Cubemap_Sky]
+Front	= "Textures/Cubemaps/sky.tga"
+Back	= "Textures/Cubemaps/sky.tga"
+Left	= "Textures/Cubemaps/sky.tga"
+Right	= "Textures/Cubemaps/sky.tga"
+Up		= "Textures/Cubemaps/sky.tga"
+Down	= "Textures/Cubemaps/sky.tga"
+
+[Cubemap_Simple]
+SkyLightFactor	= 1.0
+FogFactor		= 1.0
+Front			= "Textures/Cubemaps/simple.tga"
+Back			= "Textures/Cubemaps/simple.tga"
+Left			= "Textures/Cubemaps/simple.tga"
+Right			= "Textures/Cubemaps/simple.tga"
+Up				= "Textures/Cubemaps/simple.tga"
+Down			= "Textures/Cubemaps/simple.tga"

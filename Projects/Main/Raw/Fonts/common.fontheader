@@ -1,0 +1,115 @@
+[Script_Numerals]
+NumCodePointRanges	= &
+@ CodePointRange
+@@&Low				= "U+0030"
+@@^High 			= "U+0039"
+
+[Script_LatinCyrillic]
+# Basic Latin:				0020-007F
+# Latin-1 Supplement:		00A0-00FF
+# Latin Extended-A:			0100-017F
+# Cyrillic (basic only):	0400-045F
+
+NumCodePointRanges	= &
+@ CodePointRange
+
+# Latin
+	@@&Low			= "U+0020"	# Basic Latin
+	@@^High 		= "U+007F"
+	@@&Low			= "U+00A0"	# Latin-1 Supplement
+	@@^High 		= "U+00FF"
+	@@&Low			= "U+0100"	# Latin Extended-A
+	@@^High 		= "U+017F"
+
+# Cyrillic
+	@@&Low			= "U+0400"	# Basic Cyrillic
+	@@^High 		= "U+045F"
+	@@&Low			= "U+0490"	# Ghe with upturn, required addition for Ukrainian
+	@@^High 		= "U+0491"
+
+# Misc
+	@@&				= "U+0009"	# Tab (the only control character I use)
+	@@&				= "U+2014"	# Em dash
+	@@&Low			= "U+201D"	# Low/high double quotation marks
+	@@^High 		= "U+201E"
+
+[Script_LatinCyrillic_Glyphs]
+# Basic Latin:				0020-007F
+# Latin-1 Supplement:		00A0-00FF
+# Latin Extended-A:			0100-017F
+# Cyrillic (basic only):	0400-045F
+
+NumCodePointRanges	= &
+@ CodePointRange
+
+# Latin
+	@@&Low			= "U+0020"	# Basic Latin
+	@@^High 		= "U+007F"
+	@@&Low			= "U+00A0"	# Latin-1 Supplement
+	@@^High 		= "U+00FF"
+	@@&Low			= "U+0100"	# Latin Extended-A
+	@@^High 		= "U+017F"
+
+# Cyrillic
+	@@&Low			= "U+0400"	# Basic Cyrillic
+	@@^High 		= "U+045F"
+	@@&Low			= "U+0490"	# Ghe with upturn, required addition for Ukrainian
+	@@^High 		= "U+0491"
+
+# Misc
+	@@&				= "U+0009"	# Tab (the only control character I use)
+	@@&				= "U+2014"	# Em dash
+	@@&Low			= "U+201D"	# Low/high double quotation marks
+	@@^High 		= "U+201E"
+
+# Button and icon glyphs (Private Use Area)
+	@@&Low			= "U+E0DB"
+	@@^High			= "U+E0FF"
+
+[Script_Latin]
+# Basic Latin:				0020-007F
+# Latin-1 Supplement:		00A0-00FF
+# Latin Extended-A:			0100-017F
+
+NumCodePointRanges	= &
+@ CodePointRange
+
+# Latin
+	@@&Low			= "U+0020"	# Basic Latin
+	@@^High 		= "U+007F"
+	@@&Low			= "U+00A0"	# Latin-1 Supplement
+	@@^High 		= "U+00FF"
+	@@&Low			= "U+0100"	# Latin Extended-A
+	@@^High 		= "U+017F"
+
+# Misc
+	@@&				= "U+0009"	# Tab (the only control character I use)
+	@@&				= "U+2014"	# Em dash
+	@@&Low			= "U+201D"	# Low/high double quotation marks
+	@@^High 		= "U+201E"
+
+[Script_Latin_Glyphs]
+# Basic Latin:				0020-007F
+# Latin-1 Supplement:		00A0-00FF
+# Latin Extended-A:			0100-017F
+
+NumCodePointRanges	= &
+@ CodePointRange
+
+# Latin
+	@@&Low			= "U+0020"	# Basic Latin
+	@@^High 		= "U+007F"
+	@@&Low			= "U+00A0"	# Latin-1 Supplement
+	@@^High 		= "U+00FF"
+	@@&Low			= "U+0100"	# Latin Extended-A
+	@@^High 		= "U+017F"
+
+# Misc
+	@@&				= "U+0009"	# Tab (the only control character I use)
+	@@&				= "U+2014"	# Em dash
+	@@&Low			= "U+201D"	# Low/high double quotation marks
+	@@^High 		= "U+201E"
+
+# Button and icon glyphs (Private Use Area)
+	@@&Low			= "U+E0DB"
+	@@^High			= "U+E0FF"

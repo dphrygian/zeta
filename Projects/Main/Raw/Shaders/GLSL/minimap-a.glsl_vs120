@@ -1,0 +1,16 @@
+#version 120
+
+uniform mat4	WVP;
+uniform vec4	SkewParams;
+
+attribute vec4	InPosition;
+
+varying float	PassHeight;
+
+void main()
+{
+	float	HeightDelta	= InPosition.z - SkewParams.z;
+	vec4	SkewXY		= vec4( SkewParams.x * HeightDelta, SkewParams.y * HeightDelta, 0.0f, 0.0f );
+	gl_Position			= ( InPosition + SkewXY )* WVP;
+	PassHeight			= InPosition.z;
+}

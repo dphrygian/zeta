@@ -1,0 +1,28 @@
+uniform float4 MultiplyColor;
+uniform float4 ScreenColor;
+uniform float4 HUDParams; // x = blend colored text (0-1)
+
+#include "colorblind.hlsl_psh"
+
+struct PS_INPUT 
+{
+	float2	UV		: TEXCOORD0;
+	float4	Color	: COLOR;
+};
+
+float4 Main( PS_INPUT In ) : COLOR
+{
+	const float4	White			= float4( 1.0f, 1.0f, 1.0f, 1.0f );
+	const float4	BaseColor		= tex2D( Sampler, In.UV ) * lerp( White, In.Color, HUDParams.x );
+	
+	// NOTE: These operations are performed in sRGB space, not ideal.
+	const float4	ScreenedColor	= ( BaseColor + ScreenColor ) - ( BaseColor * ScreenColor );
+	const float4	MultipliedColor	= MultiplyColor * ScreenedColor;
+	const float4	FinalColor		= UIColor( MultipliedColor );
+
+#if COLOR_BLIND
+	return mul( ColorBlindMat, FinalColor );
+#else
+	return FinalColor;
+#endif
+}

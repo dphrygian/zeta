@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<!-- See https://docs.microsoft.com/en-us/previous-versions/visualstudio/visual-studio-2015/debugger/create-custom-views-of-native-objects?view=vs-2015 for guide -->
+<!-- See https://docs.microsoft.com/en-us/previous-versions/visualstudio/visual-studio-2015/debugger/format-specifiers-in-cpp?view=vs-2015 for formatting -->
+<AutoVisualizer xmlns="http://schemas.microsoft.com/vstudio/debugger/natvis/2010">
+
+  <Type Name="Vector">
+    <!-- This is identical to the default display but ensures all values are shown and not truncated -->
+    <DisplayString>{{x={x} y={y} z={z}}}</DisplayString>
+    <!-- This is identical to the default display but hides the union struct values -->
+    <Expand>
+      <Item Name="x">x</Item>
+      <Item Name="y">y</Item>
+      <Item Name="z">z</Item>
+    </Expand>
+  </Type>
+
+  <Type Name="Vector2">
+    <!-- This is identical to the default display but ensures all values are shown and not truncated -->
+    <DisplayString>{{x={x} y={y}}}</DisplayString>
+    <!-- This is identical to the default display but hides the union struct values -->
+    <Expand>
+      <Item Name="x">x</Item>
+      <Item Name="y">y</Item>
+    </Expand>
+  </Type>
+
+  <Type Name="Vector4">
+    <!-- This is identical to the default display but ensures all values are shown and not truncated -->
+    <DisplayString>{{x={x} y={y} z={z} w={w}}}</DisplayString>
+    <!-- This is identical to the default display but hides the union struct values -->
+    <Expand>
+      <Item Name="x">x</Item>
+      <Item Name="y">y</Item>
+      <Item Name="z">z</Item>
+      <Item Name="w">w</Item>
+    </Expand>
+  </Type>
+
+  <Type Name="Angles">
+    <!-- This is identical to the default display but ensures all values are shown and not truncated -->
+    <DisplayString>{{Pitch={Pitch} Roll={Roll} Yaw={Yaw}}}</DisplayString>
+  </Type>
+
+  <Type Name="Matrix">
+    <Expand>
+      <!-- HACKHACK: Cast rows to Vector4s so we can show them in one value -->
+      <Item Name="row 0">*(Vector4*)(&amp;m[0][0])</Item>
+      <Item Name="row 1">*(Vector4*)(&amp;m[1][0])</Item>
+      <Item Name="row 2">*(Vector4*)(&amp;m[2][0])</Item>
+      <Item Name="row 3">*(Vector4*)(&amp;m[3][0])</Item>
+    </Expand>
+  </Type>
+
+  <Type Name="Quat">
+    <!-- This is identical to the default display but ensures all values are shown and not truncated -->
+    <DisplayString>{{w={w} x={x} y={y} z={z}}}</DisplayString>
+    <!-- This is identical to the default display but hides the union struct values -->
+    <Expand>
+      <Item Name="w">w</Item>
+      <Item Name="x">x</Item>
+      <Item Name="y">y</Item>
+      <Item Name="z">z</Item>
+    </Expand>
+  </Type>
+
+</AutoVisualizer>

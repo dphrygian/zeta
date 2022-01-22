@@ -1,0 +1,1666 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="src\Achievements\achievementmanager_steam.cpp">
+      <Filter>src\Achievements</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SDPs\sdprosaambientlight.cpp">
+      <Filter>src\SDPs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SDPs\sdprosaantilight.cpp">
+      <Filter>src\SDPs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SDPs\sdprosabloom.cpp">
+      <Filter>src\SDPs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SDPs\sdprosabloomclip.cpp">
+      <Filter>src\SDPs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SDPs\sdprosacharacter.cpp">
+      <Filter>src\SDPs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SDPs\sdprosadecal.cpp">
+      <Filter>src\SDPs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SDPs\sdprosaentity.cpp">
+      <Filter>src\SDPs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SDPs\sdprosafoliage.cpp">
+      <Filter>src\SDPs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SDPs\sdprosafxaa.cpp">
+      <Filter>src\SDPs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SDPs\sdprosageo.cpp">
+      <Filter>src\SDPs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SDPs\sdprosahud.cpp">
+      <Filter>src\SDPs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SDPs\sdprosahudcalibration.cpp">
+      <Filter>src\SDPs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SDPs\sdprosalight.cpp">
+      <Filter>src\SDPs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SDPs\sdprosalightcombine.cpp">
+      <Filter>src\SDPs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SDPs\sdprosaminimapb.cpp">
+      <Filter>src\SDPs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SDPs\sdprosapost.cpp">
+      <Filter>src\SDPs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SDPs\sdprosasky.cpp">
+      <Filter>src\SDPs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Screens\uiscreen-rosabindinputs.cpp">
+      <Filter>src\Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Screens\uiscreen-rosacharacterconfig.cpp">
+      <Filter>src\Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Screens\uiscreen-rosaconversation.cpp">
+      <Filter>src\Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Screens\uiscreen-rosacredits.cpp">
+      <Filter>src\Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Screens\uiscreen-rosahacking.cpp">
+      <Filter>src\Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Screens\uiscreen-rosakeypad.cpp">
+      <Filter>src\Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Screens\uiscreen-rosalanguages.cpp">
+      <Filter>src\Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Screens\uiscreen-rosaradial.cpp">
+      <Filter>src\Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Screens\uiscreen-rosasetres.cpp">
+      <Filter>src\Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AnimEvents\animeventrosaexecuteaction.cpp">
+      <Filter>src\AnimEvents</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AnimEvents\animeventrosasendevent.cpp">
+      <Filter>src\AnimEvents</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BTNodes\rodinbtnoderosachecktrace.cpp">
+      <Filter>src\BTNodes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BTNodes\rodinbtnoderosalookat.cpp">
+      <Filter>src\BTNodes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BTNodes\rodinbtnoderosamoveto.cpp">
+      <Filter>src\BTNodes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BTNodes\rodinbtnoderosaplayanim.cpp">
+      <Filter>src\BTNodes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BTNodes\rodinbtnoderosaplaybark.cpp">
+      <Filter>src\BTNodes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BTNodes\rodinbtnoderosastopmoving.cpp">
+      <Filter>src\BTNodes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BTNodes\rodinbtnoderosaturntoward.cpp">
+      <Filter>src\BTNodes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Actions\wbactionrosaaddammo.cpp">
+      <Filter>src\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Actions\wbactionrosaaddkeycard.cpp">
+      <Filter>src\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Actions\wbactionrosaaddmoney.cpp">
+      <Filter>src\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Actions\wbactionrosaaddobjective.cpp">
+      <Filter>src\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Actions\wbactionrosaawardachievement.cpp">
+      <Filter>src\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Actions\wbactionrosabindinput.cpp">
+      <Filter>src\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Actions\wbactionrosabuyammo.cpp">
+      <Filter>src\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Actions\wbactionrosacheckcone.cpp">
+      <Filter>src\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Actions\wbactionrosacheckline.cpp">
+      <Filter>src\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Actions\wbactionrosachecksphere.cpp">
+      <Filter>src\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Actions\wbactionrosaclearobjectives.cpp">
+      <Filter>src\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Actions\wbactionrosacompleteobjective.cpp">
+      <Filter>src\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Actions\wbactionrosaconditionalshowbook.cpp">
+      <Filter>src\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Actions\wbactionrosaflushworldfiles.cpp">
+      <Filter>src\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Actions\wbactionrosafootstep.cpp">
+      <Filter>src\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Actions\wbactionrosagiveitem.cpp">
+      <Filter>src\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Actions\wbactionrosagotolevel.cpp">
+      <Filter>src\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Actions\wbactionrosaincrementstat.cpp">
+      <Filter>src\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Actions\wbactionrosalaunchwebsite.cpp">
+      <Filter>src\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Actions\wbactionrosalogmessage.cpp">
+      <Filter>src\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Actions\wbactionrosaplayanim.cpp">
+      <Filter>src\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Actions\wbactionrosaplaybark.cpp">
+      <Filter>src\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Actions\wbactionrosaplayhandanim.cpp">
+      <Filter>src\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Actions\wbactionrosaplaysound.cpp">
+      <Filter>src\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Actions\wbactionrosaprogressconversation.cpp">
+      <Filter>src\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Actions\wbactionrosapublishresults.cpp">
+      <Filter>src\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Actions\wbactionrosaremoveammo.cpp">
+      <Filter>src\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Actions\wbactionrosaremovekeycard.cpp">
+      <Filter>src\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Actions\wbactionrosaremovemoney.cpp">
+      <Filter>src\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Actions\wbactionrosareturntotitle.cpp">
+      <Filter>src\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Actions\wbactionrosaselectcharacterpreset.cpp">
+      <Filter>src\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Actions\wbactionrosaselectconversationchoice.cpp">
+      <Filter>src\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Actions\wbactionrosasetconvostate.cpp">
+      <Filter>src\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Actions\wbactionrosasetlanguage.cpp">
+      <Filter>src\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Actions\wbactionrosasetlight.cpp">
+      <Filter>src\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Actions\wbactionrosasetlightcolor.cpp">
+      <Filter>src\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Actions\wbactionrosasetpersistentvar.cpp">
+      <Filter>src\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Actions\wbactionrosasetstat.cpp">
+      <Filter>src\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Actions\wbactionrosasettexture.cpp">
+      <Filter>src\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Actions\wbactionrosashowbook.cpp">
+      <Filter>src\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Actions\wbactionrosaspawndecal.cpp">
+      <Filter>src\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Actions\wbactionrosaspawnentity.cpp">
+      <Filter>src\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Actions\wbactionrosastartconversation.cpp">
+      <Filter>src\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Actions\wbactionrosastopmotion.cpp">
+      <Filter>src\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Actions\wbactionrosateleportto.cpp">
+      <Filter>src\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosaaimotion.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosaalarmbox.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosaalarmtripper.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosaammobag.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosaanchor.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosaantilight.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosacamera.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosacampaignartifact.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosacharacter.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosacharacterconfig.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosaclimbable.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosacollectible.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosacollision.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosadamageeffects.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosadecal.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosadoor.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosafaction.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosafootsteps.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosafrobbable.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosafrobber.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosahackable.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosahands.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosaheadshot.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosaheadtracker.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosahealth.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosahudmarker.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosaicicles.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosainventory.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosaitem.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosajukebox.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosakeyring.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosalight.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosalock.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosaloottable.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosamapmarker.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosamarkup.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosamedkit.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosamesh.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosaobjectives.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosaparticles.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosapatrolpath.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosapickup.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosaplayer.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosaposeop.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosapowerteleport.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosareadable.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosarepulsor.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosarespawner.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosarope.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosaseccam.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosasensor.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosasensorbump.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosasensordamage.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosasensorhearing.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosasensormarkup.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosasensorpatrol.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosasensorpoll.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosasensorrepulsor.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosasensortheft.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosasensorvision.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosasign.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosasignreader.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosasleeper.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosasound.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosaspawnmanager.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosaspikes.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosaspin.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosastim.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosaswitch.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosaswitchable.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosathinker.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosathinkernpctarget.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosathinkerpatrol.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosathinkertarget.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosatransform.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosatrapbolt.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosaupgrades.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosavisible.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosawallet.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosaweapon.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprodinbehaviortree_debugrender.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PEs\wbperosacampaignmodify.cpp">
+      <Filter>src\PEs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PEs\wbperosaconvoselector.cpp">
+      <Filter>src\PEs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PEs\wbperosadeadreckoning.cpp">
+      <Filter>src\PEs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PEs\wbperosadistance.cpp">
+      <Filter>src\PEs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PEs\wbperosagetbestcycleslot.cpp">
+      <Filter>src\PEs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PEs\wbperosagetbonelocation.cpp">
+      <Filter>src\PEs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PEs\wbperosagetcharactervo.cpp">
+      <Filter>src\PEs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PEs\wbperosagetfaction.cpp">
+      <Filter>src\PEs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PEs\wbperosagetitem.cpp">
+      <Filter>src\PEs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PEs\wbperosagetlocation.cpp">
+      <Filter>src\PEs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PEs\wbperosagetorientation.cpp">
+      <Filter>src\PEs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PEs\wbperosagetpersistentvar.cpp">
+      <Filter>src\PEs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PEs\wbperosagetslot.cpp">
+      <Filter>src\PEs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PEs\wbperosagetspeed.cpp">
+      <Filter>src\PEs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PEs\wbperosagetspeedlimit.cpp">
+      <Filter>src\PEs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PEs\wbperosagetsurfaceproperty.cpp">
+      <Filter>src\PEs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PEs\wbperosagetvelocity.cpp">
+      <Filter>src\PEs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PEs\wbperosahasammo.cpp">
+      <Filter>src\PEs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PEs\wbperosahaskeycard.cpp">
+      <Filter>src\PEs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PEs\wbperosahasmoney.cpp">
+      <Filter>src\PEs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PEs\wbperosahasmrusave.cpp">
+      <Filter>src\PEs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PEs\wbperosaheadshot.cpp">
+      <Filter>src\PEs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PEs\wbperosaisconvostate.cpp">
+      <Filter>src\PEs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PEs\wbperosaisdifficulty.cpp">
+      <Filter>src\PEs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PEs\wbperosaisinfrontof.cpp">
+      <Filter>src\PEs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PEs\wbperosaisinsidedoor.cpp">
+      <Filter>src\PEs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PEs\wbperosaisobjectivecomplete.cpp">
+      <Filter>src\PEs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PEs\wbperosaplayer.cpp">
+      <Filter>src\PEs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\exceptionwritesteamminidump.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\main.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\rosacampaign.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\rosaconversation.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\rosadamage.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\rosadifficulty.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\rosafactions.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\rosaframework.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\rosagame.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\rosahacking.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\rosahudlog.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\rosaintro.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\rosairradiance.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\rosalockpicking.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\rosamesh.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\rosamusic.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\rosanav.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\rosaparticles.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\rosapersistence.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\rosaroom.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\rosaroom-editor.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\rosasaveload.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\rosasound3dlistener.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\rosasurfaces.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\rosatargetmanager.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\rosatools.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\rosatools-static.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\rosawardrobe.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\rosawbscenehelpers.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\rosaworld.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\rosaworldcubemap.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\rosaworldgen.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\rosaworldtexture.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\uiinputmaprosa.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Actions\wbactionrosaopenuserdatapath.cpp">
+      <Filter>src\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosaragdoll.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosalinkedentities.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SDPs\sdprosafoglight.cpp">
+      <Filter>src\SDPs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SDPs\sdprosaedge.cpp">
+      <Filter>src\SDPs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SDPs\sdprosapostwatercolor.cpp">
+      <Filter>src\SDPs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\rosacloudmanager.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SDPs\sdprosapostcheap.cpp">
+      <Filter>src\SDPs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SDPs\sdprosawater.cpp">
+      <Filter>src\SDPs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprosahitbox.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomponent_debugrender.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SDPs\sdprosaminimapa.cpp">
+      <Filter>src\SDPs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcompstatmod_debugrender.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Actions\wbactionrosaloadgame.cpp">
+      <Filter>src\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Actions\wbactionrosasavegame.cpp">
+      <Filter>src\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Screens\uiscreen-rosaload.cpp">
+      <Filter>src\Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Screens\uiscreen-rosanewgame.cpp">
+      <Filter>src\Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Screens\uiscreen-rosasave.cpp">
+      <Filter>src\Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SDPs\sdprosassao.cpp">
+      <Filter>src\SDPs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\rosasupertitles.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SDPs\sdprosafogmesh.cpp">
+      <Filter>src\SDPs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SDPs\sdprosawaterflow.cpp">
+      <Filter>src\SDPs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Screens\uiscreen-rosacampaign.cpp">
+      <Filter>src\Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SDPs\sdprosagradient.cpp">
+      <Filter>src\SDPs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprodinblackboard_debugrender.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\wbentity_debugrender.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbrosacomponent.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="src\Achievements\achievementmanager_steam.h">
+      <Filter>src\Achievements</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Achievements\iachievementmanager.h">
+      <Filter>src\Achievements</Filter>
+    </ClInclude>
+    <ClInclude Include="src\steam\isteamapplist.h">
+      <Filter>src\steam</Filter>
+    </ClInclude>
+    <ClInclude Include="src\steam\isteamapps.h">
+      <Filter>src\steam</Filter>
+    </ClInclude>
+    <ClInclude Include="src\steam\isteamappticket.h">
+      <Filter>src\steam</Filter>
+    </ClInclude>
+    <ClInclude Include="src\steam\isteamclient.h">
+      <Filter>src\steam</Filter>
+    </ClInclude>
+    <ClInclude Include="src\steam\isteamcontroller.h">
+      <Filter>src\steam</Filter>
+    </ClInclude>
+    <ClInclude Include="src\steam\isteamfriends.h">
+      <Filter>src\steam</Filter>
+    </ClInclude>
+    <ClInclude Include="src\steam\isteamgamecoordinator.h">
+      <Filter>src\steam</Filter>
+    </ClInclude>
+    <ClInclude Include="src\steam\isteamgameserver.h">
+      <Filter>src\steam</Filter>
+    </ClInclude>
+    <ClInclude Include="src\steam\isteamgameserverstats.h">
+      <Filter>src\steam</Filter>
+    </ClInclude>
+    <ClInclude Include="src\steam\isteamhtmlsurface.h">
+      <Filter>src\steam</Filter>
+    </ClInclude>
+    <ClInclude Include="src\steam\isteamhttp.h">
+      <Filter>src\steam</Filter>
+    </ClInclude>
+    <ClInclude Include="src\steam\isteaminventory.h">
+      <Filter>src\steam</Filter>
+    </ClInclude>
+    <ClInclude Include="src\steam\isteammasterserverupdater.h">
+      <Filter>src\steam</Filter>
+    </ClInclude>
+    <ClInclude Include="src\steam\isteammatchmaking.h">
+      <Filter>src\steam</Filter>
+    </ClInclude>
+    <ClInclude Include="src\steam\isteammusic.h">
+      <Filter>src\steam</Filter>
+    </ClInclude>
+    <ClInclude Include="src\steam\isteammusicremote.h">
+      <Filter>src\steam</Filter>
+    </ClInclude>
+    <ClInclude Include="src\steam\isteamnetworking.h">
+      <Filter>src\steam</Filter>
+    </ClInclude>
+    <ClInclude Include="src\steam\isteamps3overlayrenderer.h">
+      <Filter>src\steam</Filter>
+    </ClInclude>
+    <ClInclude Include="src\steam\isteamremotestorage.h">
+      <Filter>src\steam</Filter>
+    </ClInclude>
+    <ClInclude Include="src\steam\isteamscreenshots.h">
+      <Filter>src\steam</Filter>
+    </ClInclude>
+    <ClInclude Include="src\steam\isteamugc.h">
+      <Filter>src\steam</Filter>
+    </ClInclude>
+    <ClInclude Include="src\steam\isteamuser.h">
+      <Filter>src\steam</Filter>
+    </ClInclude>
+    <ClInclude Include="src\steam\isteamuserstats.h">
+      <Filter>src\steam</Filter>
+    </ClInclude>
+    <ClInclude Include="src\steam\isteamutils.h">
+      <Filter>src\steam</Filter>
+    </ClInclude>
+    <ClInclude Include="src\steam\isteamvideo.h">
+      <Filter>src\steam</Filter>
+    </ClInclude>
+    <ClInclude Include="src\steam\matchmakingtypes.h">
+      <Filter>src\steam</Filter>
+    </ClInclude>
+    <ClInclude Include="src\steam\steam_api.h">
+      <Filter>src\steam</Filter>
+    </ClInclude>
+    <ClInclude Include="src\steam\steam_gameserver.h">
+      <Filter>src\steam</Filter>
+    </ClInclude>
+    <ClInclude Include="src\steam\steamclientpublic.h">
+      <Filter>src\steam</Filter>
+    </ClInclude>
+    <ClInclude Include="src\steam\steamencryptedappticket.h">
+      <Filter>src\steam</Filter>
+    </ClInclude>
+    <ClInclude Include="src\steam\steamhttpenums.h">
+      <Filter>src\steam</Filter>
+    </ClInclude>
+    <ClInclude Include="src\steam\steamps3params.h">
+      <Filter>src\steam</Filter>
+    </ClInclude>
+    <ClInclude Include="src\steam\steamtypes.h">
+      <Filter>src\steam</Filter>
+    </ClInclude>
+    <ClInclude Include="src\steam\steamuniverse.h">
+      <Filter>src\steam</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDPs\sdprosaambientlight.h">
+      <Filter>src\SDPs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDPs\sdprosaantilight.h">
+      <Filter>src\SDPs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDPs\sdprosabloom.h">
+      <Filter>src\SDPs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDPs\sdprosabloomclip.h">
+      <Filter>src\SDPs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDPs\sdprosacharacter.h">
+      <Filter>src\SDPs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDPs\sdprosadecal.h">
+      <Filter>src\SDPs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDPs\sdprosaentity.h">
+      <Filter>src\SDPs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDPs\sdprosafoliage.h">
+      <Filter>src\SDPs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDPs\sdprosafxaa.h">
+      <Filter>src\SDPs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDPs\sdprosageo.h">
+      <Filter>src\SDPs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDPs\sdprosahud.h">
+      <Filter>src\SDPs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDPs\sdprosahudcalibration.h">
+      <Filter>src\SDPs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDPs\sdprosalight.h">
+      <Filter>src\SDPs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDPs\sdprosalightcombine.h">
+      <Filter>src\SDPs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDPs\sdprosaminimapb.h">
+      <Filter>src\SDPs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDPs\sdprosapost.h">
+      <Filter>src\SDPs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDPs\sdprosasky.h">
+      <Filter>src\SDPs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Screens\uiscreen-rosabindinputs.h">
+      <Filter>src\Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Screens\uiscreen-rosacharacterconfig.h">
+      <Filter>src\Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Screens\uiscreen-rosaconversation.h">
+      <Filter>src\Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Screens\uiscreen-rosacredits.h">
+      <Filter>src\Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Screens\uiscreen-rosahacking.h">
+      <Filter>src\Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Screens\uiscreen-rosakeypad.h">
+      <Filter>src\Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Screens\uiscreen-rosalanguages.h">
+      <Filter>src\Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Screens\uiscreen-rosaradial.h">
+      <Filter>src\Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Screens\uiscreen-rosasetres.h">
+      <Filter>src\Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AnimEvents\animeventrosaexecuteaction.h">
+      <Filter>src\AnimEvents</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AnimEvents\animeventrosasendevent.h">
+      <Filter>src\AnimEvents</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BTNodes\rodinbtnoderosachecktrace.h">
+      <Filter>src\BTNodes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BTNodes\rodinbtnoderosalookat.h">
+      <Filter>src\BTNodes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BTNodes\rodinbtnoderosamoveto.h">
+      <Filter>src\BTNodes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BTNodes\rodinbtnoderosaplayanim.h">
+      <Filter>src\BTNodes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BTNodes\rodinbtnoderosaplaybark.h">
+      <Filter>src\BTNodes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BTNodes\rodinbtnoderosastopmoving.h">
+      <Filter>src\BTNodes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BTNodes\rodinbtnoderosaturntoward.h">
+      <Filter>src\BTNodes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Actions\wbactionrosaaddammo.h">
+      <Filter>src\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Actions\wbactionrosaaddkeycard.h">
+      <Filter>src\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Actions\wbactionrosaaddmoney.h">
+      <Filter>src\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Actions\wbactionrosaaddobjective.h">
+      <Filter>src\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Actions\wbactionrosaawardachievement.h">
+      <Filter>src\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Actions\wbactionrosabindinput.h">
+      <Filter>src\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Actions\wbactionrosabuyammo.h">
+      <Filter>src\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Actions\wbactionrosacheckcone.h">
+      <Filter>src\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Actions\wbactionrosacheckline.h">
+      <Filter>src\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Actions\wbactionrosachecksphere.h">
+      <Filter>src\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Actions\wbactionrosaclearobjectives.h">
+      <Filter>src\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Actions\wbactionrosacompleteobjective.h">
+      <Filter>src\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Actions\wbactionrosaconditionalshowbook.h">
+      <Filter>src\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Actions\wbactionrosaflushworldfiles.h">
+      <Filter>src\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Actions\wbactionrosafootstep.h">
+      <Filter>src\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Actions\wbactionrosagiveitem.h">
+      <Filter>src\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Actions\wbactionrosagotolevel.h">
+      <Filter>src\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Actions\wbactionrosaincrementstat.h">
+      <Filter>src\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Actions\wbactionrosalaunchwebsite.h">
+      <Filter>src\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Actions\wbactionrosalogmessage.h">
+      <Filter>src\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Actions\wbactionrosaplayanim.h">
+      <Filter>src\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Actions\wbactionrosaplaybark.h">
+      <Filter>src\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Actions\wbactionrosaplayhandanim.h">
+      <Filter>src\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Actions\wbactionrosaplaysound.h">
+      <Filter>src\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Actions\wbactionrosaprogressconversation.h">
+      <Filter>src\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Actions\wbactionrosapublishresults.h">
+      <Filter>src\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Actions\wbactionrosaremoveammo.h">
+      <Filter>src\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Actions\wbactionrosaremovekeycard.h">
+      <Filter>src\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Actions\wbactionrosaremovemoney.h">
+      <Filter>src\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Actions\wbactionrosareturntotitle.h">
+      <Filter>src\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Actions\wbactionrosaselectcharacterpreset.h">
+      <Filter>src\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Actions\wbactionrosaselectconversationchoice.h">
+      <Filter>src\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Actions\wbactionrosasetconvostate.h">
+      <Filter>src\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Actions\wbactionrosasetlanguage.h">
+      <Filter>src\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Actions\wbactionrosasetlight.h">
+      <Filter>src\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Actions\wbactionrosasetlightcolor.h">
+      <Filter>src\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Actions\wbactionrosasetpersistentvar.h">
+      <Filter>src\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Actions\wbactionrosasetstat.h">
+      <Filter>src\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Actions\wbactionrosasettexture.h">
+      <Filter>src\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Actions\wbactionrosashowbook.h">
+      <Filter>src\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Actions\wbactionrosaspawndecal.h">
+      <Filter>src\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Actions\wbactionrosaspawnentity.h">
+      <Filter>src\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Actions\wbactionrosastartconversation.h">
+      <Filter>src\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Actions\wbactionrosastopmotion.h">
+      <Filter>src\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Actions\wbactionrosateleportto.h">
+      <Filter>src\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosaaimotion.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosaalarmbox.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosaalarmtripper.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosaammobag.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosaanchor.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosaantilight.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosacamera.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosacampaignartifact.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosacharacter.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosacharacterconfig.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosaclimbable.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosacollectible.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosacollision.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosadamageeffects.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosadecal.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosadoor.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosafaction.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosafootsteps.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosafrobbable.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosafrobber.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosahackable.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosahands.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosaheadshot.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosaheadtracker.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosahealth.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosahudmarker.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosaicicles.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosainventory.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosaitem.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosajukebox.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosakeyring.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosalight.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosalock.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosaloottable.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosamapmarker.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosamarkup.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosamedkit.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosamesh.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosaobjectives.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosaparticles.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosapatrolpath.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosapickup.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosaplayer.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosaposeop.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosapowerteleport.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosareadable.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosarepulsor.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosarespawner.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosarope.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosaseccam.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosasensor.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosasensorbump.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosasensordamage.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosasensorhearing.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosasensormarkup.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosasensorpatrol.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosasensorpoll.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosasensorrepulsor.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosasensortheft.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosasensorvision.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosasign.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosasignreader.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosasleeper.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosasound.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosaspawnmanager.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosaspikes.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosaspin.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosastim.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosaswitch.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosaswitchable.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosathinker.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosathinkernpctarget.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosathinkerpatrol.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosathinkertarget.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosatransform.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosatrapbolt.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosaupgrades.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosavisible.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosawallet.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosaweapon.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PEs\wbperosaplayer.h">
+      <Filter>src\PEs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PEs\wbperosacampaignmodify.h">
+      <Filter>src\PEs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PEs\wbperosaconvoselector.h">
+      <Filter>src\PEs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PEs\wbperosadeadreckoning.h">
+      <Filter>src\PEs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PEs\wbperosadistance.h">
+      <Filter>src\PEs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PEs\wbperosagetbestcycleslot.h">
+      <Filter>src\PEs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PEs\wbperosagetbonelocation.h">
+      <Filter>src\PEs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PEs\wbperosagetcharactervo.h">
+      <Filter>src\PEs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PEs\wbperosagetfaction.h">
+      <Filter>src\PEs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PEs\wbperosagetitem.h">
+      <Filter>src\PEs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PEs\wbperosagetlocation.h">
+      <Filter>src\PEs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PEs\wbperosagetorientation.h">
+      <Filter>src\PEs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PEs\wbperosagetpersistentvar.h">
+      <Filter>src\PEs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PEs\wbperosagetslot.h">
+      <Filter>src\PEs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PEs\wbperosagetspeed.h">
+      <Filter>src\PEs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PEs\wbperosagetspeedlimit.h">
+      <Filter>src\PEs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PEs\wbperosagetsurfaceproperty.h">
+      <Filter>src\PEs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PEs\wbperosagetvelocity.h">
+      <Filter>src\PEs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PEs\wbperosahasammo.h">
+      <Filter>src\PEs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PEs\wbperosahaskeycard.h">
+      <Filter>src\PEs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PEs\wbperosahasmoney.h">
+      <Filter>src\PEs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PEs\wbperosahasmrusave.h">
+      <Filter>src\PEs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PEs\wbperosaheadshot.h">
+      <Filter>src\PEs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PEs\wbperosaisconvostate.h">
+      <Filter>src\PEs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PEs\wbperosaisdifficulty.h">
+      <Filter>src\PEs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PEs\wbperosaisinfrontof.h">
+      <Filter>src\PEs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PEs\wbperosaisinsidedoor.h">
+      <Filter>src\PEs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PEs\wbperosaisobjectivecomplete.h">
+      <Filter>src\PEs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\rosaanimevents.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\rosacampaign.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\rosaconversation.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\rosadamage.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\rosadifficulty.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\rosafactions.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\rosaframework.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\rosagame.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\rosahacking.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\rosahudlog.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\rosaintro.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\rosairradiance.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\rosalockpicking.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\rosamesh.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\rosamusic.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\rosanav.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\rosaparticles.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\rosapersistence.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\rosarodinbtnodes.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\rosaroom.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\rosaroom-editor.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\rosasaveload.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\rosasdps.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\rosasound3dlistener.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\rosasurfaces.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\rosatargetmanager.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\rosatools.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\rosauiscreens.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\rosawardrobe.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\rosawbactions.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\rosawbcomponents.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\rosawbpes.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\rosawbscenehelpers.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\rosaworld.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\rosaworldcubemap.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\rosaworldgen.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\rosaworldtexture.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\uiinputmaprosa.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Actions\wbactionrosaopenuserdatapath.h">
+      <Filter>src\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosaragdoll.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosalinkedentities.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\steam\isteamparentalsettings.h">
+      <Filter>src\steam</Filter>
+    </ClInclude>
+    <ClInclude Include="src\steam\steam_api_internal.h">
+      <Filter>src\steam</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDPs\sdprosafoglight.h">
+      <Filter>src\SDPs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\steam\isteaminput.h">
+      <Filter>src\steam</Filter>
+    </ClInclude>
+    <ClInclude Include="src\steam\steam_api_common.h">
+      <Filter>src\steam</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDPs\sdprosaedge.h">
+      <Filter>src\SDPs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDPs\sdprosapostwatercolor.h">
+      <Filter>src\SDPs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\rosacloudmanager.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDPs\sdprosapostcheap.h">
+      <Filter>src\SDPs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDPs\sdprosawater.h">
+      <Filter>src\SDPs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprosahitbox.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDPs\sdprosaminimapa.h">
+      <Filter>src\SDPs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Actions\wbactionrosaloadgame.h">
+      <Filter>src\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Actions\wbactionrosasavegame.h">
+      <Filter>src\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Screens\uiscreen-rosaload.h">
+      <Filter>src\Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Screens\uiscreen-rosanewgame.h">
+      <Filter>src\Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Screens\uiscreen-rosasave.h">
+      <Filter>src\Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDPs\sdprosassao.h">
+      <Filter>src\SDPs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\rosasupertitles.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDPs\sdprosafogmesh.h">
+      <Filter>src\SDPs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDPs\sdprosawaterflow.h">
+      <Filter>src\SDPs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Screens\uiscreen-rosacampaign.h">
+      <Filter>src\Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDPs\sdprosagradient.h">
+      <Filter>src\SDPs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbrosacomponent.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Rosa.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Rosa.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{967fcce7-9e24-4138-b486-c976caaf2ff5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Achievements">
+      <UniqueIdentifier>{c7315264-9fcc-4b8d-9db4-263fe474a5a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Actions">
+      <UniqueIdentifier>{d8e0f169-883b-4e94-801e-b1c79f9f1acc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\AnimEvents">
+      <UniqueIdentifier>{c8f94ad3-5b8e-493b-9d9d-3e566a087000}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\BTNodes">
+      <UniqueIdentifier>{8186478f-d471-436c-83c1-efe87640f4c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Components">
+      <UniqueIdentifier>{cf651994-6d80-4e96-adbf-c1c68667efde}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\PEs">
+      <UniqueIdentifier>{836da8ac-31aa-4cfc-87fe-af5ed9110977}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Screens">
+      <UniqueIdentifier>{b478d13d-2182-4723-880b-bc6acec04182}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\SDPs">
+      <UniqueIdentifier>{8d8d2afc-010a-4d13-a63c-09bfdca9dd61}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\steam">
+      <UniqueIdentifier>{49f0903c-a1a1-4900-98cc-8e40036dc3e4}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

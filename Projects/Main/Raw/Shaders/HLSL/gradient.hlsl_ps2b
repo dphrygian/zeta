@@ -1,0 +1,48 @@
+#include "common.hlsl_psh"
+#include "fog.hlsl_psh"
+
+static const float skGradientThresholdLo	= 0.00f;
+static const float skGradientThresholdHi	= 1.00f;
+
+sampler SamplerNormal	: register(s0);
+sampler SamplerDepth	: register(s1);
+
+uniform float4	EyeDirection;
+
+struct PS_INPUT
+{
+	float2 UV	: TEXCOORD0;
+};
+
+float4 Main( PS_INPUT In ) : COLOR
+{
+	const float4	NormalSpec		= tex2D( SamplerNormal, In.UV );
+	const float4	NormalUnpack	= ( NormalSpec * 2.0f ) - 1.0f;
+	const float		NormalZSign		= NonZeroSign( NormalUnpack.z );
+	const float3	WSNormal		= GetInvStereographicProjection( NormalUnpack.xy, NormalZSign );
+
+	const float		Depth			= tex2D( SamplerDepth, In.UV ).r;
+	const float4	WSPos			= GetWSPos( In.UV, Depth );
+	const float3	WSToEyeOffset	= EyePosition.xyz - WSPos.xyz;
+	const float		WSToEyeLength	= length ( WSToEyeOffset );
+	const float3	WSToEyeDir		= WSToEyeOffset / WSToEyeLength;
+
+	const float3	WSToEyeProjView		= dot( WSToEyeDir, EyeDirection.xyz ) * EyeDirection.xyz;
+	const float3	WSNormalProjView	= dot( WSNormal, EyeDirection.xyz ) * EyeDirection.xyz;
+	const float3	WSToEyeRejView		= WSToEyeDir - WSToEyeProjView;	// i.e., WSToEyeDir lying in view plane
+	const float3	WSNormalRejView		= WSNormal - WSNormalProjView;	// i.e., WSNormal lying in view plane
+	const float		Gradient			= ( 0.5f * ( 1.0f - dot( WSToEyeRejView, WSNormalRejView ) ) );
+	const float		FacingCancel		= saturate( 1.0f + dot( WSNormal, EyeDirection.xyz ) );
+	const float		GradTerm			= smoothstep( skGradientThresholdLo, skGradientThresholdHi, Gradient * FacingCancel );
+
+	// This uses the actual fog term instead of the cheap one from edge shader,
+	// since I can afford it and so I don't have to deal with linear depth.
+	const float		FogTerm				= 1.0f - ScaleDistance( WSToEyeLength );
+
+	return
+		lerp(
+			float4( 0.0f, 0.0f, 0.0f, 0.98f ),	// Not fully black
+			float4( 0.0f, 0.0f, 0.0f, -4.0f ),	// Negative alpha will BRIGHTEN grazing angles, HACKHACK?
+			FogTerm * GradTerm
+		);
+}

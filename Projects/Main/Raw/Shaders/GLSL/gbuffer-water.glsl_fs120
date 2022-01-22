@@ -1,0 +1,107 @@
+#version 120
+
+vec4 SampleSRGBToLinear( sampler2D Sampler, vec2 UV )
+{
+	vec4 Sample = texture2D( Sampler, UV );
+	vec4 Linear = pow( Sample, vec4( 2.2f ) );
+	return vec4( Linear.rgb, Sample.a );
+}
+
+float NonZeroSign( float x )
+{
+	return ( step( 0.0f, x ) * 2.0f ) - 1.0f;
+}
+
+vec2 GetStereographicProjection( vec3 Normal )
+{
+	float Denom = 1.0f / ( 1.0f + abs( Normal.z ) );
+	return vec2( Normal.xy * Denom );
+}
+
+vec3 SampleNormal( sampler2D NormalSampler, vec2 UV )
+{
+	vec3 Normal = texture2D( NormalSampler, UV ).rgb * 2.0f - 1.0f;
+	Normal.z = sqrt( 1.0f - dot( Normal.xy, Normal.xy ) );
+	return Normal;
+}
+
+vec3 SampleNormalCheap( sampler2D NormalSampler, vec2 UV )
+{
+	return texture2D( NormalSampler, UV ).rgb * 2.0f - 1.0f;
+}
+
+vec3 GetBitangent( vec3 Normal, vec3 Tangent, float Sign )
+{
+	return Sign * cross( Normal, Tangent );
+}
+
+// ROSANOTE: Transposed compared to HLSL.
+mat4 GetInverseTBNMatrix( vec3 Tangent, vec3 Bitangent, vec3 Normal )
+{
+	return mat4(
+		Tangent.x,	Bitangent.x,	Normal.x,	0.0f,
+		Tangent.y,	Bitangent.y,	Normal.y,	0.0f,
+		Tangent.z,	Bitangent.z,	Normal.z,	0.0f,
+		0.0f,		0.0f,			0.0f,		1.0f );
+
+	//return mat4(
+	//	Tangent.x,		Tangent.y,		Tangent.z,		0.0f,
+	//	Bitangent.x,	Bitangent.y,	Bitangent.z,	0.0f,
+	//	Normal.x,		Normal.y,		Normal.z,		0.0f,
+	//	0.0f,			0.0f,			0.0f,			1.0f );
+}
+
+uniform sampler2D Texture0;	// Albedo
+uniform sampler2D Texture1;	// NormalA
+uniform sampler2D Texture2;	// NormalB
+
+uniform vec4	Highlight;
+uniform vec4	WaterPhase;
+
+varying vec2	PassUV;
+varying vec4	PassPositionSS;
+varying vec3	PassNormalWS;
+varying vec4	PassTangentWS;
+
+float Pack( float Unpacked )
+{
+	return ( Unpacked * 0.9375f ) + 0.0625f;
+}
+
+vec2 Pack( vec2 Unpacked )
+{
+	return ( Unpacked * 0.9375f ) + 0.0625f;
+}
+
+vec4 SpecMap		= vec4( 0.04f, 1.0f, 0.0f, 1.0f );
+vec2 ReflSmooth		= Pack( vec2( SpecMap.r, SpecMap.g * SpecMap.g ) );
+float Dielectric	= SpecMap.a * 2.0f - 1.0f;
+
+float WaterDepth	= -0.2f;
+
+void main()
+{
+	vec3	Normal		= normalize( PassNormalWS );
+	vec3	Tangent		= normalize( PassTangentWS.xyz );
+	vec3	Bitangent	= GetBitangent( Normal, Tangent, PassTangentWS.w );
+	mat4	InvTBN		= GetInverseTBNMatrix( Tangent, Bitangent, Normal );
+
+	vec3	NormalATS	= SampleNormal( Texture1, PassUV + WaterPhase.xy );
+	vec3	NormalBTS	= SampleNormal( Texture2, PassUV + WaterPhase.zw );
+	vec3	NormalMapTS	= normalize( NormalATS + NormalBTS );
+	vec3	NormalMapWS	= ( vec4( NormalMapTS, 0.0f ) * InvTBN ).xyz;
+	
+	vec3	Albedo		= SampleSRGBToLinear( Texture0, PassUV + WaterDepth * NormalMapTS.xy ).rgb * Highlight.rgb;
+
+	float	Emissive	= Pack( SpecMap.b + Highlight.a );
+
+	float	Depth		= PassPositionSS.z / PassPositionSS.w;
+
+	float	NormalZSign	= NonZeroSign( NormalMapWS.z );
+	vec4	NormalPack	= vec4( GetStereographicProjection( NormalMapWS ), NormalZSign * ReflSmooth.y, Dielectric * ReflSmooth.x ) * 0.5f + 0.5f;
+	vec4	AlbedoPack	= vec4( Albedo, Emissive * 0.5f + 0.5f );
+
+	gl_FragData[0]	= NormalPack;
+	gl_FragData[1]	= AlbedoPack;
+	gl_FragData[2]	= vec4( Depth, Depth, Depth, Depth );
+}

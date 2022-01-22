@@ -1,0 +1,96 @@
+#include "common.hlsl_psh"
+#include "calibration.hlsl_psh"
+#include "colorblind.hlsl_psh"
+#include "color-grading.hlsl_psh"
+
+sampler MainSampler			: register(s0);
+sampler ColorGradingSampler	: register(s1);
+sampler NoiseSampler		: register(s2);
+sampler BloomSampler		: register(s3);	// Combined blur levels (linear)
+sampler GhostSampler		: register(s4);	// Lowest blur level (linear)
+sampler LensSampler			: register(s5);	// sRGB
+
+uniform float4				PostLevels;			// x = bloom (with normalization factor), y = dirty lens, z = film grain, w = halos
+uniform float4				LensUVAdjustment;	// Set from code to correct dirty lens aspect ratio; xy is multiply, zw is add
+uniform	row_major float4x4	NoiseMatrix;
+uniform float4				NoiseParams;		// x = range
+
+// Each tuple is (coefficient, UV scalar)
+static float2 DirtyLens[4] =
+{
+	float2( 0.30f, -0.7f ),	// Small, bright reflection
+	float2( 0.45f, -0.3f ),	// Bigger, brighter reflection
+	float2( 0.25f, -0.4f ),	// Large halo
+	float2( 0.20f,  0.6f ),	// Medium opposite halo
+};
+
+struct PS_INPUT
+{
+	float2 UV	: TEXCOORD0;
+};
+
+float2 GetGhostUV( const float2 UV, const float Scalar )
+{
+	const float2 RangeUV = UV * 2.0f - 1.0f;
+	const float2 ScaleUV = Scalar * RangeUV;
+	const float2 GhostUV = ScaleUV * 0.5f + 0.5f;
+	return GhostUV;
+}
+
+// ROSANOTE: This samples relative to the aspect ratio,
+// which I didn't want in Vamp but I'm okay with here.
+float2 GetHaloUV( const float2 UV, const float Scalar )
+{
+	const float2 RangeUV = UV * 2.0f - 1.0f;
+	const float2 ScaleUV = ( Scalar * RangeUV ) * length( RangeUV );
+	const float2 GhostUV = ScaleUV * 0.5f + 0.5f;
+	return GhostUV;
+}
+
+float4 Main( PS_INPUT In ) : COLOR
+{
+	const float4 MainColor		= tex2D( MainSampler, In.UV );
+	// ROSAHACK: Normalizing by number of bloom blur passes? TODO: Actual version!
+	const float4 BloomColor		= tex2D( BloomSampler, In.UV );
+	const float2 LensUV			= ( In.UV * LensUVAdjustment.xy ) + LensUVAdjustment.zw;
+	const float4 LensColor		= SampleSRGBToLinear( LensSampler, LensUV );
+	// ROSANOTE: No need to normalize this at the moment since it's hard-coded to use the lowest blur level
+	const float4 GhostsColor	=
+									DirtyLens[0].x * tex2D( GhostSampler, GetGhostUV( In.UV, DirtyLens[0].y ) ) +
+									DirtyLens[1].x * tex2D( GhostSampler, GetGhostUV( In.UV, DirtyLens[1].y ) );
+	const float4 HalosColor		=
+									DirtyLens[2].x * tex2D( GhostSampler, GetHaloUV( In.UV, DirtyLens[2].y ) ) +
+									DirtyLens[3].x * tex2D( GhostSampler, GetHaloUV( In.UV, DirtyLens[3].y ) );
+	const float4 HDRColor		= MainColor +
+									( PostLevels.x * BloomColor ) +
+									( PostLevels.y * ( LensColor * GhostsColor ) ) +
+									( PostLevels.w * HalosColor );
+
+	// ROSANOTE: Unlike Vamp, I'm doing noise in HDR; this fixes it oversaturating lows
+	// and producing a really ugly noisy curve (around the tonemap's "filmic toe"?)
+	// NOTE: I'm using an evenly distributed noise texture and ignoring its perceptual
+	// value, so it's effectively already in linear space which is why I don't convert.
+	const float4 NoiseUV		= mul( float4( In.UV, 0.0f, 1.0f ), NoiseMatrix );
+	const float3 NoiseColor		= tex2D( NoiseSampler, NoiseUV.xy ).rgb * NoiseParams.x;
+
+	const float3 Black			= float3( 0.0f, 0.0f, 0.0f );
+	const float3 LDRColor		= TonemapFilmicHejl2015( max( HDRColor.rgb - ( PostLevels.z * NoiseColor ), Black ) );
+
+	// Do color grading in sRGB space to save sRGB -> linear conversions on grading texture.
+	// Linear grading might be give nicer value lerps but it'd be a subtle difference.
+	const float3 GradedColor	= ColorGrade( LDRColor, ColorGradingSampler );
+	// DLP 25 Oct 2020: Oops, PostLevels.w is halos now
+	//const float3 GradedBlend	= lerp( LDRColor, GradedColor, PostLevels.w );
+
+	const float3 GammaColor		= Calibrate( GradedColor );
+
+	// NOTE: Luma() is meant for nonlinear values, but not meant for sRGB?
+	// Not sure how to interpret that since I use those terms interchangeably.
+	const float4 FinalColor 	= float4( GammaColor, Luma( GammaColor ) );
+
+#if COLOR_BLIND
+	return mul( ColorBlindMat, FinalColor );
+#else
+	return FinalColor;
+#endif
+}

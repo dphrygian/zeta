@@ -1,0 +1,1377 @@
+[Wardrobe_Mentor]
+Extends	= "Wardrobe_Human"
+
+[Wardrobe_Shopkeeper]
+Extends	= "Wardrobe_Human"
+
+[Wardrobe_Weaponsmith]
+Extends	= "Wardrobe_Human"
+
+[Wardrobe_Rogue]
+Extends	= "Wardrobe_Vampire"
+
+[Wardrobe_Researcher]
+Extends	= "Wardrobe_Human"
+
+[Wardrobe_BigBad]
+Extends	= "Wardrobe_Vampire"
+
+# ROSATODO: Use Loom to minimize this!
+[Wardrobe_Chump]
+NumMaleBodies = &
+@ MaleBody
+@@& = "Body_Chump_Male"
+NumFemaleBodies = &
+@ FemaleBody
+@@& = "Body_Chump_Female"
+
+	[Body_Chump_Male]
+	Gender		= "Man"
+	Mesh		= "Meshes/chump-m.cms"	# No options for other meshes! Body mesh dictates so much, I can't see any reason I'd change this.
+	Voice		= "Voice_Chump"
+	ScaleMin	= 0.88
+	ScaleMax	= 0.93
+	NumSkins	= &
+	@ Skin
+	@@&			= "Skin_Chump_White"
+	@@&			= "Skin_Chump_Black"
+	@@&			= "Skin_Chump_Asian"
+	@@&			= "Skin_Chump_Hispanic"
+	NumHeads	= &
+	@ Head
+	@@&			= "Head_Chump_A"
+	@@&			= "Head_Chump_B"
+	NumOutfits	= &
+	@ Outfit
+	@@&			= "Outfit_Chump_Male"
+
+		[Voice_Chump]
+		lmPEMap
+		{
+			PEMap( "WanderBark",	ConstantString( "VO_Minion_Wander" ) )
+			PEMap( "NoticeBark",	ConstantString( "VO_Minion_Notice" ) )
+			PEMap( "SearchBark",	ConstantString( "VO_Minion_Search" ) )
+			PEMap( "CombatBark",	ConstantString( "VO_Minion_Combat" ) )
+			PEMap( "AttackBark",	ConstantString( "VO_Minion_Attack" ) )
+			PEMap( "DamageBark",	ConstantString( "VO_Minion_Damage" ) )
+			PEMap( "DeathBark",		ConstantString( "VO_Minion_Death" ) )
+		}
+
+		[Skin_Chump_White]
+		NumHairs	= &
+		@ Hair
+		@@&			= "Hair_Chump_Blonde"
+		@@&			= "Hair_Chump_Brunette"
+		@@&			= "Hair_Chump_Red"
+		lmColorHDSV( Color ) { 57.0, 0.10, 0.68 }
+
+			[Hair_Chump_Blonde]
+			lmColorHDSV( Color ) { 36.0, 0.38, 0.92 }
+
+			[Hair_Chump_Brunette]
+			lmColorHDSV( Color ) { 18.0, 0.64, 0.32 }
+
+			[Hair_Chump_Red]
+			lmColorHDSV( Color ) { 28.0, 0.65, 0.92 }
+
+			[Hair_Chump_Black]
+			lmColorHDSV( Color ) { 253.0, 0.08, 0.12 }
+
+		[Skin_Chump_Black]
+		NumHairs	= &
+		@ Hair
+		@@&			= "Hair_Chump_Black"
+		@@&			= "Hair_Chump_Brunette"
+		ColorHD		= 14.0
+		ColorS		= 0.15
+		ColorV		= 0.49
+
+		[Skin_Chump_Asian]
+		NumHairs	= &
+		@ Hair
+		@@&			= "Hair_Chump_Black"
+		ColorHD		= 126.0
+		ColorS		= 0.05
+		ColorV		= 0.79
+
+		[Skin_Chump_Hispanic]
+		NumHairs	= &
+		@ Hair
+		@@&			= "Hair_Chump_Brunette"
+		ColorHD		= 35.0
+		ColorS		= 0.18
+		ColorV		= 0.55
+
+		[Head_Chump_A]
+		Mesh	= "Meshes/chump-m-head.cms"
+
+		[Head_Chump_B]
+		Mesh	= "Meshes/chump-m-head-2.cms"
+
+		[Outfit_Chump_Male]
+		NumStyles		= &
+		@ Style
+		@@&				= "Style_ChumpA"
+		@@&				= "Style_ChumpNone"
+		NumSchemes		= &
+		@ Scheme
+		@@&				= "Scheme_ChumpA"
+		@@&				= "Scheme_ChumpB"
+		NumPieces		= &
+		@ Piece
+		@@&				= "Pants_Chump"
+		@@&				= "Shirt_Chump_Male"
+
+			[Style_ChumpA]
+			Mesh		= "Meshes/chump-m-hair-1.cms"
+
+			[Scheme_ChumpA]
+			lmColorHSV( PrimaryColor )		{ 0.1, 0.3, 0.7 }
+			lmColorHSV( SecondaryColor )	{ 0.1, 0.3, 0.9 }
+			lmColorHSV( AccentColor )		{ 0.1, 0.3, 0.9 }
+
+			[Scheme_ChumpB]
+			# HACKHACK: _ means "use default"
+			lmColorHSV( PrimaryColor )		{ _, _,   0.2 }
+			lmColorHSV( SecondaryColor )	{ _, 1.0, 1.0 }
+			lmColorHSV( AccentColor )		{ _, _,   0.1 }
+
+			[Pants_Chump]
+			NumOptions	= &
+			@ Option
+			@@&			= "Option_Pants_Chump_A"
+			@@&			= "Option_Pants_Chump_B"
+
+				[Option_Pants_Chump_A]
+				Mesh	= "Meshes/Chump/Male/pants-0.cms"
+
+				[Option_Pants_Chump_B]
+				Mesh	= "Meshes/Chump/Male/pants-1.cms"
+
+			[Shirt_Chump_Male]
+			NumOptions	= &
+			@ Option
+			@@&			= "Option_Shirt_Chump_Male_None"
+			@@&			= "Option_Shirt_Chump_Male_A"
+
+				[Option_Shirt_Chump_Male_None]
+
+				[Option_Shirt_Chump_Male_A]
+				Mesh	= "Meshes/Chump/Male/shirt-0.cms"
+
+	[Body_Chump_Female]
+	Gender		= "Woman"
+	Mesh		= "Meshes/chump-f.cms"
+	Voice		= "Voice_Chump"
+	ScaleMin	= 0.83
+	ScaleMax	= 0.88
+	NumSkins	= &
+	@ Skin
+	@@&			= "Skin_Chump_White"
+	@@&			= "Skin_Chump_Black"
+	@@&			= "Skin_Chump_Asian"
+	@@&			= "Skin_Chump_Hispanic"
+	NumHeads	= &
+	@ Head
+	@@&			= "Head_Chump_A"
+	@@&			= "Head_Chump_B"
+	NumOutfits	= &
+	@ Outfit
+	@@&			= "Outfit_Chump_Female"
+
+		[Outfit_Chump_Female]
+		NumSchemes	= &
+		@ Scheme
+		@@&			= "Scheme_ChumpA"
+		@@&			= "Scheme_ChumpB"
+		NumPieces	= &
+		@ Piece
+		@@&			= "Pants_Chump"
+		@@&			= "Shirt_Chump_Female"
+
+			[Shirt_Chump_Female]
+			NumOptions	= &
+			@ Option
+			@@&			= "Option_Shirt_Chump_Female_A"
+
+				[Option_Shirt_Chump_Female_A]
+				Mesh	= "Meshes/Chump/Female/shirt-0.cms"
+
+[Wardrobe_Human]
+NumMaleBodies	= &
+@ MaleBody
+@@&				= "Body_Human_Male"
+NumFemaleBodies	= &
+@ FemaleBody
+@@&				= "Body_Human_Female"
+
+	[Body_Human_Male]
+	Extends		= "Body_Actor_Male"
+	NumOutfits	= &
+	@ Outfit
+	@@&			= "Outfit_Actor_Male_Student"
+	# ROSATODO: Some sort of Classical variation; no cravats or vests or top hats, just pants and jackets and bow ties
+	# ROSATODO: Some sort of Rocker variation
+
+	[Body_Human_Female]
+	Extends		= "Body_Actor_Female"
+	NumOutfits	= &
+	@ Outfit
+	@@&			= "Outfit_Actor_Female_A"
+	@@&			= "Outfit_Actor_Female_B"
+	@@&			= "Outfit_Actor_Female_C"
+	# ROSATODO: Classical/Rocker variations?
+
+[Wardrobe_Vampire]
+Extends			= "Wardrobe_Human"
+NumMaleBodies	= &
+@ MaleBody
+@@&				= "Body_Vampire_Male"
+NumFemaleBodies	= &
+@ FemaleBody
+@@&				= "Body_Vampire_Female"
+
+	[Body_Vampire_Male]
+	Extends		= "Body_Actor_Male"
+	#NumOutfits	= &
+	#@ Outfit
+	#@@&			= "Outfit_Actor_Male_Student"
+	#@@&			= "Outfit_Actor_Male_Classical"
+	#@@&			= "Outfit_Actor_Male_Rocker"
+
+	[Body_Vampire_Female]
+	Extends		= "Body_Actor_Female"
+	#NumOutfits	= &
+	#@ Outfit
+	#@@&			= "Outfit_Actor_Female_A"
+	#@@&			= "Outfit_Actor_Female_B"
+	#@@&			= "Outfit_Actor_Female_C"
+	#@@&			= "Outfit_Actor_Female_Classical"
+	#@@&			= "Outfit_Actor_Female_Rocker"
+
+[Wardrobe_Classical]
+NumMaleBodies	= &
+@ MaleBody
+@@&				= "Body_Classical_Male"
+NumFemaleBodies	= &
+@ FemaleBody
+@@&				= "Body_Classical_Female"
+
+	[Body_Classical_Male]
+	Extends		= "Body_Actor_Male"
+	NumOutfits	= &
+	@ Outfit
+	@@&			= "Outfit_Actor_Male_Classical"
+
+	[Body_Classical_Female]
+	Extends		= "Body_Actor_Female"
+	NumOutfits	= &
+	@ Outfit
+	@@&			= "Outfit_Actor_Female_Classical"
+
+[Wardrobe_Farmer]
+NumMaleBodies	= &
+@ MaleBody
+@@&				= "Body_Farmer_Male"
+
+	[Body_Farmer_Male]
+	Extends		= "Body_Actor_Male"
+	NumOutfits	= &
+	@ Outfit
+	@@&			= "Outfit_Farmer_Male"
+
+		[Outfit_Farmer_Male]
+		Extends			= "Outfit_Actor_Male_Student"
+		NumPieces		= &
+		@ Piece
+		@@&				= "Piece_Actor_Male_Student_Pants"
+		@@&				= "Piece_Actor_Male_Student_Boots"
+		NumAccessories	= &
+		@ Accessory
+		@@&				= "Accessory_None"
+
+[Wardrobe_Domme]
+NumFemaleBodies	= &
+@ FemaleBody
+@@&				= "Body_Classical_Female"
+
+[Wardrobe_Punk]
+NumMaleBodies	= &
+@ MaleBody
+@@&				= "Body_Punk_Male"
+NumFemaleBodies	= &
+@ FemaleBody
+@@&				= "Body_Punk_Female"
+
+	[Body_Punk_Male]
+	Extends		= "Body_Actor_Male"
+	NumOutfits	= &
+	@ Outfit
+	@@&			= "Outfit_Actor_Male_Rocker"
+
+	[Body_Punk_Female]
+	Extends		= "Body_Actor_Female"
+	NumOutfits	= &
+	@ Outfit
+	@@&			= "Outfit_Actor_Female_Rocker"
+
+# ROSANOTE: This is the gimmick, not the Harrow miniboss
+[Wardrobe_Pumpkin]
+NumMaleBodies	= &
+@ MaleBody
+@@&				= "Body_Pumpkin_Male"
+NumFemaleBodies	= &
+@ FemaleBody
+@@&				= "Body_Pumpkin_Female"
+
+	[Body_Pumpkin_Male]
+	Extends		= "Body_Actor_Male"
+	NumOutfits	= &
+	@ Outfit
+	@@&			= "Outfit_Actor_Male_Pumpkin"
+
+		[Outfit_Actor_Male_Pumpkin]
+		Extends			= "Outfit_Actor_Male_Classical"
+		NumStyles		= 0
+		NumAccessories	= &
+		@ Accessory
+		@@&				= "Accessory_Pumpkin"
+
+	[Body_Pumpkin_Female]
+	Extends		= "Body_Actor_Female"
+	NumOutfits	= &
+	@ Outfit
+	@@&			= "Outfit_Actor_Female_Pumpkin"
+
+		[Outfit_Actor_Female_Pumpkin]
+		Extends			= "Outfit_Actor_Female_Classical"
+		NumStyles		= 0
+		NumAccessories	= &
+		@ Accessory
+		@@&				= "Accessory_Pumpkin"
+
+[Wardrobe_Parent]
+NumMaleBodies	= &
+@ MaleBody
+@@&				= "Body_Parent_Male"
+NumFemaleBodies	= &
+@ FemaleBody
+@@&				= "Body_Parent_Female"
+
+	[Body_Parent_Male]
+	Extends		= "Body_Actor_Male"
+	NumOutfits	= &
+	@ Outfit
+	@@&			= "Outfit_Actor_Male_Student"
+
+	[Body_Parent_Female]
+	Extends		= "Body_Actor_Female"
+	NumOutfits	= &
+	@ Outfit
+	@@&			= "Outfit_Actor_Female_A"
+	@@&			= "Outfit_Actor_Female_B"
+	@@&			= "Outfit_Actor_Female_C"
+
+[Body_Actor_Female]
+Gender		= "Woman"
+Mesh		= "Meshes/Actors/body-base.cms"
+HumanVoice		= "Voice_Human_Female"
+VampireVoice	= "Voice_Vampire_Female"
+ScaleMin	= 0.7
+ScaleMax	= 0.7
+NumSkins	= &
+@ Skin
+@@&			= "Skin_Actor_White"
+@@&			= "Skin_Actor_Black"
+@@&			= "Skin_Actor_Asian"
+@@&			= "Skin_Actor_Hispanic"
+NumHeads	= &
+@ Head
+@@&			= "Head_Actor_A"
+@@&			= "Head_Actor_B"
+# ROSANOTE: Outfits are in child definitions now!
+
+	[Voice_Human_Female]
+	lmPEMap
+	{
+		PEMap( "IdleBark",		ConstantString( "VO_Human_Female_Idle" ) )
+		PEMap( "DamageBark",	ConstantString( "VO_Human_Female_Damage" ) )
+		PEMap( "DeathBark",		ConstantString( "VO_Human_Female_Death" ) )
+	}
+
+	[Voice_Vampire_Female]
+	lmPEMap
+	{
+		PEMap( "WanderBark",	ConstantString( "VO_Elite_Female_Wander" ) )
+		PEMap( "NoticeBark",	ConstantString( "VO_Elite_Female_Notice" ) )
+		PEMap( "SearchBark",	ConstantString( "VO_Elite_Female_Search" ) )
+		PEMap( "CombatBark",	ConstantString( "VO_Elite_Female_Combat" ) )
+		PEMap( "AttackBark",	ConstantString( "VO_Elite_Female_Attack" ) )
+		PEMap( "DamageBark",	ConstantString( "VO_Elite_Female_Damage" ) )
+		PEMap( "DeathBark",		ConstantString( "VO_Elite_Female_Death" ) )
+		PEMap( "BamfBark",		ConstantString( "VO_Elite_Female_Bamf" ) )
+	}
+
+	[Head_Actor_A]
+	HumanMesh	= "Meshes/Actors/head-0.cms"
+	VampireMesh	= "Meshes/Actors/head-0.cms"
+
+	[Head_Actor_B]
+	HumanMesh	= "Meshes/Actors/head-1.cms"
+	VampireMesh	= "Meshes/Actors/head-1.cms"
+
+	[Head_Actor_Female_A]
+	HumanMesh	= "Meshes/Actors/head-human-f.cms"
+	VampireMesh	= "Meshes/Actors/head-vampire-f.cms"
+
+	[Outfit_Actor_Female_A]
+	NumStyles		= &
+	@ Style
+	@@&				= "Style_Actor_Pixie"
+	@@&				= "Style_Actor_Female_Classical_Up"
+	@@&				= "Style_Actor_Female_Classical_Down"
+	@@&				= "Style_Actor_Female_Rocker_Short"
+	NumSchemes		= &
+	@ Scheme
+	@@&				= "Scheme_Actor_A"
+	@@&				= "Scheme_Actor_B"
+	@@&				= "Scheme_Actor_C"
+	@@&				= "Scheme_Actor_D"
+	@@&				= "Scheme_Actor_E"
+	NumPieces		= &
+	@ Piece
+	@@&				= "Piece_Actor_Female_Cardigan"
+	@@&				= "Piece_Actor_Female_Dress"
+	@@&				= "Piece_Actor_Female_Shoes"
+	NumAccessories	= &
+	@ Accessory
+	@@&				= "Accessory_Glasses"
+	@@&				= "Accessory_Shades"
+	@@&				= "Accessory_None"
+
+		[Style_Actor_Pixie]
+		Mesh	= "Meshes/Actors/hair-f.cms"
+
+		[Piece_Actor_Female_Cardigan]
+		NumOptions	= &
+		@ Option
+		@@&			= "Piece_Actor_Female_Cardigan_A"
+
+			[Piece_Actor_Female_Cardigan_A]
+			Mesh	= "Meshes/Actors/Outfits/Student/Female/cardigan-0.cms"
+
+		[Piece_Actor_Female_Dress]
+		NumOptions	= &
+		@ Option
+		@@&			= "Option_Actor_Female_Dress_A"
+
+			[Option_Actor_Female_Dress_A]
+			Mesh	= "Meshes/Actors/dress-f.cms"
+
+		[Accessory_Glasses]
+		Mesh	= "Meshes/Actors/attachment-glasses.cms"
+		Bone	= "Head"
+
+		[Accessory_Shades]
+		Mesh	= "Meshes/Actors/attachment-shades.cms"
+		Bone	= "Head"
+
+	[Outfit_Actor_Female_B]
+	NumStyles		= &
+	@ Style
+	@@&				= "Style_Actor_Pixie"
+	@@&				= "Style_Actor_Female_Classical_Up"
+	@@&				= "Style_Actor_Female_Classical_Down"
+	@@&				= "Style_Actor_Female_Rocker_Short"
+	NumSchemes		= &
+	@ Scheme
+	@@&				= "Scheme_Actor_A"
+	@@&				= "Scheme_Actor_B"
+	@@&				= "Scheme_Actor_C"
+	@@&				= "Scheme_Actor_D"
+	@@&				= "Scheme_Actor_E"
+	NumPieces		= &
+	@ Piece
+	@@&				= "Piece_Actor_Female_Pants"
+	@@&				= "Piece_Actor_Female_Shirt"
+	@@&				= "Piece_Actor_Female_Shoes"
+	NumAccessories	= &
+	@ Accessory
+	@@&				= "Accessory_Glasses"
+	@@&				= "Accessory_Shades"
+	@@&				= "Accessory_None"
+
+		[Piece_Actor_Female_Pants]
+		NumOptions	= &
+		@ Option
+		@@&			= "Option_Actor_Female_Pants_A"
+
+			[Option_Actor_Female_Pants_A]
+			Mesh	= "Meshes/Actors/Outfits/Student/Female/pants-0.cms"
+
+		[Piece_Actor_Female_Shirt]
+		NumOptions	= &
+		@ Option
+		@@&			= "Option_Actor_Female_Shirt_A"
+
+			[Option_Actor_Female_Shirt_A]
+			Mesh	= "Meshes/Actors/Outfits/Student/Female/shirt-0.cms"
+
+		[Piece_Actor_Female_Shoes]
+		NumOptions	= &
+		@ Option
+		@@&			= "Option_Actor_Female_Shoes_A"
+
+			[Option_Actor_Female_Shoes_A]
+			Mesh	= "Meshes/Actors/Outfits/Student/Female/shoes-0.cms"
+
+	[Outfit_Actor_Female_C]
+	NumStyles		= &
+	@ Style
+	@@&				= "Style_Actor_Pixie"
+	@@&				= "Style_Actor_Female_Classical_Up"
+	@@&				= "Style_Actor_Female_Classical_Down"
+	@@&				= "Style_Actor_Female_Rocker_Short"
+	NumSchemes		= &
+	@ Scheme
+	@@&				= "Scheme_Actor_A"
+	@@&				= "Scheme_Actor_B"
+	@@&				= "Scheme_Actor_C"
+	@@&				= "Scheme_Actor_D"
+	@@&				= "Scheme_Actor_E"
+	NumPieces		= &
+	@ Piece
+	@@&				= "Piece_Actor_Female_Shirt"
+	@@&				= "Piece_Actor_Female_Cardigan"
+	@@&				= "Piece_Actor_Female_Skirt"
+	@@&				= "Piece_Actor_Female_Shoes"
+	NumAccessories	= &
+	@ Accessory
+	@@&				= "Accessory_Glasses"
+	@@&				= "Accessory_Shades"
+	@@&				= "Accessory_None"
+
+		[Piece_Actor_Female_Skirt]
+		NumOptions	= &
+		@ Option
+		@@&			= "Option_Actor_Female_Skirt_A"
+
+			[Option_Actor_Female_Skirt_A]
+			Mesh	= "Meshes/Actors/Outfits/Student/Female/skirt-0.cms"
+
+	[Outfit_Actor_Female_Classical]
+	NumStyles		= &
+	@ Style
+	@@&				= "Style_Actor_Female_Classical_Up"
+	@@&				= "Style_Actor_Female_Classical_Down"
+	NumSchemes		= &
+	@ Scheme
+	@@&				= "Scheme_Actor_Female_Classical_A"
+	@@&				= "Scheme_Actor_Female_Classical_B"
+	NumPieces		= &
+	@ Piece
+	@@&				= "Piece_Actor_Female_Classical_Dress"
+	@@&				= "Piece_Actor_Female_Classical_Shoes"
+	@@&				= "Piece_Actor_Female_Classical_Choker"
+	@@&				= "Piece_Actor_Female_Classical_Gloves"
+	NumAccessories	= &
+	@ Accessory
+	@@&				= "Accessory_Classical_Mask"
+	@@&				= "Accessory_Glasses"
+	@@&				= "Accessory_None"
+
+		[Style_Actor_Female_Classical_Up]
+		Mesh	= "Meshes/Actors/Outfits/Classical/Female/hair-up.cms"
+
+		[Style_Actor_Female_Classical_Down]
+		Mesh	= "Meshes/Actors/Outfits/Classical/Female/hair-down.cms"
+
+		[Scheme_Actor_Female_Classical_A]
+		# Dark dress
+		PrimaryColorHD		= 0.00
+		PrimaryColorS		= 0.00
+		PrimaryColorV		= 0.30
+		# Red secondary
+		SecondaryColorHD	= 0.00
+		SecondaryColorS		= 1.00
+		SecondaryColorV		= 0.80
+		# Unused accent
+		AccentColorHD		= 0.00
+		AccentColorS		= 0.00
+		AccentColorV		= 0.00
+
+		[Scheme_Actor_Female_Classical_B]
+		# Dark dress
+		PrimaryColorHD		= 0.00
+		PrimaryColorS		= 0.00
+		PrimaryColorV		= 0.30
+		# Purple secondary
+		SecondaryColorHD	= 280.0
+		SecondaryColorS		= 1.00
+		SecondaryColorV		= 0.80
+		# Unused accent
+		AccentColorHD		= 0.00
+		AccentColorS		= 0.00
+		AccentColorV		= 0.00
+
+		[Piece_Actor_Female_Classical_Dress]
+		NumOptions	= &
+		@ Option
+		@@&			= "Option_Actor_Female_Classical_Dress_A"
+
+			[Option_Actor_Female_Classical_Dress_A]
+			Mesh	= "Meshes/Actors/Outfits/Classical/Female/dress-0.cms"
+
+		[Piece_Actor_Female_Classical_Shoes]
+		NumOptions	= &
+		@ Option
+		@@&			= "Option_Actor_Female_Classical_Shoes_A"
+
+			[Option_Actor_Female_Classical_Shoes_A]
+			Mesh	= "Meshes/Actors/Outfits/Classical/Female/shoes-0.cms"
+
+		[Piece_Actor_Female_Classical_Choker]
+		NumOptions	= &
+		@ Option
+		@@&			= "Option_Actor_Female_Classical_Choker_None"
+		@@&			= "Option_Actor_Female_Classical_Choker_A"
+
+			[Option_Actor_Female_Classical_Choker_None]
+			# Empty
+
+			[Option_Actor_Female_Classical_Choker_A]
+			Mesh	= "Meshes/Actors/Outfits/Classical/Female/choker-0.cms"
+
+		[Piece_Actor_Female_Classical_Gloves]
+		NumOptions	= &
+		@ Option
+		@@&			= "Option_Actor_Female_Classical_Gloves_None"
+		@@&			= "Option_Actor_Female_Classical_Gloves_A"
+
+			[Option_Actor_Female_Classical_Gloves_None]
+			# Empty
+
+			[Option_Actor_Female_Classical_Gloves_A]
+			Mesh	= "Meshes/Actors/Outfits/Classical/Female/gloves-0.cms"
+
+		[Accessory_Classical_Mask]
+		Mesh	= "Meshes/Actors/Outfits/Classical/Female/mask-0.cms"
+		Bone	= "Head"
+
+	[Outfit_Actor_Female_Rocker]
+	NumStyles		= &
+	@ Style
+	@@&				= "Style_Actor_Female_Rocker_Short"
+	@@&				= "Style_Actor_Female_Classical_Up"
+	@@&				= "Style_Actor_Pixie"
+	# ROSATODO
+	NumSchemes		= &
+	@ Scheme
+	@@&				= "Scheme_Actor_Female_Rocker_A"
+	@@&				= "Scheme_Actor_Female_Rocker_B"
+	NumPieces		= &
+	@ Piece
+	@@&				= "Piece_Actor_Female_Rocker_Boots"
+	@@&				= "Piece_Actor_Female_Rocker_Top"
+	@@&				= "Piece_Actor_Female_Rocker_Jacket"
+	@@&				= "Piece_Actor_Female_Rocker_Pants"
+	NumAccessories	= &
+	@ Accessory
+	# ROSATODO
+	@@&				= "Accessory_Glasses"
+	@@&				= "Accessory_None"
+
+		[Scheme_Actor_Female_Rocker_A]
+		# Green top
+		PrimaryColorHD		= 100.0
+		PrimaryColorS		= 0.75
+		PrimaryColorV		= 1.00
+		# Red pants/skirt
+		SecondaryColorHD	= 0.00
+		SecondaryColorS		= 1.00
+		SecondaryColorV		= 0.80
+		# White accent (crop top, etc.)
+		AccentColorHD		= 0.00
+		AccentColorS		= 0.00
+		AccentColorV		= 0.30
+
+		[Scheme_Actor_Female_Rocker_B]
+		# Red top
+		PrimaryColorHD		= 0.0
+		PrimaryColorS		= 1.00
+		PrimaryColorV		= 1.00
+		# Blue pants/skirt
+		SecondaryColorHD	= 240.0
+		SecondaryColorS		= 0.65
+		SecondaryColorV		= 0.80
+		# White accent (crop top, etc.)
+		AccentColorHD		= 0.00
+		AccentColorS		= 0.00
+		AccentColorV		= 1.00
+
+		[Style_Actor_Female_Rocker_Short]
+		Mesh	= "Meshes/Actors/Outfits/Rocker/Female/hair-short.cms"
+
+		[Piece_Actor_Female_Rocker_Boots]
+		NumOptions	= &
+		@ Option
+		@@&			= "Option_Actor_Female_Rocker_Boots_A"
+
+			[Option_Actor_Female_Rocker_Boots_A]
+			Mesh	= "Meshes/Actors/Outfits/Rocker/Female/boots-0.cms"
+
+		[Piece_Actor_Female_Rocker_Top]
+		NumOptions	= &
+		@ Option
+		@@&			= "Option_Actor_Female_Rocker_CropTop_A"
+
+			[Option_Actor_Female_Rocker_CropTop_A]
+			Mesh	= "Meshes/Actors/Outfits/Rocker/Female/croptop-0.cms"
+
+		[Piece_Actor_Female_Rocker_Jacket]
+		NumOptions	= &
+		@ Option
+		@@&			= "Option_Actor_Female_Rocker_Jacket_None"
+		@@&			= "Option_Actor_Female_Rocker_LeatherJacket_A"
+		@@&			= "Option_Actor_Female_Rocker_OpenShirt_A"
+
+			[Option_Actor_Female_Rocker_Jacket_None]
+			# Empty
+
+			[Option_Actor_Female_Rocker_LeatherJacket_A]
+			Mesh	= "Meshes/Actors/Outfits/Rocker/Female/leatherjacket-0.cms"
+
+			[Option_Actor_Female_Rocker_OpenShirt_A]
+			Mesh	= "Meshes/Actors/Outfits/Rocker/Female/openshirt-0.cms"
+
+		[Piece_Actor_Female_Rocker_Pants]
+		NumOptions	= &
+		@ Option
+		@@&			= "Option_Actor_Female_Rocker_BaggyPants_A"
+		@@&			= "Option_Actor_Female_Rocker_TightPants_A"
+		@@&			= "Option_Actor_Female_Rocker_PlaidSkirt_A"
+
+			[Option_Actor_Female_Rocker_BaggyPants_A]
+			Mesh	= "Meshes/Actors/Outfits/Rocker/Female/baggypants-0.cms"
+
+			[Option_Actor_Female_Rocker_TightPants_A]
+			Mesh	= "Meshes/Actors/Outfits/Rocker/Female/tightpants-0.cms"
+
+			[Option_Actor_Female_Rocker_PlaidSkirt_A]
+			Mesh	= "Meshes/Actors/Outfits/Rocker/Female/plaidskirt-0.cms"
+
+[Body_Actor_Male]
+Gender		= "Man"
+Mesh		= "Meshes/Actors/body-base.cms"
+HumanVoice		= "Voice_Human_Male"
+VampireVoice	= "Voice_Vampire_Male"
+ScaleMin	= 0.7
+ScaleMax	= 0.7
+NumSkins	= &
+@ Skin
+@@&			= "Skin_Actor_White"
+@@&			= "Skin_Actor_Black"
+@@&			= "Skin_Actor_Asian"
+@@&			= "Skin_Actor_Hispanic"
+NumHeads	= &
+@ Head
+@@&			= "Head_Actor_A"
+@@&			= "Head_Actor_B"
+# ROSANOTE: Outfits are in child definitions now!
+
+	[Voice_Human_Male]
+	lmPEMap
+	{
+		PEMap( "IdleBark",		ConstantString( "VO_Human_Male_Idle" ) )
+		PEMap( "DamageBark",	ConstantString( "VO_Human_Male_Damage" ) )
+		PEMap( "DeathBark",		ConstantString( "VO_Human_Male_Death" ) )
+	}
+
+	[Voice_Vampire_Male]
+	lmPEMap
+	{
+		PEMap( "WanderBark",	ConstantString( "VO_Elite_Male_Wander" ) )
+		PEMap( "NoticeBark",	ConstantString( "VO_Elite_Male_Notice" ) )
+		PEMap( "SearchBark",	ConstantString( "VO_Elite_Male_Search" ) )
+		PEMap( "CombatBark",	ConstantString( "VO_Elite_Male_Combat" ) )
+		PEMap( "AttackBark",	ConstantString( "VO_Elite_Male_Attack" ) )
+		PEMap( "DamageBark",	ConstantString( "VO_Elite_Male_Damage" ) )
+		PEMap( "DeathBark",		ConstantString( "VO_Elite_Male_Death" ) )
+		PEMap( "BamfBark",		ConstantString( "VO_Elite_Male_Bamf" ) )
+	}
+
+	[Skin_Actor_White]
+	NumHairs		= &
+	@ Hair
+	@@&				= "Hair_Actor_Brunette"
+	@@&				= "Hair_Actor_Blonde"
+	@@&				= "Hair_Actor_Red"
+	NumEyes			= &
+	@ Eyes
+	@@&				= "Eyes_Actor_Brown"
+	@@&				= "Eyes_Actor_Blue"
+	@@&				= "Eyes_Actor_Green"
+	HumanColorHD	= 22.0
+	HumanColorS		= 0.39
+	HumanColorV		= 0.94
+	VampireColorHD	= 27.0
+	VampireColorS	= 0.27
+	VampireColorV	= 0.81
+	#VampireColorA	= 0.0		# TEMPHACK for skin glow
+
+		[Hair_Actor_Brunette]
+		ColorHD	= 18.0
+		ColorS	= 0.64
+		ColorV	= 0.32
+
+		[Hair_Actor_Blonde]
+		ColorHD	= 36.0
+		ColorS	= 0.38
+		ColorV	= 0.92
+
+		[Hair_Actor_Red]
+		ColorHD	= 28.0
+		ColorS	= 0.65
+		ColorV	= 0.92
+
+		[Hair_Actor_Black]
+		ColorHD	= 253.0
+		ColorS	= 0.08
+		ColorV	= 0.12
+
+		[Eyes_Actor_Brown]
+		ColorHD	= 18.0
+		ColorS	= 0.80
+		ColorV	= 0.60
+
+		[Eyes_Actor_Blue]
+		ColorHD	= 216.0
+		ColorS	= 0.90
+		ColorV	= 0.90
+
+		[Eyes_Actor_Green]
+		ColorHD	= 112.0
+		ColorS	= 0.70
+		ColorV	= 0.70
+
+	[Skin_Actor_Black]
+	NumHairs		= &
+	@ Hair
+	@@&				= "Hair_Actor_Brunette"
+	@@&				= "Hair_Actor_Black"
+	NumEyes			= &
+	@ Eyes
+	@@&				= "Eyes_Actor_Brown"
+	@@&				= "Eyes_Actor_Blue"
+	@@&				= "Eyes_Actor_Green"
+	HumanColorHD	= 17.0
+	HumanColorS		= 0.45
+	HumanColorV		= 0.69
+	VampireColorHD	= 21.0
+	VampireColorS	= 0.32
+	VampireColorV	= 0.58
+
+	[Skin_Actor_Asian]
+	NumHairs		= &
+	@ Hair
+	@@&				= "Hair_Actor_Brunette"
+	@@&				= "Hair_Actor_Black"
+	NumEyes			= &
+	@ Eyes
+	@@&				= "Eyes_Actor_Brown"
+	@@&				= "Eyes_Actor_Blue"
+	@@&				= "Eyes_Actor_Green"
+	HumanColorHD	= 20.0
+	HumanColorS		= 0.23
+	HumanColorV		= 0.96
+	VampireColorHD	= 29.0
+	VampireColorS	= 0.12
+	VampireColorV	= 0.85
+
+	[Skin_Actor_Hispanic]
+	NumHairs		= &
+	@ Hair
+	@@&				= "Hair_Actor_Brunette"
+	NumEyes			= &
+	@ Eyes
+	@@&				= "Eyes_Actor_Brown"
+	@@&				= "Eyes_Actor_Blue"
+	@@&				= "Eyes_Actor_Green"
+	HumanColorHD	= 18.0
+	HumanColorS		= 0.50
+	HumanColorV		= 0.80
+	VampireColorHD	= 22.0
+	VampireColorS	= 0.37
+	VampireColorV	= 0.67
+
+	[Head_Actor_Male_A]
+	HumanMesh	= "Meshes/Actors/head-human-m.cms"
+	VampireMesh	= "Meshes/Actors/head-vampire-m.cms"
+
+	[Outfit_Actor_Male_Student]
+	NumStyles		= &
+	@ Style
+	@@&				= "Style_Actor_Slick"
+	@@&				= "Style_Actor_Male_Classical_WidowsPeak"
+	@@&				= "Style_Actor_Male_Classical_Long"
+	@@&				= "Style_Actor_Male_Rocker_Spiked"
+	NumSchemes		= &
+	@ Scheme
+	@@&				= "Scheme_Actor_A"
+	@@&				= "Scheme_Actor_B"
+	@@&				= "Scheme_Actor_C"
+	@@&				= "Scheme_Actor_D"
+	@@&				= "Scheme_Actor_E"
+	NumPieces		= &
+	@ Piece
+	@@&				= "Piece_Actor_Male_Student_Shirt"
+	@@&				= "Piece_Actor_Male_Student_Pants"
+	@@&				= "Piece_Actor_Male_Student_Boots"
+	NumAccessories	= &
+	@ Accessory
+	@@&				= "Accessory_Glasses"
+	@@&				= "Accessory_Shades"
+	@@&				= "Accessory_None"
+
+		[Style_Actor_Slick]
+		Mesh	= "Meshes/Actors/hair-m.cms"
+
+		[Scheme_Actor_A]
+		# Birch shirt
+		PrimaryColorH	= 0.00
+		PrimaryColorS	= 0.00
+		PrimaryColorV	= 0.78
+		# Faded denim pants
+		SecondaryColorH	= 0.62
+		SecondaryColorS	= 0.49
+		SecondaryColorV	= 1.00
+		# Brown leather shoes
+		AccentColorH	= 0.05
+		AccentColorS	= 0.48
+		AccentColorV	= 0.45
+
+		[Scheme_Actor_B]
+		# Salmon shirt
+		PrimaryColorH	= 0.02
+		PrimaryColorS	= 0.50
+		PrimaryColorV	= 1.00
+		# Khaki pants
+		SecondaryColorH	= 0.12
+		SecondaryColorS	= 0.16
+		SecondaryColorV	= 0.84
+		# Black leather shoes
+		AccentColorH	= 0.00
+		AccentColorS	= 0.00
+		AccentColorV	= 0.20
+
+		[Scheme_Actor_C]
+		# Blue shirt
+		PrimaryColorH	= 0.61
+		PrimaryColorS	= 0.78
+		PrimaryColorV	= 0.80
+		# Olive khaki pants
+		SecondaryColorH	= 0.20
+		SecondaryColorS	= 0.58
+		SecondaryColorV	= 0.54
+		# Light leather shoes
+		AccentColorH	= 0.12
+		AccentColorS	= 0.62
+		AccentColorV	= 0.91
+
+		[Scheme_Actor_D]
+		# Dark gray/black shirt
+		PrimaryColorH	= 0.00
+		PrimaryColorS	= 0.00
+		PrimaryColorV	= 0.20
+		# Dark blue denim pants
+		SecondaryColorHD	= 225.0
+		SecondaryColorS		= 0.90
+		SecondaryColorV		= 0.50
+		# Brown leather shoes
+		AccentColorH	= 0.05
+		AccentColorS	= 0.48
+		AccentColorV	= 0.45
+
+		[Scheme_Actor_E]
+		# Dark gray/black shirt
+		PrimaryColorH	= 0.00
+		PrimaryColorS	= 0.00
+		PrimaryColorV	= 0.20
+		# Khaki pants
+		SecondaryColorH	= 0.12
+		SecondaryColorS	= 0.16
+		SecondaryColorV	= 0.84
+		# Black leather shoes
+		AccentColorH	= 0.00
+		AccentColorS	= 0.00
+		AccentColorV	= 0.20
+
+		[Piece_Actor_Male_Student_Shirt]
+		NumOptions	= &
+		@ Option
+		@@&			= "Option_Actor_Male_Student_Shirt_A"
+		@@&			= "Option_Actor_Male_Student_Shirt_B"
+
+			[Option_Actor_Male_Student_Shirt_A]
+			Mesh	= "Meshes/Actors/Outfits/Student/Male/shirt-0.cms"
+
+			[Option_Actor_Male_Student_Shirt_B]
+			Mesh	= "Meshes/Actors/Outfits/Student/Male/shirt-1.cms"
+
+		[Piece_Actor_Male_Student_Pants]
+		NumOptions	= &
+		@ Option
+		@@&			= "Option_Actor_Male_Student_Pants_A"
+		@@&			= "Option_Actor_Male_Student_Pants_B"
+
+			[Option_Actor_Male_Student_Pants_A]
+			Mesh	= "Meshes/Actors/Outfits/Student/Male/pants-m-0.cms"
+
+			[Option_Actor_Male_Student_Pants_B]
+			Mesh	= "Meshes/Actors/Outfits/Student/Male/pants-1.cms"
+
+		[Piece_Actor_Male_Student_Boots]
+		NumOptions	= &
+		@ Option
+		@@&			= "Option_Actor_Male_Student_Boots_A"
+
+			[Option_Actor_Male_Student_Boots_A]
+			Mesh	= "Meshes/Actors/Outfits/Student/Male/boots-m-0.cms"
+
+	[Outfit_Actor_Male_Classical]
+	NumStyles		= &
+	@ Style
+	@@&				= "Style_Actor_Male_Classical_WidowsPeak"
+	@@&				= "Style_Actor_Male_Classical_Long"
+	NumSchemes		= &
+	@ Scheme
+	@@&				= "Scheme_Actor_Male_Classical_A"
+	@@&				= "Scheme_Actor_Male_Classical_B"
+	@@&				= "Scheme_Actor_Male_Classical_C"
+	NumPieces		= &
+	@ Piece
+	@@&				= "Piece_Actor_Male_Classical_Jacket"
+	@@&				= "Piece_Actor_Male_Classical_Vest"
+	@@&				= "Piece_Actor_Male_Classical_Shirt"
+	@@&				= "Piece_Actor_Male_Classical_Neck"
+	@@&				= "Piece_Actor_Male_Classical_Pants"
+	@@&				= "Piece_Actor_Male_Classical_Shoes"
+	@@&				= "Piece_Actor_Male_Classical_Gloves"
+	NumAccessories	= &
+	@ Accessory
+	@@&				= "Accessory_Classical_TopHat"
+	@@&				= "Accessory_Glasses"
+	@@&				= "Accessory_None"
+
+		[Style_Actor_Male_Classical_WidowsPeak]
+		Mesh	= "Meshes/Actors/Outfits/Classical/Male/hair-widows-peak.cms"
+
+		[Style_Actor_Male_Classical_Long]
+		Mesh						= "Meshes/Actors/Outfits/Classical/Male/hair-long.cms"
+		Accessory_Classical_TopHat	= false	# HACKHACK: Disable top hat with this hairstyle
+
+		[Scheme_Actor_Male_Classical_A]
+		# Dark jacket
+		PrimaryColorHD		= 0.00
+		PrimaryColorS		= 0.00
+		PrimaryColorV		= 0.30
+		# White shirt
+		SecondaryColorHD	= 0.00
+		SecondaryColorS		= 0.00
+		SecondaryColorV		= 1.00
+		# Red accents
+		AccentColorHD		= 0.00
+		AccentColorS		= 1.00
+		AccentColorV		= 0.80
+
+		[Scheme_Actor_Male_Classical_B]
+		# Dark jacket
+		PrimaryColorHD		= 0.00
+		PrimaryColorS		= 0.00
+		PrimaryColorV		= 0.30
+		# Gray shirt
+		SecondaryColorHD	= 0.00
+		SecondaryColorS		= 0.00
+		SecondaryColorV		= 0.60
+		# Purple accents
+		AccentColorHD		= 280.0
+		AccentColorS		= 1.00
+		AccentColorV		= 0.80
+
+		[Scheme_Actor_Male_Classical_C]
+		# Cream jacket
+		PrimaryColorHD		= 57.0
+		PrimaryColorS		= 0.18
+		PrimaryColorV		= 1.00
+		# White shirt
+		SecondaryColorHD	= 0.00
+		SecondaryColorS		= 0.00
+		SecondaryColorV		= 1.00
+		# Black accents
+		AccentColorHD		= 0.00
+		AccentColorS		= 0.00
+		AccentColorV		= 0.30
+
+		[Piece_Actor_Male_Classical_Jacket]
+		NumOptions	= &
+		@ Option
+		# ROSAHACK: Cheap way of weighting this, because I don't want to implement weighting in wardrobes
+		@@&			= "Option_Actor_Male_Classical_Jacket_None"
+		@@&			= "Option_Actor_Male_Classical_Jacket_A"
+		@@&			= "Option_Actor_Male_Classical_Jacket_A"
+		@@&			= "Option_Actor_Male_Classical_Jacket_A"
+
+			[Option_Actor_Male_Classical_Jacket_None]
+			# Empty
+
+			[Option_Actor_Male_Classical_Jacket_A]
+			Mesh	= "Meshes/Actors/Outfits/Classical/Male/jacket-0.cms"
+
+		[Piece_Actor_Male_Classical_Vest]
+		NumOptions	= &
+		@ Option
+		# ROSAHACK: Cheap way of weighting this, because I don't want to implement weighting in wardrobes
+		@@&			= "Option_Actor_Male_Classical_Vest_None"
+		@@&			= "Option_Actor_Male_Classical_Vest_A"
+		@@&			= "Option_Actor_Male_Classical_Vest_A"
+		@@&			= "Option_Actor_Male_Classical_Vest_A"
+
+			[Option_Actor_Male_Classical_Vest_None]
+			# Empty
+
+			[Option_Actor_Male_Classical_Vest_A]
+			Mesh	= "Meshes/Actors/Outfits/Classical/Male/vest-0.cms"
+
+		[Piece_Actor_Male_Classical_Shirt]
+		NumOptions	= &
+		@ Option
+		@@&			= "Option_Actor_Male_Classical_Shirt_A"
+
+			[Option_Actor_Male_Classical_Shirt_A]
+			Mesh	= "Meshes/Actors/Outfits/Classical/Male/shirt-0.cms"
+
+		[Piece_Actor_Male_Classical_Neck]
+		NumOptions	= &
+		@ Option
+		@@&			= "Option_Actor_Male_Classical_Neck_None"
+		@@&			= "Option_Actor_Male_Classical_BowTie_A"
+		@@&			= "Option_Actor_Male_Classical_Cravat_A"
+
+			[Option_Actor_Male_Classical_Neck_None]
+			# Empty
+
+			[Option_Actor_Male_Classical_BowTie_A]
+			Mesh	= "Meshes/Actors/Outfits/Classical/Male/bowtie-0.cms"
+
+			[Option_Actor_Male_Classical_Cravat_A]
+			Mesh	= "Meshes/Actors/Outfits/Classical/Male/cravat-0.cms"
+
+		[Piece_Actor_Male_Classical_Pants]
+		NumOptions	= &
+		@ Option
+		@@&			= "Option_Actor_Male_Classical_Pants_A"
+
+			[Option_Actor_Male_Classical_Pants_A]
+			Mesh	= "Meshes/Actors/Outfits/Classical/Male/pants-0.cms"
+
+		[Piece_Actor_Male_Classical_Shoes]
+		NumOptions	= &
+		@ Option
+		@@&			= "Option_Actor_Male_Classical_Shoes_A"
+
+			[Option_Actor_Male_Classical_Shoes_A]
+			Mesh	= "Meshes/Actors/Outfits/Classical/Male/shoes-0.cms"
+
+		[Piece_Actor_Male_Classical_Gloves]
+		NumOptions	= &
+		@ Option
+		# ROSAHACK: Cheap way of weighting this, because I don't want to implement weighting in wardrobes
+		@@&			= "Option_Actor_Male_Classical_Gloves_None"
+		@@&			= "Option_Actor_Male_Classical_Gloves_None"
+		@@&			= "Option_Actor_Male_Classical_Gloves_None"
+		@@&			= "Option_Actor_Male_Classical_Gloves_A"
+
+			[Option_Actor_Male_Classical_Gloves_None]
+			# Empty
+
+			[Option_Actor_Male_Classical_Gloves_A]
+			Mesh	= "Meshes/Actors/Outfits/Classical/Male/gloves-0.cms"
+
+		[Accessory_Classical_TopHat]
+		Mesh	= "Meshes/Actors/Outfits/Classical/Male/tophat-0.cms"
+		Bone	= "Head"
+
+	[Outfit_Actor_Male_Rocker]
+	NumStyles		= &
+	@ Style
+	@@&				= "Style_Actor_Male_Rocker_Shaved"
+	@@&				= "Style_Actor_Male_Rocker_Spiked"
+	NumSchemes		= &
+	@ Scheme
+	@@&				= "Scheme_Actor_Male_Rocker_A"
+	@@&				= "Scheme_Actor_Male_Rocker_B"
+	NumPieces		= &
+	@ Piece
+	@@&				= "Piece_Actor_Male_Rocker_Top"
+	@@&				= "Piece_Actor_Male_Rocker_Pants"
+	@@&				= "Piece_Actor_Male_Rocker_Boots"
+	NumAccessories	= &
+	@ Accessory
+	@@&				= "Accessory_Glasses"
+	@@&				= "Accessory_Shades"
+	@@&				= "Accessory_None"
+
+		[Style_Actor_Male_Rocker_Shaved]
+		# Empty
+
+		[Style_Actor_Male_Rocker_Spiked]
+		Mesh	= "Meshes/Actors/Outfits/Rocker/Male/hair-spiked.cms"
+
+		[Scheme_Actor_Male_Rocker_A]
+		# Unused primary
+		PrimaryColorHD		= 0.00
+		PrimaryColorS		= 0.00
+		PrimaryColorV		= 0.00
+		# Dark jeans (currently unused for rocker set)
+		SecondaryColorHD	= 0.00
+		SecondaryColorS		= 0.00
+		SecondaryColorV		= 0.30
+		# Black accent (t-shirt, boots, etc.)
+		AccentColorHD		= 0.00
+		AccentColorS		= 0.00
+		AccentColorV		= 0.30
+
+		[Scheme_Actor_Male_Rocker_B]
+		# Unused primary
+		PrimaryColorHD		= 0.00
+		PrimaryColorS		= 0.00
+		PrimaryColorV		= 0.00
+		# Dark blue jeans (currently unused for rocker set)
+		SecondaryColorHD	= 219.0
+		SecondaryColorS		= 0.76
+		SecondaryColorV		= 0.72
+		# Black accent (t-shirt, boots, etc.)
+		AccentColorHD		= 0.00
+		AccentColorS		= 0.00
+		AccentColorV		= 0.30
+
+		[Piece_Actor_Male_Rocker_Top]
+		NumOptions	= &
+		@ Option
+		@@&			= "Option_Actor_Male_Rocker_Top_A"
+		@@&			= "Option_Actor_Male_Rocker_Top_B"
+		@@&			= "Option_Actor_Male_Rocker_Top_C"
+
+			[Option_Actor_Male_Rocker_Top_A]
+			Mesh	= "Meshes/Actors/Outfits/Rocker/Male/harness-0.cms"
+
+			[Option_Actor_Male_Rocker_Top_B]
+			Mesh	= "Meshes/Actors/Outfits/Rocker/Male/shirt-0.cms"
+
+			[Option_Actor_Male_Rocker_Top_C]
+			Mesh	= "Meshes/Actors/Outfits/Rocker/Male/shirt-1.cms"
+
+		[Piece_Actor_Male_Rocker_Pants]
+		NumOptions	= &
+		@ Option
+		@@&			= "Option_Actor_Male_Rocker_Pants_A"
+		@@&			= "Option_Actor_Male_Student_Pants_A"
+		@@&			= "Option_Actor_Male_Student_Pants_B"
+
+			[Option_Actor_Male_Rocker_Pants_A]
+			Mesh	= "Meshes/Actors/Outfits/Rocker/Male/pants-0.cms"
+
+		[Piece_Actor_Male_Rocker_Boots]
+		NumOptions	= &
+		@ Option
+		@@&			= "Option_Actor_Female_Rocker_Boots_A"
+		@@&			= "Option_Actor_Male_Student_Boots_A"
+
+
+
+# ****************************************************************
+
+[Wardrobe_PumpkinKing]
+NumBodies	= &
+@ Body
+@@&			= "Body_PumpkinKing"
+
+	[Body_PumpkinKing]
+	Mesh			= "Meshes/Actors/body-base.cms"
+	Voice			= "Voice_Vampire_Male"
+	NumSkins		= &
+	@ Skin
+	@@&				= "Skin_PumpkinKing"
+	NumHeads		= &
+	@ Head
+	@@&				= "Head_PumpkinKing"
+	NumOutfits		= &
+	@ Outfit
+	@@&				= "Outfit_PumpkinKing"
+
+		# Same as Taboo but no hair/eyes
+		[Skin_PumpkinKing]
+		ColorHD	= 57.0
+		ColorS	= 0.10
+		ColorV	= 1.0
+
+		[Head_PumpkinKing]
+		Mesh	= "Meshes/Actors/head-vampire-m.cms"
+
+		[Outfit_PumpkinKing]
+		NumSchemes		= &
+		@ Scheme
+		@@&				= "Scheme_PumpkinKing_A"
+		NumPieces		= &
+		@ Piece
+		@@&				= "Piece_PumpkinKing_Jacket"
+		@@&				= "Piece_PumpkinKing_Shirt"
+		@@&				= "Piece_PumpkinKing_Neck"
+		@@&				= "Piece_PumpkinKing_Pants"
+		@@&				= "Piece_PumpkinKing_Shoes"
+		NumAccessories	= &
+		@ Accessory
+		@@&				= "Accessory_Pumpkin"
+
+			[Scheme_PumpkinKing_A]
+			# Dark jacket
+			PrimaryColorHD		= 0.00
+			PrimaryColorS		= 0.00
+			PrimaryColorV		= 0.30
+			# White shirt
+			SecondaryColorHD	= 0.00
+			SecondaryColorS		= 0.00
+			SecondaryColorV		= 1.00
+			# Dark accents
+			AccentColorHD		= 0.00
+			AccentColorS		= 0.00
+			AccentColorV		= 0.30
+
+			[Piece_PumpkinKing_Jacket]
+			NumOptions	= &
+			@ Option
+			@@&			= "Option_Actor_Male_Classical_Jacket_A"
+
+			[Piece_PumpkinKing_Shirt]
+			NumOptions	= &
+			@ Option
+			@@&			= "Option_Actor_Male_Classical_Shirt_A"
+
+			[Piece_PumpkinKing_Neck]
+			NumOptions	= &
+			@ Option
+			@@&			= "Option_Actor_Male_Classical_BowTie_A"
+
+			[Piece_PumpkinKing_Pants]
+			NumOptions	= &
+			@ Option
+			@@&			= "Option_Actor_Male_Classical_Pants_A"
+
+			[Piece_PumpkinKing_Shoes]
+			NumOptions	= &
+			@ Option
+			@@&			= "Option_Actor_Male_Classical_Shoes_A"
+
+			[Accessory_Pumpkin]
+			Mesh	= "Meshes/Actors/attachment-pumpkin.cms"
+			Bone	= "Head"

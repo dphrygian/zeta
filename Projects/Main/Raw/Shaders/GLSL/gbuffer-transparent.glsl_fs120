@@ -1,0 +1,137 @@
+#version 120
+
+vec4 SampleSRGBToLinear( sampler2D Sampler, vec2 UV )
+{
+	vec4 Sample = texture2D( Sampler, UV );
+	vec4 Linear = pow( Sample, vec4( 2.2f ) );
+	return vec4( Linear.rgb, Sample.a );
+}
+
+vec4 SampleSRGBToLinearCheap( sampler2D Sampler, vec2 UV )
+{
+	vec4 Sample = texture2D( Sampler, UV );
+	vec4 Linear = Sample * Sample;
+	return vec4( Linear.rgb, Sample.a );
+}
+
+vec3 SampleNormal( sampler2D NormalSampler, vec2 UV )
+{
+	vec3 Normal = texture2D( NormalSampler, UV ).rgb * 2.0f - 1.0f;
+	Normal.z = sqrt( 1.0f - dot( Normal.xy, Normal.xy ) );
+	return Normal;
+}
+
+float NonZeroSign( float x )
+{
+	return ( step( 0.0f, x ) * 2.0f ) - 1.0f;
+}
+
+vec2 GetStereographicProjection( vec3 Normal )
+{
+	float Denom = 1.0f / ( 1.0f + abs( Normal.z ) );
+	return vec2( Normal.xy * Denom );
+}
+
+vec3 GetBitangent( vec3 Normal, vec3 Tangent, float Sign )
+{
+	return Sign * cross( Normal, Tangent );
+}
+
+// ROSANOTE: Transposed compared to HLSL.
+mat4 GetInverseTBNMatrix( vec3 Tangent, vec3 Bitangent, vec3 Normal )
+{
+	return mat4(
+		Tangent.x,	Bitangent.x,	Normal.x,	0.0f,
+		Tangent.y,	Bitangent.y,	Normal.y,	0.0f,
+		Tangent.z,	Bitangent.z,	Normal.z,	0.0f,
+		0.0f,		0.0f,			0.0f,		1.0f );
+
+	//return mat4(
+	//	Tangent.x,		Tangent.y,		Tangent.z,		0.0f,
+	//	Bitangent.x,	Bitangent.y,	Bitangent.z,	0.0f,
+	//	Normal.x,		Normal.y,		Normal.z,		0.0f,
+	//	0.0f,			0.0f,			0.0f,			1.0f );
+}
+
+uniform sampler2D Texture0;	// Albedo
+uniform sampler2D Texture1;	// Normal
+uniform sampler2D Texture2;	// Spec
+
+uniform vec4	Highlight;
+
+uniform	vec4	EyePosition;
+
+varying vec2	PassUV;
+varying vec4	PassPositionWS;
+varying vec4	PassPositionSS;
+varying vec4	PassPixelPos;
+varying vec3	PassNormalWS;
+varying vec4	PassTangentWS;
+
+mat4 Thresholds = mat4
+(
+	1.0f  / 17.0f,	9.0f  / 17.0f,	3.0f  / 17.0f,	11.0f / 17.0f,
+	13.0f / 17.0f,	5.0f  / 17.0f,	15.0f / 17.0f,	7.0f  / 17.0f,
+	4.0f  / 17.0f,	12.0f / 17.0f,	2.0f  / 17.0f,	10.0f / 17.0f,
+	16.0f / 17.0f,	8.0f  / 17.0f,	14.0f / 17.0f,	6.0f  / 17.0f
+);
+
+void Clip( float F )
+{
+	if( F < 0.0f )
+	{
+		discard;
+	}
+}
+
+float Pack( float Unpacked )
+{
+	return ( Unpacked * 0.9375f ) + 0.0625f;
+}
+
+vec2 Pack( vec2 Unpacked )
+{
+	return ( Unpacked * 0.9375f ) + 0.0625f;
+}
+
+vec3 Pack( vec3 Unpacked )
+{
+	return ( Unpacked * 0.9375f ) + 0.0625f;
+}
+
+void main()
+{
+
+	vec3	Normal		= PassNormalWS;
+	vec3	Tangent		= PassTangentWS.xyz;
+	vec3	Bitangent	= GetBitangent( Normal, Tangent, PassTangentWS.w );
+	mat4	InvTBN		= GetInverseTBNMatrix( Tangent, Bitangent, Normal );
+	
+	vec4	BaseColor	= SampleSRGBToLinear( Texture0, PassUV );
+	
+	vec3	NormalMapTS	= SampleNormal( Texture1, PassUV );
+	vec3	NormalMapWS	= ( vec4( NormalMapTS, 0.0f ) * InvTBN ).xyz;
+
+	vec3	View		= normalize( PassPositionWS.xyz - EyePosition.xyz );
+	float	Fresnel		= pow( clamp( 1.0f + dot( NormalMapWS, View ), 0.0f, 1.0f ), 5.0f );
+	float	Alpha		= mix( BaseColor.a, 1.0f, Fresnel );
+
+	// The alternative is to use "#extension GL_EXT_gpu_shader4 : enable" and the modulus operator (%) like in HLSL
+	ivec2	PixelPos	= ivec2( mod( PassPixelPos.xy / PassPixelPos.w, 4.0f ) );	// No reason to FixUV on this
+	Clip( Alpha - Thresholds[ PixelPos.x ][ PixelPos.y ] );
+
+	vec4	SpecMap		= texture2D( Texture2, PassUV );
+	vec2	ReflSmooth	= Pack( vec2( SpecMap.r, SpecMap.g * SpecMap.g ) );
+	float	Emissive	= Pack( SpecMap.b + Highlight.a );
+	float	Dielectric	= SpecMap.a * 2.0f - 1.0f;
+
+	float	Depth		= PassPositionSS.z / PassPositionSS.w;
+
+	float	NormalZSign	= NonZeroSign( NormalMapWS.z );
+	vec4	NormalPack	= vec4( GetStereographicProjection( NormalMapWS ), NormalZSign * ReflSmooth.y, Dielectric * ReflSmooth.x ) * 0.5f + 0.5f;
+	vec4	AlbedoPack	= vec4( BaseColor.rgb, Emissive * 0.5f + 0.5f );
+
+	gl_FragData[0]	= NormalPack;
+	gl_FragData[1]	= AlbedoPack;
+	gl_FragData[2]	= vec4( Depth, Depth, Depth, Depth );
+}

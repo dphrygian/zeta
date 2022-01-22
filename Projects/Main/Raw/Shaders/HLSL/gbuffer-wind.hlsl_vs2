@@ -1,0 +1,38 @@
+#include "common.hlsl_vsh"
+#include "foliage.hlsl_vsh"
+
+struct VS_INPUT 
+{
+	float4 Position	: POSITION;
+	float3 Normal	: NORMAL;
+	float4 Tangent	: TANGENT;
+	float2 UV		: TEXCOORD0;
+	float4 Color	: TEXCOORD1;
+};
+
+struct VS_OUTPUT
+{
+	float4	Position	: POSITION;
+	float2	UV			: TEXCOORD0;
+	float4	PositionSS	: TEXCOORD1;
+	float3	NormalWS	: TEXCOORD2;
+	float4	TangentWS	: TEXCOORD3;
+};
+
+VS_OUTPUT Main( VS_INPUT In )
+{
+	VS_OUTPUT Out;
+
+	const float4	PositionWS		= mul( In.Position, WorldMatrix );
+	const float4	FoliagePosition	= GetFoliagePosition( PositionWS, In.Normal, In.Color );
+
+	Out.Position	= FixHalfPixelOffset( mul( FoliagePosition, VP ) );
+	Out.UV			= In.UV;
+	Out.PositionSS	= Out.Position;
+	
+	// Using geometric normals; this is foliage shader without bent normals, for swaying tree trunks, etc.
+	Out.NormalWS	= mul( float4( In.Normal, 0.0f ), WorldMatrix ).xyz;
+	Out.TangentWS	= float4( mul( float4( In.Tangent.xyz, 0.0f ), WorldMatrix ).xyz, In.Tangent.w );
+
+	return Out;
+}

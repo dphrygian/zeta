@@ -1,0 +1,112 @@
+#version 120
+
+uniform sampler2D Texture0;	// Albedo
+uniform sampler2D Texture1;	// Normal
+uniform sampler2D Texture2;	// Spec
+uniform sampler2D Texture3;	// Depth
+
+uniform mat4	NormalBasis;
+uniform vec4	DecalAlpha;
+uniform mat4	InvWorldMatrix;
+uniform mat4	InvVPMatrix;
+
+varying vec4	PassVPos;
+
+void Clip( float F )
+{
+	if( F < 0.0f )
+	{
+		discard;
+	}
+}
+
+void Clip( vec3 F )
+{
+	if( any( lessThan( F, vec3( 0.0f, 0.0f, 0.0f ) ) ) )
+	{
+		discard;
+	}
+}
+
+vec4 SampleSRGBToLinear( sampler2D Sampler, vec2 UV )
+{
+	vec4 Sample = texture2D( Sampler, UV );
+	vec4 Linear = pow( Sample, vec4( 2.2f ) );
+	return vec4( Linear.rgb, Sample.a );
+}
+
+float NonZeroSign( float x )
+{
+	return ( step( 0.0f, x ) * 2.0f ) - 1.0f;
+}
+
+vec2 GetStereographicProjection( vec3 Normal )
+{
+	float Denom = 1.0f / ( 1.0f + abs( Normal.z ) );
+	return vec2( Normal.xy * Denom );
+}
+
+vec3 SampleNormal( sampler2D NormalSampler, vec2 UV )
+{
+	vec3 Normal = texture2D( NormalSampler, UV ).rgb * 2.0f - 1.0f;
+	Normal.z = sqrt( 1.0f - dot( Normal.xy, Normal.xy ) );
+	return Normal;
+}
+
+vec4 GetWSPos( vec2 UV, float Depth )
+{
+	vec2 FixedUV	= ( UV * 2.0f ) - 1.0f;
+	vec4 VPos4		= vec4( FixedUV.x, FixedUV.y, Depth, 1.0f );	// ROSANOTE: *Don't* negate FixedUV.y, it's already flipped in GLSL
+	vec4 WSPos		= VPos4 * InvVPMatrix;
+	return WSPos / WSPos.w;
+}
+
+vec2 FixUV( vec2 UV )
+{
+	return vec2( UV.x, 1.0f - UV.y );
+}
+
+float Pack( float Unpacked )
+{
+	return ( Unpacked * 0.9375f ) + 0.0625f;
+}
+
+vec2 Pack( vec2 Unpacked )
+{
+	return ( Unpacked * 0.9375f ) + 0.0625f;
+}
+
+void main()
+{
+	// Fix VPos
+	vec2	NormVPos	= PassVPos.xy / PassVPos.w;
+	vec2	FixedUV		= FixUV( NormVPos );
+
+	float	Depth		= texture2D( Texture3, FixedUV ).r;
+	vec4	WSPos		= GetWSPos( FixedUV, Depth );
+	vec4	OSPos		= WSPos * InvWorldMatrix;
+
+	vec3	AbsOSPos	= abs( OSPos.xyz );
+	Clip( 0.5f - AbsOSPos );
+
+	vec2	DecalUV		= ( OSPos.xz * vec2( 1.0f, -1.0f ) ) + 0.5f;
+
+	vec4	Albedo		= SampleSRGBToLinear( Texture0, DecalUV );
+	float	YAlpha		= clamp( 2.0f - 4.0 * AbsOSPos.y, 0.0f, 1.0f );
+	Clip( Albedo.a + YAlpha + DecalAlpha.x - 2.1f );
+
+	vec3	NormalMapTS	= SampleNormal( Texture1, DecalUV ).xzy * vec3( 1.0f, -1.0f, -1.0f );
+	vec3	NormalMapWS	= ( vec4( NormalMapTS, 0.0f ) * NormalBasis ).xyz;
+
+	vec4	SpecMap		= texture2D( Texture2, DecalUV );
+	vec2	ReflSmooth	= Pack( vec2( SpecMap.r, SpecMap.g * SpecMap.g ) );
+	float	Emissive	= Pack( SpecMap.b );
+	float	Dielectric	= SpecMap.a * 2.0f - 1.0f;
+
+	float	NormalZSign	= NonZeroSign( NormalMapWS.z );
+	vec4	NormalPack	= vec4( GetStereographicProjection( NormalMapWS ), NormalZSign * ReflSmooth.y, Dielectric * ReflSmooth.x ) * 0.5f + 0.5f;
+	vec4	AlbedoPack	= vec4( Albedo.rgb, Emissive * 0.5f + 0.5f );
+
+	gl_FragData[0]	= NormalPack;
+	gl_FragData[1]	= AlbedoPack;
+}

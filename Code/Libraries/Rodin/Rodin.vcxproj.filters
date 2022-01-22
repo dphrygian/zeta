@@ -1,0 +1,246 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="src\rodinbtnode.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\rodinbtnodefactory.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BTNodes\rodinbtnodeactiondecorator.cpp">
+      <Filter>src\BTNodes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BTNodes\rodinbtnodecastresult.cpp">
+      <Filter>src\BTNodes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BTNodes\rodinbtnodecomposite.cpp">
+      <Filter>src\BTNodes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BTNodes\rodinbtnodecompositesingular.cpp">
+      <Filter>src\BTNodes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BTNodes\rodinbtnodeconditionpe.cpp">
+      <Filter>src\BTNodes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BTNodes\rodinbtnodeconditiontimeout.cpp">
+      <Filter>src\BTNodes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BTNodes\rodinbtnodedecorator.cpp">
+      <Filter>src\BTNodes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BTNodes\rodinbtnodelog.cpp">
+      <Filter>src\BTNodes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BTNodes\rodinbtnodelookup.cpp">
+      <Filter>src\BTNodes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BTNodes\rodinbtnodeloop.cpp">
+      <Filter>src\BTNodes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BTNodes\rodinbtnodenull.cpp">
+      <Filter>src\BTNodes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BTNodes\rodinbtnodeparallel.cpp">
+      <Filter>src\BTNodes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BTNodes\rodinbtnodeplayactions.cpp">
+      <Filter>src\BTNodes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BTNodes\rodinbtnodeselector.cpp">
+      <Filter>src\BTNodes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BTNodes\rodinbtnodesendevent.cpp">
+      <Filter>src\BTNodes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BTNodes\rodinbtnodesequence.cpp">
+      <Filter>src\BTNodes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BTNodes\rodinbtnodesleep.cpp">
+      <Filter>src\BTNodes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BTNodes\rodinbtnodetimeout.cpp">
+      <Filter>src\BTNodes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BTNodes\rodinbtnodeuseresource.cpp">
+      <Filter>src\BTNodes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BTNodes\rodinbtnodeusestatmod.cpp">
+      <Filter>src\BTNodes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BTNodes\rodinbtnodewait.cpp">
+      <Filter>src\BTNodes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BTNodes\rodinbtnodewaitforevent.cpp">
+      <Filter>src\BTNodes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BTNodes\rodinbtnodeblackboardwrite.cpp">
+      <Filter>src\BTNodes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Actions\wbactionrodinblackboardwrite.cpp">
+      <Filter>src\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprodinbehaviortree.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprodinblackboard.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprodinknowledge.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\wbcomprodinresourcemap.cpp">
+      <Filter>src\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PEs\wbperodinblackboardget.cpp">
+      <Filter>src\PEs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PEs\wbperodingetknowledge.cpp">
+      <Filter>src\PEs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PEs\wbperodingetlastknownlocation.cpp">
+      <Filter>src\PEs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PEs\wbperodingetlastknowntime.cpp">
+      <Filter>src\PEs</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\irodinresourceuser.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\rodinbtnode.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\rodinbtnodefactory.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\rodinbtnodes.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\rodinwbactions.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\rodinwbcomponents.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\rodinwbpes.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BTNodes\rodinbtnodeactiondecorator.h">
+      <Filter>src\BTNodes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BTNodes\rodinbtnodecastresult.h">
+      <Filter>src\BTNodes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BTNodes\rodinbtnodecomposite.h">
+      <Filter>src\BTNodes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BTNodes\rodinbtnodecompositesingular.h">
+      <Filter>src\BTNodes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BTNodes\rodinbtnodeconditionpe.h">
+      <Filter>src\BTNodes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BTNodes\rodinbtnodeconditiontimeout.h">
+      <Filter>src\BTNodes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BTNodes\rodinbtnodedecorator.h">
+      <Filter>src\BTNodes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BTNodes\rodinbtnodelog.h">
+      <Filter>src\BTNodes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BTNodes\rodinbtnodelookup.h">
+      <Filter>src\BTNodes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BTNodes\rodinbtnodeloop.h">
+      <Filter>src\BTNodes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BTNodes\rodinbtnodenull.h">
+      <Filter>src\BTNodes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BTNodes\rodinbtnodeparallel.h">
+      <Filter>src\BTNodes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BTNodes\rodinbtnodeplayactions.h">
+      <Filter>src\BTNodes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BTNodes\rodinbtnodeselector.h">
+      <Filter>src\BTNodes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BTNodes\rodinbtnodesendevent.h">
+      <Filter>src\BTNodes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BTNodes\rodinbtnodesequence.h">
+      <Filter>src\BTNodes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BTNodes\rodinbtnodesleep.h">
+      <Filter>src\BTNodes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BTNodes\rodinbtnodetimeout.h">
+      <Filter>src\BTNodes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BTNodes\rodinbtnodeuseresource.h">
+      <Filter>src\BTNodes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BTNodes\rodinbtnodeusestatmod.h">
+      <Filter>src\BTNodes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BTNodes\rodinbtnodewait.h">
+      <Filter>src\BTNodes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BTNodes\rodinbtnodewaitforevent.h">
+      <Filter>src\BTNodes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BTNodes\rodinbtnodeblackboardwrite.h">
+      <Filter>src\BTNodes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Actions\wbactionrodinblackboardwrite.h">
+      <Filter>src\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprodinbehaviortree.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprodinblackboard.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprodinknowledge.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\wbcomprodinresourcemap.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PEs\wbperodinblackboardget.h">
+      <Filter>src\PEs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PEs\wbperodingetknowledge.h">
+      <Filter>src\PEs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PEs\wbperodingetlastknownlocation.h">
+      <Filter>src\PEs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PEs\wbperodingetlastknowntime.h">
+      <Filter>src\PEs</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{c11727a8-7e06-4434-bc1a-bbfe22414849}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Actions">
+      <UniqueIdentifier>{c5151dd8-d31e-412f-af8f-7cdd1444881a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\BTNodes">
+      <UniqueIdentifier>{1ad986e6-5ded-4563-967e-4572a7a68986}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Components">
+      <UniqueIdentifier>{80007223-7c14-401d-8ec6-9c7bb7e92aa5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\PEs">
+      <UniqueIdentifier>{032b0246-042d-477c-af64-4147372f54b3}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="Rodin.natvis" />
+  </ItemGroup>
+</Project>

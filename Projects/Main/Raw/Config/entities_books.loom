@@ -1,0 +1,15 @@
+[NoteBase]
+ShouldDebugCheckSpawnClearance	= false
+RosaTransform	= "ImmobileTransform"
+RosaMesh			= "NoteBaseMesh"
+RosaFrobbable	= "NoteBaseFrobbable"
+
+	[NoteBaseMesh]
+	Mesh		= "Meshes/tablet.cms"
+	Material	= "Material_EntityStaticEmissive"
+	
+	[NoteBaseFrobbable]
+	UseMeshExtents	= true
+	ExtentsFatten	= 0.05
+	FriendlyName	= "Note"
+	FrobVerb		= "Read"

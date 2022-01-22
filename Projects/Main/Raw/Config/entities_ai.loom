@@ -1,0 +1,901 @@
+# Base class for enemies and NPCs
+[BaseAI]
+#ShouldDebugRender	= true
+RosaTransform		= "BaseAI_Transform"
+RosaCollision		= "BaseAI_Collision"
+RosaMesh			= "BaseAI_Mesh"
+#RosaCharacterConfig	= "BaseAI_CharacterConfig"
+RosaFrobbable		= "BaseAI_Frobbable"
+RosaAIMotion		= "BaseAI_AIMotion"
+RosaRepulsor		= "BaseAI_Repulsor"
+RosaHeadTracker		= "BaseAI_HeadTracker"
+RosaHitbox			= "BaseAI_Hitbox"
+RosaRagdoll			= "BaseAI_Ragdoll"
+RodinKnowledge		= "BaseAI_Knowledge"
+RodinBlackboard		= "."
+RodinResourceMap	= "."
+RosaSound			= "."
+RosaParticles		= "."
+RosaVisible			= "."
+RosaSensorVision	= "BaseAI_SensorVision"
+RosaSensorBump		= "."
+VariableMap			= "."
+
+	[BaseAI_Transform]
+	ShouldDebugRender = true
+	UseGravity	= true
+	SpeedLimit	= 3.0
+
+	[BaseAI_Collision]
+	ShouldDebugRender = true
+	HalfExtentsXY	= 0.25	#0.125	# Plenty of room for two AIs to stand shoulder-to-shoulder in a doorway
+	HalfExtentsZ	= 1.25	#0.875	# Room to fit under doors (1.75m tall at most; extents get scaled down per character)
+	BlocksTrace		= true
+	BlocksEntities	= true
+	StandOnSlopes	= true
+	MaxStepHeight	= 0.55	# Enough to clear a 1/2m obstacle (up from 0.4 (or 3/8m) in Vamp)
+
+	[BaseAI_Mesh]
+	OffsetZ					= -1.25	#-0.875		# Mesh's root is at origin, so offset by half extents.
+	DefaultAnimBlendTime	= 0.25
+
+	[BaseAI_CharacterConfig]
+	Wardrobe	= "Wardrobe_Chump"
+	IsHuman		= false
+
+	[BaseAI_Frobbable]
+	ShouldDebugRender = true
+	ExtentsXY		= 0.25	#0.1875
+	ExtentsZ		= 1.25	#0.875
+	CanBeAimedAt	= true
+
+	[BaseAI_AIMotion]
+	LandAcceleration		= 15.0
+	AirAcceleration			= 6.0
+	TurnSpeed				= 360.0		# Degrees per second (DLP 22 Aug 2016: Doubled this because really everyone was turning too slow)
+	FollowValidateTime		= 1.0
+	StepReachedThreshold	= 0.1
+	TurnReachedThreshold	= 5.0		# Degrees
+	CanOpenDoors			= true
+	CanUnlockDoors			= false
+	MaxPathSteps			= 200
+	IdleAnimation			= "Idle"
+	WalkAnimation			= "Walk"
+	AnimationResource		= "Anim"
+	# Randomize the animation rates to stagger footstep sounds.
+	# Note that this does *not* change motion speed.
+	WalkAnimRateLo			= 0.90909
+	WalkAnimRateHi			= 1.1
+	NumStanceAnimations		= &
+	@ Stance
+	@@&						= "Search"
+	@@^Animation			= "Search"
+	@@&						= "Run"
+	@@^Animation			= "Run"
+	StepUpTime				= 0.15
+
+	[BaseAI_Repulsor]
+	Radius	= 1.0	# Was 0.5
+
+	[BaseAI_HeadTracker]
+	HeadBoneName	= "Head"
+	EyesBoneName	= "Eyes"
+	MaxRotation		= 60.0		# Degrees
+	LookVelocity	= 270.0		# Degrees per second
+	HeadResource	= "Head"
+
+	[BaseAI_Hitbox]
+	# Revisit these when I'm more certain about character mesh design.
+	# This is a first pass on the proxy bobblehead model, missing most limbs because.
+	ShouldDebugRender	= true
+	NumHitboxBones	= &
+	@ HitboxBone
+	@@&				= "Spine0"
+	@@^Width		= 0.25
+	@@&				= "Spine2"
+	@@^Width		= 0.3
+	@@&				= "Head"
+	@@^Width		= 0.5
+	@@^LengthScalar	= 0.5	# Override actual bone length
+	@@&				= "UpperArm.R"
+	@@^Width		= 0.2
+	@@&				= "Hand.R"
+	@@^Width		= 0.2
+	@@&				= "UpperArm.L"
+	@@^Width		= 0.2
+	@@&				= "Hand.L"
+	@@^Width		= 0.2
+	@@&				= "Foot.R"
+	@@^Width		= 0.2
+	@@&				= "Foot.L"
+	@@^Width		= 0.2
+
+	[BaseAI_Ragdoll]
+	ShouldDebugRender	= true
+	SpringK				= 100.0
+	DamperC				= 2.0
+	DefaultMassRadius	= 0.1
+	NumMassRadii		= &
+	@ MassRadius
+	@@&Mass				= "Root"
+	@@^Radius			= 0.15
+	@@&Mass				= "Spine0"
+	@@^Radius			= 0.15
+	@@&Mass				= "Spine1"
+	@@^Radius			= 0.15
+	@@&Mass				= "Spine2"
+	@@^Radius			= 0.2
+	@@&Mass				= "Neck"
+	@@^Radius			= 0.2
+	@@&Mass				= "Head"
+	@@^Radius			= 0.2
+	@@&Mass				= "Foot.L"
+	@@^Radius			= 0.15
+	@@&Mass				= "Foot.R"
+	@@^Radius			= 0.15
+
+	[BaseAI_Knowledge]
+	ExpireTime		= 15.0
+	StaleSeenTime	= 5.0		# How long after target is last seen does sound become more relevant
+
+	[BaseAI_SensorVision]
+	TickDeltaMin				= 0.1
+	TickDeltaMax				= 0.2
+	EyesBoneName				= "Eyes"
+	Radius						= 15.0
+	ConeAngle					= 45.0	# Half angle (this is narrower than Neon's 60, since vision uses headtracker now)
+	ConeScaleZ					= 0.4
+	CertaintyFalloffRadius		= 8.0	# Distance factor of certainty is half at this radius
+	DistanceCertaintyFactor		= 1.0	# Distance factor of certainty is worth this much in total score (multiplied with other factors)
+	PeripheryCertaintyFactor	= 0.5	# Worth this much in total score (0.5 means it multiplies 0.5-1.0 with other factors; if this is 1.0, you are perfectly hidden orthogonal to eye direction)
+	SpeedCertaintyScalar		= 0.2	# Scales speed (in m/s) before clamping to [0,1]
+	SpeedCertaintyFactor		= 0.1	# Worth this much in total score (0.1 means it multiplies 0.9-1.0 with other factors; if this is 1.0, you are perfectly hidden when stationary)
+	CrouchedCertaintyFactor		= 0.2	# Worth this much in total score (0.2 means it multiplies 0.8-1.0 with other factors; if this is 1.0, you are perfectly hidden when crouched)
+	CertaintyVelocity			= 0.80	# DLP 6 Dec 2021: Raised from 0.50, seemed like it was taking enemies a long time to acquire targets
+	CertaintyDecay				= 0.10
+	CertaintyThreshold			= 0.01
+	IsAimingThreshold			= 15.0	# Angle threshold to check if visible entity is aiming at this AI
+
+[BaseEnemy]
+#ShouldDebugRender	= true
+Extends				= "BaseAI"
+RosaFrobbable		= "BaseEnemy_Frobbable"
+RosaHealth			= "BaseEnemy_Health"
+RosaHeadshot		= "BaseEnemy_Headshot"
+RodinBehaviorTree	= "BaseEnemy_BT"
+RosaFaction			= "Faction_Minion"
+StatMod				= "BaseEnemy_StatMod"
+RosaSensorHearing	= "BaseEnemy_SensorHearing"
+RosaSensorDamage	= "."
+RosaSensorRepulsor	= "."
+RosaThinkerTarget	= "BaseEnemy_ThinkerTarget"
+Reactions			= "BaseEnemy_Reactions"
+PEMap				= "BaseEnemy_PEMap"
+State				= "BaseEnemy_State"
+
+	[Faction_Minion]
+	Faction = "Minion"
+
+	# ROSATODO: Just remove this component if enemies will never be frobbable
+	[BaseEnemy_Frobbable]
+	Extends		= "BaseAI_Frobbable"
+	#IsFrobbable	= true	# TEMPHACK for testing ragdoll frobbables
+	IsFrobbable	= false
+	FrobVerb	= "Search"
+
+	[BaseEnemy_Health]
+	UseChallengeScalar	= true
+	CanBeDebuffed		= true
+	CanBeFactioned		= true	# HACKHACK, "factioned", for enrage effect
+	Health				= 100
+
+	[BaseEnemy_Headshot]
+	NumHeadshots	= &
+	@ Headshot
+	@@&Bone	= "Head"
+	@@^Mod	= 2.0
+
+	[BaseEnemy_State]
+	InitialState	= "None"
+
+	[BaseEnemy_StatMod]
+	# Making this explicit, as a reminder. It used to be false, I think because
+	# I worried it wouldn't play nice with BT stat mod events. And that's valid,
+	# BT state isn't serialized so a BT-triggered stat mod would be saved but
+	# the tree might evaluate a different way when loaded. In basic tests, it
+	# has worked fine, but it's something to keep an eye on. In the meantime,
+	# I'm adding non-serialized events as a hack to be safe. This makes all
+	# current enemy stat mods non-serialized, but the idea is that now I could
+	# trigger stat mods from player powers, and they'd serialized as expected.
+	Serialize	= true
+	NumNonSerializedEvents	= &
+	@ NonSerializedEvent
+	@@&			= "Wander"
+	@@&			= "Search"
+	@@&			= "Combat"
+	@@&			= "Run"
+	@@&			= "Notice"
+	@@&			= "Charging"
+	lmStatMods
+	{
+		StatMod( "Quicksand",	"LandAcceleration",			"Mul",	0.5 )
+		StatMod( "Quicksand",	"SpeedLimit",				"Mul",	0.5 )
+		StatMod( "Quicksand",	"AnimationVelocity",		"Mul",	0.5 )	// Scale faked root motion too so dodges are slower
+	
+		StatMod( "Wander",		"LandAcceleration",			"Mul",	1.0 )
+		StatMod( "Wander",		"SpeedLimit",				"Mul",	1.0 )
+		StatMod( "Wander",		"WalkAnimRate",				"Mul",	0.5 )
+		StatMod( "Search",		"LandAcceleration",			"Mul",	2.0 )
+		StatMod( "Search",		"SpeedLimit",				"Mul",	2.0 )
+		StatMod( "Search",		"WalkAnimRate",				"Mul",	0.9 )
+		StatMod( "Search",		"TurnSpeed",				"Mul",	0.7 )	// Turn a bit slower so we have more chance of acquiring target
+		StatMod( "Combat",		"LandAcceleration",			"Mul",	4.0 )
+		StatMod( "Combat",		"SpeedLimit",				"Mul",	4.0 )
+		StatMod( "Combat",		"WalkAnimRate",				"Mul",	1.2 )
+		
+		// Provided for scripting
+		StatMod( "Run",			"LandAcceleration",			"Mul",	4.0 )
+		StatMod( "Run",			"SpeedLimit",				"Mul",	4.0 )
+		StatMod( "Run",			"WalkAnimRate",				"Mul",	1.2 )
+
+		// Distance to target becomes less important in scoring as behavior increases
+		StatMod( "Search",		"DistanceCertaintyFactor",	"Set",	0.9 )
+		StatMod( "Combat",		"DistanceCertaintyFactor",	"Set",	0.8 )
+
+		// Take extra damage if unaware of any threats
+		StatMod( "Wander",		"SneakAttackable",			"Add",	1.0 )
+		StatMod( "Notice",		"SneakAttackable",			"Add",	1.0 )
+	}
+
+	[BaseEnemy_PEMap]
+	lmPEMap
+	{
+		PEMap( "VampireDust",				ConstantString( "" ) )	// Don't spawn any vampire dust for minions
+		PEMap( "VampireDustOffset",			ConstantVector( 0.0, 0.0, 0.875 ) )
+		PEMap( "MeleeAttackCooldownTime",	ConstantFloat( 0.2 ) )
+		PEMap( "MeleeImpulse",				ConstantFloat( 5.0 ) )
+		PEMap( "MeleeDamageSet",			ConstantString( "DamageSet_BaseEnemy_Melee" ) )
+		PEMap( "HitReactTimeout",			ConstantFloat( 1.0 ) )
+		PEMap( "StaggerTimeout",			ConstantFloat( 2.0 ) )
+	}
+
+	[BaseEnemy_BT]
+	RootNode		= "CommonBT_Root"
+	NumLookupNodes	= &
+	@ LookupNode
+	@@&Key			= "Behave"
+	@@^Value		= "BaseEnemyBT_Behave"
+	@@&Key			= "React"
+	@@^Value		= "BaseEnemyBT_React"
+	@@&Key			= "IdleBehavior"
+	@@^Value		= "CommonBT_Wander"
+	@@&Key			= "WanderMove"
+	@@^Value		= "CommonBT_WanderMove_Tethered"	# ZETANOTE: EVERYONE is tethered in Z axis here
+	@@&Key			= "PursuitBehavior"
+	@@^Value		= "CommonBT_PursueAndWarn"
+	@@&Key			= "AttackBehavior"
+	@@^Value		= "CommonBT_MeleeAttackSequence"
+	@@&Key			= "PursueCombatTarget"
+	@@^Value		= "CommonBT_PursueCombatTarget"
+	@@&Key			= "PursueCombatTargetFallback"
+	@@^Value		= "CommonBT_PursueCombatTargetFallback"
+
+	[BaseEnemy_SensorHearing]
+	# Added to noise radius to extend AI's hearing. It's fine if this is 0.
+	# More than 0 means this AI can detect 0-radius sounds like crouched footsteps!
+	Radius						= 0.0
+	CertaintyFalloffRadius		= 5.0	# Distance factor of certainty is half at this radius
+	DistanceCertaintyFactor		= 1.0	# Distance factor of certainty is worth this much in total score
+	OcclusionCertaintyFactor	= 0.6	# Occlusion factor of certainty is worth this much in total score
+
+	[BaseEnemy_ThinkerTarget]
+	OutputCombatTargetBlackboardKey	= "BestCombatTarget"
+	OutputSearchTargetBlackboardKey	= "BestSearchTarget"
+	OutputNoticeTargetBlackboardKey	= "BestNoticeTarget"
+	CombatTargetScoreThreshold		= 0.4
+	SearchTargetScoreThreshold		= 0.2
+	NoticeTargetScoreThreshold		= 0.1
+	BodyConsiderTimeout				= 20.0	# Stop caring about a body this long after first seeing it
+
+	[BaseAI_Reactions_Damage]
+	lmReactions
+	{
+		Reaction( Rule( "OnDamaged" ) )
+		{
+			SendEvent(
+					"PlayParticleSystem",
+					"SelfPE",
+					ParticleSystem	= ConstantString( "PS_Hitspang" ),
+					Location		= QueryActionStack( "DamageLocation" ),
+					Orientation		= QueryActionStack( "DamageOrientation" )
+				)
+			RosaSpawnEntity(
+					Entity		= "HitspangLight",
+					LocationPE	= QueryActionStack( "DamageLocation" )
+				)
+		}
+
+		// Take damage when landed upon by player
+		Reaction( Rule( "OnLandedUpon", Conditional( "E", QueryActionStack( "CollidedEntity" ), "PlayerPE" ) ) )
+		{
+			//SendEvent(
+			//		"TakeDamage",
+			//		"SelfPE",
+			//		DamageSet			= ConstantString( "DamageSet_Landed" ),
+			//		Scalar				= StatMod( "PlayerPE", "StompScalar", ConstantFloat( 1.0 ) ),
+			//		Damager				= "PlayerPE",
+			//		DamageLocation		= "LocationPE",
+			//		DamageOrientation	= Normal( Sub( RosaGetLocation( "PlayerPE" ), RosaGetLocation( "SelfPE" ) ) ),
+			//		DamageDirection		= Normal( Sub( RosaGetLocation( "SelfPE" ), RosaGetLocation( "PlayerPE" ) ) )
+			//	)
+
+			// Apply impulse to the *player* to push them off
+			SendEvent(
+					"ApplyImpulse",
+					"PlayerPE",
+					Impulse			= RandomVector( ValueAX = -2.0, ValueBX = 2.0, ValueAY = -2.0, ValueBY = 2.0, ValueZ = 10.0 )
+				)
+		}
+	}
+
+	[BaseEnemy_Reactions]
+	NumObserveEvents	= &
+	@ ObserveEvent
+	@@&					= "ForceAIRespawn"	# HACKHACK for Zeta, so we can broadcast to all AIs
+	@@&					= "KillAIs"	# HACKHACK for Zeta, so we can broadcast to all AIs
+	NumReactionSets	= &
+	@ ReactionSet
+	@@&				= "BaseAI_Reactions_Damage"
+	lmReactions
+	{
+		Reaction( Rule( "ForceAIRespawn" ) )
+		{
+			SendEvent( "ForceRespawn", "SelfPE" )
+		}
+		
+		Reaction( Rule( "KillAIs" ) )
+		{
+			SendEvent( "Kill", "SelfPE", Damager = "SelfPE" )
+		}
+
+		// Set spawn location
+		Reaction( Rule( "OnSpawnedQueued" ) )
+		{
+			RodinBlackboardWrite( "SpawnLocation",		"LocationPE" )
+			RodinBlackboardWrite( "SpawnOrientation",	"OrientationPE" )
+		}
+	
+		// Play footstep sound
+		Reaction( Rule( "OnFootstep" ) )
+		{
+			RosaPlaySound(
+				SoundPE	= RosaGetSurfaceProperty( "FootstepSurface", "Sound" ),
+				Volume	= StatMod( "SelfPE", "FootstepVolume", Mul( RosaGetSurfaceProperty( "FootstepSurface", "VolumeScalar" ), Mul( ConstantFloat( 3.0 ), "SpeedScalarPE" ) ) ) )
+		}
+
+		Reaction( Rule( "OnDied" ) )
+		{
+			SendEvent( "HideMapMarker",						"SelfPE" )
+			SendEvent( "ResolveArtifact",					"SelfPE" )		// Notify campaign
+			SendEvent( "SpawnManager_RemoveManagedEntity",	"PlayerPE" )	// Notify spawn manager; this is safe even if the enemy isn't a managed entity
+
+			SendEvent( "PauseBT",				"SelfPE" )
+			SendEvent( "PauseSensors",			"SelfPE" )
+			SendEvent( "PauseThinkers",			"SelfPE" )
+			SendEvent( "PauseAIMotion",			"SelfPE" )
+			SendEvent( "StopLooking",			"SelfPE" )
+			SendEvent( "StopCategory",			"SelfPE",	Category = ConstantString( "VO" ) )
+			SendEvent( "StopTouching",			"SelfPE" )
+			SendEvent( "StopBlockingBlockers",	"SelfPE" )	// This also means the ragdoll root will fall through dynamic blockers like crates
+			SendEvent( "StopRepulsing",			"SelfPE" )
+			SendEvent( "DisableCanBeAimedAt",	"SelfPE" )
+			
+			// Turn off the low frequency effect on death, why not
+			SendEvent( "SetAnimationBonesTickRate",	"SelfPE", TickRate = ConstantFloat( 0.0 ) )
+
+			// TEMPHACK: Always applying impulse to send ragdoll flying
+			// HACKHACK: Adding some up vector for additional spiciness.
+			SendEvent( "ApplyImpulse",			"SelfPE",
+				Impulse =
+					Add(
+						ConstantVector( 0.0, 0.0, 8.0 ),
+						Mul(
+							ConstantFloat( 15.0 ), QueryActionStack( "DamageDirection" )
+						)
+					)
+				)
+			
+			// HACKHACK, experimenting with ragdoll
+			//SendEvent( "StartRagdoll",			"SelfPE", BlendTime = ConstantFloat( 0.6 ) )	// Timed to Death anim (18 frames)
+			SendEvent( "StartRagdoll",			"SelfPE", BlendTime = ConstantFloat( 0.75 ) )		// Blend a bit longer to try to get head in the right place
+			
+			// TEMPHACK to test rise from ragdoll
+			//SendEvent( "StopRagdoll",			"SelfPE", DispatchDelay = 4.0, BlendTime = ConstantFloat( 2.0 ) )
+			//SendEvent( "PlayAnim",				"SelfPE", DispatchDelay = 4.0, BlendTime = ConstantFloat( 2.0 ), AnimationName = ConstantString( "Idle" ) )
+
+			RosaPlayAnim( "Death", BlendTime = 0.12 )
+			RosaPlayBark( Lookup( "DeathBark", WarnFailure = false ), "VO" )
+
+			// NOTE: Old fix from Neon for frob state errors caused by reverting from dragged state to none while being dragged;
+			// isn't currently an issue for Rosa, but could be if I use states for other purposes.
+			UnqueueEvent( "SelfPE", "UnstaggerEvent" )
+
+			SetState( "SelfPE", "None" )
+			
+			SendEvent( "BecomeFrobbable",	"SelfPE" )
+		}
+		
+		Reaction( Rule( "OnFrobbed" ) )
+		{
+			"RobotLootAction"
+			RosaPlaySound( "Sound_Search_Robot" )
+
+			SendEvent( "BecomeNonFrobbable",	"SelfPE" )
+		}
+
+		Reaction( Rule( "MeleeAttack" ) )
+		{
+			// Default to a 1.5m length from eye position but let entities override
+			RosaCheckLine( "SelfPE", 1.5, "Melee",
+					LineStartPE		= Lookup( "MeleeLineStartPE", WarnFailure = false ),
+					LineLengthPE	= Lookup( "MeleeLineLengthPE", WarnFailure = false )
+				)
+		}
+
+		Reaction( Rule( "OnLineCheck",
+						PushContext( "CheckedPE", QueryActionStack( "IsAlive" ) ),
+						Conditional( "E", QueryActionStack( "CheckTag" ), ConstantString( "Melee" ) )
+					) )
+		{
+			RosaPlaySound( "Sound_Robot_Melee" )
+			SendEvent(
+					"TakeDamage",
+					"CheckedPE",
+					DamageSet			= Lookup( "MeleeDamageSet" ),
+					Damager				= "SelfPE",
+					DamageLocation		= QueryActionStack( "HitLocation" ),
+					DamageOrientation	= QueryActionStack( "LineDirection" )
+				)
+			SendEvent(
+					"ApplyImpulse",
+					"CheckedPE",
+					Impulse	= Mul(
+						Lookup( "MeleeImpulse" ),
+						Normal( Sub( RosaGetLocation( "CheckedPE" ), "LocationPE" ) )
+						)
+				)
+		}
+
+		Reaction( Rule( "RangedAttack", Lookup( "UseDeadReckoning", WarnFailure = false ) ) )
+		{
+			// Use dead reckoning to throw at where the target will be given current velocity
+			// (Ignore the Z component of target's velocity, it should rarely matter)
+			RosaSpawnEntity(
+					EntityPE		= Lookup( "RangedAttackProjectile" ),
+					LocationPE		= RosaGetBoneLocation( "SelfPE", "Hand.R" ),
+					OrientationPE	= RosaDeadReckoning(
+						RosaGetBoneLocation( "SelfPE", "Hand.R" ),					// Location
+						Lookup( "RangedAttackSpeed" ),								// Speed
+						RosaGetLocation( RodinBlackboardGet( "CombatTarget" ) ),	// Target location
+						Mul(														// Target velocity, ignoring Z
+							ConstantVector( 1.0, 1.0, 0.0 ),
+							RosaGetVelocity( RodinBlackboardGet( "CombatTarget" ) )
+							)
+						),
+					SpawnImpulsePE	= Lookup( "RangedAttackSpeed" )
+				)
+		}
+
+		Reaction( Rule( "RangedAttack" ) )
+		{
+			RosaPlaySound( "Sound_Robot_Ranged" )
+			RosaSpawnEntity(
+					EntityPE		= Lookup( "RangedAttackProjectile" ),
+					LocationPE		= RosaGetBoneLocation( "SelfPE", "Hand.R" ),
+					OrientationPE	= Sub(
+						// Aim a bit above the target's center
+						Add(
+							ConstantVector( 0.0, 0.0, 0.4 ),
+							RosaGetLocation( RodinBlackboardGet( "CombatTarget" ) )
+							),
+						RosaGetBoneLocation( "SelfPE", "Hand.R" ) ),
+					SpawnImpulsePE	= Lookup( "RangedAttackSpeed" )
+				)
+		}
+		
+		Reaction( Rule( "OnCollided", NOT( "IsAlivePE" ) ) )
+		{
+			RosaPlaySound( "Sound_Ragdoll_Collision" )
+		}
+
+		// This is kinda magic number-y, trying to avoid too many sounds
+		Reaction( Rule( "OnRagdollCollided",
+			Conditional( "GT", QueryActionStack( "CollisionSpeed" ), ConstantFloat( 4.0 ) ) ) )
+		{
+			RosaPlaySound( "Sound_Ragdoll_Collision",
+				VolumePE = Saturate( Mul( QueryActionStack( "CollisionSpeed" ), ConstantFloat( 0.1 ) ) ) )
+		}
+	}
+
+	[RobotLootAction]
+	lmSelectorAction
+	{
+		Selection( RandomBool( ProbabilityPE = Lookup( "LootChance_Ammox3" ) ),	RosaAddAmmo( "AmmoType_Lasergun", 3 ) )	// 20% of the time you get 3
+		Selection( RandomBool( ProbabilityPE = Lookup( "LootChance_Ammox2" ) ),	RosaAddAmmo( "AmmoType_Lasergun", 2 ) )	// 30% of the time you get 2 (.375 * .8 = .3)
+		Selection( RandomBool( ProbabilityPE = Lookup( "LootChance_Ammox1" ) ),	RosaAddAmmo( "AmmoType_Lasergun", 1 ) )	// 40% of the time you get 1
+		Selection( ConstantBool( true ),										RosaAddAmmo( "AmmoType_Lasergun", 0 ) )	// HACKHACK to get the ammo pickup screen
+	}
+
+	[DamageSet_BaseEnemy_Melee]
+	NumDamageVectors	= &
+	@ DamageVector
+	@@&Amount			= 10.0
+	@@^Type				= "Blunt"
+
+
+
+[RobotProjectile]
+RosaTransform	= "."
+RosaSpin		= "RobotProjectile_Spin"
+RosaCollision	= "RobotProjectile_Collision"
+RosaMesh		= "RobotProjectile_Mesh"
+RosaLight		= "RobotProjectile_Light"
+RosaParticles	= "."
+RosaSound		= "."
+Reactions		= "RobotProjectile_Reactions"
+Owner			= "."
+
+	[RobotProjectile_Spin]
+	AxisX		= 1.0
+	AxisY		= 0.5
+	Velocity	= 720.0	# In degrees per second
+
+	[RobotProjectile_Collision]
+	HalfExtentsXY	= 0.15
+	HalfExtentsZ	= 0.15
+
+	[RobotProjectile_Mesh]
+	IsLight				= true
+	Mesh				= "Meshes/_light-sphere.cms"
+	Scale				= 0.7
+	NumAttachedMeshes	= &
+	@ AttachedMesh
+	@@&					= "Meshes/robot-projectile.cms"
+	@@^Tag				= "Projectile"
+	@@^CastsShadows		= false
+
+	[RobotProjectile_Light]
+	Radius					= 4.0
+	ColorH					= 0.0
+	ColorS					= 1.0
+	ColorV					= 1.0
+
+	[RobotProjectile_Reactions]
+	lmReactions
+	{
+		Reaction( Rule( "OnAnyCollision" ) )
+		{
+			"Projectile_StopComposite"
+		}
+
+		Reaction( Rule( "OnTouched", Conditional( "E", "TouchedPE", "OwnerPE" ) ) )
+		{
+			// Do nothing
+		}
+
+		// Touching living things
+		Reaction( Rule( "OnTouched",
+						PushContext( "TouchedPE", QueryActionStack( "IsAlive" ) )
+					) )
+		{
+			SendEvent(
+					"TakeDamage",
+					"TouchedPE",
+					DamageSet			= ConstantString( "DamageSet_RobotProjectile" ),
+					Damager				= "OwnerPE",
+					DamageLocation		= "LocationPE",
+					DamageOrientation	= Normal( "VelocityPE" )
+				)
+			SendEvent(
+					"ApplyImpulse",
+					"TouchedPE",
+					Impulse	= "VelocityPE"
+				)
+			"Projectile_StopComposite"
+		}
+	}
+
+		[Projectile_StopComposite]
+		ActionType	= "Composite"
+		lmActions
+		{
+			RosaStopMotion()
+			SendEvent( "HideMeshAttachment",	"SelfPE",	Tag				= ConstantString( "Projectile" ) )
+			SendEvent( "StopTouching",			"SelfPE" )
+			SendEvent( "PlayParticleSystem",	"SelfPE",	ParticleSystem	= ConstantString( "PS_Hitspang" ) )
+			SendEvent( "SetLightColorHSV",		"SelfPE",	ColorV			= ConstantFloat( 0.0 ),	Radius	= ConstantFloat( 1.0 ),	Duration = ConstantFloat( 0.25 ) )
+			RosaPlaySound( "Sound_Fireball_Explosion" )
+			SendEvent( "Destroy",				"SelfPE",	DispatchDelay = 3.0 )	// Give FX time to play
+		}
+
+		[DamageSet_RobotProjectile]
+		NumDamageVectors	= &
+		@ DamageVector
+		@@&Amount			= 25.0	# It takes 4 ranged hits to kill the player (not counting save threshold)
+
+
+
+[CEO]
+#ShouldDebugRender		= true
+Extends					= "BaseEnemy"
+RosaTransform			= "CEO_Transform"
+RosaMesh				= "CEO_Mesh"
+RosaFrobbable			= "CEO_Frobbable"
+RosaCampaignArtifact	= "CEO_CampaignArtifact"
+RosaFaction				= "Faction_Robot"
+RosaHealth				= "CEO_Health"
+RosaAIMotion			= "CEO_AIMotion"
+RodinBehaviorTree		= "CEO_BT"
+Reactions				= "CEO_Reactions"
+PEMap					= "CEO_PEMap"
+
+	[CEO_Transform]
+	Extends	= "BaseAI_Transform"
+	Scale	= 0.75
+
+	[CEO_Mesh]
+	Extends		= "BaseAI_Mesh"
+	Mesh		= "Meshes/Actors/ceo.cms"
+	Material	= "Material_Character"	# For skin glow
+
+	[CEO_Frobbable]
+	Extends			= "BaseEnemy_Frobbable"
+	IsFrobbable		= true
+	ExtentsXY		= 0.75
+	ExtentsZ		= 1.25
+	CanBeAimedAt	= false
+	FrobVerb		= "Talk"
+
+	[CEO_CampaignArtifact]
+	Tag	= "Objective_Zeta_GetKeycards"	# HACKHACK: I'm using this to complete the objective too now, the name must match (revisit this for Loam someday)
+
+	[CEO_Health]
+	Extends			= "BaseEnemy_Health"
+	Invulnerable	= true
+
+	[CEO_AIMotion]
+	Extends				= "BaseAI_AIMotion"
+	LandAcceleration	= 10.0
+	NumStanceAnimations	= &
+	@ Stance
+	@@&					= "Run"
+	@@^Animation		= "Run"
+
+	[CEO_PEMap]
+	# Inherit base properties and then override a few
+	NumPEMaps	= &
+	@ PEMap
+	@@&			= "BaseEnemy_PEMap"
+
+	[CEO_BT]
+	RootNode		= "CommonBT_Root"
+	NumLookupSets	= &
+	@ LookupSet
+	@@&				= "BaseEnemy_BT"
+	NumLookupNodes	= &
+	@ LookupNode
+	@@&Key			= "PursuitBehavior"
+	@@^Value		= "CommonBT_PursueAndWarn"
+	@@&Key			= "PursueCombatTarget"
+	@@^Value		= "CommonBT_FleeCombatTarget"
+	@@&Key			= "AttackBehavior"
+	@@^Value		= "NullBT"
+
+	[CEO_Reactions]
+	Extends				= "BaseEnemy_Reactions"
+	NumObserveEvents	= 0	# Don't inherit ForceAIRespawn
+	NumReactionSets		= &
+	@ ReactionSet
+	@@&					= "BaseAI_Reactions_Damage"	# For landed-upon impulse at least
+	@@&					= "BaseEnemy_Reactions"
+	lmReactions
+	{
+		Reaction( Rule( "OnFrobbed" ) )
+		{
+			RosaPlaySound( "Sound_Search_CEO", EntityPE = "PlayerPE" )
+
+			SendEvent( "StartSupertitles",
+				"PlayerPE",
+				Supertitles	= Add( ConstantString( "Supertitles_" ), GetName( "SelfPE" ) ) )	// HACKHACK: These are defined in level_zeta.loom since that's where the rest of the script lives
+			
+			SendEvent( "ResolveArtifact",		"SelfPE" )
+
+			SendEvent( "DisableMainFrob",		"SelfPE" )	// DisableMainFrob instead of BecomeNonFrobbable so the name still appears
+			SendEvent( "SetFrobPriority",		"SelfPE", FrobPriority = ConstantInt( 2 ) ) // Let open doors take priority
+
+			SendEvent( "PauseBT",				"SelfPE" )
+			SendEvent( "PauseSensors",			"SelfPE" )
+			SendEvent( "PauseThinkers",			"SelfPE" )
+			SendEvent( "PauseAIMotion",			"SelfPE" )
+			SendEvent( "StopLooking",			"SelfPE" )
+			SendEvent( "StopCategory",			"SelfPE",	Category = ConstantString( "VO" ) )
+			SendEvent( "StopTouching",			"SelfPE" )
+			SendEvent( "StopBlockingBlockers",	"SelfPE" )	// This also means the ragdoll root will fall through dynamic blockers like crates
+			SendEvent( "StopRepulsing",			"SelfPE" )
+
+			RosaPlayAnim( "Captured", BlendTime = 0.5 )
+			//RosaPlayBark( Lookup( "DeathBark", WarnFailure = false ), "VO" )
+
+			SetState( "SelfPE", "None" )
+		}
+	}
+
+[CEO_1]
+Extends	= "CEO"
+
+[CEO_2]
+Extends	= "CEO"
+
+[CEO_3]
+Extends	= "CEO"
+
+[CEO_4]
+Extends	= "CEO"
+
+[CEO_5]
+Extends	= "CEO"
+
+[CEO_6]
+Extends	= "CEO"
+
+[CEO_7]
+Extends	= "CEO"
+
+[CEO_8]
+Extends	= "CEO"
+
+
+
+[Robot_Melee]
+#ShouldDebugRender		= true
+Extends					= "BaseEnemy"
+RosaTransform			= "Robot_Melee_Transform"
+RosaMesh				= "Robot_Melee_Mesh"
+RosaFaction				= "Faction_Robot"
+RosaHealth				= "Robot_Melee_Health"
+RosaAIMotion			= "Robot_Melee_AIMotion"
+RosaRespawner			= "."
+RodinBehaviorTree		= "Robot_Melee_BT"
+PEMap					= "Robot_Melee_PEMap"
+
+	[Robot_Melee_Transform]
+	Extends	= "BaseAI_Transform"
+	Scale	= 0.6
+
+	[Robot_Melee_Mesh]
+	Extends					= "BaseAI_Mesh"
+	Mesh					= "Meshes/Actors/robot.cms"
+	AnimationBonesTickRate	= 0.08333333	# Animate on twos (12 fps)
+
+	[Faction_Robot]
+	Faction = "Robot"
+
+	[Robot_Melee_Health]
+	Extends	= "BaseEnemy_Health"
+	Health	= 20
+
+	[Robot_Melee_AIMotion]
+	Extends				= "BaseAI_AIMotion"
+	LandAcceleration	= 12.0
+	NumStanceAnimations	= 0	# Don't use Search/Run
+
+	[Robot_Melee_PEMap]
+	# Inherit base properties and then override a few
+	NumPEMaps	= &
+	@ PEMap
+	@@&			= "BaseEnemy_PEMap"
+	lmPEMap
+	{
+		PEMap( "MeleeDamageSet",	ConstantString( "DamageSet_Robot_Melee" ) )
+		PEMap( "HitReactTimeout",	ConstantFloat( 1.5 ) )
+
+		PEMap( "LootChance_Ammox3",	ConstantFloat( 0.0 ) )		// no 3x ammo drops from drones
+		PEMap( "LootChance_Ammox2",	ConstantFloat( 0.3 ) )		// 30% of the time you get 2 ammo
+		PEMap( "LootChance_Ammox1",	ConstantFloat( 0.571 ) )	// 40% of the time you get 1 ammo (and 30%, nada)
+	}
+
+		[DamageSet_Robot_Melee]
+		NumDamageVectors	= &
+		@ DamageVector
+		@@&Amount			= 15.0	# It takes 7 melee hits to kill the player (not counting save threshold)
+
+	[Robot_Melee_BT]
+	RootNode		= "CommonBT_Root"
+	NumLookupSets	= &
+	@ LookupSet
+	@@&				= "BaseEnemy_BT"
+	NumLookupNodes	= &
+	@ LookupNode
+	@@&Key			= "PursuitBehavior"
+	@@^Value		= "CommonBT_PursueAndWarn"
+	# ROSANOTE: This used to be NullBT, with the comment:
+	# "Don't do the random wander when pursuit fails, because we can keep ranged attacking"
+	# but sometimes we can't do the ranged attack because it fails the RosaCheckTrace in
+	# CommonBT_RangedAttackSequence, and then we stall. So either do this, or add a fallback
+	# in that behavior.
+	@@&Key			= "PursueCombatTargetFallback"
+	@@^Value		= "CommonBT_PursueCombatTargetFallback"
+	@@&Key			= "AttackBehavior"
+	@@^Value		= "CommonBT_MeleeAttackSequence"
+
+
+
+[Robot_Ranged]
+#ShouldDebugRender		= true
+Extends					= "BaseEnemy"
+RosaTransform			= "Robot_Ranged_Transform"
+RosaMesh				= "Robot_Ranged_Mesh"
+RosaFaction				= "Faction_Robot"
+RosaHealth				= "Robot_Ranged_Health"
+RosaAIMotion			= "Robot_Ranged_AIMotion"
+RosaRespawner			= "."
+RodinBehaviorTree		= "Robot_Ranged_BT"
+PEMap					= "Robot_Ranged_PEMap"
+
+	[Robot_Ranged_Transform]
+	Extends	= "BaseAI_Transform"
+	Scale	= 1.0
+
+	[Robot_Ranged_Mesh]
+	Extends					= "BaseAI_Mesh"
+	Mesh					= "Meshes/Actors/robot-ranged.cms"
+	AnimationBonesTickRate	= 0.08333333	# Animate on twos (12 fps)
+
+	[Robot_Ranged_Health]
+	Extends	= "BaseEnemy_Health"
+	Health	= 30
+
+	[Robot_Ranged_AIMotion]
+	Extends				= "BaseAI_AIMotion"
+	LandAcceleration	= 6.0
+	NumStanceAnimations	= 0	# Don't use Search/Run
+
+	[Robot_Ranged_PEMap]
+	# Inherit base properties and then override a few
+	NumPEMaps	= &
+	@ PEMap
+	@@&			= "BaseEnemy_PEMap"
+	lmPEMap
+	{
+		PEMap( "MeleeDamageSet",			ConstantString( "DamageSet_Robot_Melee" ) )
+		PEMap( "RangedAttackWarmupTime",	RandomFloat( 1.5, 2.5 ) )
+		PEMap( "CanDodge",					ConstantBool( false ) )
+		PEMap( "HitReactTimeout",			ConstantFloat( 1.5 ) )
+		PEMap( "UseDeadReckoning",			ConstantBool( false ) )		// This ended up looking weird, so nah.
+		PEMap( "RangedAttackProjectile",	ConstantString( "RobotProjectile" ) )
+		PEMap( "RangedAttackSpeed",			ConstantFloat( 6.0 ) )		// Slow projectile
+		PEMap( "PursueRange",				ConstantFloat( 3.0 ) )
+
+		PEMap( "LootChance_Ammox3",	ConstantFloat( 0.2 ) )		// 20% of the time you get 3 ammo
+		PEMap( "LootChance_Ammox2",	ConstantFloat( 0.375 ) )	// 30% of the time you get 2 ammo
+		PEMap( "LootChance_Ammox1",	ConstantFloat( 0.8 ) )		// 40% of the time you get 1 ammo (and 10%, nada)
+	}
+
+	[Robot_Ranged_BT]
+	RootNode		= "CommonBT_Root"
+	NumLookupSets	= &
+	@ LookupSet
+	@@&				= "BaseEnemy_BT"
+	NumLookupNodes	= &
+	@ LookupNode
+	@@&Key			= "PursuitBehavior"
+	@@^Value		= "CommonBT_PursueAndAttack"
+	# ROSANOTE: This used to be NullBT, with the comment:
+	# "Don't do the random wander when pursuit fails, because we can keep ranged attacking"
+	# but sometimes we can't do the ranged attack because it fails the RosaCheckTrace in
+	# CommonBT_RangedAttackSequence, and then we stall. So either do this, or add a fallback
+	# in that behavior.
+	@@&Key			= "PursueCombatTargetFallback"
+	@@^Value		= "CommonBT_PursueCombatTargetFallback"
+	@@&Key			= "AttackBehavior"
+	@@^Value		= "CommonBT_AttackSelector"

@@ -1,0 +1,17 @@
+#include "common.hlsl_psh"
+
+float4 BloomParams;	// Set from code; xyz = RGB threshold, w = scalar
+
+sampler Sampler			: register(s0);
+
+struct PS_INPUT
+{
+	float2 UV		: TEXCOORD0;
+};
+
+float4 Main( PS_INPUT In ) : COLOR
+{
+	// Clip anything below HDR range, then scale
+	const float3 Black = float3( 0.0f, 0.0f, 0.0f );
+	return float4( max( tex2D( Sampler, In.UV ).rgb - BloomParams.xyz, Black ) * BloomParams.w, 1.0f );
+}

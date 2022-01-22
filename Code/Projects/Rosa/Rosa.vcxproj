@@ -1,0 +1,861 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Final|Win32">
+      <Configuration>Final</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Final|x64">
+      <Configuration>Final</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{6E2F64C9-DC05-4C0E-9E3E-076A42876B2F}</ProjectGuid>
+    <RootNamespace>Rosa</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Final|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v140_xp</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Final|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v140_xp</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v140_xp</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v140_xp</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v140_xp</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v140_xp</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Final|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Final|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>14.0.25431.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(Platform)\$(Configuration)\</IntDir>
+    <LinkIncremental>true</LinkIncremental>
+    <TargetName>Zeta</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(Platform)\$(Configuration)\</OutDir>
+    <TargetName>Zeta</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(Platform)\$(Configuration)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+    <TargetName>Zeta</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(Platform)\$(Configuration)\</OutDir>
+    <TargetName>Zeta</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Final|Win32'">
+    <OutDir>$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(Platform)\$(Configuration)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+    <TargetName>Zeta</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Final|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(Platform)\$(Configuration)\</OutDir>
+    <TargetName>Zeta</TargetName>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>./src;../../Libraries/Core/src;../../Libraries/Math/src;../../Libraries/GLEW/src;../../Libraries/3D/src;../../Libraries/SoLoud/src;../../Libraries/Audio/src;../../Libraries/Framework/src;../../Libraries/UI/src;../../Libraries/Workbench/src;../../Libraries/Rodin/src;../../Libraries/ENet/src;../../Libraries/zlib/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <PrecompiledHeader />
+      <WarningLevel>Level4</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>kernel32.lib;Dxguid.lib;xinput.lib;d3d9.lib;d3dx9.lib;dinput8.lib;../../Libraries/Core/lib/SDL2_x86.lib;../../Libraries/Core/lib/SDL2main_x86.lib;lib/steam_api_x86.lib;WinMM.lib;WS2_32.lib;glu32.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreSpecificDefaultLibraries>libcmt.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <TargetMachine>MachineX86</TargetMachine>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <AdditionalLibraryDirectories>$(DXSDK_DIR)\Lib\x86\</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>./src;../../Libraries/Core/src;../../Libraries/Math/src;../../Libraries/GLEW/src;../../Libraries/3D/src;../../Libraries/SoLoud/src;../../Libraries/Audio/src;../../Libraries/Framework/src;../../Libraries/UI/src;../../Libraries/Workbench/src;../../Libraries/Rodin/src;../../Libraries/ENet/src;../../Libraries/zlib/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level4</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>kernel32.lib;Dxguid.lib;xinput.lib;d3d9.lib;d3dx9.lib;dinput8.lib;../../Libraries/Core/lib/SDL2_x64.lib;../../Libraries/Core/lib/SDL2main_x64.lib;lib/steam_api_x64.lib;WinMM.lib;WS2_32.lib;glu32.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreSpecificDefaultLibraries>libcmt.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <AdditionalLibraryDirectories>$(DXSDK_DIR)\Lib\x64\</AdditionalLibraryDirectories>
+    </Link>
+    <ProjectReference />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>./src;../../Libraries/Core/src;../../Libraries/Math/src;../../Libraries/GLEW/src;../../Libraries/3D/src;../../Libraries/SoLoud/src;../../Libraries/Audio/src;../../Libraries/Framework/src;../../Libraries/UI/src;../../Libraries/Workbench/src;../../Libraries/Rodin/src;../../Libraries/ENet/src;../../Libraries/zlib/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <PrecompiledHeader />
+      <WarningLevel>Level4</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>kernel32.lib;Dxguid.lib;xinput.lib;d3d9.lib;d3dx9.lib;dinput8.lib;../../Libraries/Core/lib/SDL2_x86.lib;../../Libraries/Core/lib/SDL2main_x86.lib;lib/steam_api_x86.lib;WinMM.lib;WS2_32.lib;glu32.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX86</TargetMachine>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <AdditionalLibraryDirectories>$(DXSDK_DIR)\Lib\x86\</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>./src;../../Libraries/Core/src;../../Libraries/Math/src;../../Libraries/GLEW/src;../../Libraries/3D/src;../../Libraries/SoLoud/src;../../Libraries/Audio/src;../../Libraries/Framework/src;../../Libraries/UI/src;../../Libraries/Workbench/src;../../Libraries/Rodin/src;../../Libraries/ENet/src;../../Libraries/zlib/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level4</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>kernel32.lib;Dxguid.lib;xinput.lib;d3d9.lib;d3dx9.lib;dinput8.lib;../../Libraries/Core/lib/SDL2_x64.lib;../../Libraries/Core/lib/SDL2main_x64.lib;lib/steam_api_x64.lib;WinMM.lib;WS2_32.lib;glu32.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <AdditionalLibraryDirectories>$(DXSDK_DIR)\Lib\x64\</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Final|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>./src;../../Libraries/Core/src;../../Libraries/Math/src;../../Libraries/GLEW/src;../../Libraries/3D/src;../../Libraries/SoLoud/src;../../Libraries/Audio/src;../../Libraries/Framework/src;../../Libraries/UI/src;../../Libraries/Workbench/src;../../Libraries/Rodin/src;../../Libraries/ENet/src;../../Libraries/zlib/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_FINAL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <PrecompiledHeader />
+      <WarningLevel>Level4</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>kernel32.lib;Dxguid.lib;xinput.lib;d3d9.lib;d3dx9.lib;dinput8.lib;../../Libraries/Core/lib/SDL2_x86.lib;../../Libraries/Core/lib/SDL2main_x86.lib;lib/steam_api_x86.lib;WinMM.lib;WS2_32.lib;glu32.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX86</TargetMachine>
+      <AdditionalLibraryDirectories>$(DXSDK_DIR)\Lib\x86\</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Final|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>./src;../../Libraries/Core/src;../../Libraries/Math/src;../../Libraries/GLEW/src;../../Libraries/3D/src;../../Libraries/SoLoud/src;../../Libraries/Audio/src;../../Libraries/Framework/src;../../Libraries/UI/src;../../Libraries/Workbench/src;../../Libraries/Rodin/src;../../Libraries/ENet/src;../../Libraries/zlib/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_FINAL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level4</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>kernel32.lib;Dxguid.lib;xinput.lib;d3d9.lib;d3dx9.lib;dinput8.lib;../../Libraries/Core/lib/SDL2_x64.lib;../../Libraries/Core/lib/SDL2main_x64.lib;lib/steam_api_x64.lib;WinMM.lib;WS2_32.lib;glu32.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <AdditionalLibraryDirectories>$(DXSDK_DIR)\Lib\x64\</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Achievements\achievementmanager_steam.cpp" />
+    <ClCompile Include="src\Actions\wbactionrosaaddammo.cpp" />
+    <ClCompile Include="src\Actions\wbactionrosaaddkeycard.cpp" />
+    <ClCompile Include="src\Actions\wbactionrosaaddmoney.cpp" />
+    <ClCompile Include="src\Actions\wbactionrosaaddobjective.cpp" />
+    <ClCompile Include="src\Actions\wbactionrosaawardachievement.cpp" />
+    <ClCompile Include="src\Actions\wbactionrosabindinput.cpp" />
+    <ClCompile Include="src\Actions\wbactionrosabuyammo.cpp" />
+    <ClCompile Include="src\Actions\wbactionrosacheckcone.cpp" />
+    <ClCompile Include="src\Actions\wbactionrosacheckline.cpp" />
+    <ClCompile Include="src\Actions\wbactionrosachecksphere.cpp" />
+    <ClCompile Include="src\Actions\wbactionrosaclearobjectives.cpp" />
+    <ClCompile Include="src\Actions\wbactionrosacompleteobjective.cpp" />
+    <ClCompile Include="src\Actions\wbactionrosaconditionalshowbook.cpp" />
+    <ClCompile Include="src\Actions\wbactionrosaflushworldfiles.cpp" />
+    <ClCompile Include="src\Actions\wbactionrosafootstep.cpp" />
+    <ClCompile Include="src\Actions\wbactionrosagiveitem.cpp" />
+    <ClCompile Include="src\Actions\wbactionrosagotolevel.cpp" />
+    <ClCompile Include="src\Actions\wbactionrosaincrementstat.cpp" />
+    <ClCompile Include="src\Actions\wbactionrosalaunchwebsite.cpp" />
+    <ClCompile Include="src\Actions\wbactionrosaloadgame.cpp" />
+    <ClCompile Include="src\Actions\wbactionrosalogmessage.cpp" />
+    <ClCompile Include="src\Actions\wbactionrosaopenuserdatapath.cpp" />
+    <ClCompile Include="src\Actions\wbactionrosaplayanim.cpp" />
+    <ClCompile Include="src\Actions\wbactionrosaplaybark.cpp" />
+    <ClCompile Include="src\Actions\wbactionrosaplayhandanim.cpp" />
+    <ClCompile Include="src\Actions\wbactionrosaplaysound.cpp" />
+    <ClCompile Include="src\Actions\wbactionrosaprogressconversation.cpp" />
+    <ClCompile Include="src\Actions\wbactionrosapublishresults.cpp" />
+    <ClCompile Include="src\Actions\wbactionrosaremoveammo.cpp" />
+    <ClCompile Include="src\Actions\wbactionrosaremovekeycard.cpp" />
+    <ClCompile Include="src\Actions\wbactionrosaremovemoney.cpp" />
+    <ClCompile Include="src\Actions\wbactionrosareturntotitle.cpp" />
+    <ClCompile Include="src\Actions\wbactionrosasavegame.cpp" />
+    <ClCompile Include="src\Actions\wbactionrosaselectcharacterpreset.cpp" />
+    <ClCompile Include="src\Actions\wbactionrosaselectconversationchoice.cpp" />
+    <ClCompile Include="src\Actions\wbactionrosasetconvostate.cpp" />
+    <ClCompile Include="src\Actions\wbactionrosasetlanguage.cpp" />
+    <ClCompile Include="src\Actions\wbactionrosasetlight.cpp" />
+    <ClCompile Include="src\Actions\wbactionrosasetlightcolor.cpp" />
+    <ClCompile Include="src\Actions\wbactionrosasetpersistentvar.cpp" />
+    <ClCompile Include="src\Actions\wbactionrosasetstat.cpp" />
+    <ClCompile Include="src\Actions\wbactionrosasettexture.cpp" />
+    <ClCompile Include="src\Actions\wbactionrosashowbook.cpp" />
+    <ClCompile Include="src\Actions\wbactionrosaspawndecal.cpp" />
+    <ClCompile Include="src\Actions\wbactionrosaspawnentity.cpp" />
+    <ClCompile Include="src\Actions\wbactionrosastartconversation.cpp" />
+    <ClCompile Include="src\Actions\wbactionrosastopmotion.cpp" />
+    <ClCompile Include="src\Actions\wbactionrosateleportto.cpp" />
+    <ClCompile Include="src\AnimEvents\animeventrosaexecuteaction.cpp" />
+    <ClCompile Include="src\AnimEvents\animeventrosasendevent.cpp" />
+    <ClCompile Include="src\BTNodes\rodinbtnoderosachecktrace.cpp" />
+    <ClCompile Include="src\BTNodes\rodinbtnoderosalookat.cpp" />
+    <ClCompile Include="src\BTNodes\rodinbtnoderosamoveto.cpp" />
+    <ClCompile Include="src\BTNodes\rodinbtnoderosaplayanim.cpp" />
+    <ClCompile Include="src\BTNodes\rodinbtnoderosaplaybark.cpp" />
+    <ClCompile Include="src\BTNodes\rodinbtnoderosastopmoving.cpp" />
+    <ClCompile Include="src\BTNodes\rodinbtnoderosaturntoward.cpp" />
+    <ClCompile Include="src\Components\wbcomponent_debugrender.cpp" />
+    <ClCompile Include="src\Components\wbcomprodinblackboard_debugrender.cpp" />
+    <ClCompile Include="src\Components\wbcomprosaantilight.cpp" />
+    <ClCompile Include="src\Components\wbcomprosahitbox.cpp" />
+    <ClCompile Include="src\Components\wbcomprosalinkedentities.cpp" />
+    <ClCompile Include="src\Components\wbcomprosaragdoll.cpp" />
+    <ClCompile Include="src\Components\wbcomprodinbehaviortree_debugrender.cpp" />
+    <ClCompile Include="src\Components\wbcomprosaaimotion.cpp" />
+    <ClCompile Include="src\Components\wbcomprosaalarmbox.cpp" />
+    <ClCompile Include="src\Components\wbcomprosaalarmtripper.cpp" />
+    <ClCompile Include="src\Components\wbcomprosaammobag.cpp" />
+    <ClCompile Include="src\Components\wbcomprosaanchor.cpp" />
+    <ClCompile Include="src\Components\wbcomprosacamera.cpp" />
+    <ClCompile Include="src\Components\wbcomprosacampaignartifact.cpp" />
+    <ClCompile Include="src\Components\wbcomprosacharacter.cpp" />
+    <ClCompile Include="src\Components\wbcomprosacharacterconfig.cpp" />
+    <ClCompile Include="src\Components\wbcomprosaclimbable.cpp" />
+    <ClCompile Include="src\Components\wbcomprosacollectible.cpp" />
+    <ClCompile Include="src\Components\wbcomprosacollision.cpp" />
+    <ClCompile Include="src\Components\wbcomprosadamageeffects.cpp" />
+    <ClCompile Include="src\Components\wbcomprosadecal.cpp" />
+    <ClCompile Include="src\Components\wbcomprosadoor.cpp" />
+    <ClCompile Include="src\Components\wbcomprosafaction.cpp" />
+    <ClCompile Include="src\Components\wbcomprosafootsteps.cpp" />
+    <ClCompile Include="src\Components\wbcomprosafrobbable.cpp" />
+    <ClCompile Include="src\Components\wbcomprosafrobber.cpp" />
+    <ClCompile Include="src\Components\wbcomprosahackable.cpp" />
+    <ClCompile Include="src\Components\wbcomprosahands.cpp" />
+    <ClCompile Include="src\Components\wbcomprosaheadshot.cpp" />
+    <ClCompile Include="src\Components\wbcomprosaheadtracker.cpp" />
+    <ClCompile Include="src\Components\wbcomprosahealth.cpp" />
+    <ClCompile Include="src\Components\wbcomprosahudmarker.cpp" />
+    <ClCompile Include="src\Components\wbcomprosaicicles.cpp" />
+    <ClCompile Include="src\Components\wbcomprosainventory.cpp" />
+    <ClCompile Include="src\Components\wbcomprosaitem.cpp" />
+    <ClCompile Include="src\Components\wbcomprosajukebox.cpp" />
+    <ClCompile Include="src\Components\wbcomprosakeyring.cpp" />
+    <ClCompile Include="src\Components\wbcomprosalight.cpp" />
+    <ClCompile Include="src\Components\wbcomprosalock.cpp" />
+    <ClCompile Include="src\Components\wbcomprosaloottable.cpp" />
+    <ClCompile Include="src\Components\wbcomprosamapmarker.cpp" />
+    <ClCompile Include="src\Components\wbcomprosamarkup.cpp" />
+    <ClCompile Include="src\Components\wbcomprosamedkit.cpp" />
+    <ClCompile Include="src\Components\wbcomprosamesh.cpp" />
+    <ClCompile Include="src\Components\wbcomprosaobjectives.cpp" />
+    <ClCompile Include="src\Components\wbcomprosaparticles.cpp" />
+    <ClCompile Include="src\Components\wbcomprosapatrolpath.cpp" />
+    <ClCompile Include="src\Components\wbcomprosapickup.cpp" />
+    <ClCompile Include="src\Components\wbcomprosaplayer.cpp" />
+    <ClCompile Include="src\Components\wbcomprosaposeop.cpp" />
+    <ClCompile Include="src\Components\wbcomprosapowerteleport.cpp" />
+    <ClCompile Include="src\Components\wbcomprosareadable.cpp" />
+    <ClCompile Include="src\Components\wbcomprosarepulsor.cpp" />
+    <ClCompile Include="src\Components\wbcomprosarespawner.cpp" />
+    <ClCompile Include="src\Components\wbcomprosarope.cpp" />
+    <ClCompile Include="src\Components\wbcomprosaseccam.cpp" />
+    <ClCompile Include="src\Components\wbcomprosasensor.cpp" />
+    <ClCompile Include="src\Components\wbcomprosasensorbump.cpp" />
+    <ClCompile Include="src\Components\wbcomprosasensordamage.cpp" />
+    <ClCompile Include="src\Components\wbcomprosasensorhearing.cpp" />
+    <ClCompile Include="src\Components\wbcomprosasensormarkup.cpp" />
+    <ClCompile Include="src\Components\wbcomprosasensorpatrol.cpp" />
+    <ClCompile Include="src\Components\wbcomprosasensorpoll.cpp" />
+    <ClCompile Include="src\Components\wbcomprosasensorrepulsor.cpp" />
+    <ClCompile Include="src\Components\wbcomprosasensortheft.cpp" />
+    <ClCompile Include="src\Components\wbcomprosasensorvision.cpp" />
+    <ClCompile Include="src\Components\wbcomprosasign.cpp" />
+    <ClCompile Include="src\Components\wbcomprosasignreader.cpp" />
+    <ClCompile Include="src\Components\wbcomprosasleeper.cpp" />
+    <ClCompile Include="src\Components\wbcomprosasound.cpp" />
+    <ClCompile Include="src\Components\wbcomprosaspawnmanager.cpp" />
+    <ClCompile Include="src\Components\wbcomprosaspikes.cpp" />
+    <ClCompile Include="src\Components\wbcomprosaspin.cpp" />
+    <ClCompile Include="src\Components\wbcomprosastim.cpp" />
+    <ClCompile Include="src\Components\wbcomprosaswitch.cpp" />
+    <ClCompile Include="src\Components\wbcomprosaswitchable.cpp" />
+    <ClCompile Include="src\Components\wbcomprosathinker.cpp" />
+    <ClCompile Include="src\Components\wbcomprosathinkernpctarget.cpp" />
+    <ClCompile Include="src\Components\wbcomprosathinkerpatrol.cpp" />
+    <ClCompile Include="src\Components\wbcomprosathinkertarget.cpp" />
+    <ClCompile Include="src\Components\wbcomprosatransform.cpp" />
+    <ClCompile Include="src\Components\wbcomprosatrapbolt.cpp" />
+    <ClCompile Include="src\Components\wbcomprosaupgrades.cpp" />
+    <ClCompile Include="src\Components\wbcomprosavisible.cpp" />
+    <ClCompile Include="src\Components\wbcomprosawallet.cpp" />
+    <ClCompile Include="src\Components\wbcomprosaweapon.cpp" />
+    <ClCompile Include="src\Components\wbcompstatmod_debugrender.cpp" />
+    <ClCompile Include="src\Components\wbrosacomponent.cpp" />
+    <ClCompile Include="src\exceptionwritesteamminidump.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\PEs\wbperosacampaignmodify.cpp" />
+    <ClCompile Include="src\PEs\wbperosaconvoselector.cpp" />
+    <ClCompile Include="src\PEs\wbperosadeadreckoning.cpp" />
+    <ClCompile Include="src\PEs\wbperosadistance.cpp" />
+    <ClCompile Include="src\PEs\wbperosagetbestcycleslot.cpp" />
+    <ClCompile Include="src\PEs\wbperosagetbonelocation.cpp" />
+    <ClCompile Include="src\PEs\wbperosagetcharactervo.cpp" />
+    <ClCompile Include="src\PEs\wbperosagetfaction.cpp" />
+    <ClCompile Include="src\PEs\wbperosagetitem.cpp" />
+    <ClCompile Include="src\PEs\wbperosagetlocation.cpp" />
+    <ClCompile Include="src\PEs\wbperosagetorientation.cpp" />
+    <ClCompile Include="src\PEs\wbperosagetpersistentvar.cpp" />
+    <ClCompile Include="src\PEs\wbperosagetslot.cpp" />
+    <ClCompile Include="src\PEs\wbperosagetspeed.cpp" />
+    <ClCompile Include="src\PEs\wbperosagetspeedlimit.cpp" />
+    <ClCompile Include="src\PEs\wbperosagetsurfaceproperty.cpp" />
+    <ClCompile Include="src\PEs\wbperosagetvelocity.cpp" />
+    <ClCompile Include="src\PEs\wbperosahasammo.cpp" />
+    <ClCompile Include="src\PEs\wbperosahaskeycard.cpp" />
+    <ClCompile Include="src\PEs\wbperosahasmoney.cpp" />
+    <ClCompile Include="src\PEs\wbperosahasmrusave.cpp" />
+    <ClCompile Include="src\PEs\wbperosaheadshot.cpp" />
+    <ClCompile Include="src\PEs\wbperosaisconvostate.cpp" />
+    <ClCompile Include="src\PEs\wbperosaisdifficulty.cpp" />
+    <ClCompile Include="src\PEs\wbperosaisinfrontof.cpp" />
+    <ClCompile Include="src\PEs\wbperosaisinsidedoor.cpp" />
+    <ClCompile Include="src\PEs\wbperosaisobjectivecomplete.cpp" />
+    <ClCompile Include="src\PEs\wbperosaplayer.cpp" />
+    <ClCompile Include="src\rosacloudmanager.cpp" />
+    <ClCompile Include="src\rosasupertitles.cpp" />
+    <ClCompile Include="src\Screens\uiscreen-rosabindinputs.cpp" />
+    <ClCompile Include="src\Screens\uiscreen-rosacampaign.cpp" />
+    <ClCompile Include="src\Screens\uiscreen-rosacharacterconfig.cpp" />
+    <ClCompile Include="src\Screens\uiscreen-rosaconversation.cpp" />
+    <ClCompile Include="src\Screens\uiscreen-rosacredits.cpp" />
+    <ClCompile Include="src\Screens\uiscreen-rosahacking.cpp" />
+    <ClCompile Include="src\Screens\uiscreen-rosakeypad.cpp" />
+    <ClCompile Include="src\Screens\uiscreen-rosalanguages.cpp" />
+    <ClCompile Include="src\Screens\uiscreen-rosaload.cpp" />
+    <ClCompile Include="src\Screens\uiscreen-rosanewgame.cpp" />
+    <ClCompile Include="src\Screens\uiscreen-rosaradial.cpp" />
+    <ClCompile Include="src\Screens\uiscreen-rosasave.cpp" />
+    <ClCompile Include="src\Screens\uiscreen-rosasetres.cpp" />
+    <ClCompile Include="src\SDPs\sdprosaambientlight.cpp" />
+    <ClCompile Include="src\SDPs\sdprosaantilight.cpp" />
+    <ClCompile Include="src\SDPs\sdprosabloom.cpp" />
+    <ClCompile Include="src\SDPs\sdprosabloomclip.cpp" />
+    <ClCompile Include="src\SDPs\sdprosacharacter.cpp" />
+    <ClCompile Include="src\SDPs\sdprosadecal.cpp" />
+    <ClCompile Include="src\SDPs\sdprosaedge.cpp" />
+    <ClCompile Include="src\SDPs\sdprosaentity.cpp" />
+    <ClCompile Include="src\SDPs\sdprosafoglight.cpp" />
+    <ClCompile Include="src\SDPs\sdprosafogmesh.cpp" />
+    <ClCompile Include="src\SDPs\sdprosafoliage.cpp" />
+    <ClCompile Include="src\SDPs\sdprosafxaa.cpp" />
+    <ClCompile Include="src\SDPs\sdprosageo.cpp" />
+    <ClCompile Include="src\SDPs\sdprosagradient.cpp" />
+    <ClCompile Include="src\SDPs\sdprosahud.cpp" />
+    <ClCompile Include="src\SDPs\sdprosahudcalibration.cpp" />
+    <ClCompile Include="src\SDPs\sdprosalight.cpp" />
+    <ClCompile Include="src\SDPs\sdprosalightcombine.cpp" />
+    <ClCompile Include="src\SDPs\sdprosaminimapa.cpp" />
+    <ClCompile Include="src\SDPs\sdprosaminimapb.cpp" />
+    <ClCompile Include="src\SDPs\sdprosapost.cpp" />
+    <ClCompile Include="src\SDPs\sdprosapostcheap.cpp" />
+    <ClCompile Include="src\SDPs\sdprosapostwatercolor.cpp" />
+    <ClCompile Include="src\SDPs\sdprosasky.cpp" />
+    <ClCompile Include="src\SDPs\sdprosassao.cpp" />
+    <ClCompile Include="src\SDPs\sdprosawater.cpp" />
+    <ClCompile Include="src\SDPs\sdprosawaterflow.cpp" />
+    <ClCompile Include="src\uiinputmaprosa.cpp" />
+    <ClCompile Include="src\rosacampaign.cpp" />
+    <ClCompile Include="src\rosaconversation.cpp" />
+    <ClCompile Include="src\rosadamage.cpp" />
+    <ClCompile Include="src\rosadifficulty.cpp" />
+    <ClCompile Include="src\rosafactions.cpp" />
+    <ClCompile Include="src\rosaframework.cpp" />
+    <ClCompile Include="src\rosagame.cpp" />
+    <ClCompile Include="src\rosahacking.cpp" />
+    <ClCompile Include="src\rosahudlog.cpp" />
+    <ClCompile Include="src\rosaintro.cpp" />
+    <ClCompile Include="src\rosairradiance.cpp" />
+    <ClCompile Include="src\rosalockpicking.cpp" />
+    <ClCompile Include="src\rosamesh.cpp" />
+    <ClCompile Include="src\rosamusic.cpp" />
+    <ClCompile Include="src\rosanav.cpp" />
+    <ClCompile Include="src\rosaparticles.cpp" />
+    <ClCompile Include="src\rosapersistence.cpp" />
+    <ClCompile Include="src\rosaroom-editor.cpp" />
+    <ClCompile Include="src\rosaroom.cpp" />
+    <ClCompile Include="src\rosasaveload.cpp" />
+    <ClCompile Include="src\rosasound3dlistener.cpp" />
+    <ClCompile Include="src\rosasurfaces.cpp" />
+    <ClCompile Include="src\rosatargetmanager.cpp" />
+    <ClCompile Include="src\rosatools-static.cpp" />
+    <ClCompile Include="src\rosatools.cpp" />
+    <ClCompile Include="src\rosawardrobe.cpp" />
+    <ClCompile Include="src\rosawbscenehelpers.cpp" />
+    <ClCompile Include="src\rosaworld.cpp" />
+    <ClCompile Include="src\rosaworldcubemap.cpp" />
+    <ClCompile Include="src\rosaworldgen.cpp" />
+    <ClCompile Include="src\rosaworldtexture.cpp" />
+    <ClCompile Include="src\wbentity_debugrender.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="src\Achievements\achievementmanager_steam.h" />
+    <ClInclude Include="src\Achievements\iachievementmanager.h" />
+    <ClInclude Include="src\Actions\wbactionrosaaddammo.h" />
+    <ClInclude Include="src\Actions\wbactionrosaaddkeycard.h" />
+    <ClInclude Include="src\Actions\wbactionrosaaddmoney.h" />
+    <ClInclude Include="src\Actions\wbactionrosaaddobjective.h" />
+    <ClInclude Include="src\Actions\wbactionrosaawardachievement.h" />
+    <ClInclude Include="src\Actions\wbactionrosabindinput.h" />
+    <ClInclude Include="src\Actions\wbactionrosabuyammo.h" />
+    <ClInclude Include="src\Actions\wbactionrosacheckcone.h" />
+    <ClInclude Include="src\Actions\wbactionrosacheckline.h" />
+    <ClInclude Include="src\Actions\wbactionrosachecksphere.h" />
+    <ClInclude Include="src\Actions\wbactionrosaclearobjectives.h" />
+    <ClInclude Include="src\Actions\wbactionrosacompleteobjective.h" />
+    <ClInclude Include="src\Actions\wbactionrosaconditionalshowbook.h" />
+    <ClInclude Include="src\Actions\wbactionrosaflushworldfiles.h" />
+    <ClInclude Include="src\Actions\wbactionrosafootstep.h" />
+    <ClInclude Include="src\Actions\wbactionrosagiveitem.h" />
+    <ClInclude Include="src\Actions\wbactionrosagotolevel.h" />
+    <ClInclude Include="src\Actions\wbactionrosaincrementstat.h" />
+    <ClInclude Include="src\Actions\wbactionrosalaunchwebsite.h" />
+    <ClInclude Include="src\Actions\wbactionrosaloadgame.h" />
+    <ClInclude Include="src\Actions\wbactionrosalogmessage.h" />
+    <ClInclude Include="src\Actions\wbactionrosaopenuserdatapath.h" />
+    <ClInclude Include="src\Actions\wbactionrosaplayanim.h" />
+    <ClInclude Include="src\Actions\wbactionrosaplaybark.h" />
+    <ClInclude Include="src\Actions\wbactionrosaplayhandanim.h" />
+    <ClInclude Include="src\Actions\wbactionrosaplaysound.h" />
+    <ClInclude Include="src\Actions\wbactionrosaprogressconversation.h" />
+    <ClInclude Include="src\Actions\wbactionrosapublishresults.h" />
+    <ClInclude Include="src\Actions\wbactionrosaremoveammo.h" />
+    <ClInclude Include="src\Actions\wbactionrosaremovekeycard.h" />
+    <ClInclude Include="src\Actions\wbactionrosaremovemoney.h" />
+    <ClInclude Include="src\Actions\wbactionrosareturntotitle.h" />
+    <ClInclude Include="src\Actions\wbactionrosasavegame.h" />
+    <ClInclude Include="src\Actions\wbactionrosaselectcharacterpreset.h" />
+    <ClInclude Include="src\Actions\wbactionrosaselectconversationchoice.h" />
+    <ClInclude Include="src\Actions\wbactionrosasetconvostate.h" />
+    <ClInclude Include="src\Actions\wbactionrosasetlanguage.h" />
+    <ClInclude Include="src\Actions\wbactionrosasetlight.h" />
+    <ClInclude Include="src\Actions\wbactionrosasetlightcolor.h" />
+    <ClInclude Include="src\Actions\wbactionrosasetpersistentvar.h" />
+    <ClInclude Include="src\Actions\wbactionrosasetstat.h" />
+    <ClInclude Include="src\Actions\wbactionrosasettexture.h" />
+    <ClInclude Include="src\Actions\wbactionrosashowbook.h" />
+    <ClInclude Include="src\Actions\wbactionrosaspawndecal.h" />
+    <ClInclude Include="src\Actions\wbactionrosaspawnentity.h" />
+    <ClInclude Include="src\Actions\wbactionrosastartconversation.h" />
+    <ClInclude Include="src\Actions\wbactionrosastopmotion.h" />
+    <ClInclude Include="src\Actions\wbactionrosateleportto.h" />
+    <ClInclude Include="src\AnimEvents\animeventrosaexecuteaction.h" />
+    <ClInclude Include="src\AnimEvents\animeventrosasendevent.h" />
+    <ClInclude Include="src\BTNodes\rodinbtnoderosachecktrace.h" />
+    <ClInclude Include="src\BTNodes\rodinbtnoderosalookat.h" />
+    <ClInclude Include="src\BTNodes\rodinbtnoderosamoveto.h" />
+    <ClInclude Include="src\BTNodes\rodinbtnoderosaplayanim.h" />
+    <ClInclude Include="src\BTNodes\rodinbtnoderosaplaybark.h" />
+    <ClInclude Include="src\BTNodes\rodinbtnoderosastopmoving.h" />
+    <ClInclude Include="src\BTNodes\rodinbtnoderosaturntoward.h" />
+    <ClInclude Include="src\Components\wbcomprosaaimotion.h" />
+    <ClInclude Include="src\Components\wbcomprosaalarmbox.h" />
+    <ClInclude Include="src\Components\wbcomprosaalarmtripper.h" />
+    <ClInclude Include="src\Components\wbcomprosaammobag.h" />
+    <ClInclude Include="src\Components\wbcomprosaanchor.h" />
+    <ClInclude Include="src\Components\wbcomprosaantilight.h" />
+    <ClInclude Include="src\Components\wbcomprosacamera.h" />
+    <ClInclude Include="src\Components\wbcomprosacampaignartifact.h" />
+    <ClInclude Include="src\Components\wbcomprosacharacter.h" />
+    <ClInclude Include="src\Components\wbcomprosacharacterconfig.h" />
+    <ClInclude Include="src\Components\wbcomprosaclimbable.h" />
+    <ClInclude Include="src\Components\wbcomprosacollectible.h" />
+    <ClInclude Include="src\Components\wbcomprosacollision.h" />
+    <ClInclude Include="src\Components\wbcomprosadamageeffects.h" />
+    <ClInclude Include="src\Components\wbcomprosadecal.h" />
+    <ClInclude Include="src\Components\wbcomprosadoor.h" />
+    <ClInclude Include="src\Components\wbcomprosafaction.h" />
+    <ClInclude Include="src\Components\wbcomprosafootsteps.h" />
+    <ClInclude Include="src\Components\wbcomprosafrobbable.h" />
+    <ClInclude Include="src\Components\wbcomprosafrobber.h" />
+    <ClInclude Include="src\Components\wbcomprosahackable.h" />
+    <ClInclude Include="src\Components\wbcomprosahands.h" />
+    <ClInclude Include="src\Components\wbcomprosaheadshot.h" />
+    <ClInclude Include="src\Components\wbcomprosaheadtracker.h" />
+    <ClInclude Include="src\Components\wbcomprosahealth.h" />
+    <ClInclude Include="src\Components\wbcomprosahitbox.h" />
+    <ClInclude Include="src\Components\wbcomprosahudmarker.h" />
+    <ClInclude Include="src\Components\wbcomprosaicicles.h" />
+    <ClInclude Include="src\Components\wbcomprosainventory.h" />
+    <ClInclude Include="src\Components\wbcomprosaitem.h" />
+    <ClInclude Include="src\Components\wbcomprosajukebox.h" />
+    <ClInclude Include="src\Components\wbcomprosakeyring.h" />
+    <ClInclude Include="src\Components\wbcomprosalight.h" />
+    <ClInclude Include="src\Components\wbcomprosalinkedentities.h" />
+    <ClInclude Include="src\Components\wbcomprosalock.h" />
+    <ClInclude Include="src\Components\wbcomprosaloottable.h" />
+    <ClInclude Include="src\Components\wbcomprosamapmarker.h" />
+    <ClInclude Include="src\Components\wbcomprosamarkup.h" />
+    <ClInclude Include="src\Components\wbcomprosamedkit.h" />
+    <ClInclude Include="src\Components\wbcomprosamesh.h" />
+    <ClInclude Include="src\Components\wbcomprosaobjectives.h" />
+    <ClInclude Include="src\Components\wbcomprosaparticles.h" />
+    <ClInclude Include="src\Components\wbcomprosapatrolpath.h" />
+    <ClInclude Include="src\Components\wbcomprosapickup.h" />
+    <ClInclude Include="src\Components\wbcomprosaplayer.h" />
+    <ClInclude Include="src\Components\wbcomprosaposeop.h" />
+    <ClInclude Include="src\Components\wbcomprosapowerteleport.h" />
+    <ClInclude Include="src\Components\wbcomprosaragdoll.h" />
+    <ClInclude Include="src\Components\wbcomprosareadable.h" />
+    <ClInclude Include="src\Components\wbcomprosarepulsor.h" />
+    <ClInclude Include="src\Components\wbcomprosarespawner.h" />
+    <ClInclude Include="src\Components\wbcomprosarope.h" />
+    <ClInclude Include="src\Components\wbcomprosaseccam.h" />
+    <ClInclude Include="src\Components\wbcomprosasensor.h" />
+    <ClInclude Include="src\Components\wbcomprosasensorbump.h" />
+    <ClInclude Include="src\Components\wbcomprosasensordamage.h" />
+    <ClInclude Include="src\Components\wbcomprosasensorhearing.h" />
+    <ClInclude Include="src\Components\wbcomprosasensormarkup.h" />
+    <ClInclude Include="src\Components\wbcomprosasensorpatrol.h" />
+    <ClInclude Include="src\Components\wbcomprosasensorpoll.h" />
+    <ClInclude Include="src\Components\wbcomprosasensorrepulsor.h" />
+    <ClInclude Include="src\Components\wbcomprosasensortheft.h" />
+    <ClInclude Include="src\Components\wbcomprosasensorvision.h" />
+    <ClInclude Include="src\Components\wbcomprosasign.h" />
+    <ClInclude Include="src\Components\wbcomprosasignreader.h" />
+    <ClInclude Include="src\Components\wbcomprosasleeper.h" />
+    <ClInclude Include="src\Components\wbcomprosasound.h" />
+    <ClInclude Include="src\Components\wbcomprosaspawnmanager.h" />
+    <ClInclude Include="src\Components\wbcomprosaspikes.h" />
+    <ClInclude Include="src\Components\wbcomprosaspin.h" />
+    <ClInclude Include="src\Components\wbcomprosastim.h" />
+    <ClInclude Include="src\Components\wbcomprosaswitch.h" />
+    <ClInclude Include="src\Components\wbcomprosaswitchable.h" />
+    <ClInclude Include="src\Components\wbcomprosathinker.h" />
+    <ClInclude Include="src\Components\wbcomprosathinkernpctarget.h" />
+    <ClInclude Include="src\Components\wbcomprosathinkerpatrol.h" />
+    <ClInclude Include="src\Components\wbcomprosathinkertarget.h" />
+    <ClInclude Include="src\Components\wbcomprosatransform.h" />
+    <ClInclude Include="src\Components\wbcomprosatrapbolt.h" />
+    <ClInclude Include="src\Components\wbcomprosaupgrades.h" />
+    <ClInclude Include="src\Components\wbcomprosavisible.h" />
+    <ClInclude Include="src\Components\wbcomprosawallet.h" />
+    <ClInclude Include="src\Components\wbcomprosaweapon.h" />
+    <ClInclude Include="src\Components\wbrosacomponent.h" />
+    <ClInclude Include="src\PEs\wbperosacampaignmodify.h" />
+    <ClInclude Include="src\PEs\wbperosaconvoselector.h" />
+    <ClInclude Include="src\PEs\wbperosadeadreckoning.h" />
+    <ClInclude Include="src\PEs\wbperosadistance.h" />
+    <ClInclude Include="src\PEs\wbperosagetbestcycleslot.h" />
+    <ClInclude Include="src\PEs\wbperosagetbonelocation.h" />
+    <ClInclude Include="src\PEs\wbperosagetcharactervo.h" />
+    <ClInclude Include="src\PEs\wbperosagetfaction.h" />
+    <ClInclude Include="src\PEs\wbperosagetitem.h" />
+    <ClInclude Include="src\PEs\wbperosagetlocation.h" />
+    <ClInclude Include="src\PEs\wbperosagetorientation.h" />
+    <ClInclude Include="src\PEs\wbperosagetpersistentvar.h" />
+    <ClInclude Include="src\PEs\wbperosagetslot.h" />
+    <ClInclude Include="src\PEs\wbperosagetspeed.h" />
+    <ClInclude Include="src\PEs\wbperosagetspeedlimit.h" />
+    <ClInclude Include="src\PEs\wbperosagetsurfaceproperty.h" />
+    <ClInclude Include="src\PEs\wbperosagetvelocity.h" />
+    <ClInclude Include="src\PEs\wbperosahasammo.h" />
+    <ClInclude Include="src\PEs\wbperosahaskeycard.h" />
+    <ClInclude Include="src\PEs\wbperosahasmoney.h" />
+    <ClInclude Include="src\PEs\wbperosahasmrusave.h" />
+    <ClInclude Include="src\PEs\wbperosaheadshot.h" />
+    <ClInclude Include="src\PEs\wbperosaisconvostate.h" />
+    <ClInclude Include="src\PEs\wbperosaisdifficulty.h" />
+    <ClInclude Include="src\PEs\wbperosaisinfrontof.h" />
+    <ClInclude Include="src\PEs\wbperosaisinsidedoor.h" />
+    <ClInclude Include="src\PEs\wbperosaisobjectivecomplete.h" />
+    <ClInclude Include="src\PEs\wbperosaplayer.h" />
+    <ClInclude Include="src\rosacloudmanager.h" />
+    <ClInclude Include="src\rosasupertitles.h" />
+    <ClInclude Include="src\Screens\uiscreen-rosabindinputs.h" />
+    <ClInclude Include="src\Screens\uiscreen-rosacampaign.h" />
+    <ClInclude Include="src\Screens\uiscreen-rosacharacterconfig.h" />
+    <ClInclude Include="src\Screens\uiscreen-rosaconversation.h" />
+    <ClInclude Include="src\Screens\uiscreen-rosacredits.h" />
+    <ClInclude Include="src\Screens\uiscreen-rosahacking.h" />
+    <ClInclude Include="src\Screens\uiscreen-rosakeypad.h" />
+    <ClInclude Include="src\Screens\uiscreen-rosalanguages.h" />
+    <ClInclude Include="src\Screens\uiscreen-rosaload.h" />
+    <ClInclude Include="src\Screens\uiscreen-rosanewgame.h" />
+    <ClInclude Include="src\Screens\uiscreen-rosaradial.h" />
+    <ClInclude Include="src\Screens\uiscreen-rosasave.h" />
+    <ClInclude Include="src\Screens\uiscreen-rosasetres.h" />
+    <ClInclude Include="src\SDPs\sdprosaambientlight.h" />
+    <ClInclude Include="src\SDPs\sdprosaantilight.h" />
+    <ClInclude Include="src\SDPs\sdprosabloom.h" />
+    <ClInclude Include="src\SDPs\sdprosabloomclip.h" />
+    <ClInclude Include="src\SDPs\sdprosacharacter.h" />
+    <ClInclude Include="src\SDPs\sdprosadecal.h" />
+    <ClInclude Include="src\SDPs\sdprosaedge.h" />
+    <ClInclude Include="src\SDPs\sdprosaentity.h" />
+    <ClInclude Include="src\SDPs\sdprosafoglight.h" />
+    <ClInclude Include="src\SDPs\sdprosafogmesh.h" />
+    <ClInclude Include="src\SDPs\sdprosafoliage.h" />
+    <ClInclude Include="src\SDPs\sdprosafxaa.h" />
+    <ClInclude Include="src\SDPs\sdprosageo.h" />
+    <ClInclude Include="src\SDPs\sdprosagradient.h" />
+    <ClInclude Include="src\SDPs\sdprosahud.h" />
+    <ClInclude Include="src\SDPs\sdprosahudcalibration.h" />
+    <ClInclude Include="src\SDPs\sdprosalight.h" />
+    <ClInclude Include="src\SDPs\sdprosalightcombine.h" />
+    <ClInclude Include="src\SDPs\sdprosaminimapa.h" />
+    <ClInclude Include="src\SDPs\sdprosaminimapb.h" />
+    <ClInclude Include="src\SDPs\sdprosapost.h" />
+    <ClInclude Include="src\SDPs\sdprosapostcheap.h" />
+    <ClInclude Include="src\SDPs\sdprosapostwatercolor.h" />
+    <ClInclude Include="src\SDPs\sdprosasky.h" />
+    <ClInclude Include="src\SDPs\sdprosassao.h" />
+    <ClInclude Include="src\SDPs\sdprosawater.h" />
+    <ClInclude Include="src\SDPs\sdprosawaterflow.h" />
+    <ClInclude Include="src\steam\isteamapplist.h" />
+    <ClInclude Include="src\steam\isteamapps.h" />
+    <ClInclude Include="src\steam\isteamappticket.h" />
+    <ClInclude Include="src\steam\isteamclient.h" />
+    <ClInclude Include="src\steam\isteamcontroller.h" />
+    <ClInclude Include="src\steam\isteamfriends.h" />
+    <ClInclude Include="src\steam\isteamgamecoordinator.h" />
+    <ClInclude Include="src\steam\isteamgameserver.h" />
+    <ClInclude Include="src\steam\isteamgameserverstats.h" />
+    <ClInclude Include="src\steam\isteamhtmlsurface.h" />
+    <ClInclude Include="src\steam\isteamhttp.h" />
+    <ClInclude Include="src\steam\isteaminput.h" />
+    <ClInclude Include="src\steam\isteaminventory.h" />
+    <ClInclude Include="src\steam\isteammasterserverupdater.h" />
+    <ClInclude Include="src\steam\isteammatchmaking.h" />
+    <ClInclude Include="src\steam\isteammusic.h" />
+    <ClInclude Include="src\steam\isteammusicremote.h" />
+    <ClInclude Include="src\steam\isteamnetworking.h" />
+    <ClInclude Include="src\steam\isteamparentalsettings.h" />
+    <ClInclude Include="src\steam\isteamps3overlayrenderer.h" />
+    <ClInclude Include="src\steam\isteamremotestorage.h" />
+    <ClInclude Include="src\steam\isteamscreenshots.h" />
+    <ClInclude Include="src\steam\isteamugc.h" />
+    <ClInclude Include="src\steam\isteamuser.h" />
+    <ClInclude Include="src\steam\isteamuserstats.h" />
+    <ClInclude Include="src\steam\isteamutils.h" />
+    <ClInclude Include="src\steam\isteamvideo.h" />
+    <ClInclude Include="src\steam\matchmakingtypes.h" />
+    <ClInclude Include="src\steam\steamclientpublic.h" />
+    <ClInclude Include="src\steam\steamencryptedappticket.h" />
+    <ClInclude Include="src\steam\steamhttpenums.h" />
+    <ClInclude Include="src\steam\steamps3params.h" />
+    <ClInclude Include="src\steam\steamtypes.h" />
+    <ClInclude Include="src\steam\steamuniverse.h" />
+    <ClInclude Include="src\steam\steam_api.h" />
+    <ClInclude Include="src\steam\steam_api_common.h" />
+    <ClInclude Include="src\steam\steam_api_internal.h" />
+    <ClInclude Include="src\steam\steam_gameserver.h" />
+    <ClInclude Include="src\uiinputmaprosa.h" />
+    <ClInclude Include="src\rosaanimevents.h" />
+    <ClInclude Include="src\rosacampaign.h" />
+    <ClInclude Include="src\rosaconversation.h" />
+    <ClInclude Include="src\rosadamage.h" />
+    <ClInclude Include="src\rosadifficulty.h" />
+    <ClInclude Include="src\rosafactions.h" />
+    <ClInclude Include="src\rosaframework.h" />
+    <ClInclude Include="src\rosagame.h" />
+    <ClInclude Include="src\rosahacking.h" />
+    <ClInclude Include="src\rosahudlog.h" />
+    <ClInclude Include="src\rosaintro.h" />
+    <ClInclude Include="src\rosairradiance.h" />
+    <ClInclude Include="src\rosalockpicking.h" />
+    <ClInclude Include="src\rosamesh.h" />
+    <ClInclude Include="src\rosamusic.h" />
+    <ClInclude Include="src\rosanav.h" />
+    <ClInclude Include="src\rosaparticles.h" />
+    <ClInclude Include="src\rosapersistence.h" />
+    <ClInclude Include="src\rosarodinbtnodes.h" />
+    <ClInclude Include="src\rosaroom-editor.h" />
+    <ClInclude Include="src\rosaroom.h" />
+    <ClInclude Include="src\rosasaveload.h" />
+    <ClInclude Include="src\rosasdps.h" />
+    <ClInclude Include="src\rosasound3dlistener.h" />
+    <ClInclude Include="src\rosasurfaces.h" />
+    <ClInclude Include="src\rosatargetmanager.h" />
+    <ClInclude Include="src\rosatools.h" />
+    <ClInclude Include="src\rosauiscreens.h" />
+    <ClInclude Include="src\rosawardrobe.h" />
+    <ClInclude Include="src\rosawbactions.h" />
+    <ClInclude Include="src\rosawbcomponents.h" />
+    <ClInclude Include="src\rosawbpes.h" />
+    <ClInclude Include="src\rosawbscenehelpers.h" />
+    <ClInclude Include="src\rosaworld.h" />
+    <ClInclude Include="src\rosaworldcubemap.h" />
+    <ClInclude Include="src\rosaworldgen.h" />
+    <ClInclude Include="src\rosaworldtexture.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Rosa.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Rosa.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Libraries\3D\3D.vcxproj">
+      <Project>{816ad150-5ac3-4db6-9917-382aed7665aa}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Audio\Audio.vcxproj">
+      <Project>{6c5daeb4-88a6-4544-8ec0-ce11ca1da37e}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Core\Core.vcxproj">
+      <Project>{35936da7-270b-418c-9386-a4aed70a2049}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Framework\Framework.vcxproj">
+      <Project>{11020cf0-d8d2-49ff-911f-5d76c45f5753}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\GLEW\GLEW.vcxproj">
+      <Project>{da83c02c-544d-4f8c-87c9-81746ff85fa2}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Math\Math.vcxproj">
+      <Project>{5e99ee6d-7b15-4ce4-a872-267dd407741e}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Rodin\Rodin.vcxproj">
+      <Project>{d98339fc-d01d-4f2b-8d87-be5127799b28}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\SoLoud\SoLoud.vcxproj">
+      <Project>{456877db-e14c-40c9-a77b-e7429c71d82a}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\UI\UI.vcxproj">
+      <Project>{ec673f69-aec4-4ac5-b31a-f189d3243198}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Workbench\Workbench.vcxproj">
+      <Project>{29fbefa5-5f6b-4edc-b7c1-9c1218c109c3}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\zlib\zlib.vcxproj">
+      <Project>{4b63c350-2556-47f2-838e-cb349499c1c6}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

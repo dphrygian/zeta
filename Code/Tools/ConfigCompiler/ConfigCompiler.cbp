@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="ConfigCompiler" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug Win32">
+				<Option output="Debug Win32/ConfigCompiler" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="../../../Projects/Rosa/Tools" />
+				<Option object_output="Debug Win32" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-Wall" />
+					<Add option="-g" />
+					<Add option="-O0" />
+					<Add option="-D_DEBUG" />
+					<Add directory="./src" />
+					<Add directory="../../Libraries/Core/src" />
+					<Add directory="../../Libraries/Math/src" />
+					<Add directory="../../Libraries/GLEW/src" />
+					<Add directory="../../Libraries/3D/src" />
+					<Add directory="../../Libraries/Audio/src" />
+					<Add directory="../../Libraries/Framework/src" />
+					<Add directory="../../Libraries/UI/src" />
+					<Add directory="../../Libraries/Workbench/src" />
+					<Add directory="../../Libraries/Rodin/src" />
+					<Add directory="../../Libraries/ENet/src" />
+					<Add directory="../../Libraries/zlib/src" />
+				</Compiler>
+				<ResourceCompiler>
+					<Add directory="./src" />
+					<Add directory="../../Libraries/Core/src" />
+					<Add directory="../../Libraries/Math/src" />
+					<Add directory="../../Libraries/GLEW/src" />
+					<Add directory="../../Libraries/3D/src" />
+					<Add directory="../../Libraries/Audio/src" />
+					<Add directory="../../Libraries/Framework/src" />
+					<Add directory="../../Libraries/UI/src" />
+					<Add directory="../../Libraries/Workbench/src" />
+					<Add directory="../../Libraries/Rodin/src" />
+					<Add directory="../../Libraries/ENet/src" />
+					<Add directory="../../Libraries/zlib/src" />
+				</ResourceCompiler>
+				<Linker>
+					<Add option="-Wl,-R./" />
+					<Add library="../../Libraries/Core/Debug Win32/libCore.a" />
+					<Add library="../../Libraries/zlib/Debug Win32/libzlib.a" />
+					<Add library="rt" />
+					<Add library="dl" />
+					<Add library="pthread" />
+				</Linker>
+			</Target>
+			<Target title="Release Win32">
+				<Option output="Release Win32/ConfigCompiler" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="../../../Projects/Rosa/Tools" />
+				<Option object_output="Release Win32" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-Wall" />
+					<Add option="-DNDEBUG" />
+					<Add directory="./src" />
+					<Add directory="../../Libraries/Core/src" />
+					<Add directory="../../Libraries/Math/src" />
+					<Add directory="../../Libraries/GLEW/src" />
+					<Add directory="../../Libraries/3D/src" />
+					<Add directory="../../Libraries/Audio/src" />
+					<Add directory="../../Libraries/Framework/src" />
+					<Add directory="../../Libraries/UI/src" />
+					<Add directory="../../Libraries/Workbench/src" />
+					<Add directory="../../Libraries/Rodin/src" />
+					<Add directory="../../Libraries/ENet/src" />
+					<Add directory="../../Libraries/zlib/src" />
+				</Compiler>
+				<ResourceCompiler>
+					<Add directory="./src" />
+					<Add directory="../../Libraries/Core/src" />
+					<Add directory="../../Libraries/Math/src" />
+					<Add directory="../../Libraries/GLEW/src" />
+					<Add directory="../../Libraries/3D/src" />
+					<Add directory="../../Libraries/Audio/src" />
+					<Add directory="../../Libraries/Framework/src" />
+					<Add directory="../../Libraries/UI/src" />
+					<Add directory="../../Libraries/Workbench/src" />
+					<Add directory="../../Libraries/Rodin/src" />
+					<Add directory="../../Libraries/ENet/src" />
+					<Add directory="../../Libraries/zlib/src" />
+				</ResourceCompiler>
+				<Linker>
+					<Add option="-Wl,-R./" />
+					<Add library="../../Libraries/Core/Release Win32/libCore.a" />
+					<Add library="../../Libraries/zlib/Release Win32/libzlib.a" />
+					<Add library="rt" />
+					<Add library="dl" />
+					<Add library="pthread" />
+				</Linker>
+			</Target>
+			<Target title="Final Win32">
+				<Option output="Final Win32/ConfigCompiler" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="../../../Projects/Rosa/Tools" />
+				<Option object_output="Final Win32" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O3" />
+					<Add option="-Wall" />
+					<Add option="-DNDEBUG" />
+					<Add option="-D_FINAL" />
+					<Add directory="./src" />
+					<Add directory="../../Libraries/Core/src" />
+					<Add directory="../../Libraries/Math/src" />
+					<Add directory="../../Libraries/GLEW/src" />
+					<Add directory="../../Libraries/3D/src" />
+					<Add directory="../../Libraries/Audio/src" />
+					<Add directory="../../Libraries/Framework/src" />
+					<Add directory="../../Libraries/UI/src" />
+					<Add directory="../../Libraries/Workbench/src" />
+					<Add directory="../../Libraries/Rodin/src" />
+					<Add directory="../../Libraries/ENet/src" />
+					<Add directory="../../Libraries/zlib/src" />
+				</Compiler>
+				<ResourceCompiler>
+					<Add directory="./src" />
+					<Add directory="../../Libraries/Core/src" />
+					<Add directory="../../Libraries/Math/src" />
+					<Add directory="../../Libraries/GLEW/src" />
+					<Add directory="../../Libraries/3D/src" />
+					<Add directory="../../Libraries/Audio/src" />
+					<Add directory="../../Libraries/Framework/src" />
+					<Add directory="../../Libraries/UI/src" />
+					<Add directory="../../Libraries/Workbench/src" />
+					<Add directory="../../Libraries/Rodin/src" />
+					<Add directory="../../Libraries/ENet/src" />
+					<Add directory="../../Libraries/zlib/src" />
+				</ResourceCompiler>
+				<Linker>
+					<Add option="-Wl,-R./" />
+					<Add library="../../Libraries/Core/Final Win32/libCore.a" />
+					<Add library="../../Libraries/zlib/Final Win32/libzlib.a" />
+					<Add library="rt" />
+					<Add library="dl" />
+					<Add library="pthread" />
+				</Linker>
+			</Target>
+		</Build>
+		<Unit filename="resource.h" />
+		<Unit filename="src/main.cpp" />
+		<Extensions>
+			<code_completion />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

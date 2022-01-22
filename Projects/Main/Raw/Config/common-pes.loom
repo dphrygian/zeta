@@ -1,0 +1,207 @@
+[SelfPE]
+PEType = "Self"
+
+[LocationPE]
+PEType	= "RosaGetLocation"
+Entity	= "SelfPE"
+
+[OrientationPE]
+PEType	= "RosaGetOrientation"
+Entity	= "SelfPE"
+
+# Gets the X (right) orientation from Y (forward)
+[OrthogonalOrientationPE]
+PEType	= "Cross"
+InputA	= "OrientationPE"
+InputB	= "VectorUpPE"
+
+[FalsePE]
+PEType	= "ConstantBool"
+Value	= false
+
+[TruePE]
+PEType	= "ConstantBool"
+Value	= true
+
+[IntZeroPE]
+PEType	= "ConstantInt"
+Value	= 0
+
+[IntOnePE]
+PEType	= "ConstantInt"
+Value	= 1
+
+[IntTwoPE]
+PEType	= "ConstantInt"
+Value	= 2
+
+[IntThreePE]
+PEType	= "ConstantInt"
+Value	= 3
+
+[IntFourPE]
+PEType	= "ConstantInt"
+Value	= 4
+
+[IntFivePE]
+PEType	= "ConstantInt"
+Value	= 5
+
+[IntBigNumberPE]
+PEType	= "ConstantInt"
+Value	= 1000000
+
+[FloatZeroPE]
+PEType	= "ConstantFloat"
+Value	= 0.0
+
+[FloatOnePE]
+PEType	= "ConstantFloat"
+Value	= 1.0
+
+[FloatHalfPE]
+PEType	= "ConstantFloat"
+Value	= 0.5
+
+[FloatBigNumberPE]
+PEType = "ConstantFloat"
+Value = 1000000.0
+
+[FloatRandomZeroToOnePE]
+PEType	= "RandomFloat"
+ValueA	= 0.0
+ValueB	= 1.0
+
+[VectorUpPE]
+PEType	= "ConstantVector"
+ValueZ	= 1.0
+
+[NullPE]
+PEType	= "Null"
+
+[PlayerPE]
+PEType	= "RosaPlayer"
+
+[PlayerLocationPE]
+PEType	= "RosaGetLocation"
+Entity	= "PlayerPE"
+
+[OwnerPE]
+PEType = "Owner"
+
+[TopmostOwnerPE]
+PEType	= "Owner"
+Topmost	= true
+
+[OwnerLocationPE]
+PEType	= "RosaGetLocation"
+Entity	= "OwnerPE"
+
+[EntityNamePE]
+PEType	= "GetName"
+Input	= "SelfPE"
+
+[EntityUniqueNamePE]
+PEType		= "GetName"
+Input		= "SelfPE"
+UniqueName	= true
+
+[EmptyStringPE]
+PEType	= "ConstantString"
+Value	= ""
+
+[VOPE]
+PEType		= "ConstantString"
+Value		= "VO"
+
+# Don't use QueryActionStack/State; it will use old state for queued events!
+[StatePE]
+PEType		= "GetState"
+EntityPE	= "SelfPE"
+
+[EventOwnerPE]
+PEType	= "QueryActionStack"
+Key		= "EventOwner"
+
+[FrobberPE]
+PEType	= "QueryActionStack"
+Key		= "Frobber"
+
+[CollidedPE]
+PEType	= "QueryActionStack"
+Key		= "CollidedEntity"
+
+[TouchedPE]
+PEType	= "QueryActionStack"
+Key		= "Touched"
+
+[UntouchedPE]
+PEType	= "QueryActionStack"
+Key		= "Untouched"
+
+[CheckedPE]
+PEType	= "QueryActionStack"
+Key		= "Checked"
+
+[DamagerPE]
+PEType	= "QueryActionStack"
+Key		= "Damager"
+
+[KillerPE]
+PEType	= "QueryActionStack"
+Key		= "Killer"
+
+[PusherPE]
+PEType	= "QueryActionStack"
+Key		= "Pusher"
+
+[GivenToPE]
+PEType	= "QueryActionStack"
+Key		= "GivenTo"
+
+[VelocityPE]
+PEType	= "QueryActionStack"
+Key		= "Velocity"
+
+[SpeedSqPE]
+PEType	= "QueryActionStack"
+Key		= "SpeedSq"
+
+[SpeedPE]
+PEType	= "Pow"
+InputA	= "SpeedSqPE"
+InputB	= "FloatHalfPE"
+
+[GetPlayerMoneyPE]
+PEType		= "PushContext"
+EntityPE	= "PlayerPE"
+Input		= "GetMoneyPE"
+
+[GetMoneyPE]
+PEType	= "QueryActionStack"
+Key		= "Money"
+
+[GetPlayerCreditPE]
+PEType		= "PushContext"
+EntityPE	= "PlayerPE"
+Input		= "GetCreditPE"
+
+[GetCreditPE]
+PEType	= "QueryActionStack"
+Key		= "Credit"
+
+[GetPlayerTotalFundsPE]
+PEType	= "Add"
+InputA	= "GetPlayerMoneyPE"
+InputB	= "GetPlayerCreditPE"
+
+[IsAlivePE]
+PEType	= "QueryActionStack"
+Key		= "IsAlive"
+
+# Not a PE, but it belongs in "common"
+[OnSpawnedRule]
+Event = "OnSpawned"
+
+[OnFrobbedRule]
+Event = "OnFrobbed"

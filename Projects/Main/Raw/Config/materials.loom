@@ -1,0 +1,1296 @@
+[RosaShadowMaterialOverrides]
+Material_World						= "Material_Shadow_Static"
+Material_World_LinearNormal			= "Material_Shadow_Static"
+Material_WorldNonAnisotropic		= "Material_Shadow_Static"
+Material_WorldOverlay				= "Material_Shadow_Static"
+Material_WorldOverlay_LinearNormal	= "Material_Shadow_Static"
+Material_WorldTransparent			= "Material_Shadow_StaticTransparent"
+Material_WorldAlphaTest				= "Material_Shadow_StaticAlphaTest"
+Material_WorldFoliage				= "Material_Shadow_Foliage"
+Material_WorldAlphaTestFoliage		= "Material_Shadow_FoliageAlphaTest"
+Material_WorldWind					= "Material_Shadow_Foliage"
+Material_WorldAlphaTestWind			= "Material_Shadow_FoliageAlphaTest"
+Material_WorldWater					= "Material_Shadow_Static"
+Material_WorldWaterFlow				= "Material_Shadow_Static"
+Material_EntityStatic				= "Material_Shadow_Static"
+Material_EntityStaticAlphaTest		= "Material_Shadow_StaticAlphaTest"
+Material_EntityStaticTransparent	= "Material_Shadow_StaticTransparent"
+Material_StaticCharacter			= "Material_Shadow_Static"
+Material_EntityAnimated				= "Material_Shadow_Animated"
+Material_Character					= "Material_Shadow_Animated"
+
+[RosaEdgeFogMaterialOverrides]
+Material_FogLightPassA				= "Material_EdgeFog_FogLightPassA"
+Material_FogLightPassB				= "Material_EdgeFog_FogLightPassB"
+Material_FogMeshPassA				= "Material_EdgeFog_FogMeshPassA"
+Material_FogMeshPassB				= "Material_EdgeFog_FogMeshPassB"
+
+[Material_SSAO]
+SDP				= "RosaSSAO"
+VertexShader	= "VS_PosUV"
+PixelShader		= "PS_SSAO"
+ZEnable			= false
+ZWriteEnable	= false
+# Multiply onto ambient light
+	AlphaBlendEnable	= true
+	SrcBlend			= "Zero"
+	DestBlend			= "SrcAlpha"
+NumSamplers		= &
+@ Sampler
+@@&				= "Sampler_GBuffer"	# Sample g-buffer depth
+@@&				= "Sampler_Point"	# Sample random rotation
+ExpectedVD		= 0x9 # position/uv
+
+[Material_GlobalAmbient]
+SDP				= "RosaAmbientLight"
+VertexShader	= "VS_PosVPos"	# Global ambient is a fullscreen quad, but the shader expects vpos for convex meshes
+PixelShader		= "PS_AmbientLight"
+ZEnable			= false
+ZWriteEnable	= false
+NumSamplers		= &
+@ Sampler
+@@&				= "Sampler_GBuffer"	# G-buffer albedo
+@@&				= "Sampler_GBuffer"	# G-buffer normal
+@@&				= "Sampler_GBuffer"	# G-buffer depth
+@@&				= "Sampler_Cubemap"	# Environment cubemap
+ExpectedVD		= 0x1 # position
+
+[Material_AmbientLightPassA]
+Extends	= "Material_LightPassA"
+
+[Material_AmbientLightPassB]
+Extends				= "Material_LightPassC"
+SDP					= "RosaAmbientLight"
+PixelShader			= "PS_AmbientLight"
+AlphaBlendEnable	= false	# Unlike normal lights, ambient should *not* be additive! This lets me override regions.
+NumSamplers			= &
+@ Sampler
+@@&					= "Sampler_GBuffer"	# Sample g-buffer albedo
+@@&					= "Sampler_GBuffer"	# Sample g-buffer normal
+@@&					= "Sampler_GBuffer"	# Sample g-buffer depth
+@@&					= "Sampler_Cubemap"	# Sample environment cubemap
+
+# First, render front faces behind visible geometry.
+# This will be used to mask those parts out of the composite.
+[Material_LightPassA]
+ClearStencil		= true
+VertexShader		= "VS_Pos"
+PixelShader			= "PS_Null"
+ColorWriteEnable	= false
+ZFunc				= "GreaterEqual"
+ZWriteEnable		= false
+StencilEnable		= true
+StencilFunc			= "Always"
+StencilPassOp		= "Invert"
+ExpectedVD			= 0x1 # position
+
+# Optionally, stencil out more where things are in shadow
+[Material_LightPassB]
+SDP					= "RosaLight"
+VertexShader		= "VS_PosVPos"
+PixelShader			= "PS_LightShadow"
+NumSamplers			= &
+@ Sampler
+@@&					= "Sampler_ShadowCubemap"
+@@&					= "Sampler_GBuffer"	# Sample g-buffer normal
+@@&					= "Sampler_GBuffer"	# Sample g-buffer depth
+ColorWriteEnable	= false
+CullMode			= "CCW"
+ZFunc				= "GreaterEqual"
+ZWriteEnable		= false
+StencilEnable		= true
+StencilFunc			= "Equal"
+StencilPassOp		= "Invert"
+ExpectedVD			= 0x1 # position
+
+# Then render back faces behind visible geometry,
+# only in places where stencil is zero (i.e., where
+# front faces were not drawn), and shade.
+[Material_LightPassC]
+SDP				= "RosaLight"
+VertexShader	= "VS_PosVPos"
+PixelShader		= "PS_Light"
+NumSamplers		= &
+@ Sampler
+@@&				= "Sampler_GBuffer"	# Sample g-buffer albedo
+@@&				= "Sampler_GBuffer"	# Sample g-buffer normal
+@@&				= "Sampler_GBuffer"	# Sample g-buffer depth
+# Accumulate light
+	AlphaBlendEnable	= true
+	SrcBlend			= "One"
+	DestBlend			= "One"
+CullMode		= "CCW"
+ZFunc			= "GreaterEqual"
+ZWriteEnable	= false
+StencilEnable	= true
+StencilFunc		= "Equal"
+ExpectedVD		= 0x1 # position
+
+[Material_AntiLightPassA]
+Extends	= "Material_LightPassA"
+
+[Material_AntiLightPassB]
+Extends			= "Material_LightPassC"
+SDP				= "RosaAntiLight"
+PixelShader		= "PS_AntiLight"
+NumSamplers		= &
+@ Sampler
+@@&				= "Sampler_GBuffer"	# Sample g-buffer normal
+@@&				= "Sampler_GBuffer"	# Sample g-buffer depth
+# Multiply anti-light
+	AlphaBlendEnable	= true
+	SrcBlend			= "Zero"
+	DestBlend			= "SrcColor"
+
+# First, render front depth...
+[Material_FogLightPassA]
+ClearColor			= true
+VertexShader		= "VS_PosSS"
+PixelShader			= "PS_FogLightA"
+ZEnable				= false
+ZWriteEnable		= false
+ExpectedVD			= 0x1 # position
+
+# Then render back faces to shade
+[Material_FogLightPassB]
+SDP				= "RosaFogLight"
+VertexShader	= "VS_PosSSVPos"
+PixelShader		= "PS_FogLightB"
+NumSamplers		= &
+@ Sampler
+@@&				= "Sampler_GBuffer"	# Sample g-buffer albedo (as depth)
+@@&				= "Sampler_GBuffer"	# Sample g-buffer depth
+# Accumulate light
+	AlphaBlendEnable	= true
+	SrcBlend			= "One"
+	DestBlend			= "One"
+CullMode		= "CCW"
+ZEnable			= false
+ZWriteEnable	= false
+ExpectedVD		= 0x1 # position
+
+	# Fog edge overrides
+	[Material_EdgeFog_FogLightPassA]
+	Extends			= "Material_FogLightPassA"
+	RenderTarget	= "GB_Normal"				# DLP 29 May 2021: New feature! Assigning render targets from config!
+
+	[Material_EdgeFog_FogLightPassB]
+	Extends			= "Material_FogLightPassB"
+	PixelShader		= "PS_EdgeFog_FogLightB"
+	RenderTarget	= "GB_Albedo"				# DLP 29 May 2021: New feature! Assigning render targets from config!
+	Texture0		= "GB_Normal"				# DLP 29 May 2021: New feature! Assigning render target textures from config!
+	# Blend fog
+		AlphaBlendEnable	= true
+		SrcBlend			= "SrcAlpha"
+		DestBlend			= "InvSrcAlpha"
+
+# First, render front depth...
+[Material_FogMeshPassA]
+ClearColor			= true
+VertexShader		= "VS_PosSS"
+PixelShader			= "PS_FogLightA"	# HACKHACK: Reusing this because it functions the same
+ZEnable				= false
+ZWriteEnable		= false
+ExpectedVD			= 0x1 # position
+
+# Then render back faces to shade
+[Material_FogMeshPassB]
+SDP				= "RosaFogMesh"
+VertexShader	= "VS_PosSSVPos"
+PixelShader		= "PS_FogMeshB"
+NumSamplers		= &
+@ Sampler
+@@&				= "Sampler_GBuffer"	# Sample g-buffer albedo (as depth)
+@@&				= "Sampler_GBuffer"	# Sample g-buffer depth
+# Blend fog
+	AlphaBlendEnable	= true
+	SrcBlend			= "SrcAlpha"
+	DestBlend			= "InvSrcAlpha"
+CullMode		= "CCW"
+ZEnable			= false
+ZWriteEnable	= false
+ExpectedVD		= 0x1 # position
+	
+	# Fog edge overrides
+	[Material_EdgeFog_FogMeshPassA]
+	Extends			= "Material_FogMeshPassA"
+	RenderTarget	= "GB_Normal"				# DLP 29 May 2021: New feature! Assigning render targets from config!
+
+	[Material_EdgeFog_FogMeshPassB]
+	Extends			= "Material_FogMeshPassB"
+	PixelShader		= "PS_EdgeFog_FogMeshB"
+	RenderTarget	= "GB_Albedo"				# DLP 29 May 2021: New feature! Assigning render targets from config!
+	Texture0		= "GB_Normal"				# DLP 29 May 2021: New feature! Assigning render target textures from config!
+
+[Material_LightCombine]
+SDP				= "RosaLightCombine"
+VertexShader	= "VS_PosUV"
+PixelShader		= "PS_LightCombine"
+ZEnable			= false
+ZWriteEnable	= false
+NumSamplers	= &
+@ Sampler
+@@&				= "Sampler_GBuffer"	# Sample g-buffer light accumulation
+@@&				= "Sampler_GBuffer"	# Sample g-buffer albedo
+@@&				= "Sampler_GBuffer"	# Sample g-buffer depth
+ExpectedVD		= 0x9 # position/uv
+
+[Material_Decal]
+SDP				= "RosaDecal"
+VertexShader	= "VS_PosVPos"
+PixelShader		= "PS_Decal"
+StencilEnable	= true
+StencilFunc		= "Equal"			# Don't draw where foreground has already been rendered
+CullMode		= "CCW"				# Draw only backfaces so rendering with camera inside the box works
+ZFunc			= "GreaterEqual"	# Only draw where box intersects depth buffer
+ZWriteEnable	= false
+NumSamplers		= &
+@ Sampler
+# ROSANOTE: Converted these from point to linear to see how it might look in Rosa vs. Vamp
+@@&				= "Sampler_Main"	# Albedo map (ROSANOTE: Not sampled anisotropic here, same as Material_GBufferDynamic!)
+@@&				= "Sampler_Linear"	# Normal map (don't use point sampling here!)
+@@&				= "Sampler_Main"	# Spec map
+@@&				= "Sampler_GBuffer"	# Sample g-buffer depth
+ExpectedVD		= 0x1 # position
+
+[Material_Gradient]
+SDP				= "RosaGradient"
+VertexShader	= "VS_PosUV"
+PixelShader		= "PS_Gradient"
+ZEnable			= false
+ZWriteEnable	= false
+# Blend onto scene
+	AlphaBlendEnable	= true
+	SrcBlend			= "SrcAlpha"
+	DestBlend			= "InvSrcAlpha"
+NumSamplers		= &
+@ Sampler
+@@&				= "Sampler_GBuffer"	# Sample g-buffer normal
+@@&				= "Sampler_GBuffer"	# Sample g-buffer depth
+ExpectedVD		= 0x9 # position/uv
+
+# Watercolor version
+#[Material_Edge]
+#SDP				= "RosaEdge"
+#VertexShader	= "VS_PosUV"
+#PixelShader		= "PS_Edge"
+#ZEnable			= false
+#ZWriteEnable	= false
+#NumSamplers		= &
+#@ Sampler
+#@@&				= "Sampler_GBuffer"	# Sample g-buffer normal
+#@@&				= "Sampler_GBuffer"	# Sample g-buffer depth
+#ExpectedVD		= 0x9 # position/uv
+
+# Zeta version
+[Material_Edge]
+SDP				= "RosaEdge"
+VertexShader	= "VS_PosUV"
+PixelShader		= "PS_Edge"
+ZEnable			= false
+ZWriteEnable	= false
+# Additive
+	AlphaBlendEnable	= true
+	SrcBlend			= "SrcAlpha"
+	DestBlend			= "One"
+NumSamplers		= &
+@ Sampler
+@@&				= "Sampler_GBuffer"	# Sample g-buffer normal
+@@&				= "Sampler_GBuffer"	# Sample g-buffer depth
+ExpectedVD		= 0x9 # position/uv
+
+# ********************************
+# Materials
+
+[Material_Min]
+VertexShader	= "VS_Min"
+PixelShader		= "PS_Min"
+ExpectedVD		= 0x3 # position/color
+
+[Material_Min_NoDepthTest]
+Extends			= "Material_Min"
+ZEnable			= false
+ZWriteEnable	= false
+
+[Material_MinHUD]
+ZEnable			= false
+ZWriteEnable	= false
+VertexShader	= "VS_Min"
+PixelShader		= "PS_Min"
+ExpectedVD		= 0x3 # position/color
+
+[Material_SkyGBuffer]
+VertexShader	= "VS_SkyGBuffer"
+PixelShader		= "PS_SkyGBuffer"
+ExpectedVD		= 0x11 # position/normal
+
+[Material_SkyLight]
+SDP				= "RosaSky"
+VertexShader	= "VS_SkyLight"
+PixelShader		= "PS_SkyLight"
+ExpectedVD		= 0x1 # position
+
+[Material_GBufferStatic]
+VertexShader	= "VS_GBufferStatic"
+PixelShader		= "PS_GBuffer"
+StencilEnable	= true
+StencilFunc		= "Equal"	# Don't draw where foreground has already been rendered
+NumSamplers		= &
+@ Sampler
+@@&				= "Sampler_MainAnisotropic"		# Albedo map
+@@&				= "Sampler_PointAnisotropic"	# Normal map	(HACKHACK for Zeta, for edges)
+@@&				= "Sampler_MainAnisotropic"		# Spec map
+ExpectedVD		= 0x59 # position/uv/normal/tangent
+
+# Same as static, but without anisotropic sampling
+# (because some textures aren't necessarily designed to wrap and mip like they should for geo)
+# NOTE: I think this was legacy from Vamp, doesn't really make sense with filtered textures.
+[Material_GBufferStaticPoint]
+VertexShader	= "VS_GBufferStatic"
+PixelShader		= "PS_GBuffer"
+StencilEnable	= true
+StencilFunc		= "Equal"	# Don't draw where foreground has already been rendered
+NumSamplers		= &
+@ Sampler
+@@&				= "Sampler_Main"	# Albedo map
+@@&				= "Sampler_Main"	# Normal map
+@@&				= "Sampler_Main"	# Spec map
+ExpectedVD		= 0x59 # position/uv/normal/tangent
+
+# Also not anisotropic sampled
+[Material_GBufferAnimated]
+VertexShader	= "VS_GBufferAnimated"
+PixelShader		= "PS_GBuffer"
+StencilEnable	= true
+StencilFunc		= "Equal"	# Don't draw where foreground has already been rendered
+NumSamplers		= &
+@ Sampler
+@@&				= "Sampler_Main"	# Albedo map
+@@&				= "Sampler_Main"	# Normal map
+@@&				= "Sampler_Main"	# Spec map
+ExpectedVD		= 0x1d9 # position/uv/normal/tangent/bone weights+indices
+
+[Material_World]
+Extends	= "Material_GBufferStatic"
+SDP		= "RosaGeo"
+
+	[Material_World_LinearNormal]
+	Extends		= "Material_World"
+	NumSamplers	= &
+	@ Sampler
+	@@&			= "Sampler_MainAnisotropic"		# Albedo map
+	@@&			= "Sampler_LinearAnisotropic"	# Normal map (always linear even if we're usually unfiltered)
+	@@&			= "Sampler_MainAnisotropic"		# Spec map
+
+		[Material_WorldWater]
+		Extends		= "Material_World_LinearNormal"
+		SDP			= "RosaWater"
+		PixelShader	= "PS_GBufferWater"
+
+			[Material_WorldWaterFlow]
+			Extends		= "Material_World_LinearNormal"
+			SDP			= "RosaWaterFlow"
+			PixelShader	= "PS_GBufferWaterFlow"
+			NumSamplers	= &
+			@ Sampler
+			@@&			= "Sampler_MainAnisotropic"		# Albedo map
+			@@&			= "Sampler_LinearAnisotropic"	# Normal map (always linear even if we're usually unfiltered)
+			@@&			= "Sampler_MainAnisotropic"		# Spec map
+			@@&			= "Sampler_LinearAnisotropic"	# Flow map (always linear even if we're usually unfiltered)
+
+	[Material_WorldNonAnisotropic]
+	Extends		= "Material_World"
+	NumSamplers	= &
+	@ Sampler
+	@@&			= "Sampler_Main"	# Albedo map
+	@@&			= "Sampler_Main"	# Normal map
+	@@&			= "Sampler_Main"	# Spec map
+
+	[Material_WorldOverlay]
+	Extends			= "Material_World"
+	VertexShader	= "VS_GBufferStaticOverlay"
+	PixelShader		= "PS_GBufferOverlay"
+	NumSamplers		= &
+	@ Sampler
+	@@&				= "Sampler_MainAnisotropic"		# Albedo map
+	@@&				= "Sampler_PointAnisotropic"	# Normal map	(HACKHACK for Zeta, for edges)
+	@@&				= "Sampler_MainAnisotropic"		# Spec map
+	@@&				= "Sampler_MainAnisotropic"		# Overlay map
+
+		[Material_WorldOverlay_LinearNormal]
+		Extends		= "Material_WorldOverlay"
+		NumSamplers	= &
+		@ Sampler
+		@@&			= "Sampler_MainAnisotropic"		# Albedo map
+		@@&			= "Sampler_LinearAnisotropic"	# Normal map
+		@@&			= "Sampler_MainAnisotropic"		# Spec map
+		@@&			= "Sampler_MainAnisotropic"		# Overlay map
+
+	[Material_WorldTransparent]
+	Extends			= "Material_World"
+	VertexShader	= "VS_GBufferStaticTransparent"
+	PixelShader		= "PS_GBufferTransparent"
+
+	[Material_WorldAlphaTest]
+	Extends		= "Material_World"
+	PixelShader	= "PS_GBufferAlphaTest"
+
+	# "Foliage" shaders have bent normals; "wind" shaders do not
+	# (even though I'm now using "wind" for foliage)
+	[Material_WorldFoliage]
+	Extends			= "Material_World"
+	SDP				= "RosaFoliage"
+	VertexShader	= "VS_GBufferFoliage"
+	ExpectedVD		= 0x7d # position/uv/normal/normalb/tangent/float color
+
+		[Material_WorldAlphaTestFoliage]
+		Extends		= "Material_WorldFoliage"
+		PixelShader	= "PS_GBufferAlphaTest"
+
+		[Material_WorldWind]
+		Extends			= "Material_WorldFoliage"
+		VertexShader	= "VS_GBufferWind"
+		ExpectedVD		= 0x5d # position/uv/normal/tangent/float color (no bent normals)
+
+			[Material_WorldAlphaTestWind]
+			Extends		= "Material_WorldWind"
+			PixelShader	= "PS_GBufferAlphaTest"
+
+[Material_EntityStatic]
+Extends	= "Material_GBufferStaticPoint"
+SDP		= "RosaEntity"
+
+	[Material_EntityStaticAlphaTest]
+	Extends		= "Material_EntityStatic"
+	PixelShader	= "PS_GBufferAlphaTest"
+
+	[Material_EntityStaticTransparent]
+	Extends			= "Material_EntityStatic"
+	VertexShader	= "VS_GBufferStaticTransparent"
+	PixelShader		= "PS_GBufferTransparent"
+
+	[Material_EntityStaticForeground]
+	Extends			= "Material_EntityStatic"
+	StencilEnable	= true
+	StencilFunc		= "Always"
+	StencilPassOp	= "Replace"	# Mask out foreground to reduce overdraw
+	StencilRef		= 1
+
+		[Material_Bracelet]
+		Extends		= "Material_EntityStaticForeground"
+		# ROSATODO: Enable the following if I ever want to colorize bracelets
+		#SDP			= "RosaCharacter"
+		#PixelShader	= "PS_GBufferCharacter"
+
+	[Material_StaticCharacter]
+	Extends		= "Material_EntityStatic"
+	SDP			= "RosaCharacter"
+	PixelShader	= "PS_GBufferCharacter"
+
+[Material_EntityAnimated]
+Extends	= "Material_GBufferAnimated"
+SDP		= "RosaEntity"
+
+	[Material_EntityAnimatedForeground]
+	Extends			= "Material_EntityAnimated"
+	StencilEnable	= true
+	StencilFunc		= "Always"
+	StencilPassOp	= "Replace"	# Mask out foreground to reduce overdraw
+	StencilRef		= 1
+
+		[Material_Hands]
+		Extends		= "Material_EntityAnimatedForeground"
+		SDP			= "RosaCharacter"
+		PixelShader	= "PS_GBufferCharacter"
+
+	[Material_Character]
+	Extends		= "Material_EntityAnimated"
+	SDP			= "RosaCharacter"
+	PixelShader	= "PS_GBufferCharacter"
+
+[Material_ParticlesAlphaTest]
+Extends			= "Material_GBufferStatic"
+SDP				= "RosaGeo"	# Reuse this because it's simple and uses a null highlight term
+VertexShader	= "VS_GBufferParticles"
+PixelShader		= "PS_GBufferParticles"
+
+[Material_ParticlesTransparent]
+Extends			= "Material_GBufferStatic"
+SDP				= "RosaGeo"	# Reuse this because it's simple and uses a null highlight term
+# ROSANOTE: Use of these "non-particles" shaders precludes using vertex coloring to vary particles
+# and I can't afford the extra multiply. No big loss.
+VertexShader	= "VS_GBufferStaticTransparent"
+PixelShader		= "PS_GBufferTransparent"
+
+[Material_Shadow_Static]
+VertexShader	= "VS_Shadow_Static"
+PixelShader		= "PS_Shadow"
+#CullMode		= "CCW"
+ExpectedVD		= 0x1 # position
+
+[Material_Shadow_StaticAlphaTest]
+VertexShader	= "VS_Shadow_StaticUV"
+PixelShader		= "PS_Shadow_AlphaTest"
+NumSamplers		= &
+@ Sampler
+@@&				= "Sampler_Main"
+#CullMode		= "CCW"
+ExpectedVD		= 0x9 # position/uv
+
+[Material_Shadow_StaticTransparent]
+VertexShader	= "VS_Shadow_StaticUV"
+PixelShader		= "PS_Shadow_Transparent"
+NumSamplers		= &
+@ Sampler
+@@&				= "Sampler_Main"
+#CullMode		= "CCW"
+ExpectedVD		= 0x9 # position/uv
+
+[Material_Shadow_Foliage]
+SDP				= "RosaFoliage"
+VertexShader	= "VS_Shadow_Foliage"
+PixelShader		= "PS_Shadow"
+#CullMode		= "CCW"
+ExpectedVD		= 0x15 # position/float color/normal
+
+[Material_Shadow_FoliageAlphaTest]
+SDP				= "RosaFoliage"
+VertexShader	= "VS_Shadow_FoliageUV"
+PixelShader		= "PS_Shadow_AlphaTest"
+NumSamplers		= &
+@ Sampler
+@@&				= "Sampler_Main"
+#CullMode		= "CCW"
+ExpectedVD		= 0x1d # position/uv/float color/normal
+
+[Material_Shadow_Animated]
+VertexShader	= "VS_Shadow_Animated"
+PixelShader		= "PS_Shadow"
+#CullMode		= "CCW"
+ExpectedVD		= 0x181 # position/bones
+
+[Material_BloomClip]
+SDP				= "RosaBloomClip"
+VertexShader	= "VS_PosUV"
+PixelShader		= "PS_BloomClip"
+ZEnable			= false
+ZWriteEnable	= false
+NumSamplers	= &
+@ Sampler
+@@&				= "Sampler_BloomClip"
+ExpectedVD		= 0x9 # position/uv
+
+[Material_BloomCopy]
+VertexShader	= "VS_PosUV"
+PixelShader		= "PS_BloomCopy"
+ZEnable			= false
+ZWriteEnable	= false
+NumSamplers	= &
+@ Sampler
+@@&				= "Sampler_BloomClip"
+ExpectedVD		= 0x9 # position/uv
+
+[Material_BloomSum]
+SDP				= "RosaBloom"
+VertexShader	= "VS_PosUV"
+PixelShader		= "PS_BloomSum"
+ZEnable			= false
+ZWriteEnable	= false
+NumSamplers	= &
+@ Sampler
+@@&				= "Sampler_Bloom"
+@@&				= "Sampler_BloomKernel"
+@@&				= "Sampler_Bloom"
+ExpectedVD		= 0x9 # position/uv
+
+[Material_Bloom]
+SDP				= "RosaBloom"
+VertexShader	= "VS_PosUV"
+PixelShader		= "PS_Bloom"
+ZEnable			= false
+ZWriteEnable	= false
+NumSamplers	= &
+@ Sampler
+@@&				= "Sampler_Bloom"
+@@&				= "Sampler_BloomKernel"
+ExpectedVD		= 0x9 # position/uv
+
+[Material_MinimapA]
+SDP				= "RosaMinimapA"
+VertexShader	= "VS_MinimapA"
+PixelShader		= "PS_MinimapA"
+ExpectedVD		= 0x1 # position
+
+[Material_MinimapB]
+SDP				= "RosaMinimapB"
+VertexShader	= "VS_PosUV"
+PixelShader		= "PS_MinimapB"
+ZEnable			= false
+ZWriteEnable	= false
+NumSamplers		= &
+@ Sampler
+@@&				= "Sampler_MinimapRT"
+@@&				= "Sampler_MinimapTones"
+@@&				= "Sampler_MinimapTexture"
+@@&				= "Sampler_MinimapTexture"
+ExpectedVD		= 0x9 # position/uv
+
+[Material_MinimapFXAA]
+SDP				= "RosaFXAA"
+VertexShader	= "VS_PosUV"
+PixelShader		= "PS_FXAA"
+ZEnable			= false
+NumSamplers	= &
+@ Sampler
+@@&				= "Sampler_MinimapRT"
+ExpectedVD		= 0x9 # position/uv
+
+# MinimapC is used for rendering markers onto the minimap RT
+[Material_MinimapC]
+VertexShader	= "VS_PosUV"
+PixelShader		= "PS_MinimapC"
+ZEnable			= false
+ZWriteEnable	= false
+AlphaBlendEnable	= true
+SrcBlend			= "SrcAlpha"
+DestBlend			= "InvSrcAlpha"
+NumSamplers		= &
+@ Sampler
+@@&				= "Sampler_HUD"
+ExpectedVD		= 0x9 # position/uv
+
+[Material_Upscale]
+VertexShader	= "VS_PosUV"
+PixelShader		= "PS_Upscale"
+ZEnable			= false
+ZWriteEnable	= false
+NumSamplers	= &
+@ Sampler
+@@&				= "Sampler_Upscale"
+ExpectedVD		= 0x9 # position/uv
+
+[Material_Post]
+SDP				= "RosaPost"
+VertexShader	= "VS_PosUV"
+PixelShader		= "PS_Post"
+ZEnable			= false
+ZWriteEnable	= false
+NumSamplers	= &
+@ Sampler
+@@&				= "Sampler_Post"			# Main
+@@&				= "Sampler_ColorGrading"	# Color grading
+@@&				= "Sampler_PostNoise"		# Noise
+@@&				= "Sampler_PostBloom"		# Bloom
+@@&				= "Sampler_PostBloom"		# Ghost
+@@&				= "Sampler_HUD"				# Lens
+ExpectedVD		= 0x9 # position/uv
+
+[Material_PostWatercolor]
+SDP				= "RosaPostWatercolor"
+VertexShader	= "VS_PosUV"
+PixelShader		= "PS_PostWatercolor"
+ZEnable			= false
+ZWriteEnable	= false
+NumSamplers	= &
+@ Sampler
+@@&				= "Sampler_Post"			# Main
+@@&				= "Sampler_PostBloom"		# Blur
+@@&				= "Sampler_PostWatercolor"	# Displace
+@@&				= "Sampler_PostWatercolor"	# Blot
+@@&				= "Sampler_PostWatercolor"	# Canvas
+@@&				= "Sampler_PostWatercolor"	# Edge
+@@&				= "Sampler_ColorGrading"	# Color grading
+@@&				= "Sampler_GBuffer"			# Depth
+ExpectedVD		= 0x9 # position/uv
+
+[Material_PostCheap]
+SDP				= "RosaPostCheap"
+VertexShader	= "VS_PosUV"
+PixelShader		= "PS_PostCheap"
+ZEnable			= false
+ZWriteEnable	= false
+NumSamplers	= &
+@ Sampler
+@@&				= "Sampler_Post"			# Main
+ExpectedVD		= 0x9 # position/uv
+
+[Material_PostTools]
+VertexShader	= "VS_PosUV"
+PixelShader		= "PS_PostTools"
+ZEnable			= false
+ZWriteEnable	= false
+NumSamplers	= &
+@ Sampler
+@@&				= "Sampler_Post"
+ExpectedVD		= 0x9 # position/uv
+
+[Material_FXAA]
+SDP				= "RosaFXAA"
+VertexShader	= "VS_PosUV"
+PixelShader		= "PS_FXAA"
+ZEnable			= false
+NumSamplers	= &
+@ Sampler
+@@&				= "Sampler_FXAA"
+ExpectedVD		= 0x9 # position/uv
+
+[Material_HUD]
+SDP					= "RosaHUD"
+VertexShader		= "VS_HUD"
+PixelShader			= "PS_HUD"
+ZEnable				= false
+ZWriteEnable		= false
+AlphaBlendEnable	= true
+SrcBlend			= "SrcAlpha"
+DestBlend			= "InvSrcAlpha"
+NumSamplers			= &
+@ Sampler
+@@&					= "Sampler_HUD"
+# For dev validation, list the expected vertex declaration
+ExpectedVD			= 0xB # position/color/uv
+
+[Material_HUDInWorld]
+Extends				= "Material_HUD"
+PixelShader			= "PS_HUDInWorld"
+
+[Material_HUDMultiply]
+SDP					= "RosaHUD"
+VertexShader		= "VS_HUD"
+PixelShader			= "PS_HUD"
+ZEnable				= false
+ZWriteEnable		= false
+AlphaBlendEnable	= true
+SrcBlend			= "DestColor"
+DestBlend			= "Zero"
+NumSamplers			= &
+@ Sampler
+@@&					= "Sampler_HUD"
+ExpectedVD			= 0xB # position/color/uv
+
+# Screen is *not* simply additive.
+[Material_HUDScreen]
+SDP					= "RosaHUD"
+VertexShader		= "VS_HUD"
+PixelShader			= "PS_HUD"
+ZEnable				= false
+ZWriteEnable		= false
+AlphaBlendEnable	= true
+SrcBlend			= "InvDestColor"
+DestBlend			= "One"
+NumSamplers			= &
+@ Sampler
+@@&					= "Sampler_HUD"
+ExpectedVD			= 0xB # position/color/uv
+
+[Material_HUDAdditive]
+SDP					= "RosaHUD"
+VertexShader		= "VS_HUD"
+PixelShader			= "PS_HUD"
+ZEnable				= false
+ZWriteEnable		= false
+AlphaBlendEnable	= true
+SrcBlend			= "SrcAlpha"
+DestBlend			= "One"
+NumSamplers			= &
+@ Sampler
+@@&					= "Sampler_HUD"
+ExpectedVD			= 0xB # position/color/uv
+
+# ROSATODO: Used, but get rid of this
+[Material_HUDNoFilter]
+SDP					= "RosaHUD"
+VertexShader		= "VS_HUD"
+PixelShader			= "PS_HUD"
+ZEnable				= false
+ZWriteEnable		= false
+AlphaBlendEnable	= true
+SrcBlend			= "SrcAlpha"
+DestBlend			= "InvSrcAlpha"
+NumSamplers			= &
+@ Sampler
+@@&					= "Sampler_Point"
+ExpectedVD			= 0xB # position/color/uv
+
+[Material_HUDCalibration]
+SDP					= "RosaHUDCalibration"
+VertexShader		= "VS_HUD"
+PixelShader			= "PS_HUDCalibration"
+ZEnable				= false
+ZWriteEnable		= false
+AlphaBlendEnable	= true
+SrcBlend			= "SrcAlpha"
+DestBlend			= "InvSrcAlpha"
+NumSamplers			= &
+@ Sampler
+@@&					= "Sampler_HUD"
+ExpectedVD			= 0xB # position/color/uv
+
+[Material_HUDMinimap]
+Extends		= "Material_HUDScreen"
+#Extends		= "Material_HUD"
+PixelShader	= "PS_HUD_FixUV"
+
+[Material_ToolsNavMesh]
+ZEnable			= false
+ZWriteEnable	= false
+VertexShader	= "VS_Min"
+PixelShader		= "PS_Min"
+ExpectedVD		= 0x3 # position/color
+
+[Material_ToolsBrush]
+SDP					= "RosaHUD"	# HACKHACK: For ConstantColor, since that's all the HUD SDP does anyway
+VertexShader		= "VS_PosUVNormal"
+PixelShader			= "PS_ToolsBrush"
+NumSamplers			= &
+@ Sampler
+@@&					= "Sampler_PointAnisotropic"
+@@&					= "Sampler_PointAnisotropic"
+ExpectedVD			= 0x19 # position/uv/normal
+
+# ********************************
+# Shaders
+
+[VS_Min]
+HLSL	= "Shaders/HLSL/min.chv2"
+GLSL	= "Shaders/GLSL/min.gv12"
+
+[VS_SkyGBuffer]
+HLSL	= "Shaders/HLSL/sky-gbuffer.chv2"
+GLSL	= "Shaders/GLSL/sky-gbuffer.gv12"
+
+[VS_SkyLight]
+HLSL	= "Shaders/HLSL/sky-light.chv2"
+GLSL	= "Shaders/GLSL/sky-light.gv12"
+
+[VS_GBufferStatic]
+HLSL	= "Shaders/HLSL/gbuffer-static.chv2"
+GLSL	= "Shaders/GLSL/gbuffer-static.gv12"
+
+[VS_GBufferStaticOverlay]
+HLSL	= "Shaders/HLSL/gbuffer-static-overlay.chv2"
+GLSL	= "Shaders/GLSL/gbuffer-static-overlay.gv12"
+
+[VS_GBufferStaticTransparent]
+HLSL	= "Shaders/HLSL/gbuffer-static-transparent.chv2"
+GLSL	= "Shaders/GLSL/gbuffer-static-transparent.gv12"
+
+[VS_GBufferFoliage]
+HLSL	= "Shaders/HLSL/gbuffer-foliage.chv2"
+GLSL	= "Shaders/GLSL/gbuffer-foliage.gv12"
+
+[VS_GBufferWind]
+HLSL	= "Shaders/HLSL/gbuffer-wind.chv2"
+GLSL	= "Shaders/GLSL/gbuffer-wind.gv12"
+
+[VS_GBufferAnimated]
+HLSL	= "Shaders/HLSL/gbuffer-animated.chv2"
+GLSL	= "Shaders/GLSL/gbuffer-animated.gv12"
+
+[VS_GBufferParticles]
+HLSL	= "Shaders/HLSL/gbuffer-particles.chv2"
+GLSL	= "Shaders/GLSL/gbuffer-particles.gv12"
+
+[VS_Shadow_Static]
+HLSL	= "Shaders/HLSL/shadow-static.chv2"
+GLSL	= "Shaders/GLSL/shadow-static.gv12"
+
+[VS_Shadow_StaticUV]
+HLSL	= "Shaders/HLSL/shadow-static-uv.chv2"
+GLSL	= "Shaders/GLSL/shadow-static-uv.gv12"
+
+[VS_Shadow_Foliage]
+HLSL	= "Shaders/HLSL/shadow-foliage.chv2"
+GLSL	= "Shaders/GLSL/shadow-foliage.gv12"
+
+[VS_Shadow_FoliageUV]
+HLSL	= "Shaders/HLSL/shadow-foliage-uv.chv2"
+GLSL	= "Shaders/GLSL/shadow-foliage-uv.gv12"
+
+[VS_Shadow_Animated]
+HLSL	= "Shaders/HLSL/shadow-animated.chv2"
+GLSL	= "Shaders/GLSL/shadow-animated.gv12"
+
+[VS_Pos]
+HLSL	= "Shaders/HLSL/pos.chv2"
+GLSL	= "Shaders/GLSL/pos.gv12"
+
+[VS_PosSS]
+HLSL	= "Shaders/HLSL/pos-ss.chv2"
+GLSL	= "Shaders/GLSL/pos-ss.gv12"
+
+[VS_PosSSVPos]
+HLSL	= "Shaders/HLSL/pos-ss-vpos.chv2"
+GLSL	= "Shaders/GLSL/pos-ss-vpos.gv12"
+
+[VS_PosVPos]
+HLSL	= "Shaders/HLSL/pos-vpos.chv2"
+GLSL	= "Shaders/GLSL/pos-vpos.gv12"
+
+[VS_PosUV]
+HLSL	= "Shaders/HLSL/pos-uv.chv2"
+GLSL	= "Shaders/GLSL/pos-uv.gv12"
+
+[VS_PosUVNormal]
+HLSL	= "Shaders/HLSL/pos-uv-normal.chv2"
+GLSL	= "Shaders/GLSL/pos-uv-normal.gv12"
+
+[VS_HUD]
+HLSL	= "Shaders/HLSL/hud.chv2"
+GLSL	= "Shaders/GLSL/hud.gv12"
+
+[VS_MinimapA]
+HLSL	= "Shaders/HLSL/minimap-a.chv2"
+GLSL	= "Shaders/GLSL/minimap-a.gv12"
+
+[PS_Min]
+HLSL	= "Shaders/HLSL/min.chp2"
+GLSL	= "Shaders/GLSL/min.gf12"
+
+[PS_SkyGBuffer]
+HLSL	= "Shaders/HLSL/sky-gbuffer.chp2"
+GLSL	= "Shaders/GLSL/sky-gbuffer.gf12"
+
+[PS_SkyLight]
+HLSL	= "Shaders/HLSL/sky-light.chp2"
+GLSL	= "Shaders/GLSL/sky-light.gf12"
+
+[PS_GBuffer]
+HLSL	= "Shaders/HLSL/gbuffer.chp2"
+GLSL	= "Shaders/GLSL/gbuffer.gf12"
+
+[PS_GBufferOverlay]
+HLSL	= "Shaders/HLSL/gbuffer-overlay.chp2"
+GLSL	= "Shaders/GLSL/gbuffer-overlay.gf12"
+
+[PS_GBufferTransparent]
+HLSL	= "Shaders/HLSL/gbuffer-transparent.chp2"
+GLSL	= "Shaders/GLSL/gbuffer-transparent.gf12"
+
+[PS_GBufferAlphaTest]
+HLSL	= "Shaders/HLSL/gbuffer-alphatest.chp2"
+GLSL	= "Shaders/GLSL/gbuffer-alphatest.gf12"
+
+[PS_GBufferWater]
+HLSL	= "Shaders/HLSL/gbuffer-water.chp2"
+GLSL	= "Shaders/GLSL/gbuffer-water.gf12"
+
+[PS_GBufferWaterFlow]
+HLSL	= "Shaders/HLSL/gbuffer-water-flow.chp2"
+GLSL	= "Shaders/GLSL/gbuffer-water-flow.gf12"
+
+[PS_GBufferParticles]
+HLSL	= "Shaders/HLSL/gbuffer-particles.chp2"
+GLSL	= "Shaders/GLSL/gbuffer-particles.gf12"
+
+[PS_GBufferCharacter]
+HLSL	= "Shaders/HLSL/gbuffer-character.chp2"
+GLSL	= "Shaders/GLSL/gbuffer-character.gf12"
+
+[PS_Decal]
+HLSL	= "Shaders/HLSL/gbuffer-decal.chp2"
+GLSL	= "Shaders/GLSL/gbuffer-decal.gf12"
+
+[PS_Shadow]
+HLSL	= "Shaders/HLSL/shadow.chp2"
+GLSL	= "Shaders/GLSL/shadow.gf12"
+
+[PS_Shadow_AlphaTest]
+HLSL	= "Shaders/HLSL/shadow-alphatest.chp2"
+GLSL	= "Shaders/GLSL/shadow-alphatest.gf12"
+
+[PS_Shadow_Transparent]
+HLSL	= "Shaders/HLSL/shadow-transparent.chp2"
+GLSL	= "Shaders/GLSL/shadow-transparent.gf12"
+
+[PS_HUD]
+HLSL	= "Shaders/HLSL/hud.chp2"
+GLSL	= "Shaders/GLSL/hud.gf12"
+
+[PS_HUDInWorld]
+HLSL	= "Shaders/HLSL/hud-inworld.chp2"
+GLSL	= "Shaders/GLSL/hud-inworld.gf12"
+
+[PS_HUD_FixUV]
+HLSL	= "Shaders/HLSL/hud.chp2"
+GLSL	= "Shaders/GLSL/hud-fixuv.gf12"
+
+[PS_HUDCalibration]
+HLSL	= "Shaders/HLSL/hud-calibration.chp2"
+GLSL	= "Shaders/GLSL/hud-calibration.gf12"
+
+[PS_BloomClip]
+HLSL	= "Shaders/HLSL/bloomclip.chp2"
+GLSL	= "Shaders/GLSL/bloomclip.gf12"
+
+[PS_BloomCopy]
+HLSL	= "Shaders/HLSL/bloomcopy.chp2"
+GLSL	= "Shaders/GLSL/bloomcopy.gf12"
+
+[PS_BloomSum]
+HLSL	= "Shaders/HLSL/bloomsum.chp2"
+GLSL	= "Shaders/GLSL/bloomsum.gf12"
+
+[PS_Bloom]
+HLSL	= "Shaders/HLSL/bloom.chp2"
+GLSL	= "Shaders/GLSL/bloom.gf12"
+
+[PS_MinimapA]
+HLSL	= "Shaders/HLSL/minimap-a.chp2"
+GLSL	= "Shaders/GLSL/minimap-a.gf12"
+
+[PS_MinimapB]
+HLSL	= "Shaders/HLSL/minimap-b.chp2"
+GLSL	= "Shaders/GLSL/minimap-b.gf12"
+
+[PS_MinimapC]
+HLSL	= "Shaders/HLSL/minimap-c.chp2"
+GLSL	= "Shaders/GLSL/minimap-c.gf12"
+
+[PS_Upscale]
+HLSL	= "Shaders/HLSL/upscale.chp2"
+GLSL	= "Shaders/GLSL/upscale.gf12"
+
+[PS_Post]
+HLSL	= "Shaders/HLSL/post.chp2"
+GLSL	= "Shaders/GLSL/post.gf12"
+
+[PS_PostWatercolor]
+HLSL	= "Shaders/HLSL/post-watercolor.chp2"
+GLSL	= "Shaders/GLSL/post-watercolor.gf12"
+
+[PS_PostCheap]
+HLSL	= "Shaders/HLSL/post-cheap.chp2"
+GLSL	= "Shaders/GLSL/post-cheap.gf12"
+
+[PS_PostTools]
+HLSL	= "Shaders/HLSL/post-tools.chp2"
+GLSL	= "Shaders/GLSL/post-tools.gf12"
+
+[PS_FXAA]
+HLSL	= "Shaders/HLSL/fxaa.chp2"
+GLSL	= "Shaders/GLSL/fxaa.gf12"
+
+[PS_ToolsBrush]
+HLSL	= "Shaders/HLSL/tools-brush.chp2"
+GLSL	= "Shaders/GLSL/tools-brush.gf12"
+
+[PS_AmbientLight]
+HLSL	= "Shaders/HLSL/light-ambient.chp2"
+GLSL	= "Shaders/GLSL/light-ambient.gf12"
+
+[PS_SSAO]
+HLSL	= "Shaders/HLSL/light-ssao.chp2"
+GLSL	= "Shaders/GLSL/light-ssao.gf12"
+
+[PS_Null]
+HLSL	= "Shaders/HLSL/null.chp2"
+GLSL	= "Shaders/GLSL/null.gf12"
+
+[PS_Light]
+HLSL	= "Shaders/HLSL/light.chp2"
+GLSL	= "Shaders/GLSL/light.gf12"
+
+[PS_LightShadow]
+HLSL	= "Shaders/HLSL/light-shadow.chp2"
+GLSL	= "Shaders/GLSL/light-shadow.gf12"
+
+[PS_FogLightA]
+HLSL	= "Shaders/HLSL/light-fog-a.chp2"
+GLSL	= "Shaders/GLSL/light-fog-a.gf12"
+
+[PS_FogLightB]
+HLSL	= "Shaders/HLSL/light-fog-b.chp2"
+GLSL	= "Shaders/GLSL/light-fog-b.gf12"
+
+[PS_EdgeFog_FogLightB]
+HLSL	= "Shaders/HLSL/edge-fog-light-b.chp2"
+GLSL	= "Shaders/GLSL/edge-fog-light-b.gf12"
+
+[PS_FogMeshB]
+HLSL	= "Shaders/HLSL/fog-mesh-b.chp2"
+GLSL	= "Shaders/GLSL/fog-mesh-b.gf12"
+
+[PS_EdgeFog_FogMeshB]
+HLSL	= "Shaders/HLSL/edge-fog-mesh-b.chp2"
+GLSL	= "Shaders/GLSL/edge-fog-mesh-b.gf12"
+
+[PS_AntiLight]
+HLSL	= "Shaders/HLSL/light-anti.chp2"
+GLSL	= "Shaders/GLSL/light-anti.gf12"
+
+[PS_LightCombine]
+HLSL	= "Shaders/HLSL/light-combine.chp2"
+GLSL	= "Shaders/GLSL/light-combine.gf12"
+
+[PS_Gradient]
+HLSL	= "Shaders/HLSL/gradient.chp2"
+GLSL	= "Shaders/GLSL/gradient.gf12"
+
+[PS_Edge]
+HLSL	= "Shaders/HLSL/edge.chp2"
+GLSL	= "Shaders/GLSL/edge.gf12"
+
+# ********************************
+# Samplers
+
+[Sampler_Main]
+Extends = "Sampler_Point"
+
+[Sampler_MainAnisotropic]
+Extends = "Sampler_PointAnisotropic"
+
+[Sampler_Point]
+AddressU	= "Wrap"
+AddressV	= "Wrap"
+MinFilter	= "Point"
+MagFilter	= "Point"
+MipFilter	= "None"
+
+[Sampler_PointAnisotropic]
+AddressU		= "Wrap"
+AddressV		= "Wrap"
+MinFilter		= "Anisotropic"	# NOTE: This doesn't control anything in OpenGL
+MagFilter		= "Point"
+MipFilter		= "Linear"
+MaxAnisotropy	= 8				# NOTE: In OpenGL, this controls anisotropic filtering
+
+# NOTE: This isn't just non-anisotropic, it's non-mipped.
+# This made sense in Vamp, not sure it still does in Zeta.
+[Sampler_Linear]
+AddressU	= "Wrap"
+AddressV	= "Wrap"
+MinFilter	= "Linear"
+MagFilter	= "Linear"
+MipFilter	= "None"
+
+[Sampler_LinearAnisotropic]
+AddressU		= "Wrap"
+AddressV		= "Wrap"
+MinFilter		= "Anisotropic"	# NOTE: This doesn't control anything in OpenGL
+MagFilter		= "Linear"
+MipFilter		= "Linear"
+MaxAnisotropy	= 8				# NOTE: In OpenGL, this controls anisotropic filtering
+
+[Sampler_BloomClip]
+AddressU	= "Border"
+AddressV	= "Border"
+MinFilter	= "Linear"
+MagFilter	= "Linear"
+MipFilter	= "None"
+
+[Sampler_Bloom]
+AddressU	= "Clamp"
+AddressV	= "Clamp"
+MinFilter	= "Linear"
+MagFilter	= "Linear"
+MipFilter	= "None"
+
+[Sampler_BloomKernel]
+AddressU	= "Clamp"
+AddressV	= "Clamp"
+MinFilter	= "Linear"
+MagFilter	= "Linear"
+MipFilter	= "None"
+
+[Sampler_Upscale]
+AddressU	= "Clamp"
+AddressV	= "Clamp"
+MinFilter	= "Linear"
+MagFilter	= "Linear"
+MipFilter	= "None"
+
+[Sampler_Post]
+AddressU	= "Clamp"
+AddressV	= "Clamp"
+MinFilter	= "Point"
+MagFilter	= "Point"
+MipFilter	= "None"
+
+[Sampler_FXAA]
+AddressU	= "Clamp"
+AddressV	= "Clamp"
+MinFilter	= "Linear"
+MagFilter	= "Linear"
+MipFilter	= "None"
+
+[Sampler_MinimapRT]
+AddressU	= "Clamp"
+AddressV	= "Clamp"
+MinFilter	= "Point"
+MagFilter	= "Point"
+MipFilter	= "None"
+
+[Sampler_MinimapTones]
+AddressU	= "Clamp"
+AddressV	= "Clamp"
+#MinFilter	= "Point"
+#MagFilter	= "Point"
+MinFilter	= "Linear"
+MagFilter	= "Linear"
+MipFilter	= "None"
+
+[Sampler_MinimapTexture]
+AddressU	= "Wrap"
+AddressV	= "Wrap"
+MinFilter	= "Linear"
+MagFilter	= "Linear"
+MipFilter	= "None"
+
+[Sampler_HUD]
+AddressU	= "Clamp"
+AddressV	= "Clamp"
+MinFilter	= "Linear"
+MagFilter	= "Linear"
+MipFilter	= "None"
+
+[Sampler_PostWatercolor]
+AddressU	= "Mirror"
+AddressV	= "Mirror"
+MinFilter	= "Linear"
+MagFilter	= "Linear"
+MipFilter	= "None"
+
+[Sampler_ColorGrading]
+AddressU	= "Wrap"
+AddressV	= "Wrap"
+MinFilter	= "Linear"
+MagFilter	= "Linear"
+MipFilter	= "None"
+
+[Sampler_PostNoise]
+AddressU	= "Wrap"
+AddressV	= "Wrap"
+MinFilter	= "Linear"
+MagFilter	= "Linear"
+MipFilter	= "None"
+
+# Sample up from low res bloom buffer.
+[Sampler_PostBloom]
+AddressU	= "Clamp"
+AddressV	= "Clamp"
+MinFilter	= "Linear"
+MagFilter	= "Linear"
+MipFilter	= "None"
+
+[Sampler_Cubemap]
+MinFilter	= "Linear"
+MagFilter	= "Linear"
+MipFilter	= "None"
+AddressU	= "Clamp"
+AddressV	= "Clamp"
+AddressW	= "Clamp"
+
+[Sampler_ShadowCubemap]
+MinFilter	= "Point"
+MagFilter	= "Point"
+MipFilter	= "None"
+AddressU	= "Clamp"
+AddressV	= "Clamp"
+AddressW	= "Clamp"
+
+[Sampler_GBuffer]
+AddressU	= "Clamp"
+AddressV	= "Clamp"
+MinFilter	= "Point"
+MagFilter	= "Point"
+MipFilter	= "None"

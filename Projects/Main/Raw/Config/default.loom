@@ -1,0 +1,195 @@
+# Pushed to []
+[+Defaults_Game]
+#ShowTutorials		= true	# NOTE: Moved below so this does not reset as a default
+ShowHUD				= true
+HUDMarkers			= true
+Minimap				= true
+MinimapMarkers		= true
+ViewBob				= true
+ViewSway			= true	# DLP 12 Oct 2021: I may want to disable this because of crawling edge lines with watercolor shaders?
+StrafeRoll			= true
+SlideRoll			= true
+SprintFOV			= true
+HandsVelocity		= true
+#LeftyMode			= false	# NOTE: Moved below so this does not reset as a default
+[-]
+
+# Pushed to [Framework]
+[+Defaults_Framework]
+UseFixedFrameTime	= true			# This is an option now! Going to try shipping with optional fixed time for Rosa.
+[-]
+
+# Pushed to []
+[+Defaults_Controls]
+MouseSpeed			= 0.4			# This used to be 0.8, I've lowered it due to the new Intellimouse being higher DPI, sigh
+ControllerSpeed		= 1.0
+InvertY				= false
+AutoAim				= true
+[-]
+
+# Pushed to [RosaInput]
+[+Defaults_RosaInput]
+ControllerType		= "Controller_XB"
+[-]
+
+# Pushed to []
+[+Defaults_Display]
+Brightness			= 2.2			# Brightness is actually gamma correction; value given to shader is 1/x
+[-]
+
+# Pushed to []
+[+Defaults_Graphics]
+FOV					= 80.0			# Back to the Eld/Neon FOV from Vamp's 75
+VanishingPointY		= 0.05
+LightDistance		= 0.50			# DLP 12 Oct 2021: 30% is actually a decent value, 50% should be more than enough (and notched in the middle!)
+FXAA				= true
+SSAO				= true
+Gradient			= true
+Bloom				= true
+StylizedAnim		= true
+Fog					= true
+VolumeFog			= true
+ColorGrading		= true
+PostCheap			= false
+
+# Filmic stuff
+FilmGrain			= true
+DirtyLens			= true
+Halos				= true
+
+# Watercolor stuff
+Displace			= true
+Blur				= true
+Blot				= true
+Canvas				= true
+Edge				= true
+[-]
+
+# Pushed to []
+[+Defaults_Audio]
+MasterVolume		= 0.75
+MusicVolume			= 0.5
+AmbienceVolume		= 0.5
+[-]
+
+# Options which are either not exposed or do not have a "Reset to Defaults" implementation
+Difficulty			= 1				# 1 = normal (tourist, normal)
+Language			= "English"
+ShowTutorials		= true
+LeftyMode			= true
+PauseOnLostFocus	= true			# Not exposed in options, but saved in prefs
+MuteWhenUnfocused	= true			# Not exposed in options, but saved in prefs
+# DLP 2 Jan 2020: New behavior for Zeta. Disabling these means we'll use the
+# desktop display resolution instead, which means we'll launch the first time
+# in windowed fullscreen at desktop display resolution.
+# DisplayWidth		= 1280
+# DisplayHeight		= 720
+Fullscreen			= false
+VSync				= true
+UpscaleFullscreen	= true			# Not exposed in options, but saved in prefs
+IgnoreDisplayEnum	= false			# Not exposed in options, but saved in prefs
+DisplayX			= 0				# Not exposed in options, but saved in prefs (HACKHACK for ultrawidescreen support)
+DisplayY			= 0				# Not exposed in options, but saved in prefs (HACKHACK for ultrawidescreen support)
+HUDDisplayWidth		= 0				# Not exposed in options, but saved in prefs (HACKHACK for ultrawidescreen support)
+HUDDisplayHeight	= 0				# Not exposed in options, but saved in prefs (HACKHACK for ultrawidescreen support)
+OpenGL				= false			# Not exposed in options, but saved in prefs
+# My laptops switch to linear filtering if this isn't 1, so it was 1 in Vamp.
+# I'm using linear now, but I actually prefer the softer effect of non-anisotropic,
+# especially for edge detection on distant floors.
+MaxAnisotropy		= 1				# Not exposed in options, but saved in prefs
+ForegroundFOV		= 50.0			# Not exposed
+NearClip			= 0.05			# Not exposed
+FarClip				= 200.0			# Not exposed (and partially reserved for sky, so this isn't an exact far distance) ROSATODO: Revise for world size
+PlayIntroLevel		= true			# Not saved to prefs
+DirectInput			= false			# Not exposed in options, but saved in prefs; shipping disabled by default because DI is so legacy and it frequently caused problems in Eldritch
+ControllerSpeedX	= 8.0			# Not exposed; HACKHACK that effectively increases controller to match tuned mouse speed
+ControllerSpeedY	= 6.0			# Not exposed; HACKHACK that effectively increases controller to match tuned mouse speed
+ControllerPower		= 1.5			# Not exposed
+NumAutosaves		= 1				# Not exposed	# ZETANOTE: Autosaving goes directly into the main slots.
+NumSaves			= 10			# Not exposed	# ZETANOTE: I was gonna do three, like the Zelda thing, but why not 10 like Dark Souls?
+SkipIntro			= true			# Not exposed (NOTE: in BUILD_FINAL, intro is never skipped)
+#IntroDelay			= 3.0			# HACKHACK for video capture
+LoadSteam			= true			# HACKHACK for video capture and testing
+SteamNoticePos		= "BottomRight"	# Not exposed
+Gamma_Min			= 1.2			# For sliders, not exposed
+Gamma_Max			= 3.2			# For sliders, not exposed
+FOV_Min				= 60.0			# For sliders, not exposed
+FOV_Max				= 100.0			# For sliders, not exposed
+VanishingPointY_Min	= 0.00			# For sliders, not exposed
+VanishingPointY_Max	= 0.10			# For sliders, not exposed
+LightDistance_Min	= 0.00			# For sliders, not exposed
+LightDistance_Max	= 1.00			# For sliders, not exposed
+
+# Config files
+NumConfigFiles = &
+@ ConfigFile
+@@& = "Config/entities.ccf"
+@@& = "Config/entities_inventory.ccf"
+@@& = "Config/entities_world.ccf"
+@@& = "Config/entities_books.ccf"
+@@& = "Config/entities_ai.ccf"
+@@& = "Config/entities_scripting.ccf"
+@@&	= "Config/campaign.ccf"
+@@& = "Config/campaign_actors.ccf"
+@@& = "Config/spawners.ccf"
+@@& = "Config/strings.ccf"
+@@& = "Config/world.ccf"
+@@& = "Config/ui.ccf"
+@@& = "Config/materials.ccf"
+@@& = "Config/input.ccf"
+@@& = "Config/bt.ccf"
+@@& = "Config/particles.ccf"
+@@& = "Config/tools.ccf"
+@@& = "Config/animation.ccf"
+@@& = "Config/audio.ccf"
+@@& = "Config/common-pes.ccf"
+@@& = "Config/conversations.ccf"
+@@& = "Config/hacking.ccf"
+@@& = "Config/lockpicking.ccf"
+@@&	= "Config/difficulty.ccf"
+@@& = "Config/version.ccf"
+
+# Level config files... I might want a pattern like scenarios where these can be discovered?
+@@&	= "Config/level_title-screen.ccf"
+@@&	= "Config/level_zeta.ccf"
+
+NumPackages	= &
+@ Package
+@@&			= "zeta-audio.cpk"
+@@&			= "zeta-world.cpk"
+@@&			= "zeta-textures.cpk"
+@@&			= "zeta-meshes.cpk"
+
+[Framework]
+SendLogsOnQuit				= false
+SplashImage					= "Misc/splash.bmp"	# 24-bit image used in all builds
+IconImage					= "Misc/icon.bmp"	# 32-bit image used for SDL builds
+ShowConsole					= false				# Use for beta, turn off for shipping build
+#UseRandomSeed				= true				# Fixed random seed for testing
+RandomSeed					= 1365995234
+FixedFrameTime				= 0.016666666		# For normal gameplay
+FramesLimit					= 5					# How many sim frames need to pile up before we just dump them (for either fixed or free time, but always in measures of fixed frame time)
+DoVideoCapture				= false
+VideoCaptureFixedFrameTime	= 0.033333333
+
+[Renderer]
+TestCaps		= true	# Use for beta, turn off for shipping build
+FrustumCulling	= true
+DoMaterialSort	= true	# Sort tagged buckets by shader and base texture
+
+[PrintManager]
+# Print levels:
+# -1 = get no output
+# 0 = anything that should always be printed, such as major system alerts or specifically requested output
+# 1 = non-spammy informational output
+# 2 = spammy information output
+NumPrintLevels = &
+@ PrintLevel
+@@Category& = ""
+@@^ = 1
+@@Category& = "Core"
+@@^ = 1
+@@Category& = "Render"
+@@^ = 1
+@@Category& = "UI"
+@@^ = 1

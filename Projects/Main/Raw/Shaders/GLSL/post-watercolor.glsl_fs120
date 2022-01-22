@@ -1,0 +1,190 @@
+#version 120
+
+vec4 SampleSRGBToLinear( sampler2D Sampler, vec2 UV )
+{
+	vec4 Sample = texture2D( Sampler, UV );
+	vec4 Linear = pow( Sample, vec4( 2.2f ) );
+	return vec4( Linear.rgb, Sample.a );
+}
+
+// ****************************************************************
+// BEGIN FOG
+
+uniform vec4	FogParams;			// Set from code: x = near, y = 1/(far-near), z = emissive max, w = exposure scalar
+
+// Scales and clamps distance to [0,1] based on 
+float ScaleDistance( float InDistance )
+{
+	float ScaledDistance = ( InDistance - FogParams.x ) * FogParams.y;
+	return clamp( ScaledDistance, 0.0f, 1.0f );
+}
+
+// END FOG
+// ****************************************************************
+
+// ****************************************************************
+// BEGIN CALIBRATION
+uniform vec4 Gamma;	// Used as float
+
+float Luma( vec3 Color )
+{
+	return dot( Color, vec3( 0.299f, 0.587f, 0.114f ) );
+}
+
+float Luminance( vec3 Color )
+{
+	return dot( Color, vec3( 0.2126f, 0.7152f, 0.0722f ) );
+}
+
+// i.e. LinearToSRGB
+vec3 Calibrate( vec3 Color )
+{
+	return pow( clamp( Color, 0.0f, 1.0f ), vec3( Gamma.x ) );
+}
+
+// END CALIBRATION
+// ****************************************************************
+
+// ****************************************************************
+// BEGIN COLOR GRADING
+
+float CGTexSize		= 16.0f;
+float CGTexSizeSq	= CGTexSize * CGTexSize;
+
+// TODO: Vectorize all of this?
+
+// Red is the easiest value; it is just scaled from [0, 1] to [1/d, 1-1/d].
+float OffsetR		= 0.5f / CGTexSize;
+float ScaleR		= ( CGTexSize - 1.0f ) / CGTexSize;
+
+// Green is scaled from [0, 1] to [1/dd, (1/d)-1/dd]
+float OffsetG		= 0.5f / CGTexSizeSq;
+float ScaleG		= ( CGTexSize - 1.0f ) / CGTexSizeSq;
+
+// Blue is trickiest.
+// Scale from [0, 1] to [0, d-1].
+// Floor to get the low slice for lerp.
+// Add 1 to get the high slice for lerp.
+// Use remainder of floor as alpha for lerp.
+float ScaleB1		= CGTexSize - 1.0f;
+float ScaleB2		= 1.0f / CGTexSize;
+
+vec3 ColorGrade( vec3 InColor, sampler2D Sampler )
+{
+	vec3		Saturated	= clamp( InColor, 0.0f, 1.0f );
+
+	float		CoordR		= Saturated.r * ScaleR + OffsetR;
+	float		CoordG		= Saturated.g * ScaleG + OffsetG;
+
+	float		ScaledB		= Saturated.b * ScaleB1;
+	float		LoB			= floor( ScaledB );
+	float		HiB			= LoB + 1.0f;
+	float		AlphaB		= ScaledB - LoB;
+	float		CoordLoB	= LoB * ScaleB2;
+	float		CoordHiB	= HiB * ScaleB2;
+
+	vec2	LoUV		= vec2( CoordLoB + CoordG, CoordR );
+	vec3	LoColor		= texture2D( Sampler, LoUV ).rgb;
+
+	vec2	HiUV		= vec2( CoordHiB + CoordG, CoordR );
+	vec3	HiColor		= texture2D( Sampler, HiUV ).rgb;
+
+	return mix( LoColor, HiColor, AlphaB );
+}
+
+// END COLOR GRADING
+// ****************************************************************
+
+vec2 FixUV( vec2 UV )
+{
+	return vec2( UV.x, 1.0f - UV.y );
+}
+
+uniform sampler2D Texture0;	// Main
+uniform sampler2D Texture1;	// Blur
+uniform sampler2D Texture2;	// Displace
+uniform sampler2D Texture3;	// Blot
+uniform sampler2D Texture4;	// Canvas
+uniform sampler2D Texture5;	// Edge
+uniform sampler2D Texture6;	// Color grading
+uniform sampler2D Texture7;	// Depth
+
+uniform vec4	PostLevels;
+uniform vec4	WatercolorParams;
+uniform vec4	AspectUVAdjustmentA;
+uniform vec4	AspectUVAdjustmentB;
+
+uniform vec4	ClipValues;
+
+varying vec2	PassUV;
+
+float GetLinearDepth( float Z )
+{
+	return ClipValues.x / ( Z * ClipValues.z - ClipValues.y );
+}
+
+vec3 TonemapReinhardLuminance( vec3 HDRColor )
+{
+	float	WP_Rcp	= 1.5;	// 3/2, whitepoint = 2
+	float	L		= Luminance( HDRColor );
+	float	S		= 1.0f / ( 1.0f + L );
+	return WP_Rcp * S * HDRColor;
+}
+
+vec3 TonemapCustom( vec3 HDRColor )
+{
+	float	WP_Rcp	= 1.0465116279f;	// 2*2.15/(2*2.15+.2), whitepoint = 2
+	vec3	I		= HDRColor * ( HDRColor + 0.15f );
+	vec3	C		= I / ( I + 0.20f );
+	return WP_Rcp * C;
+}
+
+void main()
+{
+	vec3 White			= vec3( 1.0f, 1.0f, 1.0f );
+	vec3 Black			= vec3( 0.0f, 0.0f, 0.0f );
+	vec3 Gray			= vec3( 0.5f, 0.5f, 0.5f );
+
+	vec2 FixedUV		= FixUV( PassUV );
+	vec2 AspectUV		= ( PassUV * AspectUVAdjustmentA.xy ) + AspectUVAdjustmentA.zw;
+
+	float TrueDepth		= GetLinearDepth( texture2D( Texture7, FixedUV ).r );
+	float TrueFogTerm	= 1.0f - ScaleDistance( TrueDepth * ClipValues.y );
+
+	vec2 DisplaceUV		= texture2D( Texture2, AspectUV ).xy * 2.0f - 1.0f;
+	// Fixed DisplaceUV for GL
+	DisplaceUV.y		= -DisplaceUV.y;
+	vec2 MaxDisplace	= TrueFogTerm * PostLevels.y * AspectUVAdjustmentB.xy;
+	vec2 MainUV			= FixedUV + ( DisplaceUV * MaxDisplace );
+
+	float DisplaceDepth		= GetLinearDepth( texture2D( Texture7, MainUV ).r );
+	float DisplaceFogTerm	= 1.0f - ScaleDistance( DisplaceDepth * ClipValues.y );
+
+	vec3 MainColor		= texture2D( Texture0, MainUV ).rgb;
+
+	vec3 BlurColor		= texture2D( Texture1, MainUV ).rgb;
+	vec3 NormBlurColor	= PostLevels.x * BlurColor;
+
+	vec3 BlurDiff		= DisplaceFogTerm * abs( MainColor - NormBlurColor );
+	vec3 WatercolorT	= WatercolorParams.y * clamp( WatercolorParams.x * BlurDiff, 0.0f, 1.0f );
+	vec3 Watercolor		= mix( NormBlurColor, MainColor, WatercolorT );
+	
+	vec3 BlotColor		= texture2D( Texture3, AspectUV ).rgb;
+	vec3 BlotT			= WatercolorParams.w * clamp( WatercolorParams.z * BlurDiff, 0.0f, 1.0f );
+	vec3 UsingBlot		= 2.0f * mix( Gray, BlotColor, BlotT );
+	vec3 BlottedColor	= Watercolor * UsingBlot;
+	vec4 CanvasColor	= SampleSRGBToLinear( Texture4, AspectUV );
+	vec3 HDRColor		= CanvasColor.rgb * CanvasColor.a + BlottedColor * ( 1.0f - CanvasColor.a );
+
+	float HDRLuminance	= Luminance( BlottedColor );
+	float LumAlpha		= clamp( HDRLuminance * PostLevels.z + PostLevels.w, 0.0f, 1.0f );
+	vec3 EdgeColor		= mix( texture2D( Texture5, MainUV ).rgb, White, LumAlpha );
+
+	vec3 LDRColor		= TonemapCustom( max( HDRColor * EdgeColor, Black ) );
+	
+	vec3 GradedColor	= ColorGrade( LDRColor, Texture6 );
+
+	vec3 GammaColor		= Calibrate( GradedColor );
+
+	gl_FragColor		= vec4( GammaColor, Luma( GammaColor ) );
+}

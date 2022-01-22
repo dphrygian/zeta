@@ -1,0 +1,72 @@
+#include "common.hlsl_psh"
+#include "lighting.hlsl_psh"
+
+sampler	AlbedoSampler	: register(s0);
+sampler	NormalSampler	: register(s1);
+sampler	DepthSampler	: register(s2);
+
+// SDP variables
+float4	LightPosition;
+float4	LightColor;
+
+struct PS_INPUT 
+{
+	float4 VPos : TEXCOORD0;
+};
+
+float4 Main( PS_INPUT In ) : COLOR
+{
+	// Fix VPos
+	const float2	NormVPos		= In.VPos.xy / In.VPos.w;
+
+	// Unpack normal, smoothness, and reflectance
+	const float4	NormalSpec		= tex2D( NormalSampler, NormVPos );
+	const float4	NormalUnpack	= ( NormalSpec * 2.0f ) - 1.0f;
+	const float		NormalZSign		= NonZeroSign( NormalUnpack.z );
+	const float3	WSNormal		= GetInvStereographicProjection( NormalUnpack.xy, NormalZSign );
+
+	const float2	SmoothRefl		= Unpack( abs( NormalUnpack.zw ) );		// Scale back from non-zero range
+	const float		Dielectric		= step( 0.0f, NormalUnpack.w );			// 0 if metal, 1 if dielectric
+
+#if TEST_LIGHTING
+	const float3	BaseColor		= float3( 1.0f, 1.0f, 1.0f );
+#else
+	const float3	BaseColor		= tex2D( AlbedoSampler, NormVPos ).rgb;	// Base is used as either albedo or specular color depending on dielectric/metal material
+#endif
+	const float3	Black			= float3( 0.0f, 0.0f, 0.0f );
+	const float3	White			= float3( 1.0f, 1.0f, 1.0f );
+	const float3	AlbedoColor		= lerp( Black, BaseColor, Dielectric );
+	const float3	SpecColor		= lerp( BaseColor, White, Dielectric );
+	// DLP 5 Jan 2019: This is actually not correct; at grazing angles (Fresnel),
+	// metal should also reflect the true light color (or at least an edge tint).
+	// This is subtle, and I rarely use tinted metals, and I can't spare the cost.
+
+	const float		Depth			= tex2D( DepthSampler, NormVPos ).r;
+	const float3	WSPos			= GetWSPos( NormVPos, Depth ).xyz;
+
+	const float3	View			= normalize( EyePosition.xyz - WSPos );	// View vector V
+	const float3	PosToLight		= LightPosition.xyz - WSPos;
+	const float3	Light			= normalize( PosToLight );					// Light vector L
+	const float3	Half			= normalize( Light + View );				// Half vector H
+	const float		NdotL			= saturate( dot( WSNormal, Light ) );
+	const float		NdotH			= saturate( dot( WSNormal, Half ) );
+	// ROSAHACK: Roll off specular at incident angle instead of making a hard edge
+	const float		SpecShadow		= saturate( NdotL * 16.0f );
+
+	const float		FresnelC		= lerp( 0.25f, 1.0f, saturate( SmoothRefl.x * 2.0f ) );	// HACKHACK: Rougher materials do not become fully reflective at glancing angles.
+	const float		Fresnel			= FresnelC * pow( 1.0f - dot( Light, Half ), 5.0f );	// ROSANOTE: No need to saturate the dot product here. By definition, H can't face away from L.
+	const float		Reflectance		= lerp( SmoothRefl.y, 1.0f, Fresnel );		// Apply Fresnel to reflectance
+	const float		SpecularPower	= lerp( 1.0f, 100.0f, SmoothRefl.x );		// Scale into reasonable range. Smoothness is already squared to get "perceptually linear" value.
+
+	const float		SpecEnergy		= ( SpecularPower * 0.125f ) + 1.0f;		// Same as (n+8)/8
+
+	const float3	Diffuse			= AlbedoColor * NdotL;
+	const float3	Specular		= SpecShadow * SpecColor * SpecEnergy * pow( NdotH, SpecularPower );
+	const float3	AllLight		= LightColor.rgb * lerp( Diffuse, Specular, Reflectance );
+
+	const float		Dist			= sqrt( dot( PosToLight, PosToLight ) );
+	const float		LinearFalloff	= saturate( 1.0f - ( Dist / LightColor.a ) );	// 1 at light pos, 0 at light radius
+	const float		Falloff			= LinearFalloff * LinearFalloff;				// Square for proper/desirable falloff
+
+	return float4( Falloff * AllLight, 1.0f );
+}

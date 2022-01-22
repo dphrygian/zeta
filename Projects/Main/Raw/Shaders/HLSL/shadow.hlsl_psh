@@ -1,0 +1,8 @@
+// World-space distance normalized by far clip
+float4 GetShadowDistance( const float4 PositionWS )
+{
+	const float3	ViewToPos		= PositionWS.xyz - ViewPosition.xyz;
+	const float		ShadowDistance	= ClipPlanes.w * length( ViewToPos );
+
+	return float4( ShadowDistance, ShadowDistance, ShadowDistance, ShadowDistance );
+}

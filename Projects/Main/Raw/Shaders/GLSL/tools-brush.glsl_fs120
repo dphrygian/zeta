@@ -1,0 +1,54 @@
+#version 120
+
+uniform vec4	MultiplyColor;
+
+uniform sampler2D Texture0;
+uniform sampler2D Texture1;
+
+varying vec2	PassUV;
+varying vec3	PassNormal;
+varying vec4	PassPositionWS;
+
+float Lights[6] = float[6]( 0.8333, 0.8333, 0.6667, 0.6667, 1.0, 0.5 );
+
+float GetNormalLight( vec3 InNormal )
+{
+	vec3	NormalSquared	= InNormal * InNormal;
+	ivec3	IsNegative		= ivec3( lessThan( InNormal, vec3( 0.0f ) ) );
+	return
+		NormalSquared.x * Lights[ IsNegative.x ] +
+		NormalSquared.y * Lights[ IsNegative.y + 2 ] +
+		NormalSquared.z * Lights[ IsNegative.z + 4 ];
+}
+
+vec4 sRGBToLinear( vec4 sRGB )
+{
+	vec4 Linear = pow( sRGB, vec4( 2.2f ) );
+	return vec4( Linear.rgb, sRGB.a );
+}
+
+void main()
+{
+	vec4	AdjustedPosWS	= PassPositionWS;
+	AdjustedPosWS.z			*= -1.0f;
+	AdjustedPosWS.z			+= 0.5f;
+
+	float	OverlayScale	= 4.0f;
+	float	OverlaySharp	= 2.0f;
+	vec3	OverlayUVW		= AdjustedPosWS.xyz / OverlayScale;
+	vec4	OverlayX		= texture2D( Texture1, OverlayUVW.yz );
+	vec4	OverlayY		= texture2D( Texture1, OverlayUVW.xz );
+	vec4	OverlayZ		= texture2D( Texture1, OverlayUVW.xy );
+	vec3	OverlayWeights	= pow( abs( PassNormal ), vec3( OverlaySharp ) );
+	// Make weights sum to 1
+	OverlayWeights			= OverlayWeights / ( OverlayWeights.x + OverlayWeights.y + OverlayWeights.z );
+	vec4	Overlay			= OverlayWeights.x * OverlayX +
+							  OverlayWeights.y * OverlayY +
+							  OverlayWeights.z * OverlayZ;
+
+	vec4	Albedo	= sRGBToLinear( texture2D( Texture0, PassUV ) * Overlay );
+
+	float	Light	= GetNormalLight( normalize( PassNormal ) );
+
+	gl_FragColor = MultiplyColor * Light * Albedo;
+}

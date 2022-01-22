@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="src\audio.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\audiosystemcommon.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\sound3dlistener.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\soundcommon.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\soundinstancecommon.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\soundmanager.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\soloudaudiosystem.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\soloudsound.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\soloudsoundinstance.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\audio.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\audiosystemcommon.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\iaudiosystem.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\isound.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\isoundinstance.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\sound3dlistener.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\soundcommon.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\soundinstancecommon.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\soundmanager.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\soloudaudiosystem.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\soloudsound.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\soloudsoundinstance.h">
+      <Filter>src</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{3769730a-b6f6-43cf-9f6f-a06387cf0fe5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\FMOD">
+      <UniqueIdentifier>{fcec2667-c830-43c9-82d0-d2fec6d7b9fa}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

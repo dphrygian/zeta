@@ -1,0 +1,235 @@
+row_major float4x4	WorldMatrix;
+row_major float4x4	InvWorldMatrix;
+row_major float4x4	InvVPMatrix;
+float4				ViewPosition;	// float3 as float4
+float4				EyePosition;	// main camera position, *not* actual rendered view location (so it can be used with FS quads)
+float4				ClipPlanes;		// x = near, y = far, z = 1/near, w = 1/far
+float4				ClipValues;		// x = -near clip, y = far clip, z = range (far-near) (NOTE: ONLY provided by edge and watercolor SDPs!) (also kinda redundant with ClipPlanes)
+
+float4 SampleAndClip( sampler Sampler, const float2 UV )
+{
+	float4 Sample = tex2D( Sampler, UV );
+	clip( Sample.a - 0.5f );
+	return Sample;
+}
+
+float3 SampleNormal( sampler NormalSampler, const float2 UV )
+{
+	float3 Normal = tex2D( NormalSampler, UV ).rgb * 2.0f - 1.0f;	// ROSANOTE: Not doing the red/alpha swizzle because my textures won't be DXT compressed
+	Normal.z = sqrt( 1.0f - dot( Normal.xy, Normal.xy ) );			// Reconstruct Z--cheap way to renormalize (also means the stored B value gets thrown out)
+	return Normal;
+}
+
+// No renormalization, saves the expensive sqrt
+float3 SampleNormalCheap( sampler NormalSampler, const float2 UV )
+{
+	return tex2D( NormalSampler, UV ).rgb * 2.0f - 1.0f;
+}
+
+// Ignacio's gradient warp fix from The Witness blog (http://the-witness.net/news/2012/02/seamless-cube-map-filtering/)
+// (Unfortunately, I can't actually afford this in light-ambient) (DLP 12 Aug 2020: Now I can!)
+float3 FixCubeCoords( const float3 c )
+{
+	const float3	a = abs( c );
+	const float		m = max( max( a.x, a.y ), a.z );
+	const float		s = 0.875f;	// HACKHACK: Hard-coded cubemap size = 8 assumption (this is (size-1)/size)
+
+	float3			f = c;
+	if( a.x != m ) { f.x *= s; }
+	if( a.y != m ) { f.y *= s; }
+	if( a.z != m ) { f.z *= s; }
+
+	return f;
+}
+
+// Assume Normal and FromEye are already normalized
+// Using ToEye instead of FromEye because I already have it as the view vector V
+float4 SampleCube( sampler CubeSampler, const float3 Normal, const float3 ToEye )
+{
+	const float3 Reflect = -reflect( ToEye, Normal );
+	return texCUBE( CubeSampler, FixCubeCoords( Reflect.xzy ) );	// Swizzle to match expected coordinate system
+}
+
+float4 sRGBToLinear( const float4 sRGB )
+{
+	const float4 Linear = pow( sRGB, 2.2f );	// Correct version
+	return float4( Linear.rgb, sRGB.a );		// sRGB.a is assumed to already be linear
+}
+
+float4 sRGBToLinearCheap( const float4 sRGB )
+{
+	const float4 Linear = sRGB * sRGB;		// Cheaper approximated version
+	return float4( Linear.rgb, sRGB.a );	// sRGB.a is assumed to already be linear
+}
+
+float4 SampleCubeSRGBToLinear( sampler CubeSampler, const float3 Normal, const float3 ToEye )
+{
+	const float3 Reflect = -reflect( ToEye, Normal );
+	return sRGBToLinear( texCUBE( CubeSampler, Reflect.xzy ) );
+}
+
+// NOTE: Not doing FixCubeCoords here because the cubemap size is different,
+// the edges aren't matched anyway, and the output is binary so it doesn't really matter.
+float SampleCubeDepth( sampler CubeSampler, const float3 Normal )
+{
+	return texCUBE( CubeSampler, Normal.xzy ).r;
+}
+
+float4 SampleSRGBToLinear( sampler Sampler, const float2 UV )
+{
+	return sRGBToLinear( tex2D( Sampler, UV ) );
+}
+
+float4 SampleSRGBToLinearCheap( sampler Sampler, const float2 UV )
+{
+	return sRGBToLinearCheap( tex2D( Sampler, UV ) );
+}
+
+float4 SampleAndClipSRGBToLinear( sampler Sampler, const float2 UV )
+{
+	return sRGBToLinear( SampleAndClip( Sampler, UV ) );
+}
+
+// Unlike the sign() intrinsic (which also doesn't exist in GLSL 1.20),
+// this returns 1 for x=0, which makes it more useful to me in certain cases.
+float NonZeroSign( const float x )
+{
+	return ( step( 0.0f, x ) * 2.0f ) - 1.0f;
+}
+
+float2 GetStereographicProjection( const float3 Normal )
+{
+	const float Denom = 1.0f / ( 1.0f + abs( Normal.z ) );
+	return float2( Normal.xy * Denom );
+}
+
+float3 GetInvStereographicProjection( const float2 Normal, const float NormalZSign )
+{
+	const float XXYY	= dot( Normal.xy, Normal.xy );
+	const float Denom	= 1.0f / ( 1.0f + XXYY );
+	return float3( 2.0f * Normal.xy * Denom, NormalZSign * abs( ( XXYY - 1.0f ) * Denom ) );
+}
+
+// Assumes UV in range [0..1]
+float4 GetWSPos( const float2 UV, const float Depth )
+{
+	const float2 FixedUV	= ( UV * 2.0f ) - 1.0f;
+	const float4 VPos4		= float4( FixedUV.x, -FixedUV.y, Depth, 1.0f );
+	const float4 WSPos		= mul( VPos4, InvVPMatrix );
+	return WSPos / WSPos.w;
+}
+
+// ROSATODO: Replace this with a matrix multiply? Would be cheaper?
+float GetLinearDepth( const float Z )
+{
+	// For future reference, given exponential depth z (actually z/w):
+	// Distance = -fn/(fz-f-nz)
+	// LinearZ = -n/(fz-f-nz)-n/f
+	// NOTE: I'm removing the -n/f at the back because the actual value doesn't matter here, just the difference from neighboring values.
+	// (And I also use this for the distance in the fog term, so it's helpful to have it returned without the -n/f term.)
+
+	return ClipValues.x / ( Z * ClipValues.z - ClipValues.y );
+}
+
+float3 GetBitangent( const float3 Normal, const float3 Tangent, const float Sign )
+{
+	return Sign * cross( Normal, Tangent );
+}
+
+// TBN matrix transforms from world space to tangent space
+float4x4 GetTBNMatrix( const float3 Tangent, const float3 Bitangent, const float3 Normal )
+{
+	return float4x4(
+		Tangent.x,	Bitangent.x,	Normal.x,	0.0f,
+		Tangent.y,	Bitangent.y,	Normal.y,	0.0f,
+		Tangent.z,	Bitangent.z,	Normal.z,	0.0f,
+		0.0f,		0.0f,			0.0f,		1.0f );
+}
+
+// TBN matrix transforms from tangent space to world space
+float4x4 GetInverseTBNMatrix( const float3 Tangent, const float3 Bitangent, const float3 Normal )
+{
+	return float4x4(
+		Tangent.x,		Tangent.y,		Tangent.z,		0.0f,
+		Bitangent.x,	Bitangent.y,	Bitangent.z,	0.0f,
+		Normal.x,		Normal.y,		Normal.z,		0.0f,
+		0.0f,			0.0f,			0.0f,			1.0f );
+}
+
+// Scale from [0..1] to [1/16..1] for packing
+float Pack( const float Unpacked ) { return ( Unpacked * 0.9375f ) + 0.0625f; }
+float2 Pack( const float2 Unpacked ) { return ( Unpacked * 0.9375f ) + 0.0625f; }
+float3 Pack( const float3 Unpacked ) { return ( Unpacked * 0.9375f ) + 0.0625f; }
+float4 Pack( const float4 Unpacked ) { return ( Unpacked * 0.9375f ) + 0.0625f; }
+
+// Scale from [1/16..1] back to [0..1] for unpacking
+float Unpack( const float Packed ) { return saturate( ( Packed * 1.066666f ) - 0.066666f ); }
+float2 Unpack( const float2 Packed ) { return saturate( ( Packed * 1.066666f ) - 0.066666f ); }
+float3 Unpack( const float3 Packed ) { return saturate( ( Packed * 1.066666f ) - 0.066666f ); }
+float4 Unpack( const float4 Packed ) { return saturate( ( Packed * 1.066666f ) - 0.066666f ); }
+
+// For shaders, hue values *must* be greater than 0
+float4 HSVtoRGB( const float4 ColorHSV )
+{
+	float4 ColorRGB = ColorHSV;
+
+	float Hue				= frac( ColorHSV.x );
+	const float Chroma		= ColorHSV.z * ColorHSV.y;
+	const float MinValue	= ColorHSV.z - Chroma;
+	const float MidValue	= MinValue + Chroma * ( 1.0f - abs( 2.0f * frac( Hue * 3.0f ) - 1.0f ) );
+	const float MaxValue	= ColorHSV.z;
+
+	Hue = Hue * 6.0f;
+	if( Hue < 1.0f )
+	{
+		ColorRGB.r = MaxValue;
+		ColorRGB.g = MidValue;
+		ColorRGB.b = MinValue;
+	}
+	else if( Hue < 2.0f )
+	{
+		ColorRGB.r = MidValue;
+		ColorRGB.g = MaxValue;
+		ColorRGB.b = MinValue;
+	}
+	else if( Hue < 3.0f )
+	{
+		ColorRGB.r = MinValue;
+		ColorRGB.g = MaxValue;
+		ColorRGB.b = MidValue;
+	}
+	else if( Hue < 4.0f )
+	{
+		ColorRGB.r = MinValue;
+		ColorRGB.g = MidValue;
+		ColorRGB.b = MaxValue;
+	}
+	else if( Hue < 5.0f )
+	{
+		ColorRGB.r = MidValue;
+		ColorRGB.g = MinValue;
+		ColorRGB.b = MaxValue;
+	}
+	else
+	{
+		ColorRGB.r = MaxValue;
+		ColorRGB.g = MinValue;
+		ColorRGB.b = MidValue;
+	}
+
+	return ColorRGB;
+}
+
+// https://aras-p.info/blog/2009/07/30/encoding-floats-to-rgba-the-final/
+float4 EncodeFloatRGBA( const float F )
+{
+	float4 Encoded = float4( 1.0f, 255.0f, 65025.0f, 16581375.0f ) * F;
+	Encoded = frac( Encoded );
+	Encoded -= Encoded.yzww * float4( 1.0f / 255.0f, 1.0f / 255.0f, 1.0f / 255.0f, 0.0f );
+	return Encoded;
+}
+
+float DecodeFloatRGBA( const float4 RGBA )
+{
+	return dot( RGBA, float4( 1.0f, 1.0f / 255.0f, 1.0f / 65025.0f, 1.0f / 16581375.0f ) );
+}

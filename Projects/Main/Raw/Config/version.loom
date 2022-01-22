@@ -1,0 +1,5 @@
+[Version]
+# This may be manually set to any build number desired
+BuildNumber	= "33"
+# This is automatically generated when making a build
+BuildTime	= "2022-01-05T16:44:40-06:00"

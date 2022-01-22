@@ -1,0 +1,40 @@
+#include "common.hlsl_psh"
+
+sampler	LightDepthRGBASampler	: register(s0);
+sampler	SceneDepthSampler		: register(s1);
+
+// SDP variables
+float4	LightColor;		// only used for alpha here
+float4	FogLightParams;	// x = fog density
+
+struct PS_INPUT 
+{
+	float4	PositionSS	: TEXCOORD0;
+	float4	VPos		: TEXCOORD1;
+};
+
+float4 Main( PS_INPUT In ) : COLOR
+{
+	// Fix VPos
+	const float2	NormVPos		= In.VPos.xy / In.VPos.w;
+
+	const float4	LightDepthRBGA	= tex2D( LightDepthRGBASampler, NormVPos );
+	const float		LightNearDepth	= DecodeFloatRGBA( LightDepthRBGA );
+	const float		LightFarDepth	= In.PositionSS.z / In.PositionSS.w;
+	const float		SceneDepth		= tex2D( SceneDepthSampler, NormVPos ).r;
+	
+	// Discard if front face is occluded
+	clip( SceneDepth - LightNearDepth );
+	
+	// Use the mesh's far depth or the scene depth, whichever is nearer to the camera
+	const float		UsingFarDepth	= min( LightFarDepth, SceneDepth );
+
+	const float3	LightNearWSPos	= GetWSPos( NormVPos, LightNearDepth ).xyz;
+	const float3	LightFarWSPos	= GetWSPos( NormVPos, UsingFarDepth ).xyz;
+	const float		FogDistance		= length( LightFarWSPos - LightNearWSPos );
+	const float		FogFalloff		= saturate( FogDistance / ( 2.0f * LightColor.a ) );
+
+	const float		FogAlpha		= FogFalloff * FogLightParams.x;
+
+	return float4( 1.0f, 1.0f, 1.0f, FogAlpha );
+}

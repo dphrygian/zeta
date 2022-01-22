@@ -1,0 +1,8 @@
+#version 120
+
+varying vec4 PassColor;
+
+void main()
+{
+	gl_FragColor = PassColor;
+}

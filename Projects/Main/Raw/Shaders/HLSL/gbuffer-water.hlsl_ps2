@@ -1,0 +1,70 @@
+#include "common.hlsl_psh"
+
+sampler AlbedoSampler	: register(s0);
+sampler NormalASampler	: register(s1);
+sampler NormalBSampler	: register(s2);
+
+float4	Highlight;	// Set from code. Linear space. RGB is multiplicative to albedo and A is additive to emissive.
+float4	WaterPhase;	// xy = phase on UV A; zw = phase on UV B
+
+// Hard-coded water spec instead of using a spec map.
+static const float4 SpecMap		= float4( 0.04f, 1.0f, 0.0f, 1.0f );
+static const float2	ReflSmooth	= Pack( float2( SpecMap.r, SpecMap.g * SpecMap.g ) );	// Square for perceptually linear smoothness. ROSAHACK: Pack because we need these to be non-zero for multiplying with sign bits.
+static const float	Dielectric	= SpecMap.a * 2.0f - 1.0f;	// ROSANOTE: Dielectric/metal is binary. -1 if metal, 1 if dielectric.
+
+// Scalar on faked refraction
+static const float	WaterDepth	= -0.2f;	// Negative should produce "more correct" refraction (it's fake anyway, ignores viewing angle incidence)
+
+struct PS_INPUT 
+{
+	float2	UV			: TEXCOORD0;
+	float4	PositionSS	: TEXCOORD1;
+	float3	NormalWS	: TEXCOORD2;
+	float4	TangentWS	: TEXCOORD3;
+};
+
+struct PS_OUTPUT
+{
+	float4	Normal	: COLOR0;
+	float4	Albedo	: COLOR1;
+	float4	Depth	: COLOR2;
+};
+
+PS_OUTPUT Main( PS_INPUT In )
+{
+	PS_OUTPUT Out;
+
+	// Renormalize normal and tangent before creating TBN matrix
+	const float3	Normal		= normalize( In.NormalWS );
+	const float3	Tangent		= normalize( In.TangentWS.xyz );
+	const float3	Bitangent	= GetBitangent( Normal, Tangent, In.TangentWS.w );
+	const float4x4	InvTBN		= GetInverseTBNMatrix( Tangent, Bitangent, Normal );
+
+	// NOTE: Water phase is relative to UV orientation on the mesh, which means this
+	// only blows in the wind direction if the mesh is using default orientation and
+	// the surface is flat. That's fine, it means I can change the flow where I want.
+	// I may revisit this later in actual use cases, for now, it proves the concept.
+	const float3	NormalATS	= SampleNormal( NormalASampler, In.UV + WaterPhase.xy );	// DLP 12 Aug 2020: Used to be SampleNormalCheap, I think I can afford it now (probably doesn't matter since I normalize anyway)
+	const float3	NormalBTS	= SampleNormal( NormalBSampler, In.UV + WaterPhase.zw );	// DLP 12 Aug 2020: Used to be SampleNormalCheap, I think I can afford it now (probably doesn't matter since I normalize anyway)
+	const float3	NormalMapTS	= normalize( NormalATS + NormalBTS );
+	const float3	NormalMapWS	= mul( float4( NormalMapTS, 0.0f ), InvTBN ).xyz;
+
+	const float3	Albedo		= SampleSRGBToLinear( AlbedoSampler, In.UV + WaterDepth * NormalMapTS.xy ).rgb * Highlight.rgb;
+
+	//const float4	SpecMap		= tex2D( SpecSampler, In.UV );
+	//const float2	ReflSmooth	= Pack( float2( SpecMap.r, SpecMap.g * SpecMap.g ) );	// Square for perceptually linear smoothness. ROSAHACK: Pack because we need these to be non-zero for multiplying with sign bits.
+	const float		Emissive	= Pack( SpecMap.b + Highlight.a );	// Pack for multiplying with skin bit
+	//const float		Dielectric	= SpecMap.a * 2.0f - 1.0f;	// ROSANOTE: Dielectric/metal is binary. -1 if metal, 1 if dielectric.
+
+	const float		Depth		= In.PositionSS.z / In.PositionSS.w;
+
+	const float		NormalZSign	= NonZeroSign( NormalMapWS.z );
+	const float4	NormalPack	= float4( GetStereographicProjection( NormalMapWS ), NormalZSign * ReflSmooth.y, Dielectric * ReflSmooth.x ) * 0.5f + 0.5f;
+	const float4	AlbedoPack	= float4( Albedo, Emissive * 0.5f + 0.5f );	// Emissive also stores skin bit (-1 if skin, 1 if not skin; this shader never emits skin)
+
+	Out.Normal	= NormalPack;
+	Out.Albedo	= AlbedoPack;
+	Out.Depth	= float4( Depth, Depth, Depth, Depth );
+	
+	return Out;
+}

@@ -1,0 +1,207 @@
+[Animation]
+AnimEventVersion = 2
+
+[AnimationMap]
+Meshes/Hands/weapon-lasergun.cms	= "Lasergun"
+Meshes/Actors/robot.cms				= "Robot_Melee"
+Meshes/Actors/robot-ranged.cms		= "Robot_Ranged"
+Meshes/Actors/ceo.cms				= "CEO"
+
+[Robot_Melee]
+# Anim sets are baked in; paths are relative to Tools
+NumAnimSets	= &
+@ AnimSet
+@@&			= "../Intermediate/Anims/Robot/idle.mesh"
+@@&			= "../Intermediate/Anims/Robot/walk.mesh"
+@@&			= "../Intermediate/Anims/Robot/hitreact.mesh"
+@@&			= "../Intermediate/Anims/Robot/hitreact-additive.mesh"
+@@&			= "../Intermediate/Anims/Robot/death.mesh"
+@@&			= "../Intermediate/Anims/Robot/attack-melee.mesh"
+
+[Robot_Ranged]
+NumAnimSets	= &
+@ AnimSet
+@@&			= "../Intermediate/Anims/Robot/idle.mesh"
+@@&			= "../Intermediate/Anims/Robot/walk-ranged.mesh"
+@@&			= "../Intermediate/Anims/Robot/hitreact.mesh"
+@@&			= "../Intermediate/Anims/Robot/hitreact-additive.mesh"
+@@&			= "../Intermediate/Anims/Robot/death.mesh"
+@@&			= "../Intermediate/Anims/Robot/attack-melee.mesh"
+@@&			= "../Intermediate/Anims/Robot/attack-ranged.mesh"
+
+[CEO]
+# Anim sets are baked in; paths are relative to Tools
+NumAnimSets	= &
+@ AnimSet
+@@&			= "../Intermediate/Anims/CEO/idle.mesh"
+@@&			= "../Intermediate/Anims/CEO/walk.mesh"
+@@&			= "../Intermediate/Anims/CEO/run.mesh"
+@@&			= "../Intermediate/Anims/CEO/captured.mesh"
+
+
+
+# ****************************************************************
+# Common events
+
+[WeaponFire_AnimEvent]
+Type		= "RosaSendEvent"
+EventName	= "FireWeapon"
+
+[EndFiring_AnimEvent]
+Type		= "RosaSendEvent"
+EventName	= "EndFiring"
+
+[CharacterFootstepEvent]
+Type		= "RosaExecuteAction"
+NumActions	= &
+@ Action
+@@&			= "CharacterFootstepAction"
+
+	[CharacterFootstepAction]
+	ActionType	= "RosaFootstep"
+
+[EnemyMeleeFireEvent]
+Type		= "RosaSendEvent"
+EventName	= "MeleeAttack"
+
+[EnemyRangedFireEvent]
+Type		= "RosaSendEvent"
+EventName	= "RangedAttack"
+
+
+
+# ****************************************************************
+
+[Lasergun:Fire]
+NumAnimEvents = &
+@ AnimEvent
+@@&Def		= "WeaponFire_AnimEvent"
+@@^Frame	= 0
+@@&Def		= "EndFiring_AnimEvent"
+@@^Frame	= -2
+
+
+
+# ****************************************************************
+
+[Robot_Melee:Walk]
+NumAnimEvents	= &
+@ AnimEvent
+@@&Def			= "CharacterFootstepEvent"
+@@^Frame		= 7
+@@&Def			= "CharacterFootstepEvent"
+@@^Frame		= 17
+
+[Robot_Melee:MeleeAttack]
+NumAnimEvents = &
+@ AnimEvent
+@@&Def		= "EnemyMeleeFireEvent"
+@@^Frame	= 4
+@@&Def		= "EnemyMeleeFireEvent"
+@@^Frame	= 8
+
+
+
+# ****************************************************************
+
+[Robot_Ranged:Walk]
+NumAnimEvents	= &
+@ AnimEvent
+@@&Def			= "CharacterFootstepEvent"
+@@^Frame		= 7
+@@&Def			= "CharacterFootstepEvent"
+@@^Frame		= 17
+
+[Robot_Ranged:MeleeAttack]
+NumAnimEvents = &
+@ AnimEvent
+@@&Def		= "EnemyMeleeFireEvent"
+@@^Frame	= 4
+@@&Def		= "EnemyMeleeFireEvent"
+@@^Frame	= 8
+
+[Robot_Ranged:RangedAttack]
+NumAnimEvents = &
+@ AnimEvent
+@@&Def		= "EnemyRangedFireEvent"
+@@^Frame	= 15
+
+
+
+# ****************************************************************
+
+[CEO:Walk]
+NumAnimEvents	= &
+@ AnimEvent
+@@&Def			= "CharacterFootstepEvent"
+@@^Frame		= 7
+@@&Def			= "CharacterFootstepEvent"
+@@^Frame		= 17
+
+[CEO:Run]
+NumAnimEvents	= &
+@ AnimEvent
+@@&Def			= "CharacterFootstepEvent"
+@@^Frame		= 7
+@@&Def			= "CharacterFootstepEvent"
+@@^Frame		= 17
+
+
+
+# ****************************************************************
+
+[Actor:Walk]
+NumAnimEvents	= &
+@ AnimEvent
+@@&Def			= "CharacterFootstepEvent"
+@@^Frame		= 7
+@@&Def			= "CharacterFootstepEvent"
+@@^Frame		= 17
+
+[Actor:Search]
+NumAnimEvents	= &
+@ AnimEvent
+@@&Def			= "CharacterFootstepEvent"
+@@^Frame		= 7
+@@&Def			= "CharacterFootstepEvent"
+@@^Frame		= 17
+
+[Actor:Run]
+PlayRate		= 0.7
+NumAnimEvents	= &
+@ AnimEvent
+@@&Def			= "CharacterFootstepEvent"
+@@^Frame		= 6
+@@&Def			= "CharacterFootstepEvent"
+@@^Frame		= 14
+
+[Actor:MeleeAttack]
+NumAnimEvents = &
+@ AnimEvent
+@@&Def		= "EnemyMeleeFireEvent"
+@@^Frame	= 4
+@@&Def		= "EnemyMeleeFireEvent"
+@@^Frame	= 8
+
+[Actor:RangedAttack]
+NumAnimEvents = &
+@ AnimEvent
+@@&Def		= "EnemyRangedFireEvent"
+@@^Frame	= 15
+
+[Actor:DodgeLeft]
+VelocityX	= -1.8
+VelocityY	= -1.0	# HACK: Move backward to counter walking motion
+
+[Actor:DodgeRight]
+VelocityX	= 1.8
+VelocityY	= -1.0	# HACK: Move backward to counter walking motion
+
+[Actor:DodgeBack]
+VelocityY	= -3.0
+
+[Actor:Death]
+NumAnimEvents	= &
+@ AnimEvent
+#@@&Def			= "GetDusted_AnimEvent"
+#@@^Frame		= 14

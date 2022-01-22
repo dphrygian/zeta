@@ -1,0 +1,35 @@
+#include "common.hlsl_psh"
+
+float2 BloomStepRadius;	// Set from code
+
+sampler Sampler			: register(s0);
+sampler KernelSampler	: register(s1);
+
+struct PS_INPUT
+{
+	float2 UV		: TEXCOORD0;
+};
+
+float4 Main( PS_INPUT In ) : COLOR
+{
+	float4	Color		= tex2D( Sampler, In.UV );
+	float4	WeightSum	= float4( 1.0f, 1.0f, 1.0f, 1.0f );
+
+	// 16 more taps (8 in each direction)
+	const float Scalar	= 0.111111f;	// 1/9
+	for( int i = 1; i < 9; ++i )
+	{
+		// *NOT* an sRGB -> linear sample; this is treated as a linear texture
+		const float4	Weight = tex2D( KernelSampler, Scalar * i );
+		const float2	Offset = i * BloomStepRadius;
+
+		Color += Weight * tex2D( Sampler, In.UV + Offset );
+		Color += Weight * tex2D( Sampler, In.UV - Offset );
+
+		WeightSum += 2.0f * Weight;
+	}
+
+	Color /= WeightSum;
+	
+	return Color;
+}

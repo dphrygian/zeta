@@ -1,0 +1,26 @@
+#include "common.hlsl_vsh"
+
+uniform float4	SkewParams;	// Skew in XY, feet location in Z
+
+struct VS_INPUT
+{
+	float4 Position	: POSITION;
+};
+
+struct VS_OUTPUT
+{
+	float4	Position	: POSITION;
+	float	Height		: TEXCOORD0;
+};
+
+VS_OUTPUT Main( VS_INPUT In )
+{
+	VS_OUTPUT Out;
+
+	const float		HeightDelta	= In.Position.z - SkewParams.z;
+	const float4	SkewXY		= float4( SkewParams.x * HeightDelta, SkewParams.y * HeightDelta, 0.0f, 0.0f );
+	Out.Position				= FixHalfPixelOffset( mul( In.Position + SkewXY, WVP ) );
+	Out.Height					= In.Position.z;
+	
+	return Out;
+}

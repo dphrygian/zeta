@@ -1,0 +1,165 @@
+[Trigger_2x2x2_Base]
+#ShouldDebugRender = true
+ShouldDebugCheckSpawnClearance	= false
+IgnoreReport	= true
+RosaTransform	= "ImmobileTransform"
+RosaCollision	= "Trigger_2x2x2_Collision"
+
+	[Trigger_2x2x2_Collision]
+	HalfExtentsXY	= 1.0
+	HalfExtentsZ	= 1.0
+
+[LevelEnd2x2x2Trigger_ShowResults]
+Extends		= "LevelEnd2x2x2Trigger"
+Reactions	= "LevelEndTrigger_ShowResults_Reactions"
+
+	[LevelEndTrigger_ShowResults_Reactions]
+	# DLP 28 Apr 2021: This is untested, I'm just blindly trying to remove rule criteria and finally convert to Loom
+	lmReactions
+	{
+		Reaction( Rule( "OnTouched", Conditional( "E", QueryActionStack( "Touched" ), "PlayerPE" ) ) )
+		{
+			"Script_Common_ShowResultsScreen"
+		}
+	}
+
+[LevelEnd2x2x2Trigger]
+Extends		= "Trigger_2x2x2_Base"
+Reactions	= "LevelEndTriggerReactions"
+
+	[LevelEndTriggerReactions]
+	# DLP 28 Apr 2021: This is untested, I'm just blindly trying to remove rule criteria and finally convert to Loom
+	lmReactions
+	{
+		Reaction( Rule( "OnTouched", Conditional( "E", QueryActionStack( "Touched" ), "PlayerPE" ) ) )
+		{
+			RosaGoToLevel( GoToNextLevel = true )
+		}
+	}
+
+[Trigger_100x100x2_Kill]
+#ShouldDebugRender = true
+ShouldDebugCheckSpawnClearance	= false
+IgnoreReport	= true
+RosaTransform	= "ImmobileTransform"
+RosaCollision	= "Trigger_100x100x2_Collision"
+Reactions		= "Trigger_Kill_Reactions"
+
+	[Trigger_100x100x2_Collision]
+	HalfExtentsXY	= 50.0
+	HalfExtentsZ	= 1.0
+
+	[Trigger_Kill_Reactions]
+	# DLP 28 Apr 2021: This is untested, I'm just blindly trying to remove rule criteria and finally convert to Loom
+	lmReactions
+	{
+		Reaction( Rule( "OnTouched", Conditional( "E", QueryActionStack( "Touched" ), "PlayerPE" ) ) )
+		{
+			SendEvent( "Kill", "PlayerPE", DamageSet = ConstantString( "DamageSet_TriggerKill" ), Damager = "PlayerPE" )
+		}
+
+		Reaction( Rule( "OnTouched" )
+		{
+			Destroy( "TouchedPE" )
+		}
+	}
+
+		[DamageSet_TriggerKill]
+		NumDamageVectors	= &
+		@ DamageVector
+		@@&Type				= "Blunt"
+
+[Script_Common_FlushWorldFilesAction]
+ActionType	= "RosaFlushWorldFiles"
+
+[Script_Common_ClearObjectivesAction]
+ActionType	= "RosaClearObjectives"
+
+[Script_Common_MakeLevelSkipAction]
+ActionType	= "RosaMakeLevelSkip"
+
+# ******************************** Scripting ********************************
+
+[Spawner_Script_Intro]
+Entity	= "Script_Intro"
+Comment	= "Show campaign region/mission title card"
+
+[Script_Intro]
+Reactions	= "Script_Intro_Reactions"
+
+	[Script_Intro_Reactions]
+	lmReactions
+	{
+		Reaction( "OnSpawnedRule" )
+		{
+			SetConfigVar( "HUD", "TitleCardText", ConstantString( "CampaignTitleCard" ) )
+			SetConfigVar( "HUD", "TitleCardSubText", ConstantString( "CampaignTitleCardSub" ) )
+			"Script_Common_ShowTitleCard"
+			"Script_Common_QueueHideTitleCard"
+		}
+
+		// Spawn the initial set of enemies after all spawn points have had a chance to register with manager
+		Reaction( Rule( "OnSpawnedQueued" ) )
+		{
+			// DLPTODO: Enable if this is something I want to use in Zeta.
+			//SendEvent( "SpawnManager_SpawnInitialEntities", "PlayerPE" )
+		}
+	}
+
+[Script_Common_ShowTitleCard]
+ActionType = "Composite"
+lmActions
+{
+	SendEvent( "SetWidgetHidden", Screen = ConstantString( "HUD" ), Widget = ConstantString( "TitleCard" ), Hidden = "FalsePE" )
+	SendEvent( "SetWidgetHidden", Screen = ConstantString( "HUD" ), Widget = ConstantString( "TitleCardSub" ), Hidden = "FalsePE" )
+}
+
+[Script_Common_ShowTitleCard_ShadowBox]
+ActionType = "Composite"
+lmActions
+{
+	SendEvent( "SetWidgetHidden", Screen = ConstantString( "HUD" ), Widget = ConstantString( "TitleCard" ), Hidden = "FalsePE" )
+	SendEvent( "SetWidgetHidden", Screen = ConstantString( "HUD" ), Widget = ConstantString( "TitleCardSub_ShadowBox" ), Hidden = "FalsePE" )
+}
+
+[Script_Common_HideTitleCard]
+ActionType = "Composite"
+lmActions
+{
+	SendEvent( "SetWidgetHidden", Screen = ConstantString( "HUD" ), Widget = ConstantString( "TitleCard" ), Hidden = "TruePE" )
+	SendEvent( "SetWidgetHidden", Screen = ConstantString( "HUD" ), Widget = ConstantString( "TitleCardSub" ), Hidden = "TruePE" )
+	SendEvent( "SetWidgetHidden", Screen = ConstantString( "HUD" ), Widget = ConstantString( "TitleCardSub_ShadowBox" ), Hidden = "TruePE" )
+}
+
+[Script_Common_QueueHideTitleCard]
+ActionType = "Composite"
+lmActions
+{
+	SendEvent( "SetWidgetHidden", DispatchDelay = 4.0, Screen = ConstantString( "HUD" ), Widget = ConstantString( "TitleCard" ), Hidden = "TruePE" )
+	SendEvent( "SetWidgetHidden", DispatchDelay = 4.0, Screen = ConstantString( "HUD" ), Widget = ConstantString( "TitleCardSub" ), Hidden = "TruePE" )
+	SendEvent( "SetWidgetHidden", DispatchDelay = 4.0, Screen = ConstantString( "HUD" ), Widget = ConstantString( "TitleCardSub_ShadowBox" ), Hidden = "TruePE" )
+}
+
+[Script_Common_ShowResultsScreen]
+ActionType = "Composite"
+lmActions
+{
+	RosaPublishResults()
+	SendEvent( "PushUIScreen", Screen = ConstantString( "ResultsScreen" ) )
+	// HACKHACK: Queue this in case the user closes the game with the
+	// results showing; when they continue the next time, this will cause
+	// them to enter the next level.
+	SendEvent( "GoToNextLevel", "PlayerPE", QueueEvent = true )
+}
+
+[Script_Common_ResetResults]
+ActionType = "Composite"
+lmActions
+{
+	RosaSetPersistentVar( "TakedownCount", ConstantInt( 0 ) )
+	RosaSetPersistentVar( "DetectionCount", ConstantInt( 0 ) )
+	RosaSetPersistentVar( "AlarmCount", ConstantInt( 0 ) )
+	RosaSetPersistentVar( "BodiesFoundCount", ConstantInt( 0 ) )
+	RosaSetPersistentVar( "GeocacheCount", ConstantInt( 0 ) )
+	RosaSetPersistentVar( "GeocacheSum", ConstantInt( 0 ) )
+}

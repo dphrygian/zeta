@@ -1,0 +1,13 @@
+#include "common.hlsl_psh"
+
+struct PS_INPUT 
+{
+	float4	PositionSS	: TEXCOORD0;
+};
+
+float4 Main( PS_INPUT In ) : COLOR
+{
+	const float		Depth		= In.PositionSS.z / In.PositionSS.w;
+	const float4	DepthRGBA	= EncodeFloatRGBA( Depth );
+	return DepthRGBA;
+}

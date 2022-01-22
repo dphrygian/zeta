@@ -1,0 +1,589 @@
+﻿# ******************************** Tools ********************************
+
+[RosaTools_AppendRoomCategories]
+Level_Zeta = "RoomCategory_Level_Zeta"
+
+	[RoomCategory_Level_Zeta]
+	RoomsDir	= "../Raw/Rooms/Zeta/"
+
+[RosaTools_AppendSpawnerCategories]
+Level_Zeta	= "SpawnerCategory_Level_Zeta"
+
+	[SpawnerCategory_Level_Zeta]
+	lmArray( SpawnerDef )
+	{
+		( "Spawner_Zeta_Script_Intro" )
+	}
+
+[RosaTools_AppendPortalCategories]
+Level_Zeta	= "PortalCategory_Level_Zeta"
+
+	[PortalCategory_Level_Zeta]
+	lmArray( PortalDef )
+	{
+	}
+
+[RosaTools_AppendGeoCategories]
+Level_Zeta	= "GeoCategory_Level_Zeta"
+
+	[GeoCategory_Level_Zeta]
+	lmArray( GeoDef )
+	{
+		( "Brushes/test-fogmesh.cbr" )
+	}
+
+[RosaTools_AppendPrefabCategories]
+Level_Zeta	= "PrefabCategory_Level_Zeta"
+
+	[PrefabCategory_Level_Zeta]
+	PrefabsDir		= "../Raw/Rooms/Zeta/Prefabs"
+	lmArray( PrefabDef )
+	{
+	}
+
+[RosaTools_AppendMatCategories]
+Level_Zeta	= "MatCategory_Level_Zeta"
+
+	[MatCategory_Level_Zeta]
+	lmArray( MatDef )
+	{
+		( "Mat_Zeta_Tower" )
+		( "Mat_Zeta_Tower2" )
+		( "Mat_Zeta_Tower3" )
+
+		( "Mat_Zeta_Lower_Tile" )
+		( "Mat_Zeta_Lower_Turf" )
+		( "Mat_Zeta_Lower_Wall" )
+		( "Mat_Zeta_Lower_Ceiling" )
+
+		( "Mat_Zeta_Mid_Concrete" )
+		( "Mat_Zeta_Mid_Carpet" )
+		( "Mat_Zeta_Mid_Wall" )
+		( "Mat_Zeta_Mid_Ceiling" )
+
+		( "Mat_Zeta_Upper_Hardwood" )
+		( "Mat_Zeta_Upper_Carpet" )
+		( "Mat_Zeta_Upper_Wall" )
+		( "Mat_Zeta_Upper_Ceiling" )
+	}
+
+		[Mat_Zeta_Tower]
+		Albedo	= "Textures/Brushes/Zeta/tower-a.tga"
+		Normal	= "Textures/Brushes/Zeta/tower-n.tga"
+		Spec	= "Textures/Brushes/Zeta/tower-s.tga"
+		Surface	= "Concrete"
+
+		[Mat_Zeta_Tower2]
+		Albedo	= "Textures/Brushes/Zeta/tower-2-a.tga"
+		Normal	= "Textures/Brushes/Zeta/tower-2-n.tga"
+		Spec	= "Textures/Brushes/Zeta/tower-2-s.tga"
+		Surface	= "Concrete"
+
+		[Mat_Zeta_Tower3]
+		Albedo	= "Textures/Brushes/Zeta/tower-3-a.tga"
+		Normal	= "Textures/Brushes/Zeta/tower-3-n.tga"
+		Spec	= "Textures/Brushes/Zeta/tower-3-s.tga"
+		Surface	= "Concrete"
+
+		[Mat_Zeta_Lower_Tile]
+		Albedo	= "Textures/Brushes/Zeta/lower-tile-a.tga"
+		Normal	= "Textures/Brushes/Zeta/lower-tile-n.tga"
+		Spec	= "Textures/Brushes/Zeta/lower-tile-s.tga"
+		Surface	= "Concrete"
+
+		[Mat_Zeta_Lower_Turf]
+		Albedo	= "Textures/Brushes/Zeta/lower-turf-a.tga"
+		Normal	= "Textures/Brushes/Zeta/lower-turf-n.tga"
+		Spec	= "Textures/Brushes/Zeta/lower-turf-s.tga"
+		Surface	= "Grass"
+
+		[Mat_Zeta_Lower_Wall]
+		Albedo	= "Textures/Brushes/Zeta/lower-wall-a.tga"
+		Normal	= "Textures/Brushes/Zeta/lower-wall-n.tga"
+		Spec	= "Textures/Brushes/Zeta/lower-wall-s.tga"
+		Surface	= "Concrete"
+
+		[Mat_Zeta_Lower_Ceiling]
+		Albedo	= "Textures/Brushes/Zeta/lower-ceiling-a.tga"
+		Normal	= "Textures/Brushes/Zeta/lower-ceiling-n.tga"
+		Spec	= "Textures/Brushes/Zeta/lower-ceiling-s.tga"
+		Surface	= "Concrete"
+
+		[Mat_Zeta_Mid_Concrete]
+		Albedo	= "Textures/Brushes/Zeta/mid-concrete-a.tga"
+		Normal	= "Textures/Brushes/Zeta/mid-concrete-n.tga"
+		Spec	= "Textures/Brushes/Zeta/mid-concrete-s.tga"
+		Surface	= "Concrete"
+
+		[Mat_Zeta_Mid_Carpet]
+		Albedo	= "Textures/Brushes/Zeta/mid-carpet-a.tga"
+		Normal	= "Textures/Brushes/Zeta/mid-carpet-n.tga"
+		Spec	= "Textures/Brushes/Zeta/mid-carpet-s.tga"
+		Surface	= "Grass"
+
+		[Mat_Zeta_Mid_Wall]
+		Albedo	= "Textures/Brushes/Zeta/mid-wall-a.tga"
+		Normal	= "Textures/Brushes/Zeta/mid-wall-n.tga"
+		Spec	= "Textures/Brushes/Zeta/mid-wall-s.tga"
+		Surface	= "Concrete"
+
+		[Mat_Zeta_Mid_Ceiling]
+		Albedo	= "Textures/Brushes/Zeta/mid-ceiling-a.tga"
+		Normal	= "Textures/Brushes/Zeta/mid-ceiling-n.tga"
+		Spec	= "Textures/Brushes/Zeta/mid-ceiling-s.tga"
+		Surface	= "Metal"
+
+		[Mat_Zeta_Upper_Hardwood]
+		Albedo	= "Textures/Brushes/Zeta/upper-wood-a.tga"
+		Normal	= "Textures/Brushes/Zeta/upper-wood-n.tga"
+		Spec	= "Textures/Brushes/Zeta/upper-wood-s.tga"
+		Surface	= "Wood"
+
+		[Mat_Zeta_Upper_Carpet]
+		Albedo	= "Textures/Brushes/Zeta/upper-carpet-a.tga"
+		Normal	= "Textures/Brushes/Zeta/upper-carpet-n.tga"
+		Spec	= "Textures/Brushes/Zeta/upper-carpet-s.tga"
+		Surface	= "Carpet"
+
+		[Mat_Zeta_Upper_Wall]
+		Albedo	= "Textures/Brushes/Zeta/upper-wall-a.tga"
+		Normal	= "Textures/Brushes/Zeta/upper-wall-n.tga"
+		Spec	= "Textures/Brushes/Zeta/upper-wall-s.tga"
+		Surface	= "Wood"
+
+		[Mat_Zeta_Upper_Ceiling]
+		Albedo	= "Textures/Brushes/Zeta/upper-ceiling-a.tga"
+		Normal	= "Textures/Brushes/Zeta/upper-ceiling-n.tga"
+		Spec	= "Textures/Brushes/Zeta/upper-ceiling-s.tga"
+		Surface	= "Grass"
+
+# ******************************** World def ********************************
+
+[Level_Zeta]
+WorldDef	= "WorldDef_Zeta"
+Name		= "RegionType_Zeta"
+
+[WorldDef_Zeta]
+WorldGenDef			= "WorldGenDef_Zeta"
+SkyDef				= "Sky_Zeta"
+WindDef				= "Wind_Zeta"
+FogDef				= "Fog_Zeta"
+BloomDef			= "Bloom_Default"
+PostDef				= "Post_Zeta"
+Reverb				= "Reverb_RosaMedium"
+Cubemap				= "Cubemap_Zeta"
+IrradianceDef		= "Irradiance_Zeta_Cool"
+Music				= "Music_Zeta"
+Ambience			= ""
+MinimapScalar		= 1.0
+MinimapRenderAll	= false	# If false, only render visited sectors
+
+[Sky_Zeta]
+SunVectorYaw	= 0.0	# Degrees from north (Y+)
+SunVectorPitch	= 0.0	# Degrees from level (XY-plane)
+SkyColorHiHD	= 0.0
+SkyColorHiS		= 0.0
+SkyColorHiV		= 0.0
+SkyColorLoHD	= 0.0
+SkyColorLoS		= 0.0
+SkyColorLoV		= 0.0
+
+[Wind_Zeta]
+Extends			= "Wind_Default_Low"
+SwayDirectionX	= 1.0
+SwayDirectionY	= 1.0
+
+[Fog_Zeta]
+Near					= 0.0
+Far						= 35.0
+ColorNearHiHD			= 0.0
+ColorNearHiS			= 0.0
+ColorNearHiV			= 0.0
+ColorNearHiA			= 0.0
+ColorFarHiA				= 0.50
+FogLightDensity			= 0.5
+
+[Post_Zeta]
+Extends			= "Post_Default"
+ColorGrading	= "Textures/Post/color-grading-zeta.tga"
+
+[Cubemap_Zeta]
+SideMat			= "Mat_Core_Greybox_Overlay"
+UpMat			= "Mat_Core_Greybox_Overlay"
+DownMat			= "Mat_Core_Greybox_Overlay"
+Size			= 8
+EyeHeight		= 1.5
+WallDistance	= 4.0
+WallHeight		= 7.0	# Must not be close to EyeHeight + WallDistance
+
+[Irradiance_Zeta_Cool]
+ColorHiHD		= 240.0
+ColorHiS		= 0.60
+ColorHiV		= 0.10
+ColorLoHD		= 240.0
+ColorLoS		= 1.00
+ColorLoV		= 0.02	# Was 0.01 for Loam
+# For Zeta, I'm making all walls 1.0 and floors only 0.5.
+# Since the floor is almost always at a grazing angle, it
+# seemed too bright compared to everything else.
+CoefficientXPos	= 1.0
+CoefficientXNeg	= 1.0
+CoefficientYPos	= 1.0
+CoefficientYNeg	= 1.0
+CoefficientZPos	= 0.5
+CoefficientZNeg	= 0.0
+
+[Music_Zeta]
+lmArray( Track )
+{
+	( "Music_Zeta_1" )
+	( "Music_Zeta_2" )
+}
+
+# ********************************** Zeta worldgen *********************************
+
+# Map from file names or paths to their cubemaps; anything not specified here uses the world's default
+[RosaWorld_Cubemaps]
+#Rooms/Zeta/arena-1.rrm	= "Cubemap_Zeta_Arena1"	# As in Vamp, I can specify either the leading path or a filename
+#Rooms/Zeta/arena-2.rrm	= "Cubemap_Zeta_Arena2"
+#Rooms/Zeta/arena-3.rrm	= "Cubemap_Zeta_Arena3"
+Rooms/Zeta/Lower/		= "Cubemap_Zeta_Lower"
+Rooms/Zeta/Mid/			= "Cubemap_Zeta_Mid"
+Rooms/Zeta/Upper/		= "Cubemap_Zeta_Upper"
+
+	[Cubemap_Zeta_Lower]
+	Extends			= "Cubemap_Zeta"
+	EdgeColorHD		= 225.0
+	SideMat			= "Mat_Zeta_Lower_Wall"
+	UpMat			= "Mat_Zeta_Lower_Ceiling"
+	DownMat			= "Mat_Zeta_Lower_Tile"
+	FogMeshDef		= "FogMeshDef_Zeta_Lower"
+
+		[FogMeshDef_Zeta_Lower]
+		FogMeshColorHD	= 210.0
+		FogMeshColorS	= 0.75
+		FogMeshColorV	= 0.10
+		FogMeshColorA	= 0.25
+		FogMeshFar		= 15.0
+		FogMeshExp		= 0.5
+
+	[Cubemap_Zeta_Mid]
+	Extends			= "Cubemap_Zeta"
+	EdgeColorHD		= 285.0
+	SideMat			= "Mat_Zeta_Mid_Wall"
+	UpMat			= "Mat_Zeta_Mid_Ceiling"
+	DownMat			= "Mat_Zeta_Mid_Concrete"
+	FogMeshDef		= "FogMeshDef_Zeta_Mid"
+
+		[FogMeshDef_Zeta_Mid]
+		FogMeshColorHD	= 240.0
+		FogMeshColorS	= 1.0
+		FogMeshColorV	= 0.10
+		FogMeshColorA	= 0.25
+		FogMeshFar		= 15.0
+		FogMeshExp		= 0.5
+
+	[Cubemap_Zeta_Upper]
+	Extends			= "Cubemap_Zeta"
+	EdgeColorHD		= 345.0
+	SideMat			= "Mat_Zeta_Upper_Wall"
+	UpMat			= "Mat_Zeta_Upper_Ceiling"
+	DownMat			= "Mat_Zeta_Upper_Hardwood"
+	FogMeshDef		= "FogMeshDef_Zeta_Upper"
+
+		[FogMeshDef_Zeta_Upper]
+		FogMeshColorHD	= 270.0
+		FogMeshColorS	= 0.50
+		FogMeshColorV	= 0.10
+		FogMeshColorA	= 0.25
+		FogMeshFar		= 15.0
+		FogMeshExp		= 0.5
+
+	[Cubemap_Zeta_Arena1]
+	Extends			= "Cubemap_Zeta"	# Inherit reverb, ambience, etc. from global
+	IrradianceDef	= "Irradiance_Zeta_Arena1"
+	#BounceScalar	= 1.0
+	SideMat			= "Mat_Tile_Dark"
+	UpMat			= "Mat_Tile_Dark"
+	#UpSky			= true 	# TEMPHACK for testing, treats Up as sky (while blending RGB to the Up mat)
+	DownMat			= "Mat_Wood0"
+	Size			= 8
+	EyeHeight		= 1.5
+	WallDistance	= 7.0	# Bigger space than default
+	WallHeight		= 7.0	# Must not be close to EyeHeight + WallDistance
+
+		# Faint warm light
+		[Irradiance_Zeta_Arena1]
+		ColorHiHD		= 44.0
+		ColorHiS		= 0.56
+		ColorHiV		= 0.30
+		ColorLoHD		= 240.0
+		ColorLoS		= 0.80
+		ColorLoV		= 0.05
+		# NOTE: Changing from 1 - 2/3 - 1/3 - 0 to 1 - 3/4 - 1/4 - 0 as a demo
+		CoefficientXPos	= 0.75
+		CoefficientXNeg	= 0.75
+		CoefficientYPos	= 0.25
+		CoefficientYNeg	= 0.25
+		CoefficientZPos	= 1.0
+		CoefficientZNeg	= 0.0
+
+	[Cubemap_Zeta_Arena2]
+	Extends			= "Cubemap_Zeta"	# Inherit reverb, ambience, etc. from global
+	IrradianceDef	= "Irradiance_Zeta_Arena1"
+	#BounceScalar	= 1.0
+	SideMat			= "Mat_Brick_Overlay"
+	#UpMat			= "Mat_Brick_Overlay"
+	UpSky			= true
+	DownMat			= "Mat_Core_RosaTest"	# TEMPHACK? This is the new Substance Designer brick
+	Size			= 8
+	EyeHeight		= 1.5
+	WallDistance	= 5.0
+	WallHeight		= 4.0	# Must not be close to EyeHeight + WallDistance
+	FogMeshDef		= "FogMeshDef_Zeta_Arena2"	# DLP 29 May 2021: New feature!
+
+		[FogMeshDef_Zeta_Arena2]
+		FogMeshColorHD	= 200.0
+		FogMeshColorS	= 0.75
+		FogMeshColorV	= 0.10
+		FogMeshColorA	= 0.5
+		FogMeshFar		= 15.0
+		FogMeshExp		= 0.5
+
+	[Cubemap_Zeta_Arena3]
+	Extends			= "Cubemap_Zeta"	# Inherit reverb, ambience, etc. from global
+	#IrradianceDef	= "Irradiance_Zeta_Arena1"
+	#BounceScalar	= 1.0
+	SideMat			= "Mat_Tile_Light"
+	UpMat			= "Mat_Wood0"
+	DownMat			= "Mat_Tile_Checker"
+	Size			= 8
+	EyeHeight		= 1.5
+	WallDistance	= 1.0
+	WallHeight		= 3.0	# Must not be close to EyeHeight + WallDistance
+
+
+
+[WorldGenDef_Zeta]
+# See RosaWorldGen::Initialize for more info.
+# DLP 2 Jan 2020: These are saved into the world file now. (What if I don't use world files, since I'm going all procgen again?)
+#TileSizeX			= 4
+#TileSizeY			= 4
+#TileSizeZ			= 4
+
+#CriticalPathLength	= 12	# Length in rooms/modules, not tiles			(NOTE: This is entirely ignored when using a WorldFile, in favor of world rooms!)
+#MaxBranchDistance	= 1.0	# Max distance in tiles from the critical path	(NOTE: This is entirely ignored when using a WorldFile, in favor of world bounds!)
+#MinRooms			= 20	# These can be 0 to ignore them
+#MaxRooms			= 30	# These can be 0 to ignore them
+#MinTiles			= 1200	# These can be 0 to ignore them	# NOTE: This is *all* tiles, not just the footprint.
+#MaxTiles			= 1400	# These can be 0 to ignore them
+#MinLoops			= 1		# These can be 0 to ignore them
+#MaxLoops			= 4		# These can be 0 to ignore them
+#MinDeadEnds		= 6		# These can be 0 to ignore them # NOTE: dead ends can't *guarantee* hostage/chest spawner placement, because of min crit path alpha
+#MaxDeadEnds		= 8		# These can be 0 to ignore them
+ModuleUseScale		= 0.5	# Simple hysteresis; after a module is selected, its weight is scaled by this factor times its individual scale
+
+lmArray( WorldFile )
+{
+	( "Rooms/Zeta/zeta.rwd" )
+}
+
+lmArray( ResolveGroup )
+{
+	( Name = "Robots_Lower",	Limit = 12, MinRadiusFromPlayer = 20.0 )
+	( Name = "Robots_Mid",		Limit = 18 )
+	( Name = "Robots_Upper",	Limit = 24 )
+	
+	( Name = "CEO_Level1",	Limit = 1, MinZ = 8.0,  MaxZ = 16.0 )
+	( Name = "CEO_Level2",	Limit = 1, MinZ = 16.0, MaxZ = 24.0 )
+	( Name = "CEO_Level3",	Limit = 1, MinZ = 24.0, MaxZ = 32.0 )
+	( Name = "CEO_Level4",	Limit = 1, MinZ = 32.0, MaxZ = 40.0 )
+	( Name = "CEO_Level5",	Limit = 1, MinZ = 40.0, MaxZ = 48.0 )
+	( Name = "CEO_Level6",	Limit = 1, MinZ = 48.0, MaxZ = 56.0 )
+	( Name = "CEO_Level7",	Limit = 1, MinZ = 56.0, MaxZ = 64.0 )
+	( Name = "CEO_Level8",	Limit = 1, MinZ = 64.0, MaxZ = 72.0 )
+}
+
+# Procgen rooms
+lmArray( Room )
+{
+	// See RosaWorldGen::InitializeRooms for more info.
+	// High priority now takes precedence, prefer interesting rooms over junctions over corridors over dead ends
+	// Weight is used to select after filtering by priority
+	// Weight is scaled by UseScale * ModuleUseScale (from WorldGenDef) if selected
+
+	// Always place a spacer if we can
+	( "Rooms/Zeta/Lower/lower-spacer-0.rrm", Weight = 1.0, Priority = 200, MinTileZ = 0, MaxTileZ = 5 )
+	( "Rooms/Zeta/Lower/lower-spacer-1.rrm", Weight = 2.0, Priority = 200, MinTileZ = 0, MaxTileZ = 5 )
+	( "Rooms/Zeta/Lower/lower-spacer-2.rrm", Weight = 1.0, Priority = 200, MinTileZ = 0, MaxTileZ = 5 )
+	( "Rooms/Zeta/Mid/mid-spacer-0.rrm", Weight = 1.0, Priority = 200, MinTileZ = 6, MaxTileZ = 11 )
+	( "Rooms/Zeta/Mid/mid-spacer-1.rrm", Weight = 2.0, Priority = 200, MinTileZ = 6, MaxTileZ = 11 )
+	( "Rooms/Zeta/Mid/mid-spacer-2.rrm", Weight = 1.0, Priority = 200, MinTileZ = 6, MaxTileZ = 11 )
+	( "Rooms/Zeta/Upper/upper-spacer-0.rrm", Weight = 1.0, Priority = 200, MinTileZ = 12, MaxTileZ = 17 )
+	( "Rooms/Zeta/Upper/upper-spacer-1.rrm", Weight = 2.0, Priority = 200, MinTileZ = 12, MaxTileZ = 17 )
+	( "Rooms/Zeta/Upper/upper-spacer-2.rrm", Weight = 1.0, Priority = 200, MinTileZ = 12, MaxTileZ = 17 )
+
+	( "Rooms/Zeta/Lower/lower-ne-0.rrm", Weight = 0.375, Priority = 100, MinTileZ = 0, MaxTileZ = 5 )
+	( "Rooms/Zeta/Lower/lower-ne-1.rrm", Weight = 0.375, Priority = 100, MinTileZ = 0, MaxTileZ = 5 )
+	( "Rooms/Zeta/Lower/lower-ne-2.rrm", Weight = 0.375, Priority = 100, MinTileZ = 0, MaxTileZ = 5 )
+	( "Rooms/Zeta/Lower/lower-ne-3.rrm", Weight = 0.375, Priority = 100, MinTileZ = 0, MaxTileZ = 5 )
+	( "Rooms/Zeta/Lower/lower-ns-0.rrm", Weight = 1.5, Priority = 100, MinTileZ = 0, MaxTileZ = 5 )
+	( "Rooms/Zeta/Lower/lower-nse-0.rrm", Weight = 1.0, Priority = 100, MinTileZ = 0, MaxTileZ = 5 )
+	( "Rooms/Zeta/Lower/lower-nse-1.rrm", Weight = 1.0, Priority = 100, MinTileZ = 0, MaxTileZ = 5 )
+	( "Rooms/Zeta/Lower/lower-nsew-0.rrm", Weight = 1.25, Priority = 100, MinTileZ = 0, MaxTileZ = 5 )
+	( "Rooms/Zeta/Lower/lower-nsew-1.rrm", Weight = 1.25, Priority = 100, MinTileZ = 0, MaxTileZ = 5 )
+
+	( "Rooms/Zeta/Mid/mid-ne-0.rrm", Weight = 0.5, Priority = 100, MinTileZ = 6, MaxTileZ = 11 )
+	( "Rooms/Zeta/Mid/mid-ne-1.rrm", Weight = 0.5, Priority = 100, MinTileZ = 6, MaxTileZ = 11 )
+	( "Rooms/Zeta/Mid/mid-ne-2.rrm", Weight = 0.5, Priority = 100, MinTileZ = 6, MaxTileZ = 11 )
+	( "Rooms/Zeta/Mid/mid-ns-0.rrm", Weight = 1.5, Priority = 100, MinTileZ = 6, MaxTileZ = 11 )
+	( "Rooms/Zeta/Mid/mid-nse-0.rrm", Weight = 1.0, Priority = 100, MinTileZ = 6, MaxTileZ = 11 )
+	( "Rooms/Zeta/Mid/mid-nse-1.rrm", Weight = 1.0, Priority = 100, MinTileZ = 6, MaxTileZ = 11 )
+	( "Rooms/Zeta/Mid/mid-nsew-0.rrm", Weight = 2.5, Priority = 100, MinTileZ = 6, MaxTileZ = 11 )
+
+	( "Rooms/Zeta/Upper/upper-ne-0.rrm", Weight = 0.5, Priority = 100, MinTileZ = 12, MaxTileZ = 17 )
+	( "Rooms/Zeta/Upper/upper-ne-1.rrm", Weight = 0.5, Priority = 100, MinTileZ = 12, MaxTileZ = 17 )
+	( "Rooms/Zeta/Upper/upper-ne-2.rrm", Weight = 0.5, Priority = 100, MinTileZ = 12, MaxTileZ = 17 )
+	( "Rooms/Zeta/Upper/upper-ns-0.rrm", Weight = 1.5, Priority = 100, MinTileZ = 12, MaxTileZ = 17 )
+	( "Rooms/Zeta/Upper/upper-nse-0.rrm", Weight = 1.0, Priority = 100, MinTileZ = 12, MaxTileZ = 17 )
+	( "Rooms/Zeta/Upper/upper-nse-1.rrm", Weight = 1.0, Priority = 100, MinTileZ = 12, MaxTileZ = 17 )
+	( "Rooms/Zeta/Upper/upper-nsew-0.rrm", Weight = 2.5, Priority = 100, MinTileZ = 12, MaxTileZ = 17 )
+
+	// Only use these where needed, don't expand downward.
+	// (For this reason, the ending room is marked with NoExpand portals.
+	// we must expand to it from the ground floor. Hopefully more coherent.)
+	// NOTE: There are no mid or upper nsed configurations because of how the
+	// stairwells are placed in the world file. They could never be present.
+	// There are no nsewd configurations at all, for the same reason.
+	( "Rooms/Zeta/Lower/lower-nd-0.rrm", Weight = 1.0, Priority = 20, MinTileZ = 0, MaxTileZ = 5 )
+	( "Rooms/Zeta/Lower/lower-ned-0.rrm", Weight = 1.5, Priority = 20, MinTileZ = 0, MaxTileZ = 5 )
+	( "Rooms/Zeta/Lower/lower-nsed-0.rrm", Weight = 2.0, Priority = 20, MinTileZ = 0, MaxTileZ = 5 )
+	( "Rooms/Zeta/Mid/mid-nd-0.rrm", Weight = 1.0, Priority = 20, MinTileZ = 6, MaxTileZ = 11 )
+	( "Rooms/Zeta/Mid/mid-ned-0.rrm", Weight = 1.5, Priority = 20, MinTileZ = 6, MaxTileZ = 11 )
+	( "Rooms/Zeta/Upper/upper-nd-0.rrm", Weight = 1.0, Priority = 20, MinTileZ = 12, MaxTileZ = 17 )
+	( "Rooms/Zeta/Upper/upper-ned-0.rrm", Weight = 1.5, Priority = 20, MinTileZ = 12, MaxTileZ = 17 )
+
+	// Only use these where rooms couldn't fit together due to spacers.
+	( "Rooms/Zeta/Lower/lower-cap-0.rrm", Weight = 1.0, Priority = 10, MinTileZ = 0, MaxTileZ = 5 )
+	( "Rooms/Zeta/Mid/mid-cap-0.rrm", Weight = 1.0, Priority = 10, MinTileZ = 6, MaxTileZ = 11 )
+	( "Rooms/Zeta/Upper/upper-cap-0.rrm", Weight = 1.0, Priority = 10, MinTileZ = 12, MaxTileZ = 17 )
+}
+
+lmArray( ConnectiveRoom )
+{
+}
+
+# ********************************** Zeta spawners *********************************
+
+[Spawner_Zeta_Script_Intro]
+Entity	= "Zeta_Script_Intro"
+Comment	= "Give player initial loadout and show supertitles (if any)"
+
+[Zeta_Script_Intro]
+Label		= "."
+Reactions	= "Zeta_Script_Intro_Reactions"
+State		= "."
+
+	[Zeta_Script_Intro_Reactions]
+	NumObserveEvents	= &
+	@ ObserveEvent
+	@@&					= "StartRespawning"
+	lmReactions
+	{
+		Reaction( Rule( "OnSpawned" ) )
+		{
+			SendEvent( "StartSupertitles",
+				"PlayerPE",
+				DispatchDelay	= 0.5,
+				Supertitles		= ConstantString( "Supertitles_Zeta_Intro" ) )
+	
+			SendEvent( "GiveInitialLoadout", "PlayerPE" )
+		}
+
+		Reaction( Rule( "StartRespawning" ) )
+		{
+			// Respawn AIs to get them back to where they belong...
+			SendEvent( "ForceAIRespawn" ) // AIs are registered as observers
+
+			// Respawn containers too...
+			SendEvent( "ForceContainerRespawn" )
+
+			// ...respawn the player to get them back to the start...
+			SendEvent( "OnRespawn", "PlayerPE" )
+
+			// ... and then close doors now that everything should be out of the way.
+			SendEvent( "ForceDoorClosed" ) // Doors are registered as observers
+			
+			SendEvent( "OnRespawned", "SelfPE" )
+		}
+
+		Reaction( Rule( "OnRespawned", IsState( "SelfPE", "" ) ) )
+		{
+			SetState( "SelfPE", "HasRespawned" )
+
+			SendEvent( "StartSupertitles",
+				"PlayerPE",
+				DispatchDelay	= 0.5,
+				Supertitles		= ConstantString( "Supertitles_Zeta_Respawn" ) )
+		}
+	}
+
+# ********************************** Zeta convos *********************************
+
+[Supertitles_Zeta_Intro]
+lmLines
+{
+	Line( "", "Supertitles_Zeta_Intro_0" )
+	Line( "", "Supertitles_Zeta_Intro_1" )
+}
+
+[Supertitles_Zeta_Respawn]
+lmLines
+{
+	Line( "", "Supertitles_Zeta_Respawn_0" )
+}
+
+[Supertitles_Zeta_Ending_A]
+NextSupertitles	= "Supertitles_Zeta_Ending_B"
+lmLines
+{
+	Line( "", "Supertitles_Zeta_Ending_A_0" )
+	Line( "", "Supertitles_Zeta_Ending_A_1" )
+}
+
+[Supertitles_Zeta_Ending_B]
+lmLines
+{
+	Line( "", "Supertitles_Zeta_Ending_B_0" )
+	Line( "", "Supertitles_Zeta_Ending_B_1" )
+}
+lmActions
+{
+}
+lmActions( Finished )
+{
+	SendEvent( "FadeOut", Duration = ConstantFloat( 1.0 ), GameFade = "TruePE" )
+	SendEvent( "PushUIScreen", DispatchDelay = 1.0, Screen = ConstantString( "EndCreditsScreen" ) )
+}
+
+# ********************************** ZetaTest strings *********************************
+
+[English]
+Supertitles_Zeta_Intro_0	= "Can you feel it?\nThe night is young,\nmy heart is full,"
+Supertitles_Zeta_Intro_1	= "and kiddos,        \nI'm about to take\ndown a megacorp."
+
+Supertitles_Zeta_Respawn_0	= "They left me for dead.\n\nBut I'll keep coming back."
+
+Supertitles_CEO_1			= "\"Take the keycard!\nJust please don't\nhurt me!\""
+Supertitles_CEO_2			= "\"You'll never get\naway with this,\nyou little bitch.\""
+Supertitles_CEO_3			= "\"People will lose\ntheir jobs because\nof you!\""
+Supertitles_CEO_4			= "\"Do you even know\nwhat you're trying\nto accomplish here?\""
+Supertitles_CEO_5			= "\"We could have\nbeen a great team.\nThink about it.\""
+Supertitles_CEO_6			= "\"Your wickedness\nwill be your\ndownfall, child.\""
+Supertitles_CEO_7			= "\"Forgive me.\n\nI know what I did.\""
+Supertitles_CEO_8			= "\"Cut off my head.\nTwo more shall\ntake its place.\""
+
+Supertitles_Zeta_Ending_A_0	= "I slipped each\nkeycard into the\nmachine,"
+Supertitles_Zeta_Ending_A_1	= "and voted to\ndissolve the\ncompany."
+Supertitles_Zeta_Ending_B_0	= "What new world\nwill tomorrow\nbring?"
+Supertitles_Zeta_Ending_B_1	= "Tonight,\nI sleep well                 \nbeneath dying stars."

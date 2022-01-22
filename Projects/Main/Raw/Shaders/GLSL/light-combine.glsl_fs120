@@ -1,0 +1,141 @@
+#version 120
+
+vec4 SampleSRGBToLinear( sampler2D Sampler, vec2 UV )
+{
+	vec4 Sample = texture2D( Sampler, UV );
+	vec4 Linear = pow( Sample, vec4( 2.2f ) );
+	return vec4( Linear.rgb, Sample.a );
+}
+
+// ****************************************************************
+// BEGIN FOG
+
+uniform mat4	FogColors;			// Set from code, ordered near-lo/far-lo/near-hi/far-hi
+uniform vec4	FogNearFarCurve;	// Set from code: x = near pin, y = far pin (unused), z = 1/(y-x), w = exponent
+uniform vec4	FogLoHiCurve;		// Set from code: x = lo pin, y = fog height exp (HACKHACK), z = 1/(hi pin-x), w = exponent
+uniform vec4	FogParams;			// Set from code: x = near, y = 1/(far-near), z = emissive max, w = exposure scalar
+uniform vec4	HeightFogParams;	// Set from code: x = low fog height, y = 1/fog height range, z = low fog exponent, w = high fog exponent
+uniform vec4	RegionFogScalar;	// Set from code: linear space multiplier on fog color/opacity
+
+// Scales and clamps distance to [0,1] based on 
+float ScaleDistance( float InDistance )
+{
+	float ScaledDistance = ( InDistance - FogParams.x ) * FogParams.y;
+	return clamp( ScaledDistance, 0.0f, 1.0f );
+}
+
+float GetFogT( float Distance, float WSZ )
+{
+	float	FogHeight	= pow( clamp( ( WSZ - HeightFogParams.x ) * HeightFogParams.y, 0.0f, 1.0f ), FogLoHiCurve.y );
+	float	FogExponent	= mix( HeightFogParams.z, HeightFogParams.w, FogHeight );
+
+	return pow( ScaleDistance( Distance ), FogExponent );
+}
+
+vec4 SampleFog( float NearFar, float LoHi )
+{
+	float	NearFarAlpha	= pow( clamp( ( NearFar -	FogNearFarCurve.x ) *	FogNearFarCurve.z, 0.0f, 1.0f ),	FogNearFarCurve.w );
+	float	LoHiAlpha		= pow( clamp( ( LoHi -		FogLoHiCurve.x ) *		FogLoHiCurve.z, 0.0f, 1.0f ),		FogLoHiCurve.w );
+	// NOTE: GLSL uses column-major indexing; FogColors is transposed in code when using OpenGL so this works as expected
+	vec4	FogLo			= mix( FogColors[0], FogColors[1], NearFarAlpha );
+	vec4	FogHi			= mix( FogColors[2], FogColors[3], NearFarAlpha );
+	vec4	Fog				= mix( FogLo, FogHi, LoHiAlpha );
+
+	return Fog;
+}
+
+vec4 GetFogAtDistance( float Distance, float SunTerm )
+{
+	vec4	GlobalFog	= SampleFog( Distance, SunTerm );
+	vec4	RegionFog	= GlobalFog * RegionFogScalar;
+
+	return RegionFog;
+}
+
+vec4 GetFog_Deferred( float Distance, float WSZ, float SunTerm )
+{
+	float	FogT	= GetFogT( Distance, WSZ );
+
+	return GetFogAtDistance( FogT, SunTerm );
+}
+
+vec4 BlendFog( vec4 FogValue, vec4 Color )
+{
+	float	FogAlpha		= FogValue.a;
+	vec4	FogColor		= vec4( FogValue.rgb, Color.a );
+	vec4	BlendedColor	= mix( Color, FogColor, FogAlpha );
+
+	return BlendedColor;
+}
+
+// END FOG
+// ****************************************************************
+
+uniform mat4	InvVPMatrix;
+uniform vec4	EyePosition;
+
+uniform sampler2D Texture0;	// LAccum
+uniform sampler2D Texture1;	// Albedo
+uniform sampler2D Texture2;	// Depth
+
+uniform vec4	SunVector;	// Used as vec3
+
+varying vec2	PassUV;
+
+vec4 GetWSPos( vec2 UV, float Depth )
+{
+	vec2 FixedUV	= ( UV * 2.0f ) - 1.0f;
+	vec4 VPos4		= vec4( FixedUV.x, FixedUV.y, Depth, 1.0f );	// ROSANOTE: *Don't* negate FixedUV.y, it's already flipped in GLSL
+	vec4 WSPos		= VPos4 * InvVPMatrix;
+	return WSPos / WSPos.w;
+}
+
+vec2 FixUV( vec2 UV )
+{
+	return vec2( UV.x, 1.0f - UV.y );
+}
+
+float Unpack( float Packed )
+{
+	return clamp( ( Packed * 1.066666f ) - 0.066666f, 0.0f, 1.0f );
+}
+
+vec3 GetSkinGlow( vec3 Light )
+{
+	vec3 C = vec3( 0.2f, 0.1f, 0.0f );
+	vec3 S = vec3( 5.0f, 1.0f, 1.0f );
+	vec3 N = Light * S;
+	vec3 T = N / ( ( N * N ) + 1.0f );
+	return T * C;
+}
+
+void main()
+{
+	vec2	FixedUV		= FixUV( PassUV );
+
+	float  	Depth		= texture2D( Texture2, FixedUV ).r;
+	vec4	WSPos		= GetWSPos( FixedUV, Depth );
+	vec3	ViewToPos	= WSPos.xyz - EyePosition.xyz;
+	float	Distance	= length( ViewToPos );
+	vec3	ViewToPosN	= ViewToPos / Distance;
+
+	vec4	AlbedoEm	= texture2D( Texture1, FixedUV );
+	float	EmUnpack	= AlbedoEm.a * 2.0f - 1.0f;
+	float	EmTerm		= Unpack( abs( EmUnpack ) );
+	vec3	Emissive	= AlbedoEm.rgb * EmTerm * FogParams.z;
+	vec3	Light		= texture2D( Texture0, FixedUV ).rgb;
+
+	float	Skin		= step( 0.0f, EmUnpack );
+	vec3	SkinGlow	= GetSkinGlow( Emissive + Light );
+	vec3	NoGlow		= vec3( 0.0f, 0.0f, 0.0f );
+	vec3	Glow		= mix( SkinGlow, NoGlow, Skin );
+
+	vec4	AllLight	= vec4( Glow + Emissive + Light, 0.0f );
+
+	float	SunValue	= 0.5f * ( 1.0f + dot( ViewToPosN, SunVector.xyz ) );
+	float	SunValueT	= SunValue * SunValue;
+	vec4	Fog			= GetFog_Deferred( Distance, WSPos.z, SunValueT );
+
+	//gl_FragColor = FogParams.w * AllLight;	// Remove fog for testing
+	gl_FragColor = FogParams.w * BlendFog( Fog, AllLight );	// FogParams.w is exposure scalar
+}

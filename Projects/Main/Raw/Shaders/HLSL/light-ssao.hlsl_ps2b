@@ -1,0 +1,76 @@
+#include "common.hlsl_psh"
+
+sampler	DepthSampler	: register(s0);
+sampler	RandomSampler	: register(s1);
+
+uniform	row_major float4x4	RandomMatrix;
+uniform	float2				OffsetScalar;	// Max kernel size, with adjustment for aspect ratio
+
+static float DepthBias		= 0.0001f;	// Small amount subtracted from center pixel depth (moves it closer to the camera to avoid small depth differences) (was 0.00001f in Vamp, but that was non-linear)
+static float DepthRange		= 0.02f;	// Maximum depth difference to be used for AO (now using linear depth, so hopefully this is more meaningful, i.e. 0.02f ~= 4m) (was 0.0025f in Vamp, but that was non-linear)
+static float MinAO			= 0.15f;	// Darkest value, used when all neighbors are occluding
+static float MaxAO			= 1.0f;		// Brightest value, used when fragment is unoccluded, always 1.0
+
+// Generated with spiral.py (in Development folder)
+static float2 Offsets[16] =
+{
+	float2(  0.000000,  0.062500 ),
+	float2(  0.047835,  0.115485 ),
+	float2(  0.132583,  0.132583 ),
+	float2(  0.230970,  0.095671 ),
+	float2(  0.312500,  0.000000 ),
+	float2(  0.346455, -0.143506 ),
+	float2(  0.309359, -0.309359 ),
+	float2(  0.191342, -0.461940 ),
+	float2(  0.000000, -0.562500 ),
+	float2( -0.239177, -0.577425 ),
+	float2( -0.486136, -0.486136 ),
+	float2( -0.692910, -0.287013 ),
+	float2( -0.812500, -0.000000 ),
+	float2( -0.808395,  0.334848 ),
+	float2( -0.662913,  0.662913 ),
+	float2( -0.382683,  0.923880 ),
+};
+
+struct PS_INPUT
+{
+	float2 UV	: TEXCOORD0;
+};
+
+float4 Main( PS_INPUT In ) : COLOR
+{
+	const float  	Depth			= GetLinearDepth( tex2D( DepthSampler, In.UV ).r ) - DepthBias;
+	
+	const float4	RandomUV		= mul( float4( In.UV, 0.0f, 1.0f ), RandomMatrix );
+	const float4	Random			= tex2D( RandomSampler, RandomUV.xy );
+	const float4	Angles			= Random * 2.0f - 1.0f;									// Need to scale back into -1,1 range, this is where my bug was (all along in Vamp too)!
+	const float2x2	RotationMatrix	= float2x2( Angles.r, -Angles.g, Angles.g, Angles.r );	// R is cos, G is sin
+
+	// Count the unoccluded and relevant taps; we'll divide UnoccludedSum by half
+	// of RelevantSum because we assume that half of our taps can be occluded and
+	// we should still be fully lit (i.e., we don't want to darken a flat surface
+	// just because some of it is closer to the camera than other parts).
+	// Default RelevantSum to 1 so we avoid a divide by zero. This slightly darkens
+	// the resulting image but that's fine, the cutoff is still effectively the same.
+	float UnoccludedSum	= 0.0f;
+	float RelevantSum	= 1.0f;
+	for( int i = 0; i < 16; ++i )
+	{
+		const float	TapDepth	= GetLinearDepth( tex2D( DepthSampler, In.UV + OffsetScalar * mul( Offsets[i], RotationMatrix ).xy ).r );
+		const float DepthDiff	= Depth - TapDepth;	// Positive DepthDiff means the tap is occluded
+
+		const float Unoccluded	= ( DepthDiff > 0.0f ) ? 0.0f : 1.0f;		// 1 if unoccluded
+		const float Relevant	= ( DepthDiff > DepthRange ) ? 0.0f : 1.0f;	// 1 if relevant (range not too high) (ZETATODO: maybe fade this range?)
+		UnoccludedSum			+= Unoccluded * Relevant;					// increment if unoccluded and relevant
+		RelevantSum				+= Relevant;								// increment if relevant
+	}
+
+	// A fragment with 8 or fewer of 16 occluders (UnoccludedSum=8 or more) should be rendered as unoccluded.
+	// This is because we assume about half of our neighbors may "occlude" just because of the slope of the surface.
+	// This is imperfect; facing straight at a wall, we can assume another wall intersecting it will occlude
+	// at most 25% of its samples, leaving us with 12 unoccluded samples and a fully bright corner.
+	// I guess the way to solve this would be to use a lower threshold but account for surface direction (either
+	// with normal reconstruction, or ddx/ddy(Depth) (but those are apparently unsupported in shader model 2)).
+	// In any case, now that I understand and have documented the problem, I'm fine with leaving it in this state.
+	return lerp( MinAO, MaxAO, saturate( UnoccludedSum / ( RelevantSum * 0.5f ) ) );
+}

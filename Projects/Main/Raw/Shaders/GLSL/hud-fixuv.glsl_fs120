@@ -1,0 +1,23 @@
+#version 120
+
+uniform sampler2D Texture0;
+
+uniform vec4	MultiplyColor;
+uniform vec4	ScreenColor;
+uniform vec4	HUDParams;
+
+varying vec2	PassUV;
+varying vec4	PassColor;
+
+vec2 FixUV( vec2 UV )
+{
+	return vec2( UV.x, 1.0f - UV.y );
+}
+
+void main()
+{
+	vec4	White			= vec4( 1.0f, 1.0f, 1.0f, 1.0f );
+	vec4	BaseColor		= texture2D( Texture0, FixUV( PassUV ) ) * mix( White, PassColor, HUDParams.x );
+	vec4	ScreenedColor	= ( BaseColor + ScreenColor ) - ( BaseColor * ScreenColor );
+	gl_FragColor			= MultiplyColor * ScreenedColor;
+}

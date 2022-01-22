@@ -1,0 +1,369 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="src\D3D9\d3d9constanttable.cpp">
+      <Filter>src\D3D9</Filter>
+    </ClCompile>
+    <ClCompile Include="src\D3D9\d3d9cubemap.cpp">
+      <Filter>src\D3D9</Filter>
+    </ClCompile>
+    <ClCompile Include="src\D3D9\d3d9cuberendertarget.cpp">
+      <Filter>src\D3D9</Filter>
+    </ClCompile>
+    <ClCompile Include="src\D3D9\d3d9indexbuffer.cpp">
+      <Filter>src\D3D9</Filter>
+    </ClCompile>
+    <ClCompile Include="src\D3D9\d3d9pixelshader.cpp">
+      <Filter>src\D3D9</Filter>
+    </ClCompile>
+    <ClCompile Include="src\D3D9\d3d9renderer.cpp">
+      <Filter>src\D3D9</Filter>
+    </ClCompile>
+    <ClCompile Include="src\D3D9\d3d9rendertarget.cpp">
+      <Filter>src\D3D9</Filter>
+    </ClCompile>
+    <ClCompile Include="src\D3D9\d3d9shaderprogram.cpp">
+      <Filter>src\D3D9</Filter>
+    </ClCompile>
+    <ClCompile Include="src\D3D9\d3d9texture.cpp">
+      <Filter>src\D3D9</Filter>
+    </ClCompile>
+    <ClCompile Include="src\D3D9\d3d9vertexbuffer.cpp">
+      <Filter>src\D3D9</Filter>
+    </ClCompile>
+    <ClCompile Include="src\D3D9\d3d9vertexdeclaration.cpp">
+      <Filter>src\D3D9</Filter>
+    </ClCompile>
+    <ClCompile Include="src\D3D9\d3d9vertexshader.cpp">
+      <Filter>src\D3D9</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GL2\gl2cubemap.cpp">
+      <Filter>src\GL2</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GL2\gl2cuberendertarget.cpp">
+      <Filter>src\GL2</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GL2\gl2indexbuffer.cpp">
+      <Filter>src\GL2</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GL2\gl2pixelshader.cpp">
+      <Filter>src\GL2</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GL2\gl2renderer.cpp">
+      <Filter>src\GL2</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GL2\gl2rendertarget.cpp">
+      <Filter>src\GL2</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GL2\gl2shaderprogram.cpp">
+      <Filter>src\GL2</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GL2\gl2texture.cpp">
+      <Filter>src\GL2</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GL2\gl2vertexbuffer.cpp">
+      <Filter>src\GL2</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GL2\gl2vertexdeclaration.cpp">
+      <Filter>src\GL2</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GL2\gl2vertexshader.cpp">
+      <Filter>src\GL2</Filter>
+    </ClCompile>
+    <ClCompile Include="src\3d.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\animation.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\animationstate.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\animevent.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\animeventfactory.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\bonearray.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\bucket.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cubemapcommon.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\dynamicmeshmanager.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\font.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\fontmanager.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\linebatcher.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\material.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mesh.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\meshfactory.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\renderercommon.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\renderstates.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\sdpfactory.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\sectorbound.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\shaderdataprovider.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\shadermanager.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\surface.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\texturecommon.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\texturemanager.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tga.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\vertexdeclarationmanager.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\view.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SDPs\sdpbase.cpp">
+      <Filter>src\SDPs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\targetmanager.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\D3D9\d3d9constanttable.h">
+      <Filter>src\D3D9</Filter>
+    </ClInclude>
+    <ClInclude Include="src\D3D9\d3d9cubemap.h">
+      <Filter>src\D3D9</Filter>
+    </ClInclude>
+    <ClInclude Include="src\D3D9\d3d9cuberendertarget.h">
+      <Filter>src\D3D9</Filter>
+    </ClInclude>
+    <ClInclude Include="src\D3D9\d3d9indexbuffer.h">
+      <Filter>src\D3D9</Filter>
+    </ClInclude>
+    <ClInclude Include="src\D3D9\d3d9pixelshader.h">
+      <Filter>src\D3D9</Filter>
+    </ClInclude>
+    <ClInclude Include="src\D3D9\d3d9renderer.h">
+      <Filter>src\D3D9</Filter>
+    </ClInclude>
+    <ClInclude Include="src\D3D9\d3d9rendertarget.h">
+      <Filter>src\D3D9</Filter>
+    </ClInclude>
+    <ClInclude Include="src\D3D9\d3d9shaderprogram.h">
+      <Filter>src\D3D9</Filter>
+    </ClInclude>
+    <ClInclude Include="src\D3D9\d3d9texture.h">
+      <Filter>src\D3D9</Filter>
+    </ClInclude>
+    <ClInclude Include="src\D3D9\d3d9vertexbuffer.h">
+      <Filter>src\D3D9</Filter>
+    </ClInclude>
+    <ClInclude Include="src\D3D9\d3d9vertexdeclaration.h">
+      <Filter>src\D3D9</Filter>
+    </ClInclude>
+    <ClInclude Include="src\D3D9\d3d9vertexshader.h">
+      <Filter>src\D3D9</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GL2\gl2.h">
+      <Filter>src\GL2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GL2\gl2cubemap.h">
+      <Filter>src\GL2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GL2\gl2cuberendertarget.h">
+      <Filter>src\GL2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GL2\gl2indexbuffer.h">
+      <Filter>src\GL2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GL2\gl2pixelshader.h">
+      <Filter>src\GL2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GL2\gl2renderer.h">
+      <Filter>src\GL2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GL2\gl2rendertarget.h">
+      <Filter>src\GL2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GL2\gl2shaderprogram.h">
+      <Filter>src\GL2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GL2\gl2texture.h">
+      <Filter>src\GL2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GL2\gl2vertexbuffer.h">
+      <Filter>src\GL2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GL2\gl2vertexdeclaration.h">
+      <Filter>src\GL2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GL2\gl2vertexshader.h">
+      <Filter>src\GL2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\3d.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\animation.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\animationstate.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\animevent.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\animeventfactory.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\bonearray.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\bucket.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cubemapcommon.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\dynamicmeshmanager.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\font.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\fontmanager.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ibonemodifier.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\iindexbuffer.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ipixelshader.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\irenderer.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\irendertarget.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ishaderprogram.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\itexture.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ivertexbuffer.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ivertexdeclaration.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ivertexshader.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\linebatcher.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\material.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\mesh.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\meshfactory.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\renderercommon.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\renderstates.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\sdpfactory.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\sdps.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\sectorbound.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\shaderdataprovider.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\shadermanager.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\surface.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\texturecommon.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\texturemanager.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\tga.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\vertexdeclarationmanager.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\view.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SDPs\sdpbase.h">
+      <Filter>src\SDPs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\targetmanager.h">
+      <Filter>src</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{cea0bba5-2dde-40ea-a26e-c5efbd19bde3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\D3D9">
+      <UniqueIdentifier>{8399ea02-c0fa-4aec-aa2d-d8d6234f5e07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\GL2">
+      <UniqueIdentifier>{58fa6442-a227-4479-a921-86e6f4a7a53c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\SDPs">
+      <UniqueIdentifier>{bbb5f929-3efb-41b9-a4ea-b9d9229b2fa6}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

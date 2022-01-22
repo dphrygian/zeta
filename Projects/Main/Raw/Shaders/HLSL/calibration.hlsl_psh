@@ -1,0 +1,145 @@
+// Pared down version of Couriers's calibration; brightness and contrast are worthless.
+
+uniform float Gamma;
+
+// NOTE: Probably only use this for FXAA. See notes below on Luminance.
+// Honestly, the difference between using this and using Luminance for FXAA
+// is imperceptible, but I'll stick with this since that was the FXAA recommendation.
+float Luma( const float3 Color )
+{
+	return dot( Color, float3( 0.299f, 0.587f, 0.114f ) );
+}
+
+// From https://cs.stackexchange.com/questions/92569/what-is-the-difference-between-luma-and-luminance
+// Luminance (actually "relative luminance") is the measure of intensity in linear space,
+// and "luma" is relative luminance in gamma-compressed non-linear space. That's all.
+// The difference in coefficients is explained here:
+// https://en.wikipedia.org/wiki/Luma_(video)#Rec._601_luma_versus_Rec._709_luma_coefficients
+// where my Luma function is using the 601 standard and my Luminance is using 709.
+// See also https://en.wikipedia.org/wiki/Rec._601 and https://en.wikipedia.org/wiki/Rec._709
+// The 601 coefficients are what is recommended in the original FXAA header, which may
+// be how I ended up using that for Luma. In any case, prefer this for everything not FXAA.
+float Luminance( const float3 Color )
+{
+	return dot( Color, float3( 0.2126f, 0.7152f, 0.0722f ) );
+}
+
+// i.e. LinearToSRGB
+float3 Calibrate( float3 Color )
+{
+	return pow( saturate( Color ), Gamma );
+}
+
+float3 TonemapLinear( const float3 HDRColor )
+{
+	return saturate( HDRColor );
+}
+
+float3 TonemapReinhard( const float3 HDRColor )
+{
+	// Old method; mine below is based on my ReinhardLuminance implementation,
+	// and I've verified that it produces the same results as this method.
+	//const float		WP	= 16.0f;
+	//const float		WP	= 2.0f;
+	//const float4	VH	= float4( HDRColor, WP );
+	//const float4	VR	= VH / ( 1.0f + VH );
+	//return VR.rgb / VR.www;
+	
+	const float		WP_Rcp	= 1.5f;
+	const float3	R		= HDRColor / ( 1.0f + HDRColor );
+	return WP_Rcp * R;
+}
+
+// By maintaining hue and saturation, this prevents things
+// blowing out to white unless I set a very low white point.
+// Also seems just slightly more saturated in the lows, which I like.
+float3 TonemapReinhardLuminance( const float3 HDRColor )
+{
+	//const float	WP_Rcp	= 1.0625;	// 17/16, whitepoint = 16
+	//const float	WP_Rcp	= 1.25;	// 5/4, whitepoint = 4
+	const float	WP_Rcp	= 1.5f;	// 3/2, whitepoint = 2
+	//const float	WP_Rcp	= 2.0;	// 2/1, whitepoint = 1
+	const float L		= Luminance( HDRColor );
+	const float S		= 1.0f / ( 1.0f + L );	// S = L'/L where L' = L/(1+L)
+	return WP_Rcp * S * HDRColor;
+}
+
+// New filmic tonemap by Jim Hejl
+// TODO: I'm pretty sure this can be reduced to the x*(a*x+b))/(x*(c*x+d)+e form of ACES
+// by multiplying through some of the constants. I don't think it saves any operations, though.
+// It just might make the similarities or differences between them clearer.
+float3 TonemapFilmicHejl2015( const float3 HDRColor )
+{
+	//const float		wp	= 16.0f;
+	//const float		wp	= 4.0f;
+	//const float		wp	= 2.0f;
+	//const float4	vh	= float4( HDRColor, wp );
+	//const float4	va	= ( 1.425f * vh ) + 0.05f;
+	//const float4	vf	= ( ( vh * va + 0.004f ) / ( ( vh * ( va + 0.55f ) + 0.0491f ) ) ) - 0.0821f;
+	//return vf.rgb / vf.www;
+	
+	// DLP 3 Aug 2020: Get rid of the divide by precomputing the whitepoint transformation
+	const float	WP_Rcp	= 1.32781657212340f;	// Whitepoint = 2
+	const float3	vh	= HDRColor;
+	const float3	va	= ( 1.425f * HDRColor ) + 0.05f;
+	const float3	vf	= ( ( vh * va + 0.004f ) / ( ( vh * ( va + 0.55f ) + 0.0491f ) ) ) - 0.0821f;
+	return WP_Rcp * vf;
+}
+
+// By maintaining hue and saturation, this prevents things
+// blowing out to white unless I set a very low white point.
+float3 TonemapFilmicLuminance( const float3 HDRColor )
+{
+	//const float	WP_Rcp	= 1.11822005232197f;	// Filmic curve applied to whitepoint = 16
+	//const float	WP_Rcp	= 1.20629884019157f;	// Whitepoint = 4
+	const float	WP_Rcp	= 1.32781657212340f;	// Whitepoint = 2
+	//const float	WP_Rcp	= 1.58483535153098f;	// Whitepoint = 1
+	//const float	WP_Rcp	= 2.15478814561944f;	// Whitepoint = 1/2
+	//const float	WP_Rcp	= 3.51828039921013f;	// Whitepoint = 1/4
+	const float	vh		= Luminance( HDRColor );
+	const float	va		= ( 1.425f * vh ) + 0.05f;
+	const float	vf		= ( ( vh * va + 0.004f ) / ( ( vh * ( va + 0.55f ) + 0.0491f ) ) ) - 0.0821f;
+	const float	s		= vf / vh;
+	return WP_Rcp * s * HDRColor;
+}
+
+// https://knarkowicz.wordpress.com/2016/01/06/aces-filmic-tone-mapping-curve/
+// Seems to have a higher shoulder (brighter brights) than Hejl2015, and more saturated overall.
+// Otherwise, very similar, no clear reason to switch.
+float3 TonemapACESFilm( const float3 HDRColor )
+{
+	//const float4 x = float4( HDRColor, 2.0f );	// Whitepoint 2
+	//const float a = 2.51f;
+	//const float b = 0.03f;
+	//const float c = 2.43f;
+	//const float d = 0.59f;
+	//const float e = 0.14f;
+    //const float4 aces4 = (x*(a*x+b))/(x*(c*x+d)+e);
+	//return aces4.rgb / aces4.www;
+
+	const float		WP_Rcp	= 1.0930693f;
+    const float3	A		= ( HDRColor * ( 2.51f * HDRColor + 0.03f ) ) / ( HDRColor * ( 2.43f * HDRColor + 0.59f ) + 0.14f );
+	return WP_Rcp * A;
+}
+
+// Simple custom tonemapper with a toe that's not quite as dark as others, but
+// steeper contrast through the midrange and a high shoulder. Good for the
+// illustrative look of the watercolor shader, not necessarily for a filmic look.
+float3 TonemapCustom( const float3 HDRColor )
+{
+	const float		WP_Rcp	= 1.0465116279f;	// 2*2.15/(2*2.15+.2), whitepoint = 2
+	const float3	I		= HDRColor * ( HDRColor + 0.15f );
+	const float3	C		= I / ( I + 0.20f );
+	return WP_Rcp * C;
+}
+
+// Adding this just for completeness. Not actually using it, I prefer the higher saturation of the other version.
+float3 TonemapCustomLuminance( const float3 HDRColor )
+{
+	const float	WP_Rcp	= 1.0465116279f;	// 2*2.15/(2*2.15+.2), whitepoint = 2
+	const float	L		= Luminance( HDRColor );
+	const float	I		= L * ( L + 0.15f );
+	const float	C		= I / ( I + 0.20f );
+	const float	S		= C / L;
+	return WP_Rcp * S * HDRColor;
+}

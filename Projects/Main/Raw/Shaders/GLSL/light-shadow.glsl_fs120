@@ -1,0 +1,96 @@
+#version 120
+
+uniform samplerCube	Texture0;	// Shadows
+uniform sampler2D	Texture1;	// Normal (G-buffer)
+uniform sampler2D	Texture2;	// Depth (G-buffer)
+
+uniform mat4	InvVPMatrix;
+uniform	vec4	LightPosition;
+uniform vec4	ShadowFarClip;	// x = far
+
+varying vec4	PassVPos;
+
+vec4 GetWSPos( vec2 UV, float Depth )
+{
+	vec2 FixedUV	= ( UV * 2.0f ) - 1.0f;
+	vec4 VPos4		= vec4( FixedUV.x, FixedUV.y, Depth, 1.0f );	// ROSANOTE: *Don't* negate FixedUV.y, it's already flipped in GLSL
+	vec4 WSPos		= VPos4 * InvVPMatrix;
+	return WSPos / WSPos.w;
+}
+
+vec2 FixUV( vec2 UV )
+{
+	return vec2( UV.x, 1.0f - UV.y );
+}
+
+float Sign( float x )
+{
+	return ( x > 0.0f ) ? 1.0f : ( ( x < 0.0f ) ? -1.0f : 0.0f );
+}
+
+float NonZeroSign( float x )
+{
+	return ( step( 0.0f, x ) * 2.0f ) - 1.0f;
+}
+
+vec3 GetInvStereographicProjection( vec2 Normal, float NormalZSign )
+{
+	float XXYY	= dot( Normal.xy, Normal.xy );
+	float Denom	= 1.0f / ( 1.0f + XXYY );
+	return vec3( 2.0f * Normal.xy * Denom, NormalZSign * abs( ( XXYY - 1.0f ) * Denom ) );
+}
+
+void Clip( float F )
+{
+	if( F < 0.0f )
+	{
+		discard;
+	}
+}
+
+float SampleCubeDepth( samplerCube CubeSampler, vec3 Normal )
+{
+	// Correct for RTs being drawn upside-down in GL (see also CubemapRenderOrientations)
+	return textureCube( CubeSampler, -Normal.xzy ).r;
+}
+
+float	NormalOffset	= 0.025f;
+float	DepthBias		= 1.015f;
+float	OffsetScalar	= 0.0015f;
+vec3	CubeOffsets[4];
+
+void main()
+{
+	CubeOffsets[0] = vec3(	 1.0f,  1.0f,  1.0f );
+	CubeOffsets[1] = vec3(	 1.0f, -1.0f, -1.0f );
+	CubeOffsets[2] = vec3(	-1.0f,  1.0f, -1.0f );
+	CubeOffsets[3] = vec3(	-1.0f, -1.0f,  1.0f );
+
+	// Fix VPos
+	vec2	NormVPos	= PassVPos.xy / PassVPos.w;
+	vec2	FixedUV		= FixUV( NormVPos );
+
+	vec4	NormalSpec		= texture2D( Texture1, FixedUV );
+	vec4	NormalUnpack	= ( NormalSpec * 2.0f ) - 1.0f;
+	float	NormalZSign		= NonZeroSign( NormalUnpack.z );
+	vec3	WSNormal		= GetInvStereographicProjection( NormalUnpack.xy, NormalZSign );
+
+	float	Depth			= texture2D( Texture2, FixedUV ).r;
+	vec3	WSPos			= GetWSPos( FixedUV, Depth ).xyz + WSNormal * NormalOffset;
+
+	vec3	PosToLight		= WSPos - LightPosition.xyz;
+	float	LightDist		= sqrt( dot( PosToLight, PosToLight ) );
+	vec3	Light			= PosToLight / LightDist;
+
+	float	Difference		= 0.5f;
+	for( int i = 0; i < 4; ++i )
+	{
+		vec3		SampleDirection = Light + OffsetScalar * CubeOffsets[i];
+		float		ShadowDist		= ShadowFarClip.x * SampleCubeDepth( Texture0, SampleDirection );
+		Difference					+= Sign( LightDist - ( ShadowDist * DepthBias ) );
+	}
+	
+	Clip( Difference );
+
+	gl_FragColor = vec4( 0.0f, 0.0f, 0.0f, 0.0f );
+}

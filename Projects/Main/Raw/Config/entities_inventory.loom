@@ -1,0 +1,324 @@
+# Surface effect overrides for weapon/geo hits. I don't want a big m*n matrix of
+# weapon types by surface types; instead, weapons define their effects, and surfaces
+# can optionally override that. (If the surface override is defined, it takes priority.)
+# ROSANOTE: I could add these to RosaSurfaces, but I like this pattern better; it's
+# intuitive, and I'm not cluttering that with stuff that's localized to weapon effects.
+[SurfaceOverrides_ImpactSound]
+Water = "Sound_Watergun_Fire"	# ROSATODO
+
+[SurfaceOverrides_Hitspang]
+Water = "PS_Hitspang_Water"
+
+[SurfaceOverrides_HitspangLight]
+Water = ""	# No hitspang light on water impact
+
+[SurfaceOverrides_Decal]
+Water = ""	# No decals on water
+
+[Hands]
+RosaTransform	= "Hands_Transform"
+RosaMesh		= "Hands_Mesh"
+RosaItem		= "Hands_Item"
+Owner			= "."
+
+	[Hands_Transform]
+	IsAttachedToOwner	= true
+	OwnerOffsetZ		= -0.075
+	HubOwnerOffsetPitch	= -10.0	# HACKHACK
+
+	[Hands_Mesh]
+	Mesh			= "Meshes/Character/hands.cms"
+	Material		= "Material_Hands"
+	AlwaysDraw		= true
+	DrawForeground	= true
+
+	[Hands_Item]
+	Slot	= "Hands"
+
+
+
+# ****************************************************************
+# *************************** Lasergun ***************************
+# ****************************************************************
+
+# Map from damage sets to their tracer effects
+[Tracers]
+DamageSet_Lasergun	= "PS_LaserTracer"
+
+[Hitspangs]
+DamageSet_Lasergun	= "PS_Hitspang"
+
+[Lasergun]
+RosaTransform	= "Hands_Transform"
+RosaMesh		= "Lasergun_Mesh"
+RosaItem		= "."
+RosaWeapon		= "Lasergun_Weapon"
+RosaParticles	= "."
+Owner			= "."
+PEMap			= "Lasergun_PEMap"
+Reactions		= "Lasergun_Reactions"
+
+	[Lasergun_Mesh]
+	Mesh			= "Meshes/Hands/weapon-lasergun.cms"
+	AlwaysDraw		= true
+	DrawForeground	= true
+
+	[Lasergun_Weapon]
+	CanAim		= true
+	AimTime		= 0.075
+	AimZoom		= 3.0
+	AimZoomFG	= 2.0
+	RaiseTime	= 0.0
+	LowerTime	= 0.2
+	KickImpulseYaw		= 1.0
+	KickImpulsePitch	= 3.0
+	CanAutoAim	= true
+	NumMagazines	= &
+	@ Magazine
+	@@&AmmoType		= "AmmoType_Lasergun"
+	@@^AmmoMax		= 1
+	@@^DamageSet	= "DamageSet_Lasergun"
+
+		[DamageSet_Lasergun]
+		NumDamageVectors	= &
+		@ DamageVector
+		@@&Amount			= 10.0
+
+	[Lasergun_PEMap]
+	lmPEMap
+	{
+		PEMap( "FireSound",		ConstantString( "Sound_Lasergun_Fire" ) )
+		PEMap( "ImpactSound",	ConstantString( "Sound_Lasergun_Impact" ) )
+		PEMap( "ImpactDecal",	ConstantString( "Decal_Bullet" ) )
+		PEMap( "DryFireSound",	ConstantString( "Sound_Lasergun_DryFire" ) )
+	}
+
+	[Lasergun_Reactions]
+	NumReactionSets	= &
+	@ ReactionSet
+	@@&				= "ReactionSet_Weapon_Ranged"
+
+		[ReactionSet_Weapon_Ranged]
+		lmReactions
+		{
+			Reaction( Rule( "OnFired" ) )
+			{
+				RosaCheckLine( CheckTag = "Fire" )
+				RosaPlaySound( SoundPE = Lookup( "FireSound" ), EntityPE = "PlayerPE" )
+				SendEvent(
+						"OnAINoise",
+						NoiseRadius		= ConstantFloat( 12.0 ),
+						NoiseEntity		= "OwnerPE",
+						NoiseLocation	= "OwnerLocationPE" )
+				RosaSpawnEntity(
+						Entity		= "HitspangLight",
+						LocationPE	= RosaGetBoneLocation( "SelfPE", "Weapon1", ProjectFromFG = true )
+					)
+			}
+			
+			Reaction( Rule( "OnDryFired" ) )
+			{
+				RosaPlaySound( SoundPE = Lookup( "DryFireSound" ), EntityPE = "PlayerPE" )
+			}
+
+			// Hitting living things
+			Reaction( Rule( "OnLineCheck",
+							PushContext( "CheckedPE", QueryActionStack( "IsAlive" ) ),
+							Conditional( "E", QueryActionStack( "CheckTag" ), ConstantString( "Fire" ) )
+						) )
+			{
+				RosaPlaySound(
+						SoundPE		= Lookup( "ImpactSound" ),
+						EntityPE	= "PlayerPE",
+						LocationPE	= QueryActionStack( "SafeHitLocation" )
+					)
+				SendEvent(
+						"OnAINoise",
+						NoiseRadius			= ConstantFloat( 8.0 ),	// For Zeta, I'm making this bigger (it was 6)
+						NoiseEntity			= "OwnerPE",
+						NoiseLocation		= QueryActionStack( "SafeHitLocation" ),
+						NoiseSourceLocation	= "OwnerLocationPE"
+					)
+				SendEvent(
+						"PlayParticleSystem",
+						"SelfPE",
+						ParticleSystem	= GetConfigVar( VarContext = "Tracers", VarNamePE = QueryActionStack( "DamageSet" ) ),
+						Location		= RosaGetBoneLocation( "SelfPE", "Weapon1", ProjectFromFG = true ),
+						BeamEndLocation	= QueryActionStack( "HitLocation" )
+					)
+				SendEvent(
+						"TakeDamage",
+						"CheckedPE",
+						DamageSet			= QueryActionStack( "DamageSet" ),
+						DamageScalar		= StatMod( "PlayerPE", "RangedScalar", ConstantFloat( 1.0 ) ),
+						Damager				= "PlayerPE",
+						DamageLocation		= QueryActionStack( "HitLocation" ),
+						DamageOrientation	= QueryActionStack( "HitNormal" ),
+						DamageDirection		= QueryActionStack( "LineDirection" ),
+						DamageBone			= QueryActionStack( "HitBone" )
+					)
+			}
+
+			// Hitting non-living things (adds hitspang, deals no damage)
+			Reaction( Rule( "OnLineCheck",
+							Conditional( "E", QueryActionStack( "CheckTag" ), ConstantString( "Fire" ) )
+						) )
+			{
+				RosaPlaySound(
+						SoundPE		= Lookup( "ImpactSound" ),
+						EntityPE	= "PlayerPE",
+						LocationPE	= QueryActionStack( "SafeHitLocation" )
+					)
+				SendEvent(
+						"OnAINoise",
+						NoiseRadius			= ConstantFloat( 8.0 ),	// For Zeta, I'm making this bigger (it was 6)
+						NoiseEntity			= "OwnerPE",
+						NoiseLocation		= QueryActionStack( "SafeHitLocation" ),
+						NoiseSourceLocation	= "OwnerLocationPE"
+					)
+				SendEvent(
+						"PlayParticleSystem",
+						"SelfPE",
+						ParticleSystem	= GetConfigVar( VarContext = "Hitspangs", VarNamePE = QueryActionStack( "DamageSet" ) ),
+						Location		= QueryActionStack( "HitLocation" ),
+						Orientation		= QueryActionStack( "HitNormal" )
+					)
+				SendEvent(
+						"PlayParticleSystem",
+						"SelfPE",
+						ParticleSystem	= GetConfigVar( VarContext = "Tracers", VarNamePE = QueryActionStack( "DamageSet" ) ),
+						Location		= RosaGetBoneLocation( "SelfPE", "Weapon1", ProjectFromFG = true ),
+						BeamEndLocation	= QueryActionStack( "HitLocation" )
+					)
+				RosaSpawnEntity(
+					Entity		= "HitspangLight",
+					LocationPE	= QueryActionStack( "SafeHitLocation" )
+					)
+			}
+
+			// Hitting world geometry
+			Reaction( Rule( "OnLineCheckHitGeo",
+							Conditional( "E", QueryActionStack( "CheckTag" ), ConstantString( "Fire" ) )
+						) )
+			{
+				RosaPlaySound(
+						SoundPE		= GetConfigVar(
+										VarContext = "SurfaceOverrides_ImpactSound",
+										VarNamePE = QueryActionStack( "HitSurface" ),
+										DefaultPE = Lookup( "ImpactSound" ) ),
+						EntityPE	= "PlayerPE",
+						LocationPE	= QueryActionStack( "SafeHitLocation" )
+					)
+				SendEvent(
+						"OnAINoise",
+						NoiseRadius			= ConstantFloat( 8.0 ),	// For Zeta, I'm making this bigger (it was 6)
+						NoiseEntity			= "OwnerPE",
+						NoiseLocation		= QueryActionStack( "SafeHitLocation" ),
+						NoiseSourceLocation	= "OwnerLocationPE"
+					)
+				SendEvent(
+						"PlayParticleSystem",
+						"SelfPE",
+						ParticleSystem	= GetConfigVar(
+											VarContext = "SurfaceOverrides_Hitspang",
+											VarNamePE = QueryActionStack( "HitSurface" ),
+											DefaultPE = GetConfigVar( VarContext = "Hitspangs", VarNamePE = QueryActionStack( "DamageSet" ) ) ),
+						Location		= QueryActionStack( "HitLocation" ),
+						Orientation		= QueryActionStack( "HitNormal" )
+					)
+				SendEvent(
+						"PlayParticleSystem",
+						"SelfPE",
+						ParticleSystem	= GetConfigVar( VarContext = "Tracers", VarNamePE = QueryActionStack( "DamageSet" ) ),
+						Location		= RosaGetBoneLocation( "SelfPE", "Weapon1", ProjectFromFG = true ),
+						BeamEndLocation	= QueryActionStack( "HitLocation" )
+					)
+				RosaSpawnEntity(
+					EntityPE	= GetConfigVar(
+									VarContext = "SurfaceOverrides_HitspangLight",
+									VarNamePE = QueryActionStack( "HitSurface" ),
+									DefaultPE = ConstantString( "HitspangLight" ) ),
+					LocationPE	= QueryActionStack( "SafeHitLocation" )
+					)
+				RosaSpawnDecal(
+						EntityPE		= GetConfigVar(
+											VarContext = "SurfaceOverrides_Decal",
+											VarNamePE = QueryActionStack( "HitSurface" ),
+											DefaultPE = Lookup( "ImpactDecal" ) ),
+						LocationPE		= QueryActionStack( "HitLocation" ),
+						OrientationPE	= Neg( QueryActionStack( "HitNormal" ) ),
+						NormalBasisPE	= Neg( QueryActionStack( "HitNormal" ) ),
+						RollPE			= RandomFloat( 0.0, 360.0 )
+					)
+			}
+
+			// Hitting nothing (e.g. shooting at the sky)
+			Reaction( Rule( "OnLineCheckMissed",
+							Conditional( "E", QueryActionStack( "CheckTag" ), ConstantString( "Fire" ) )
+						) )
+			{
+				SendEvent(
+						"PlayParticleSystem",
+						"SelfPE",
+						ParticleSystem	= GetConfigVar( VarContext = "Tracers", VarNamePE = QueryActionStack( "DamageSet" ) ),
+						Location		= RosaGetBoneLocation( "SelfPE", "Weapon1", ProjectFromFG = true ),
+						BeamEndLocation	= Add(
+											QueryActionStack( "LineStart" ),
+											Mul(
+												QueryActionStack( "LineDirection" ),
+												ConstantFloat( 50.0 ) ) )
+					)
+			}
+		}
+
+
+
+[Decal_Bullet]
+ShouldDebugCheckSpawnClearance	= false
+RosaTransform	= "ImmobileTransform"
+RosaMesh		= "Decal_Bullet_Mesh"
+RosaDecal		= "Decal_Bullet_Decal"
+
+	[Decal_Bullet_Mesh]
+	IsDecal		= true
+	Mesh		= "Meshes/_decal-box.cms"
+	ScaleX		= 0.1
+	ScaleY		= 0.15
+	ScaleZ		= 0.1
+	AlbedoMap	= "Textures/Decals/bullet-a.tga"
+	NormalMap	= "Textures/Decals/bullet-n.tga"
+	SpecMap		= "Textures/Decals/bullet-s.tga"
+
+	[Decal_Bullet_Decal]
+	Lifetime	= 10.0
+	FadeOutTime	= 2.0
+
+[HitspangLight]
+RosaTransform	= "ImmobileTransform"
+RosaMesh		= "HitspangLight_Mesh"
+RosaLight		= "HitspangLight_Light"
+Reactions		= "HitspangLight_Reactions"
+
+	[HitspangLight_Mesh]
+	Mesh	= "Meshes/_light-sphere.cms"
+	Scale	= 0.5
+	IsLight	= true
+
+	[HitspangLight_Light]
+	Radius	= 3.0
+	ColorHD	= 30.0
+	ColorS	= 0.75
+	ColorV	= 1.0
+	# Very low importance threshold, visible at almost any distance
+	ImportanceThresholdLo	= 0.0002
+	ImportanceThresholdHi	= 0.0004
+
+	[HitspangLight_Reactions]
+	lmReactions
+	{
+		Reaction( Rule( "OnSpawned" ) )
+		{
+			SendEvent( "SetLightColorHSV", "SelfPE", ColorV = ConstantFloat( 0.0 ), Duration = ConstantFloat( 0.3 ) )
+			SendEvent( "Destroy", "SelfPE", DispatchDelay = 0.3 )
+		}
+	}

@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="src\framework3d.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\frameworkutil.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\uiinputmapframework.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\uimanagerframework.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\framework3d.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\frameworkutil.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\uiinputmapframework.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\uimanagerframework.h">
+      <Filter>src</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{a80d97a4-7690-4de8-8282-a1453025fbc9}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

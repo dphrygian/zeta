@@ -1,0 +1,381 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Final|Win32">
+      <Configuration>Final</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Final|x64">
+      <Configuration>Final</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{29FBEFA5-5F6B-4EDC-B7C1-9C1218C109C3}</ProjectGuid>
+    <RootNamespace>Workbench</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Final|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Final|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v140_xp</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v140_xp</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v140_xp</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v140_xp</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Final|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Final|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>14.0.25431.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Final|Win32'">
+    <OutDir>$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Final|x64'">
+    <OutDir>$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>./src;../Core/src;../Math/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <PrecompiledHeader />
+      <WarningLevel>Level4</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>./src;../Core/src;../Math/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level4</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>./src;../Core/src;../Math/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <PrecompiledHeader />
+      <WarningLevel>Level4</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>./src;../Core/src;../Math/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level4</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Final|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>./src;../Core/src;../Math/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;_FINAL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <PrecompiledHeader />
+      <WarningLevel>Level4</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Final|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>./src;../Core/src;../Math/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;_FINAL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level4</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Actions\wbactioncomposite.h" />
+    <ClInclude Include="src\Actions\wbactiondestroy.h" />
+    <ClInclude Include="src\Actions\wbactionlog.h" />
+    <ClInclude Include="src\Actions\wbactionselector.h" />
+    <ClInclude Include="src\Actions\wbactionsendevent.h" />
+    <ClInclude Include="src\Actions\wbactionsetconfigvar.h" />
+    <ClInclude Include="src\Actions\wbactionsetstate.h" />
+    <ClInclude Include="src\Actions\wbactionsetvariable.h" />
+    <ClInclude Include="src\Actions\wbactiontriggerstatmod.h" />
+    <ClInclude Include="src\Actions\wbactionunqueueevent.h" />
+    <ClInclude Include="src\Components\wbcomplabel.h" />
+    <ClInclude Include="src\Components\wbcompowner.h" />
+    <ClInclude Include="src\Components\wbcomppemap.h" />
+    <ClInclude Include="src\Components\wbcompreactions.h" />
+    <ClInclude Include="src\Components\wbcompstate.h" />
+    <ClInclude Include="src\Components\wbcompstatmod.h" />
+    <ClInclude Include="src\Components\wbcomptransform.h" />
+    <ClInclude Include="src\Components\wbcompvariablemap.h" />
+    <ClInclude Include="src\iwbeventobserver.h" />
+    <ClInclude Include="src\PEs\wbpeabs.h" />
+    <ClInclude Include="src\PEs\wbpeadd.h" />
+    <ClInclude Include="src\PEs\wbpeand.h" />
+    <ClInclude Include="src\PEs\wbpebinaryop.h" />
+    <ClInclude Include="src\PEs\wbpeconditional.h" />
+    <ClInclude Include="src\PEs\wbpeconstantangles.h" />
+    <ClInclude Include="src\PEs\wbpeconstantbool.h" />
+    <ClInclude Include="src\PEs\wbpeconstantfloat.h" />
+    <ClInclude Include="src\PEs\wbpeconstantint.h" />
+    <ClInclude Include="src\PEs\wbpeconstantstring.h" />
+    <ClInclude Include="src\PEs\wbpeconstantvector.h" />
+    <ClInclude Include="src\PEs\wbpecross.h" />
+    <ClInclude Include="src\PEs\wbpediv.h" />
+    <ClInclude Include="src\PEs\wbpedot.h" />
+    <ClInclude Include="src\PEs\wbpegetconfigvar.h" />
+    <ClInclude Include="src\PEs\wbpegetentitybylabel.h" />
+    <ClInclude Include="src\PEs\wbpegetname.h" />
+    <ClInclude Include="src\PEs\wbpegetstate.h" />
+    <ClInclude Include="src\PEs\wbpegetvariable.h" />
+    <ClInclude Include="src\PEs\wbpeisstate.h" />
+    <ClInclude Include="src\PEs\wbpelength.h" />
+    <ClInclude Include="src\PEs\wbpelookup.h" />
+    <ClInclude Include="src\PEs\wbpemax.h" />
+    <ClInclude Include="src\PEs\wbpemin.h" />
+    <ClInclude Include="src\PEs\wbpemul.h" />
+    <ClInclude Include="src\PEs\wbpeneg.h" />
+    <ClInclude Include="src\PEs\wbpenormal.h" />
+    <ClInclude Include="src\PEs\wbpenot.h" />
+    <ClInclude Include="src\PEs\wbpenull.h" />
+    <ClInclude Include="src\PEs\wbpeor.h" />
+    <ClInclude Include="src\PEs\wbpeowner.h" />
+    <ClInclude Include="src\PEs\wbpepow.h" />
+    <ClInclude Include="src\PEs\wbpepushcontext.h" />
+    <ClInclude Include="src\PEs\wbpequeryactionstack.h" />
+    <ClInclude Include="src\PEs\wbperandombool.h" />
+    <ClInclude Include="src\PEs\wbperandomfloat.h" />
+    <ClInclude Include="src\PEs\wbperandomint.h" />
+    <ClInclude Include="src\PEs\wbperandomvector.h" />
+    <ClInclude Include="src\PEs\wbpesaturate.h" />
+    <ClInclude Include="src\PEs\wbpeselector.h" />
+    <ClInclude Include="src\PEs\wbpeself.h" />
+    <ClInclude Include="src\PEs\wbpesquare.h" />
+    <ClInclude Include="src\PEs\wbpestatmod.h" />
+    <ClInclude Include="src\PEs\wbpesub.h" />
+    <ClInclude Include="src\PEs\wbpeunaryop.h" />
+    <ClInclude Include="src\PEs\wbpexor.h" />
+    <ClInclude Include="src\wbaction.h" />
+    <ClInclude Include="src\wbactionfactory.h" />
+    <ClInclude Include="src\wbactions.h" />
+    <ClInclude Include="src\wbactionstack.h" />
+    <ClInclude Include="src\wbcomponent.h" />
+    <ClInclude Include="src\wbcomponentarrays.h" />
+    <ClInclude Include="src\wbcomponents.h" />
+    <ClInclude Include="src\wbentity.h" />
+    <ClInclude Include="src\wbentityref.h" />
+    <ClInclude Include="src\wbevent.h" />
+    <ClInclude Include="src\wbeventmanager.h" />
+    <ClInclude Include="src\wbparamevaluator.h" />
+    <ClInclude Include="src\wbparamevaluatorfactory.h" />
+    <ClInclude Include="src\wbpatternmatching.h" />
+    <ClInclude Include="src\wbpe.h" />
+    <ClInclude Include="src\wbpes.h" />
+    <ClInclude Include="src\wbrule.h" />
+    <ClInclude Include="src\wbscene.h" />
+    <ClInclude Include="src\wbworld.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Actions\wbactioncomposite.cpp" />
+    <ClCompile Include="src\Actions\wbactiondestroy.cpp" />
+    <ClCompile Include="src\Actions\wbactionlog.cpp" />
+    <ClCompile Include="src\Actions\wbactionselector.cpp" />
+    <ClCompile Include="src\Actions\wbactionsendevent.cpp" />
+    <ClCompile Include="src\Actions\wbactionsetconfigvar.cpp" />
+    <ClCompile Include="src\Actions\wbactionsetstate.cpp" />
+    <ClCompile Include="src\Actions\wbactionsetvariable.cpp" />
+    <ClCompile Include="src\Actions\wbactiontriggerstatmod.cpp" />
+    <ClCompile Include="src\Actions\wbactionunqueueevent.cpp" />
+    <ClCompile Include="src\Components\wbcomplabel.cpp" />
+    <ClCompile Include="src\Components\wbcompowner.cpp" />
+    <ClCompile Include="src\Components\wbcomppemap.cpp" />
+    <ClCompile Include="src\Components\wbcompreactions.cpp" />
+    <ClCompile Include="src\Components\wbcompstate.cpp" />
+    <ClCompile Include="src\Components\wbcompstatmod.cpp" />
+    <ClCompile Include="src\Components\wbcomptransform.cpp" />
+    <ClCompile Include="src\Components\wbcompvariablemap.cpp" />
+    <ClCompile Include="src\PEs\wbpeabs.cpp" />
+    <ClCompile Include="src\PEs\wbpeadd.cpp" />
+    <ClCompile Include="src\PEs\wbpeand.cpp" />
+    <ClCompile Include="src\PEs\wbpebinaryop.cpp" />
+    <ClCompile Include="src\PEs\wbpeconditional.cpp" />
+    <ClCompile Include="src\PEs\wbpeconstantangles.cpp" />
+    <ClCompile Include="src\PEs\wbpeconstantbool.cpp" />
+    <ClCompile Include="src\PEs\wbpeconstantfloat.cpp" />
+    <ClCompile Include="src\PEs\wbpeconstantint.cpp" />
+    <ClCompile Include="src\PEs\wbpeconstantstring.cpp" />
+    <ClCompile Include="src\PEs\wbpeconstantvector.cpp" />
+    <ClCompile Include="src\PEs\wbpecross.cpp" />
+    <ClCompile Include="src\PEs\wbpediv.cpp" />
+    <ClCompile Include="src\PEs\wbpedot.cpp" />
+    <ClCompile Include="src\PEs\wbpegetconfigvar.cpp" />
+    <ClCompile Include="src\PEs\wbpegetentitybylabel.cpp" />
+    <ClCompile Include="src\PEs\wbpegetname.cpp" />
+    <ClCompile Include="src\PEs\wbpegetstate.cpp" />
+    <ClCompile Include="src\PEs\wbpegetvariable.cpp" />
+    <ClCompile Include="src\PEs\wbpeisstate.cpp" />
+    <ClCompile Include="src\PEs\wbpelength.cpp" />
+    <ClCompile Include="src\PEs\wbpelookup.cpp" />
+    <ClCompile Include="src\PEs\wbpemax.cpp" />
+    <ClCompile Include="src\PEs\wbpemin.cpp" />
+    <ClCompile Include="src\PEs\wbpemul.cpp" />
+    <ClCompile Include="src\PEs\wbpeneg.cpp" />
+    <ClCompile Include="src\PEs\wbpenormal.cpp" />
+    <ClCompile Include="src\PEs\wbpenot.cpp" />
+    <ClCompile Include="src\PEs\wbpenull.cpp" />
+    <ClCompile Include="src\PEs\wbpeor.cpp" />
+    <ClCompile Include="src\PEs\wbpeowner.cpp" />
+    <ClCompile Include="src\PEs\wbpepow.cpp" />
+    <ClCompile Include="src\PEs\wbpepushcontext.cpp" />
+    <ClCompile Include="src\PEs\wbpequeryactionstack.cpp" />
+    <ClCompile Include="src\PEs\wbperandombool.cpp" />
+    <ClCompile Include="src\PEs\wbperandomfloat.cpp" />
+    <ClCompile Include="src\PEs\wbperandomint.cpp" />
+    <ClCompile Include="src\PEs\wbperandomvector.cpp" />
+    <ClCompile Include="src\PEs\wbpesaturate.cpp" />
+    <ClCompile Include="src\PEs\wbpeselector.cpp" />
+    <ClCompile Include="src\PEs\wbpeself.cpp" />
+    <ClCompile Include="src\PEs\wbpesquare.cpp" />
+    <ClCompile Include="src\PEs\wbpestatmod.cpp" />
+    <ClCompile Include="src\PEs\wbpesub.cpp" />
+    <ClCompile Include="src\PEs\wbpeunaryop.cpp" />
+    <ClCompile Include="src\PEs\wbpexor.cpp" />
+    <ClCompile Include="src\wbaction.cpp" />
+    <ClCompile Include="src\wbactionfactory.cpp" />
+    <ClCompile Include="src\wbactionstack.cpp" />
+    <ClCompile Include="src\wbcomponent.cpp" />
+    <ClCompile Include="src\wbcomponentarrays.cpp" />
+    <ClCompile Include="src\wbentity.cpp" />
+    <ClCompile Include="src\wbevent.cpp" />
+    <ClCompile Include="src\wbeventmanager.cpp" />
+    <ClCompile Include="src\wbparamevaluator.cpp" />
+    <ClCompile Include="src\wbparamevaluatorfactory.cpp" />
+    <ClCompile Include="src\wbpatternmatching.cpp" />
+    <ClCompile Include="src\wbpe.cpp" />
+    <ClCompile Include="src\wbrule.cpp" />
+    <ClCompile Include="src\wbscene.cpp" />
+    <ClCompile Include="src\wbworld.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Core\Core.vcxproj">
+      <Project>{35936da7-270b-418c-9386-a4aed70a2049}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\Math\Math.vcxproj">
+      <Project>{5e99ee6d-7b15-4ce4-a872-267dd407741e}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="Workbench.natvis">
+      <SubType>Designer</SubType>
+    </Natvis>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

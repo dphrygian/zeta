@@ -1,0 +1,1159 @@
+[AudioSystem]
+MaxChannels			= 1000	# FMOD supports up to 4093
+DefaultReverb		= "Reverb_RosaSmall"
+NumReverbCategories	= &
+@ ReverbCategory
+@@&					= "SFX"
+@@&					= "VO"
+# NOTE: Ambience is *not* a reverb category because it should have its own "baked in" reverb
+NumPauseCategories	= &
+@ PauseCategory
+@@&					= "SFX"
+@@&					= "VO"
+# ROSANOTE: I'm disabling this because of things like mission results and plot point screens,
+# but it used to be a pause category because it's at least sort of diegetic.
+#@@&					= "Ambience"
+
+# Artifically scale vertical attenuation (Rosa-specific parameter,
+# *only* affects occluded sounds, so you can still clearly hear anything
+# you can see.
+VerticalScalar			= 8.0	# Bumped way up from 3.0, I really don't want to hear sounds from other floors
+
+# Artificially scale the depth of occluding surfaces
+# (e.g., for getting more attenuation out of thin occluders)
+# This is a default, it can also be set per sound
+OcclusionDepthScalar	= 4.0
+# Near-distance falloff radius for additional occlusion attenuation.
+# In other words, at 10m from near side of occlusion (side closer to
+# listener), there is an additional 50% cut.
+# This is a default, it can also be set per sound
+OccludedFalloffRadius	= 10.0
+
+[RosaMusic]
+AmbienceFadeDuration	= 0.5
+
+# ******** I3DL2(*) Reverb definitions ********
+# (*) FMOD has made their own changes.
+
+# Notes on FMOD's I3DL2 implementation:
+# "Early" is the discrete echoing reflections
+# "Late" is the dense trailing reverberation
+# "Early Delay" is the time between the direct sound and the first early echo
+# "Late Delay" is the time between the first early echo and the late reverb
+# "Decay time" is how long it takes low-freq late reverb to fall 60 dB (if FMOD's implementation is to spec)
+# "HF Reference" is the reference high frequency, used with HF Decay Ratio to shape late reverb
+# "HF Decay Ratio" is the percent of high-freq decay relative to low-freq (for late reverb, in feedback loop); low is dark, high is bright
+# "Diffusion" is the "echo density" (i.e. echoes per seconds) in late reverb; 100% is "smooth" and lower is "grainy" reverb
+# "Density" is the "modal density" (i.e. echoes per Hz?) in late reverb; 100% is "natural" and lower is "hollow" reverb
+# "Low Shelf Frequency" is the reference low frequency, for room effect and late reverb
+# "Low Shelf Gain" is the level of the low frequencies for room effect
+# "High Cut" is the cutoff frequency for the low-pass filter for room effect (shapes both early reflections and late reverb, not in feedback loop)
+# "Early/Late Mix" is the ratio of late reverb to early reflections. 100% is equal reverb and reflections, 0% is only reflections
+# "Wet Level" is the amount of all reverb effects relative to direct sound.
+# "Dry Level" additionally allows the dry sound to be mixed separately, and should generally be ignored.
+
+# In FMOD's presets, certain parameters are ignored or rarely used:
+# HFReference is *always* 5000
+# LowShelfFrequency is *always* 250
+# LowShelfGain is *always* 0
+# With one exception (for the "sewer pipe" preset), Density is always 100
+# With a few exceptions, Diffusion is usually 100
+
+# ROSANOTE: I'm leaving all parameters here for quick reference
+[Reverb_None]
+SoLoudEchoTime		= 0.2		# s
+SoLoudDecayTime		= 1.0		# s
+SoLoudFilter		= 0.0		# 0-1, lowpass (slamming to 1 seems to break things)
+SoLoudWetDryMix		= 0.0
+DecayTime			= 1000.0	# ms, 100 to 20000 (default 1500)
+EarlyDelay			= 7.0		# ms, 0 to 300 (default 20)
+LateDelay			= 11.0		# ms, 0 to 100 (default 40)
+HFReference			= 5000.0	# Hz, 20 to 20000 (default 5000)
+HFDecayRatio		= 100.0		# %, 10 to 100 (default 50)
+Diffusion			= 100.0		# %, 0 to 100 (default 100)
+Density				= 100.0		# %, 0 to 100 (default 100)
+LowShelfFrequency	= 250.0		# Hz, 20 to 1000 (default 25)
+LowShelfGain		= 0.0		# dB, -36 to 12 (default 0)
+HighCut				= 20.0		# Hz, 20 to 20000 (default 20000)
+EarlyLateMix		= 96.0		# %, 0 to 100 (default 50)
+WetLevel			= -80.0		# dB, -80 to 20 (default -6)
+DryLevel			= 0.0		# dB, -80 to 20 (default 0)
+
+[Reverb_Generic]
+SoLoudEchoTime		= 0.2		# s
+SoLoudDecayTime		= 1.0		# s
+SoLoudFilter		= 0.0		# 0-1, lowpass (slamming to 1 seems to break things)
+DecayTime		= 1500.0	# ms, 100 to 20000 (default 1500)
+EarlyDelay		= 7.0		# ms, 0 to 300 (default 20)
+LateDelay		= 11.0		# ms, 0 to 100 (default 40)
+HFDecayRatio	= 83.0		# %, 10 to 100 (default 50)
+HighCut			= 14500.0	# Hz, 20 to 20000 (default 20000)
+EarlyLateMix	= 96.0		# %, 0 to 100 (default 50)
+WetLevel		= -8.0		# dB, -80 to 20 (default -6)
+
+[Reverb_RosaSmall]
+SoLoudEchoTime		= 0.15	# s
+SoLoudDecayTime		= 0.50	# s
+SoLoudFilter		= 0.20	# 0-1, lowpass (slamming to 1 seems to break things)
+DecayTime		= 500.0		# ms, 100 to 20000 (default 1500)
+EarlyDelay		= 3.0		# ms, 0 to 300 (default 20)
+LateDelay		= 4.0		# ms, 0 to 100 (default 40)
+HFDecayRatio	= 10.0		# %, 10 to 100 (default 50)
+HighCut			= 160.0		# Hz, 20 to 20000 (default 20000)
+EarlyLateMix	= 58.0		# %, 0 to 100 (default 50)
+WetLevel		= -19.0		# dB, -80 to 20 (default -6)
+
+[Reverb_RosaSmallMuted]
+SoLoudEchoTime		= 0.15	# s
+SoLoudDecayTime		= 0.50	# s
+SoLoudFilter		= 0.50	# 0-1, lowpass (slamming to 1 seems to break things)
+SoLoudWetDryMix		= 0.50	# 0-1
+
+[Reverb_RosaMedium]
+SoLoudEchoTime		= 0.20	# s
+SoLoudDecayTime		= 0.70	# s
+SoLoudFilter		= 0.40	# 0-1, lowpass (slamming to 1 seems to break things)
+DecayTime		= 4300.0	# ms, 100 to 20000 (default 1500)
+EarlyDelay		= 20.0		# ms, 0 to 300 (default 20)
+LateDelay		= 30.0		# ms, 0 to 100 (default 40)
+HFDecayRatio	= 59.0		# %, 10 to 100 (default 50)
+HighCut			= 5850.0	# Hz, 20 to 20000 (default 20000)
+EarlyLateMix	= 64.0		# %, 0 to 100 (default 50)
+WetLevel		= -11.7		# dB, -80 to 20 (default -6)
+
+[Reverb_RosaCave]
+SoLoudEchoTime		= 0.2		# s
+SoLoudDecayTime		= 1.0		# s
+SoLoudFilter		= 0.0		# 0-1, lowpass (slamming to 1 seems to break things)
+DecayTime		= 2900.0	# ms, 100 to 20000 (default 1500)
+EarlyDelay		= 15.0		# ms, 0 to 300 (default 20)
+LateDelay		= 22.0		# ms, 0 to 100 (default 40)
+HFDecayRatio	= 100.0		# %, 10 to 100 (default 50)
+EarlyLateMix	= 59.0		# %, 0 to 100 (default 50)
+WetLevel		= -11.3		# dB, -80 to 20 (default -6)
+
+[Reverb_RosaAuditorium]
+SoLoudEchoTime		= 0.2		# s
+SoLoudDecayTime		= 1.0		# s
+SoLoudFilter		= 0.0		# 0-1, lowpass (slamming to 1 seems to break things)
+DecayTime		= 4300.0	# ms, 100 to 20000 (default 1500)
+EarlyDelay		= 20.0		# ms, 0 to 300 (default 20)
+LateDelay		= 30.0		# ms, 0 to 100 (default 40)
+HFDecayRatio	= 59.0		# %, 10 to 100 (default 50)
+HighCut			= 5850.0	# Hz, 20 to 20000 (default 20000)
+EarlyLateMix	= 64.0		# %, 0 to 100 (default 50)
+WetLevel		= -11.7		# dB, -80 to 20 (default -6)
+
+[Reverb_RosaForest]
+SoLoudEchoTime		= 0.2		# s
+SoLoudDecayTime		= 1.0		# s
+SoLoudFilter		= 0.0		# 0-1, lowpass (slamming to 1 seems to break things)
+DecayTime		= 1500.0	# ms, 100 to 20000 (default 1500)
+EarlyDelay		= 162.0		# ms, 0 to 300 (default 20)
+LateDelay		= 88.0		# ms, 0 to 100 (default 40)
+HFDecayRatio	= 54.0		# %, 10 to 100 (default 50)
+Diffusion		= 79.0		# %, 0 to 100 (default 100)
+HighCut			= 760.0		# Hz, 20 to 20000 (default 20000)
+EarlyLateMix	= 94.0		# %, 0 to 100 (default 50)
+WetLevel		= -12.3		# dB, -80 to 20 (default -6)
+
+[Reverb_RosaCity]
+SoLoudEchoTime		= 0.2		# s
+SoLoudDecayTime		= 1.0		# s
+SoLoudFilter		= 0.0		# 0-1, lowpass (slamming to 1 seems to break things)
+DecayTime		= 1500.0	# ms, 100 to 20000 (default 1500)
+EarlyDelay		= 7.0		# ms, 0 to 300 (default 20)
+LateDelay		= 11.0		# ms, 0 to 100 (default 40)
+HFDecayRatio	= 67.0		# %, 10 to 100 (default 50)
+Diffusion		= 50.0		# %, 0 to 100 (default 100)
+HighCut			= 4050.0	# Hz, 20 to 20000 (default 20000)
+EarlyLateMix	= 66.0		# %, 0 to 100 (default 50)
+WetLevel		= -26.0	# dB, -80 to 20 (default -6)
+
+
+
+# ****************************************************************
+
+[SoundArchetypeOneShot]
+Category			= "SFX"
+Stream				= false
+3DSound				= true
+ShouldCalcOcclusion	= true
+Volume				= 1.0
+FalloffRadius		= 5.0
+PanBiasNear			= 0.5
+PanBiasFar			= 1.0
+PanPower			= 0.5
+MinimumAttenuation	= 0.05
+RearAttenuation		= 0.5	# NOTE: 1.0 means full rear attenuation
+
+[SoundArchetypeLoop]
+Extends			= "SoundArchetypeOneShot"
+Looping			= true
+ShouldSerialize	= true
+
+[SoundArchetypeBark]
+Extends		= "SoundArchetypeOneShot"
+Category	= "VO"
+# DLP 27 Nov 2021: Making everything except music non-streamed, because Oggs are slow to stream in SoLoud
+Stream		= false
+PitchMin	= 0.90909
+PitchMax	= 1.1
+
+	[SoundArchetypeBark_Elite]
+	Extends	= "SoundArchetypeBark"
+	# TEMPHACK to test WAV streaming vs. ogg
+	Stream	= true
+
+[SoundArchetypePlayerBark]
+Category	= "VO"
+Stream		= false
+3DSound		= false
+Volume		= 1.0
+PitchMin	= 0.90909
+PitchMax	= 1.1
+
+[SoundArchetypePlayerSound]
+Category	= "SFX"
+Stream		= false
+3DSound		= false
+Volume		= 1.0
+
+[SoundArchetypeMusic]
+Category		= "Music"
+Stream			= true
+3DSound			= false
+Volume			= 1.0
+Looping			= true
+HighPriority	= true	# High priority sounds tick even if they're silenced, and are protected against having their voice stolen
+
+	[SoundArchetypeMusic_Hub]
+	Extends	= "SoundArchetypeMusic"
+	Volume	= 0.3
+	Looping	= false
+
+[SoundArchetypeAmbience]
+Category	= "Ambience"
+Stream		= true
+3DSound		= false
+Volume		= 1.0
+Looping		= true
+
+[SoundArchetypeUI]
+Category			= "UI"
+Stream				= false
+3DSound				= false
+Volume				= 1.0
+
+
+
+# ****************************************************************
+
+[Sound_Player_WakeUp]
+Extends		= "SoundArchetypePlayerBark"
+Volume		= 0.4
+NumSources	= &
+@ Source
+@@&			= "Audio/VO/Human/Female/wake-up-0.ogg"
+
+[Sound_Player_Grunt]
+Extends		= "SoundArchetypePlayerBark"
+Volume		= 0.25
+NumSources	= &
+@ Source
+@@&			= "Audio/VO/Human/Female/grunt-0.ogg"
+@@&			= "Audio/VO/Human/Female/grunt-1.ogg"
+@@&			= "Audio/VO/Human/Female/grunt-2.ogg"
+@@&			= "Audio/VO/Human/Female/grunt-3.ogg"
+
+[Sound_Player_Sprint]
+Extends		= "SoundArchetypePlayerBark"
+Volume		= 0.10
+NumSources	= &
+@ Source
+@@&			= "Audio/VO/Human/Female/sprint-0.ogg"
+@@&			= "Audio/VO/Human/Female/sprint-1.ogg"
+@@&			= "Audio/VO/Human/Female/sprint-2.ogg"
+
+[Sound_Player_Mantel]
+Extends		= "SoundArchetypePlayerBark"
+Volume		= 0.25
+NumSources	= &
+@ Source
+@@&			= "Audio/VO/Human/Female/mantel-0.ogg"
+@@&			= "Audio/VO/Human/Female/mantel-1.ogg"
+@@&			= "Audio/VO/Human/Female/mantel-2.ogg"
+
+[Sound_Player_PowerSlide]
+Extends		= "SoundArchetypePlayerBark"
+Volume		= 0.15
+NumSources	= &
+@ Source
+@@&			= "Audio/VO/Human/Female/power-slide-0.ogg"
+@@&			= "Audio/VO/Human/Female/power-slide-1.ogg"
+
+[Sound_Player_Damage]
+Extends		= "SoundArchetypePlayerBark"
+Volume		= 0.3
+NumSources	= &
+@ Source
+@@&			= "Audio/VO/Human/Female/damage-0.ogg"
+@@&			= "Audio/VO/Human/Female/damage-1.ogg"
+@@&			= "Audio/VO/Human/Female/damage-2.ogg"
+@@&			= "Audio/VO/Human/Female/damage-3.ogg"
+@@&			= "Audio/VO/Human/Female/damage-4.ogg"
+@@&			= "Audio/VO/Human/Female/damage-5.ogg"
+
+[Sound_Player_Death]
+Extends		= "SoundArchetypePlayerBark"
+Volume		= 0.3
+NumSources	= &
+@ Source
+@@&			= "Audio/VO/Human/Female/death-0.ogg"
+@@&			= "Audio/VO/Human/Female/death-1.ogg"
+@@&			= "Audio/VO/Human/Female/death-2.ogg"
+@@&			= "Audio/VO/Human/Female/death-3.ogg"
+
+[Sound_Player_Shove]
+Extends		= "SoundArchetypePlayerBark"
+Volume		= 0.2
+NumSources	= &
+@ Source
+@@&			= "Audio/VO/Human/Female/shove-0.ogg"
+@@&			= "Audio/VO/Human/Female/shove-1.ogg"
+@@&			= "Audio/VO/Human/Female/shove-2.ogg"
+
+
+
+# ****************************************************************
+
+[DoorOpenSound]
+Extends		= "SoundArchetypeOneShot"
+Volume		= 0.5
+NumSources	= &
+@ Source
+@@&			= "Audio/door-open-1.ogg"
+@@&			= "Audio/door-open-2.ogg"
+
+[DoorCloseSound]
+Extends		= "SoundArchetypeOneShot"
+Volume		= 0.5
+NumSources	= &
+@ Source
+@@&			= "Audio/door-close-1.ogg"
+@@&			= "Audio/door-close-2.ogg"
+
+[DoorLockSound]
+Extends		= "SoundArchetypeOneShot"
+Volume		= 0.6
+NumSources	= &
+@ Source
+@@&			= "Audio/door-lock-1.ogg"
+@@&			= "Audio/door-lock-2.ogg"
+
+[DoorUnlockSound]
+Extends		= "SoundArchetypeOneShot"
+Volume		= 0.6
+NumSources	= &
+@ Source
+@@&			= "Audio/door-unlock-1.ogg"
+@@&			= "Audio/door-unlock-2.ogg"
+
+[DoorLockedSound]
+Extends		= "SoundArchetypeOneShot"
+Source		= "Audio/door-locked.ogg"
+
+[Sound_WindowBreak]
+Extends		= "SoundArchetypeOneShot"
+Volume		= 0.5
+NumSources	= &
+@ Source
+@@&			= "Audio/window-break-0.ogg"
+@@&			= "Audio/window-break-1.ogg"
+
+[TitlePressStartSound]
+Extends		= "SoundArchetypeUI"
+Source		= "Audio/objective-complete.ogg"	# TEMPHACK
+Volume		= 0.3
+
+
+
+# ****************************************************************
+
+[SoundArchetype_Footstep]
+Extends			= "SoundArchetypeOneShot"
+Volume			= 1.0
+FalloffRadius	= 8.0	# Bumped up from 2.0 because footsteps just weren't useful. (Bumped up even more for Zeta!)
+SuppressGroup	= "Footstep"
+SuppressRadius	= 5.0
+SuppressLimit	= 4
+PitchMin		= 0.90909
+PitchMax		= 1.1
+
+[FootCleanCementSound]
+Extends			= "SoundArchetype_Footstep"
+NumSources		= &
+@ Source
+@@&				= "Audio/Footsteps/foot-clean-cement-1.ogg"
+@@&				= "Audio/Footsteps/foot-clean-cement-2.ogg"
+@@&				= "Audio/Footsteps/foot-clean-cement-3.ogg"
+@@&				= "Audio/Footsteps/foot-clean-cement-4.ogg"
+@@&				= "Audio/Footsteps/foot-clean-cement-5.ogg"
+@@&				= "Audio/Footsteps/foot-clean-cement-6.ogg"
+@@&				= "Audio/Footsteps/foot-clean-cement-7.ogg"
+@@&				= "Audio/Footsteps/foot-clean-cement-8.ogg"
+
+# Separate definition so it has its own last random source and is never suppressed
+[PlayerFootCleanCementSound]
+Extends			= "FootCleanCementSound"
+SuppressGroup	= ""
+
+[FootCarpetSound]
+Extends			= "SoundArchetype_Footstep"
+NumSources		= &
+@ Source
+@@&				= "Audio/Footsteps/foot-carpet-1.ogg"
+@@&				= "Audio/Footsteps/foot-carpet-2.ogg"
+@@&				= "Audio/Footsteps/foot-carpet-3.ogg"
+@@&				= "Audio/Footsteps/foot-carpet-4.ogg"
+@@&				= "Audio/Footsteps/foot-carpet-5.ogg"
+@@&				= "Audio/Footsteps/foot-carpet-6.ogg"
+@@&				= "Audio/Footsteps/foot-carpet-7.ogg"
+@@&				= "Audio/Footsteps/foot-carpet-8.ogg"
+
+[PlayerFootCarpetSound]
+Extends			= "FootCarpetSound"
+SuppressGroup	= ""
+
+[FootSoftWoodSound]
+Extends			= "SoundArchetype_Footstep"
+NumSources		= &
+@ Source
+@@&				= "Audio/Footsteps/foot-soft-wood-1.ogg"
+@@&				= "Audio/Footsteps/foot-soft-wood-2.ogg"
+@@&				= "Audio/Footsteps/foot-soft-wood-3.ogg"
+@@&				= "Audio/Footsteps/foot-soft-wood-4.ogg"
+@@&				= "Audio/Footsteps/foot-soft-wood-5.ogg"
+@@&				= "Audio/Footsteps/foot-soft-wood-6.ogg"
+@@&				= "Audio/Footsteps/foot-soft-wood-7.ogg"
+@@&				= "Audio/Footsteps/foot-soft-wood-8.ogg"
+
+[PlayerFootSoftWoodSound]
+Extends			= "FootSoftWoodSound"
+SuppressGroup	= ""
+
+[FootDampenedMetalSound]
+Extends			= "SoundArchetype_Footstep"
+NumSources		= &
+@ Source
+@@&				= "Audio/Footsteps/foot-dampened-metal-1.ogg"
+@@&				= "Audio/Footsteps/foot-dampened-metal-2.ogg"
+@@&				= "Audio/Footsteps/foot-dampened-metal-3.ogg"
+@@&				= "Audio/Footsteps/foot-dampened-metal-4.ogg"
+@@&				= "Audio/Footsteps/foot-dampened-metal-5.ogg"
+@@&				= "Audio/Footsteps/foot-dampened-metal-6.ogg"
+@@&				= "Audio/Footsteps/foot-dampened-metal-7.ogg"
+@@&				= "Audio/Footsteps/foot-dampened-metal-8.ogg"
+
+[PlayerFootDampenedMetalSound]
+Extends			= "FootDampenedMetalSound"
+SuppressGroup	= ""
+
+[FootGrassSound]
+Extends			= "SoundArchetype_Footstep"
+NumSources		= &
+@ Source
+@@&				= "Audio/Footsteps/foot-grass-1.ogg"
+@@&				= "Audio/Footsteps/foot-grass-2.ogg"
+@@&				= "Audio/Footsteps/foot-grass-3.ogg"
+@@&				= "Audio/Footsteps/foot-grass-4.ogg"
+@@&				= "Audio/Footsteps/foot-grass-5.ogg"
+@@&				= "Audio/Footsteps/foot-grass-6.ogg"
+@@&				= "Audio/Footsteps/foot-grass-7.ogg"
+@@&				= "Audio/Footsteps/foot-grass-8.ogg"
+
+[PlayerFootGrassSound]
+Extends			= "FootGrassSound"
+SuppressGroup	= ""
+
+[FootWetCementSound]
+Extends			= "SoundArchetype_Footstep"
+NumSources		= &
+@ Source
+@@&				= "Audio/Footsteps/foot-wet-cement-1.ogg"
+@@&				= "Audio/Footsteps/foot-wet-cement-2.ogg"
+@@&				= "Audio/Footsteps/foot-wet-cement-3.ogg"
+@@&				= "Audio/Footsteps/foot-wet-cement-4.ogg"
+@@&				= "Audio/Footsteps/foot-wet-cement-5.ogg"
+@@&				= "Audio/Footsteps/foot-wet-cement-6.ogg"
+@@&				= "Audio/Footsteps/foot-wet-cement-7.ogg"
+@@&				= "Audio/Footsteps/foot-wet-cement-8.ogg"
+
+[PlayerFootWetCementSound]
+Extends			= "FootWetCementSound"
+SuppressGroup	= ""
+
+[FootMudSound]
+Extends			= "SoundArchetype_Footstep"
+NumSources		= &
+@ Source
+@@&				= "Audio/Footsteps/foot-mud-1.ogg"
+@@&				= "Audio/Footsteps/foot-mud-2.ogg"
+@@&				= "Audio/Footsteps/foot-mud-3.ogg"
+@@&				= "Audio/Footsteps/foot-mud-4.ogg"
+@@&				= "Audio/Footsteps/foot-mud-5.ogg"
+@@&				= "Audio/Footsteps/foot-mud-6.ogg"
+@@&				= "Audio/Footsteps/foot-mud-7.ogg"
+@@&				= "Audio/Footsteps/foot-mud-8.ogg"
+
+[PlayerFootMudSound]
+Extends			= "FootMudSound"
+SuppressGroup	= ""
+
+
+
+# ****************************************************************
+
+[Sound_Convo]
+Extends		= "SoundArchetypePlayerSound"
+Category	= "PausedSFX"
+Volume		= 0.3
+NumSources	= &
+@ Source
+@@&			= "Audio/convo-0.ogg"
+@@&			= "Audio/convo-1.ogg"
+@@&			= "Audio/convo-2.ogg"
+
+[Sound_Player_AddAmmo]
+Extends	= "SoundArchetypePlayerSound"
+Source	= "Audio/add-ammo.ogg"
+Volume	= 0.5
+
+[Sound_Player_Respawn]
+Extends	= "SoundArchetypePlayerSound"
+Source	= "Audio/respawn.ogg"
+
+[Sound_PowerSlide]
+Extends	= "SoundArchetypePlayerSound"
+Source	= "Audio/power-slide.ogg"
+Volume	= 0.2
+
+[Sound_Zoom]
+Extends	= "SoundArchetypePlayerSound"
+Source	= "Audio/zoom.ogg"
+Volume	= 0.4
+
+[Sound_Unzoom]
+Extends	= "SoundArchetypePlayerSound"
+Source	= "Audio/unzoom.ogg"
+Volume	= 0.4
+
+[Sound_Flashlight_On]
+Extends	= "SoundArchetypePlayerSound"
+Source	= "Audio/switch-on.ogg"
+Volume	= 0.3
+
+[Sound_Flashlight_Off]
+Extends	= "SoundArchetypePlayerSound"
+Source	= "Audio/switch-off.ogg"
+Volume	= 0.3
+
+[Sound_Heartbeat]
+Extends	= "SoundArchetypePlayerSound"
+Source	= "Audio/heartbeat.ogg"
+Volume	= 1.0
+
+[Sound_Bandage]
+Extends	= "SoundArchetypePlayerSound"
+Source	= "Audio/bandage.ogg"
+Volume	= 0.35
+
+[Sound_ObjectiveComplete]
+Extends	= "SoundArchetypeUI"
+Source	= "Audio/objective-complete.ogg"
+Volume	= 0.4
+
+[Sound_TitleEnter]
+Extends	= "SoundArchetypeUI"
+Source	= "Audio/title-enter.ogg"
+Volume	= 0.5
+
+[Sound_Intro_Thunder]
+Extends	= "SoundArchetypePlayerSound"
+Source	= "Audio/intro-thunder.ogg"
+Volume	= 0.75
+
+
+
+# ****************************************************************
+
+[Sound_Lasergun_Fire]
+Extends	= "SoundArchetypePlayerSound"
+Source	= "Audio/Hands/lasergun-fire.ogg"
+Volume	= 0.5
+
+[Sound_Lasergun_Impact]
+Extends	= "SoundArchetypeOneShot"
+Source	= "Audio/Hands/lasergun-impact.ogg"
+Volume	= 0.5
+
+[Sound_Lasergun_DryFire]
+Extends	= "SoundArchetypePlayerSound"
+Source	= "Audio/Hands/lasergun-dryfire.ogg"
+Volume	= 0.5
+
+
+
+# ****************************************************************
+
+[Sound_Fireball]
+Extends	= "SoundArchetypeLoop"
+Source	= "Audio/fire-loop.ogg"
+Volume	= 0.8
+
+[Sound_Fireball_Explosion]
+Extends	= "SoundArchetypeOneShot"
+Source	= "Audio/explosion.ogg"
+Volume	= 0.8
+
+[Sound_Toilet]
+Extends			= "SoundArchetypeOneShot"
+ShouldSerialize	= true
+Source			= "Audio/toilet-0.ogg"
+
+[Sound_Search_Cabinet]
+Extends	= "SoundArchetypeOneShot"
+Source	= "Audio/search-cabinet.ogg"
+Volume	= 0.5
+
+[Sound_Search_Robot]
+Extends	= "SoundArchetypeOneShot"
+Source	= "Audio/search-robot.ogg"
+Volume	= 0.6
+
+[Sound_Robot_Melee]
+Extends	= "SoundArchetypeOneShot"
+Source	= "Audio/robot-melee.ogg"
+Volume	= 0.5
+
+[Sound_Robot_Ranged]
+Extends	= "SoundArchetypeOneShot"
+Source	= "Audio/robot-ranged.ogg"
+Volume	= 1.0
+
+[Sound_Search_CEO]
+Extends	= "SoundArchetypeOneShot"
+Source	= "Audio/search-ceo.ogg"
+
+[Sound_Ragdoll_Collision]
+Extends			= "SoundArchetypeOneShot"
+NumSources		= &
+@ Source
+@@&				= "Audio/Footsteps/foot-dampened-metal-1.ogg"
+@@&				= "Audio/Footsteps/foot-dampened-metal-2.ogg"
+@@&				= "Audio/Footsteps/foot-dampened-metal-3.ogg"
+@@&				= "Audio/Footsteps/foot-dampened-metal-4.ogg"
+@@&				= "Audio/Footsteps/foot-dampened-metal-5.ogg"
+@@&				= "Audio/Footsteps/foot-dampened-metal-6.ogg"
+@@&				= "Audio/Footsteps/foot-dampened-metal-7.ogg"
+@@&				= "Audio/Footsteps/foot-dampened-metal-8.ogg"
+
+
+
+# ****************************************************************
+
+[VO_Minion_Wander]
+Extends		= "SoundArchetypeBark"
+Volume		= 0.5
+NumSources	= &
+@ Source
+@@&			= "Audio/VO/Minion/wander-0.ogg"
+@@&			= "Audio/VO/Minion/wander-1.ogg"
+@@&			= "Audio/VO/Minion/wander-2.ogg"
+@@&			= "Audio/VO/Minion/wander-3.ogg"
+@@&			= "Audio/VO/Minion/wander-4.ogg"
+@@&			= "Audio/VO/Minion/wander-5.ogg"
+@@&			= "Audio/VO/Minion/wander-6.ogg"
+@@&			= "Audio/VO/Minion/wander-7.ogg"
+
+[VO_Minion_Notice]
+Extends		= "SoundArchetypeBark"
+Volume		= 0.6
+NumSources	= &
+@ Source
+@@&			= "Audio/VO/Minion/search-0.ogg"	# Not a typo
+@@&			= "Audio/VO/Minion/search-1.ogg"	# Not a typo
+
+[VO_Minion_Search]
+Extends		= "SoundArchetypeBark"
+Volume		= 0.7
+NumSources	= &
+@ Source
+@@&			= "Audio/VO/Minion/search-0.ogg"
+@@&			= "Audio/VO/Minion/search-1.ogg"
+@@&			= "Audio/VO/Minion/search-2.ogg"
+# If 2 or more sounds in this group are already playing in a 5m radius, suppress this
+SuppressGroup	= "Minion_Search"
+SuppressRadius	= 5.0
+SuppressLimit	= 2
+
+[VO_Minion_Combat]
+Extends		= "SoundArchetypeBark"
+Volume		= 0.6
+NumSources	= &
+@ Source
+@@&			= "Audio/VO/Minion/combat-0.ogg"
+@@&			= "Audio/VO/Minion/combat-1.ogg"
+@@&			= "Audio/VO/Minion/combat-2.ogg"
+@@&			= "Audio/VO/Minion/combat-3.ogg"
+@@&			= "Audio/VO/Minion/combat-4.ogg"
+# If 2 or more sounds in this group are already playing in a 5m radius, suppress this
+SuppressGroup	= "Minion_CombatAttack"
+SuppressRadius	= 5.0
+SuppressLimit	= 2
+
+[VO_Minion_Attack]
+Extends		= "SoundArchetypeBark"
+Volume		= 0.6
+NumSources	= &
+@ Source
+@@&			= "Audio/VO/Minion/attack-0.ogg"
+@@&			= "Audio/VO/Minion/attack-1.ogg"
+@@&			= "Audio/VO/Minion/attack-2.ogg"
+@@&			= "Audio/VO/Minion/attack-3.ogg"
+@@&			= "Audio/VO/Minion/attack-4.ogg"
+# If 2 or more sounds in this group are already playing in a 5m radius, suppress this
+SuppressGroup	= "Minion_CombatAttack"
+SuppressRadius	= 5.0
+SuppressLimit	= 2
+
+[VO_Minion_Damage]
+Extends		= "SoundArchetypeBark"
+Volume		= 0.6
+NumSources	= &
+@ Source
+@@&			= "Audio/VO/Minion/damage-0.ogg"
+@@&			= "Audio/VO/Minion/damage-1.ogg"
+@@&			= "Audio/VO/Minion/damage-2.ogg"
+@@&			= "Audio/VO/Minion/damage-3.ogg"
+@@&			= "Audio/VO/Minion/damage-4.ogg"
+# If 3 or more sounds in this group are already playing in a 5m radius, suppress this
+SuppressGroup	= "Minion_DamageDeath"
+SuppressRadius	= 5.0
+SuppressLimit	= 3
+
+[VO_Minion_Death]
+Extends		= "SoundArchetypeBark"
+Volume		= 0.6
+NumSources	= &
+@ Source
+@@&			= "Audio/VO/Minion/death-0.ogg"
+@@&			= "Audio/VO/Minion/death-1.ogg"
+@@&			= "Audio/VO/Minion/death-2.ogg"
+@@&			= "Audio/VO/Minion/death-3.ogg"
+# If 3 or more sounds in this group are already playing in a 5m radius, suppress this
+SuppressGroup	= "Minion_DamageDeath"
+SuppressRadius	= 5.0
+SuppressLimit	= 3
+
+
+
+# ****************************************************************
+
+[VO_Elite_Male_Wander]
+Extends		= "SoundArchetypeBark_Elite"
+Volume		= 0.5
+NumSources	= &
+@ Source
+@@&			= "Audio/VO/Elite/Male/wander-0.wav"
+@@&			= "Audio/VO/Elite/Male/wander-1.wav"
+@@&			= "Audio/VO/Elite/Male/wander-2.wav"
+@@&			= "Audio/VO/Elite/Male/wander-3.wav"
+@@&			= "Audio/VO/Elite/Male/wander-4.wav"
+@@&			= "Audio/VO/Elite/Male/wander-5.wav"
+@@&			= "Audio/VO/Elite/Male/wander-6.wav"
+@@&			= "Audio/VO/Elite/Male/wander-7.wav"
+
+[VO_Elite_Male_Notice]
+Extends		= "SoundArchetypeBark_Elite"
+Volume		= 0.6
+NumSources	= &
+@ Source
+@@&			= "Audio/VO/Elite/Male/notice-0.wav"
+@@&			= "Audio/VO/Elite/Male/notice-1.wav"
+
+[VO_Elite_Male_Search]
+Extends		= "SoundArchetypeBark_Elite"
+Volume		= 0.7
+NumSources	= &
+@ Source
+@@&			= "Audio/VO/Elite/Male/search-0.wav"
+@@&			= "Audio/VO/Elite/Male/search-1.wav"
+@@&			= "Audio/VO/Elite/Male/search-2.wav"
+
+[VO_Elite_Male_Combat]
+Extends		= "SoundArchetypeBark_Elite"
+Volume		= 0.6
+NumSources	= &
+@ Source
+@@&			= "Audio/VO/Elite/Male/combat-0.wav"
+@@&			= "Audio/VO/Elite/Male/combat-1.wav"
+@@&			= "Audio/VO/Elite/Male/combat-2.wav"
+@@&			= "Audio/VO/Elite/Male/combat-3.wav"
+
+[VO_Elite_Male_Attack]
+Extends		= "SoundArchetypeBark_Elite"
+Volume		= 0.6
+NumSources	= &
+@ Source
+@@&			= "Audio/VO/Elite/Male/attack-0.wav"
+@@&			= "Audio/VO/Elite/Male/attack-1.wav"
+@@&			= "Audio/VO/Elite/Male/attack-2.wav"
+@@&			= "Audio/VO/Elite/Male/attack-3.wav"
+@@&			= "Audio/VO/Elite/Male/attack-4.wav"
+
+[VO_Elite_Male_Damage]
+Extends		= "SoundArchetypeBark_Elite"
+Volume		= 0.6
+NumSources	= &
+@ Source
+@@&			= "Audio/VO/Elite/Male/damage-0.wav"
+@@&			= "Audio/VO/Elite/Male/damage-1.wav"
+@@&			= "Audio/VO/Elite/Male/damage-2.wav"
+@@&			= "Audio/VO/Elite/Male/damage-3.wav"
+
+[VO_Elite_Male_Death]
+Extends		= "SoundArchetypeBark_Elite"
+Volume		= 0.6
+NumSources	= &
+@ Source
+@@&			= "Audio/VO/Elite/Male/death-0.wav"
+@@&			= "Audio/VO/Elite/Male/death-1.wav"
+@@&			= "Audio/VO/Elite/Male/death-2.wav"
+@@&			= "Audio/VO/Elite/Male/death-3.wav"
+
+[VO_Elite_Male_Bamf]
+Extends		= "SoundArchetypeBark_Elite"
+Volume		= 0.6
+NumSources	= &
+@ Source
+@@&			= "Audio/VO/Elite/Male/wander-5.wav"
+@@&			= "Audio/VO/Elite/Male/wander-6.wav"
+@@&			= "Audio/VO/Elite/Male/wander-7.wav"
+
+
+
+# ****************************************************************
+
+[VO_Elite_Female_Wander]
+Extends		= "SoundArchetypeBark_Elite"
+Volume		= 0.5
+NumSources	= &
+@ Source
+@@&			= "Audio/VO/Elite/Female/wander-0.wav"
+@@&			= "Audio/VO/Elite/Female/wander-1.wav"
+@@&			= "Audio/VO/Elite/Female/wander-2.wav"
+@@&			= "Audio/VO/Elite/Female/wander-3.wav"
+@@&			= "Audio/VO/Elite/Female/wander-4.wav"
+@@&			= "Audio/VO/Elite/Female/wander-5.wav"
+@@&			= "Audio/VO/Elite/Female/wander-6.wav"
+@@&			= "Audio/VO/Elite/Female/wander-7.wav"
+@@&			= "Audio/VO/Elite/Female/wander-8.wav"
+
+[VO_Elite_Female_Notice]
+Extends		= "SoundArchetypeBark_Elite"
+Volume		= 0.6
+NumSources	= &
+@ Source
+@@&			= "Audio/VO/Elite/Female/search-0.wav"	# Not a typo! Notice shares search VO
+@@&			= "Audio/VO/Elite/Female/search-1.wav"	# Not a typo! Notice shares search VO
+
+[VO_Elite_Female_Search]
+Extends		= "SoundArchetypeBark_Elite"
+Volume		= 0.7
+NumSources	= &
+@ Source
+@@&			= "Audio/VO/Elite/Female/search-0.wav"
+@@&			= "Audio/VO/Elite/Female/search-1.wav"
+@@&			= "Audio/VO/Elite/Female/search-2.wav"
+
+[VO_Elite_Female_Combat]
+Extends		= "SoundArchetypeBark_Elite"
+Volume		= 0.6
+NumSources	= &
+@ Source
+@@&			= "Audio/VO/Elite/Female/combat-0.wav"
+@@&			= "Audio/VO/Elite/Female/combat-1.wav"
+@@&			= "Audio/VO/Elite/Female/combat-2.wav"
+@@&			= "Audio/VO/Elite/Female/combat-3.wav"
+
+[VO_Elite_Female_Attack]
+Extends		= "SoundArchetypeBark_Elite"
+Volume		= 0.6
+NumSources	= &
+@ Source
+@@&			= "Audio/VO/Elite/Female/attack-0.wav"
+@@&			= "Audio/VO/Elite/Female/attack-1.wav"
+@@&			= "Audio/VO/Elite/Female/attack-2.wav"
+@@&			= "Audio/VO/Elite/Female/attack-3.wav"
+
+[VO_Elite_Female_Damage]
+Extends		= "SoundArchetypeBark_Elite"
+Volume		= 0.6
+NumSources	= &
+@ Source
+@@&			= "Audio/VO/Elite/Female/damage-0.wav"
+@@&			= "Audio/VO/Elite/Female/damage-1.wav"
+@@&			= "Audio/VO/Elite/Female/damage-2.wav"
+@@&			= "Audio/VO/Elite/Female/damage-3.wav"
+
+[VO_Elite_Female_Death]
+Extends		= "SoundArchetypeBark_Elite"
+Volume		= 0.6
+NumSources	= &
+@ Source
+@@&			= "Audio/VO/Elite/Female/death-0.wav"
+@@&			= "Audio/VO/Elite/Female/death-1.wav"
+@@&			= "Audio/VO/Elite/Female/death-2.wav"
+@@&			= "Audio/VO/Elite/Female/death-3.wav"
+
+[VO_Elite_Female_Bamf]
+Extends		= "SoundArchetypeBark_Elite"
+Volume		= 0.6
+NumSources	= &
+@ Source
+@@&			= "Audio/VO/Elite/Female/wander-6.wav"
+@@&			= "Audio/VO/Elite/Female/wander-7.wav"
+@@&			= "Audio/VO/Elite/Female/wander-8.wav"
+
+
+
+# ****************************************************************
+
+[VO_Human_Male_Idle]
+Extends		= "SoundArchetypeBark"
+Volume		= 0.5
+NumSources	= &
+@ Source
+@@&			= "Audio/VO/Human/Male/idle-0.ogg"
+@@&			= "Audio/VO/Human/Male/idle-1.ogg"
+@@&			= "Audio/VO/Human/Male/idle-2.ogg"
+@@&			= "Audio/VO/Human/Male/idle-3.ogg"
+@@&			= "Audio/VO/Human/Male/idle-4.ogg"
+
+[VO_Human_Male_Damage]
+Extends		= "SoundArchetypeBark"
+Volume		= 0.6
+NumSources	= &
+@ Source
+@@&			= "Audio/VO/Human/Male/damage-0.ogg"
+@@&			= "Audio/VO/Human/Male/damage-1.ogg"
+@@&			= "Audio/VO/Human/Male/damage-2.ogg"
+@@&			= "Audio/VO/Human/Male/damage-3.ogg"
+
+[VO_Human_Male_Death]
+Extends		= "SoundArchetypeBark"
+Volume		= 0.6
+NumSources	= &
+@ Source
+@@&			= "Audio/VO/Human/Male/death-0.ogg"
+@@&			= "Audio/VO/Human/Male/death-1.ogg"
+@@&			= "Audio/VO/Human/Male/death-2.ogg"
+@@&			= "Audio/VO/Human/Male/death-3.ogg"
+
+
+
+# ****************************************************************
+
+[VO_Human_Female_Idle]
+Extends		= "SoundArchetypeBark"
+Volume		= 0.5
+NumSources	= &
+@ Source
+@@&			= "Audio/VO/Human/Female/idle-0.ogg"
+@@&			= "Audio/VO/Human/Female/idle-1.ogg"
+@@&			= "Audio/VO/Human/Female/idle-2.ogg"
+@@&			= "Audio/VO/Human/Female/idle-3.ogg"
+@@&			= "Audio/VO/Human/Female/idle-4.ogg"
+
+[VO_Human_Female_Damage]
+Extends		= "SoundArchetypeBark"
+Volume		= 0.6
+NumSources	= &
+@ Source
+@@&			= "Audio/VO/Human/Female/damage-0.ogg"
+@@&			= "Audio/VO/Human/Female/damage-1.ogg"
+@@&			= "Audio/VO/Human/Female/damage-2.ogg"
+@@&			= "Audio/VO/Human/Female/damage-3.ogg"
+@@&			= "Audio/VO/Human/Female/damage-4.ogg"
+@@&			= "Audio/VO/Human/Female/damage-5.ogg"
+
+[VO_Human_Female_Death]
+Extends		= "SoundArchetypeBark"
+Volume		= 0.6
+NumSources	= &
+@ Source
+@@&			= "Audio/VO/Human/Female/death-0.ogg"
+@@&			= "Audio/VO/Human/Female/death-1.ogg"
+@@&			= "Audio/VO/Human/Female/death-2.ogg"
+@@&			= "Audio/VO/Human/Female/death-3.ogg"
+
+
+
+# ****************************************************************
+
+[Music_TitleScreen]
+Extends	= "SoundArchetypeMusic"
+Source	= "Audio/Music/title.ogg"
+Looping	= false
+
+[Music_Ending]
+Extends	= "SoundArchetypeMusic"
+Source	= "Audio/Music/alive.ogg"
+Looping	= false
+Volume	= 0.6
+
+[Music_OldTown_1]
+Extends	= "SoundArchetypeMusic"
+Source	= "Audio/Music/OldTown/1-dark.ogg"
+
+[Music_OldTown_2]
+Extends	= "SoundArchetypeMusic"
+Source	= "Audio/Music/OldTown/2-normal.ogg"
+
+[Music_OldTown_3]
+Extends	= "SoundArchetypeMusic"
+Source	= "Audio/Music/OldTown/4-combat.ogg"
+
+[Music_OldTown_4]
+Extends	= "SoundArchetypeMusic"
+Source	= "Audio/Music/OldTown/8-bigbad.ogg"
+
+[Music_Farmland_1]
+Extends	= "SoundArchetypeMusic"
+Source	= "Audio/Music/Farmland/1-dark.ogg"
+
+[Music_Farmland_2]
+Extends	= "SoundArchetypeMusic"
+Source	= "Audio/Music/Farmland/2-normal.ogg"
+
+[Music_Farmland_3]
+Extends	= "SoundArchetypeMusic"
+Source	= "Audio/Music/Farmland/4-combat.ogg"
+
+[Music_Farmland_4]
+Extends	= "SoundArchetypeMusic"
+Source	= "Audio/Music/Farmland/8-bigbad.ogg"
+
+[Music_Dust_1]
+Extends	= "SoundArchetypeMusic"
+Source	= "Audio/Music/Dust/1-dark.ogg"
+
+[Music_Dust_2]
+Extends	= "SoundArchetypeMusic"
+Source	= "Audio/Music/Dust/2-normal.ogg"
+
+[Music_Dust_3]
+Extends	= "SoundArchetypeMusic"
+Source	= "Audio/Music/Dust/4-combat.ogg"
+
+[Music_Dust_4]
+Extends	= "SoundArchetypeMusic"
+Source	= "Audio/Music/Dust/8-bigbad.ogg"
+
+[Music_Grind_1]
+Extends	= "SoundArchetypeMusic"
+Source	= "Audio/Music/Grind/1-dark.ogg"
+
+[Music_Grind_2]
+Extends	= "SoundArchetypeMusic"
+Source	= "Audio/Music/Grind/2-normal.ogg"
+
+[Music_Grind_3]
+Extends	= "SoundArchetypeMusic"
+Source	= "Audio/Music/Grind/4-combat.ogg"
+
+[Music_Grind_4]
+Extends	= "SoundArchetypeMusic"
+Source	= "Audio/Music/Grind/8-bigbad.ogg"
+
+[Music_Third_1]
+Extends	= "SoundArchetypeMusic"
+Source	= "Audio/Music/Third/1-dark.ogg"
+
+[Music_Third_2]
+Extends	= "SoundArchetypeMusic"
+Source	= "Audio/Music/Third/2-normal.ogg"
+
+[Music_Third_3]
+Extends	= "SoundArchetypeMusic"
+Source	= "Audio/Music/Third/4-combat.ogg"
+
+[Music_Third_4]
+Extends	= "SoundArchetypeMusic"
+Source	= "Audio/Music/Third/8-bigbad.ogg"
+
+[Music_Hub_Act1]
+Extends		= "SoundArchetypeMusic_Hub"
+NumSources	= &
+@ Source
+@@&			= "Audio/Music/Hub/Act1/chordy.ogg"
+@@&			= "Audio/Music/Hub/Act1/miles-from-selleck.ogg"
+@@&			= "Audio/Music/Hub/Act1/the-burial-of-atland.ogg"
+@@&			= "Audio/Music/Hub/Act1/the-cremation-of-lakenheath.ogg"
+
+[Music_Hub_Act2]
+Extends		= "SoundArchetypeMusic_Hub"
+NumSources	= &
+@ Source
+@@&			= "Audio/Music/Hub/Act2/endless-summers-are-dying.ogg"
+@@&			= "Audio/Music/Hub/Act2/exit-stage-left.ogg"
+@@&			= "Audio/Music/Hub/Act2/moar-chords.ogg"
+@@&			= "Audio/Music/Hub/Act2/the-cremation-of-lakenheath-reprise.ogg"
+
+[Music_Hub_Act3]
+Extends		= "SoundArchetypeMusic_Hub"
+NumSources	= &
+@ Source
+@@&			= "Audio/Music/Hub/Act3/48th-and-desperation.ogg"
+@@&			= "Audio/Music/Hub/Act3/roll-on-killer.ogg"
+@@&			= "Audio/Music/Hub/Act3/until-the-sun-goes-dark.ogg"
+
+[Music_Zeta_1]
+Extends	= "SoundArchetypeMusic"
+Source	= "Audio/Music/Zeta/1-stealth.ogg"
+Volume	= 0.5
+
+[Music_Zeta_2]
+Extends	= "SoundArchetypeMusic"
+Source	= "Audio/Music/Zeta/2-combat.ogg"
+Volume	= 0.75
+
+
+
+# ****************************************************************
+
+[Ambience_Streets]
+Extends	= "SoundArchetypeAmbience"
+Source	= "Audio/Ambience/streets.ogg"
+Volume	= 0.10
+
+[Ambience_RoomLight]
+Extends	= "SoundArchetypeAmbience"
+Source	= "Audio/Ambience/room-light.ogg"
+Volume	= 0.01
+
+[Ambience_Crickets]
+Extends	= "SoundArchetypeAmbience"
+Source	= "Audio/Ambience/crickets.ogg"
+Volume	= 0.02	# Quieter because this is used for dark levels at the moment
+
+[Ambience_CricketsWind]
+Extends	= "SoundArchetypeAmbience"
+Source	= "Audio/Ambience/crickets-wind.ogg"
+Volume	= 0.10
+
+[Ambience_Cave]
+Extends	= "SoundArchetypeAmbience"
+Source	= "Audio/Ambience/cave.ogg"
+Volume	= 0.10

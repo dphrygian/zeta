@@ -1,0 +1,196 @@
+[]
+NumSubstitutes = &
+@ Substitute
+@@&	= "m_LMB"
+@@&	= "m_MMB"
+@@&	= "m_RMB"
+@@&	= "m_wUp"
+@@&	= "m_wDn"
+@@&	= "Glyph_ObjIncomplete"
+@@&	= "Glyph_ObjSucceeded"
+@@&	= "Glyph_ObjFailed"
+@@&	= "Glyph_Notification"
+@@& = "ps_X"
+@@& = "ps_Circle"
+@@& = "ps_Square"
+@@& = "ps_Triangle"
+@@& = "ps_Up"
+@@& = "ps_Down"
+@@& = "ps_Left"
+@@& = "ps_Right"
+@@& = "ps_L2"
+@@& = "ps_R2"
+@@& = "ps_L1"
+@@& = "ps_R1"
+@@& = "ps_LS"
+@@& = "ps_RS"
+@@& = "x_A"
+@@& = "x_B"
+@@& = "x_X"
+@@& = "x_Y"
+@@& = "x_DP_Up"
+@@& = "x_DP_Down"
+@@& = "x_DP_Left"
+@@& = "x_DP_Right"
+@@& = "x_Trigger_Left"
+@@& = "x_Trigger_Right"
+@@& = "x_Bumper_Left"
+@@& = "x_Bumper_Right"
+@@& = "x_Thumbstick_Left"
+@@& = "x_Thumbstick_Right"
+
+
+
+[m_LMB]
+CodePoint		= "U+E0DC"
+Image			= "Fonts/Glyphs/48/Mouse/lmb.tga"
+
+[m_MMB]
+CodePoint		= "U+E0DD"
+Image			= "Fonts/Glyphs/48/Mouse/mmb.tga"
+
+[m_RMB]
+CodePoint		= "U+E0DE"
+Image			= "Fonts/Glyphs/48/Mouse/rmb.tga"
+
+[m_wUp]
+CodePoint		= "U+E0DF"
+Image			= "Fonts/Glyphs/48/Mouse/wup.tga"
+
+[m_wDn]
+CodePoint		= "U+E0E0"
+Image			= "Fonts/Glyphs/48/Mouse/wdn.tga"
+
+
+
+[Glyph_ObjIncomplete]
+CodePoint		= "U+E0E1"
+Image			= "Fonts/Glyphs/48/Objectives/incomplete.tga"
+
+[Glyph_ObjSucceeded]
+CodePoint		= "U+E0E2"
+Image			= "Fonts/Glyphs/48/Objectives/succeeded.tga"
+
+[Glyph_ObjFailed]
+CodePoint		= "U+E0E3"
+Image			= "Fonts/Glyphs/48/Objectives/failed.tga"
+
+[Glyph_Notification]
+CodePoint		= "U+E0DB"
+Image			= "Fonts/Glyphs/48/notification.tga"
+
+
+
+[ps_X]
+CodePoint		= "U+E0E4"
+Image			= "Fonts/Glyphs/48/PS4/cross.tga"
+
+[ps_Circle]
+CodePoint		= "U+E0E5"
+Image			= "Fonts/Glyphs/48/PS4/circle.tga"
+
+[ps_Square]
+CodePoint		= "U+E0E6"
+Image			= "Fonts/Glyphs/48/PS4/square.tga"
+
+[ps_Triangle]
+CodePoint		= "U+E0E7"
+Image			= "Fonts/Glyphs/48/PS4/triangle.tga"
+
+[ps_Up]
+CodePoint		= "U+E0E8"
+Image			= "Fonts/Glyphs/48/PS4/d-up.tga"
+
+[ps_Down]
+CodePoint		= "U+E0E9"
+Image			= "Fonts/Glyphs/48/PS4/d-down.tga"
+
+[ps_Left]
+CodePoint		= "U+E0EA"
+Image			= "Fonts/Glyphs/48/PS4/d-left.tga"
+
+[ps_Right]
+CodePoint		= "U+E0EB"
+Image			= "Fonts/Glyphs/48/PS4/d-right.tga"
+
+[ps_L2]
+CodePoint		= "U+E0EC"
+Image			= "Fonts/Glyphs/48/PS4/l2.tga"
+
+[ps_R2]
+CodePoint		= "U+E0ED"
+Image			= "Fonts/Glyphs/48/PS4/r2.tga"
+
+[ps_L1]
+CodePoint		= "U+E0EE"
+Image			= "Fonts/Glyphs/48/PS4/l1.tga"
+
+[ps_R1]
+CodePoint		= "U+E0EF"
+Image			= "Fonts/Glyphs/48/PS4/r1.tga"
+
+[ps_LS]
+CodePoint		= "U+E0F0"
+Image			= "Fonts/Glyphs/48/PS4/ls.tga"
+
+[ps_RS]
+CodePoint		= "U+E0F1"
+Image			= "Fonts/Glyphs/48/PS4/rs.tga"
+
+
+
+[x_A]
+CodePoint		= "U+E0F2"
+Image			= "Fonts/Glyphs/48/XB1/a.tga"
+
+[x_B]
+CodePoint		= "U+E0F3"
+Image			= "Fonts/Glyphs/48/XB1/b.tga"
+
+[x_X]
+CodePoint		= "U+E0F4"
+Image			= "Fonts/Glyphs/48/XB1/x.tga"
+
+[x_Y]
+CodePoint		= "U+E0F5"
+Image			= "Fonts/Glyphs/48/XB1/y.tga"
+
+[x_DP_Up]
+CodePoint		= "U+E0F6"
+Image			= "Fonts/Glyphs/48/XB1/d-up.tga"
+
+[x_DP_Down]
+CodePoint		= "U+E0F7"
+Image			= "Fonts/Glyphs/48/XB1/d-down.tga"
+
+[x_DP_Left]
+CodePoint		= "U+E0F8"
+Image			= "Fonts/Glyphs/48/XB1/d-left.tga"
+
+[x_DP_Right]
+CodePoint		= "U+E0F9"
+Image			= "Fonts/Glyphs/48/XB1/d-right.tga"
+
+[x_Trigger_Left]
+CodePoint		= "U+E0FA"
+Image			= "Fonts/Glyphs/48/XB1/lt.tga"
+
+[x_Trigger_Right]
+CodePoint		= "U+E0FB"
+Image			= "Fonts/Glyphs/48/XB1/rt.tga"
+
+[x_Bumper_Left]
+CodePoint		= "U+E0FC"
+Image			= "Fonts/Glyphs/48/XB1/lb.tga"
+
+[x_Bumper_Right]
+CodePoint		= "U+E0FD"
+Image			= "Fonts/Glyphs/48/XB1/rb.tga"
+
+[x_Thumbstick_Left]
+CodePoint		= "U+E0FE"
+Image			= "Fonts/Glyphs/48/XB1/ls.tga"
+
+[x_Thumbstick_Right]
+CodePoint		= "U+E0FF"
+Image			= "Fonts/Glyphs/48/XB1/rs.tga"

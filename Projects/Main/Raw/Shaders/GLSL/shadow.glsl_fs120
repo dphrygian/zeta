@@ -1,0 +1,19 @@
+#version 120
+
+uniform vec4	ViewPosition;
+uniform vec4	ClipPlanes;
+
+vec4 GetShadowDistance( vec4 PositionWS )
+{
+	vec3	ViewToPos		= PositionWS.xyz - ViewPosition.xyz;
+	float	ShadowDistance	= ClipPlanes.w * length( ViewToPos );
+
+	return vec4( ShadowDistance, ShadowDistance, ShadowDistance, ShadowDistance );
+}
+
+varying vec4	PassPositionWS;
+
+void main()
+{
+	gl_FragColor = GetShadowDistance( PassPositionWS );
+}

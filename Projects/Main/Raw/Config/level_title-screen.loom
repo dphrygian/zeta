@@ -1,0 +1,112 @@
+# ******************************** HACKHACK ********************************
+
+[RosaIntro]
+ColorGrading = "Textures/Post/color-grading-default.tga"
+
+# ******************************** Tools ********************************
+
+[RosaTools_AppendSpawnerCategories]
+Level_TitleScreen	= "SpawnerCategory_Level_TitleScreen"
+
+[SpawnerCategory_Level_TitleScreen]
+NumSpawnerDefs = &
+@ SpawnerDef
+@@&	= "Spawner_Player_TitleScreen"
+@@&	= "Spawner_CameraMarker_TitleScreen"
+@@&	= "Spawner_Script_TitleScreen_Intro"
+
+[RosaTools_AppendGeoCategories]
+Level_TitleScreen	= "GeoCategory_Level_TitleScreen"
+
+[GeoCategory_Level_TitleScreen]
+NumGeoDefs = &
+@ GeoDef
+
+# ******************************** World def ********************************
+
+[Level_TitleScreen]
+IsHub		= true
+WorldDef	= "WorldDef_TitleScreen"
+Name		= "Level_TitleScreen"
+
+[WorldDef_TitleScreen]
+WorldGenDef	= "WorldGenDef_TitleScreen"
+SkyDef		= "Sky_Zeta"
+WindDef		= "Wind_Zeta"
+FogDef		= "Fog_Zeta"
+BloomDef	= "Bloom_Default"
+PostDef		= "Post_Zeta"
+Reverb		= "Reverb_RosaMedium"
+Cubemap		= "Cubemap_Zeta"
+IrradianceDef		= "Irradiance_Zeta_Cool"
+Music		= "Music_TitleScreen"
+Ambience	= "Ambience_Streets"
+
+[Music_TitleScreen]
+# Probably no music
+
+[WorldGenDef_TitleScreen]
+FixedRoom = "Rooms/title-screen.rrm"
+
+# ******************************** Player ********************************
+
+[Spawner_Player_TitleScreen]
+Extends		= "Spawner_Player"
+Entity		= "Player_TitleScreen"
+
+[Player_TitleScreen]
+Extends			= "Player"
+RosaTransform	= "Player_TitleScreen_Transform"
+RosaPlayer		= "Player_TitleScreen_Player"
+RosaInventory	= "Player_TitleScreen_Inventory"
+RosaFootsteps	= ""
+
+	[Player_TitleScreen_Transform]
+	Extends	= "Player_Transform"
+	UseGravity	= false
+
+	[Player_TitleScreen_Player]
+	Extends		= "Player_Player"
+	DeferMusic	= true
+
+	[Player_TitleScreen_Inventory]
+	Extends				= "Player_Inventory"
+	NumInitialItemSets	= 0
+	NumInitialItems		= 0	# No items, not even hands!
+
+[Spawner_CameraMarker_TitleScreen]
+Entity	= "CameraMarker_TitleScreen"
+
+[CameraMarker_TitleScreen]
+ShouldDebugCheckSpawnClearance	= false
+RosaTransform	= "ImmobileTransform"
+Label			= "."
+
+[Spawner_Script_TitleScreen_Intro]
+Entity	= "Script_TitleScreen_Intro"
+
+[Script_TitleScreen_Intro]
+Reactions	= "Script_TitleScreen_Intro_Reactions"
+
+	[Script_TitleScreen_Intro_Reactions]
+	NumObserveEvents	= &
+	@ ObserveEvent
+	@@&					= "OnIntroStarted"
+	@@&					= "OnIntroSkipped"
+	lmReactions
+	{
+		Reaction( Rule( "OnIntroStarted" ) )
+		{
+			SendEvent( "PlayMusic", "PlayerPE", DispatchDelay = 2.0, TrackBits = ConstantInt( 0x1 ) )
+		}
+		
+		Reaction( Rule( "OnIntroSkipped" ) )
+		{
+			SendEvent( "PlayMusicAndAmbience", "PlayerPE", TrackBits = ConstantInt( 0x1 ) )
+		}
+	}
+
+# ******************************** Strings ********************************
+
+[English]
+Level_TitleScreen	= "*THIS STRING SHOULD NOT BE SEEN IN GAME*"

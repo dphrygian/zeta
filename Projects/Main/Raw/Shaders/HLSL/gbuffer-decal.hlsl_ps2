@@ -1,0 +1,62 @@
+#include "common.hlsl_psh"
+
+row_major float4x4	NormalBasis;
+float4				DecalAlpha;
+
+sampler AlbedoSampler	: register(s0);
+sampler NormalSampler	: register(s1);
+sampler SpecSampler		: register(s2);
+sampler	DepthSampler	: register(s3);
+
+struct PS_INPUT 
+{
+	float4 VPos : TEXCOORD0;
+};
+
+struct PS_OUTPUT
+{
+	float4	Normal	: COLOR0;
+	float4	Albedo	: COLOR1;
+};
+
+PS_OUTPUT Main( PS_INPUT In )
+{
+	PS_OUTPUT Out;
+
+	// Fix VPos
+	const float2	NormVPos	= In.VPos.xy / In.VPos.w;
+
+	const float		Depth		= tex2D( DepthSampler, NormVPos ).r;
+	const float4	WSPos		= GetWSPos( NormVPos, Depth );
+	const float4	OSPos		= mul( WSPos, InvWorldMatrix );
+	
+	// Discard fragments outside unit box
+	const float3	AbsOSPos	= abs( OSPos.xyz );
+	clip( 0.5f - AbsOSPos );
+
+	// Get UV from box space, projecting along Y+
+	const float2	DecalUV		= ( OSPos.xz * float2( 1.0f, -1.0f ) ) + 0.5f;
+
+	// Discard alpha tested fragments
+	const float4	Albedo		= SampleSRGBToLinear( AlbedoSampler, DecalUV );
+	const float		YAlpha		= saturate( 2.0f - 4.0 * AbsOSPos.y ); // Fall off linearly from halfway of either side of the unit depth
+	clip( Albedo.a + YAlpha + DecalAlpha.x - 2.1f );	// Or clip( Albedo.a - ( 1.0f - DecalAlpha.x ) - ( 1.0f - ZAlpha ) - 0.1f ), where the 0.1f is the actual clip threshold
+
+	// Swizzle and scale to match projection along Y+
+	const float3	NormalMapTS	= SampleNormal( NormalSampler, DecalUV ).xzy * float3( 1.0f, -1.0f, -1.0f );
+	const float3	NormalMapWS	= mul( float4( NormalMapTS, 0.0f ), NormalBasis ).xyz;
+
+	const float4	SpecMap		= tex2D( SpecSampler, DecalUV );
+	const float2	ReflSmooth	= Pack( float2( SpecMap.r, SpecMap.g * SpecMap.g ) );	// Square for perceptually linear smoothness. ROSAHACK: Pack because we need these to be non-zero for multiplying with sign bits.
+	const float		Emissive	= Pack( SpecMap.b );									// Pack for multiplying with skin bit
+	const float		Dielectric	= SpecMap.a * 2.0f - 1.0f;								// ROSANOTE: Dielectric/metal is binary. -1 if metal, 1 if dielectric.
+
+	const float		NormalZSign	= NonZeroSign( NormalMapWS.z );
+	const float4	NormalPack	= float4( GetStereographicProjection( NormalMapWS ), NormalZSign * ReflSmooth.y, Dielectric * ReflSmooth.x ) * 0.5f + 0.5f;
+	const float4	AlbedoPack	= float4( Albedo.rgb, Emissive * 0.5f + 0.5f );	// Emissive also stores skin bit (-1 if skin, 1 if not skin; this shader never emits skin)
+
+	Out.Normal	= NormalPack;
+	Out.Albedo	= AlbedoPack;
+	
+	return Out;
+}

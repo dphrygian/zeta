@@ -1,0 +1,77 @@
+#version 120
+
+uniform vec4 SunVector;		// Used as vec3
+uniform vec4 SkyColorHi;
+uniform vec4 SkyColorLo;
+
+varying vec3	PassPositionPass;
+
+vec4 HSVtoRGB( vec4 ColorHSV )
+{
+	vec4 ColorRGB = ColorHSV;
+
+	float Hue		= fract( ColorHSV.x );
+	float Chroma	= ColorHSV.z * ColorHSV.y;
+	float MinValue	= ColorHSV.z - Chroma;
+	float MidValue	= MinValue + Chroma * ( 1.0f - abs( 2.0f * fract( Hue * 3.0f ) - 1.0f ) );
+	float MaxValue	= ColorHSV.z;
+
+	Hue = Hue * 6.0f;
+	if( Hue < 1.0f )
+	{
+		ColorRGB.r = MaxValue;
+		ColorRGB.g = MidValue;
+		ColorRGB.b = MinValue;
+	}
+	else if( Hue < 2.0f )
+	{
+		ColorRGB.r = MidValue;
+		ColorRGB.g = MaxValue;
+		ColorRGB.b = MinValue;
+	}
+	else if( Hue < 3.0f )
+	{
+		ColorRGB.r = MinValue;
+		ColorRGB.g = MaxValue;
+		ColorRGB.b = MidValue;
+	}
+	else if( Hue < 4.0f )
+	{
+		ColorRGB.r = MinValue;
+		ColorRGB.g = MidValue;
+		ColorRGB.b = MaxValue;
+	}
+	else if( Hue < 5.0f )
+	{
+		ColorRGB.r = MidValue;
+		ColorRGB.g = MinValue;
+		ColorRGB.b = MaxValue;
+	}
+	else
+	{
+		ColorRGB.r = MaxValue;
+		ColorRGB.g = MinValue;
+		ColorRGB.b = MidValue;
+	}
+
+	return ColorRGB;
+}
+
+float NonZeroSign( float x )
+{
+	return ( step( 0.0f, x ) * 2.0f ) - 1.0f;
+}
+
+float Pack( float Unpacked )
+{
+	return ( Unpacked * 0.9375f ) + 0.0625f;
+}
+
+void main()
+{
+	float	SunValue	= 0.5f * ( 1.0f + dot( normalize( PassPositionPass ), SunVector.xyz ) );
+	float	T			= SunValue * SunValue;
+	vec4	SkyHSV		= mix( SkyColorLo, SkyColorHi, T );
+	vec4	SkyRGB		= HSVtoRGB( SkyHSV );
+	gl_FragColor = SkyRGB;
+}

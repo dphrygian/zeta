@@ -1,0 +1,41 @@
+#version 120
+
+uniform vec4	BloomStepRadius;	// Set from code, used as vec2
+
+vec2 FixUV( vec2 UV )
+{
+	return vec2( UV.x, 1.0f - UV.y );
+}
+
+uniform sampler2D Texture0;	// Sampler
+uniform sampler2D Texture1;	// KernelSampler
+uniform sampler2D Texture2;	// LowerSampler
+
+varying vec2	PassUV;
+
+void main()
+{
+	vec2	FixedUV		= FixUV( PassUV );
+	vec4	LowerColor	= texture2D( Texture2, FixedUV );
+
+	vec4	Color		= texture2D( Texture0, FixedUV );
+	vec4	WeightSum	= vec4( 1.0f, 1.0f, 1.0f, 1.0f );
+
+	// 16 more taps (8 in each direction)
+	float Scalar		= 0.111111f;	// 1/9
+	for( int i = 1; i < 9; ++i )
+	{
+		vec2	Step	= vec2( i );
+		vec4	Weight	= texture2D( Texture1, Scalar * Step );
+		vec2	Offset	= Step * BloomStepRadius.xy;
+
+		Color += Weight * texture2D( Texture0, FixUV( PassUV + Offset ) );
+		Color += Weight * texture2D( Texture0, FixUV( PassUV - Offset ) );
+
+		WeightSum += 2.0f * Weight;
+	}
+
+	Color /= WeightSum;
+	
+	gl_FragColor = LowerColor + Color;
+}

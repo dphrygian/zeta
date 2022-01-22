@@ -1,0 +1,980 @@
+# Defaults for components
+[WBComponent]
+ShouldDebugRender = true
+
+[StatMod]
+# Changing this for Zeta, it used to default to false
+Serialize = true
+
+[RosaTransform]
+Gravity = 32.0
+
+[ImmobileTransform]
+CanMove	= false
+
+[RosaCollision]
+FrictionTargetTime					= 0.4
+FrictionTargetPercentVelocity		= 0.01
+AirFrictionTargetTime				= 4.0
+AirFrictionTargetPercentVelocity	= 0.01
+
+[RosaRagdoll]
+MinRagdollCollisionEventSpeed	= 1.0
+
+[RosaMesh]
+HighlightInterpTime	= 0.2
+CullDistance		= 0.0
+
+[RosaLight]
+# Light importance score now factors luma, so these have been adjusted from Vamp
+# DLP 12 Oct 2021: I doubled these to try to reduce some shadow-casting light costs.
+ImportanceThresholdLo	= 0.010	# Threshold of light importance score (AABB XY area divided by distance-squared); at or below this score, light is not drawn
+ImportanceThresholdHi	= 0.020	# Threshold of light importance score; at or above this score, light is fully bright (smaller number means visible at a greater distance)
+
+[RosaAntiLight]
+ImportanceThresholdLo	= 0.002	# Threshold of light importance score (AABB XY area divided by distance-squared); at or below this score, light is not drawn
+ImportanceThresholdHi	= 0.004	# Threshold of light importance score; at or above this score, light is fully bright (smaller number means visible at a greater distance)
+
+[RosaParticles]
+CullDistance	= 40.0
+
+[RosaFrobbable]
+HighlightHD	= 30.0
+HighlightS	= 0.50
+HighlightV	= 1.00
+HighlightA	= 0.10	# Additive emissive (automatically scaled based on current exposure)
+
+[RosaSign]
+ReadDistance = 5.0
+
+[RosaMinimap]
+# RosaFramework properties
+MinimapViewHeight		= 1.0	# Offset from actual location, used in conjunction with near/far clip to show current floor (NOTE: this used to be a constant, its meaning has changed!)
+MinimapViewOffset		= 0.5	# Scalar on view half-extent; 0.5 means the player is 50% between center and lower edge, or 75% down the map (same as VanishingPointY in POV)
+MinimapViewNearClip		= 0.1	# Near clip plane; could be smaller, doesn't really matter
+MinimapViewFarClip		= 8.5	# Far clip plane
+MaximapViewOffset		= 0.0	# Scalar on view half-extent; 0.5 means the player is 50% between center and lower edge, or 75% down the map (same as VanishingPointY in POV)
+# WBCompRosaCamera properties
+MinimapViewExtentNear	= 25.0	# Visible region of map when standing still (shared with RosaFramework for initialization)
+MinimapViewExtentFar	= 40.0	# Visible region of map when sprinting
+MinimapViewLerpTime		= 0.8	# Time to switch near/far extents
+MaximapViewExtentNear	= 80.0	# Visible region of map when standing still (shared with RosaFramework for initialization)
+MaximapViewExtentFar	= 128.0	# Visible region of map when sprinting (HACKHACK: because of map marker mesh scale hack, this must be the same multiple of near extent as the minimap uses)
+# RosaGame properties
+MinimapHeightThreshold	= 1.25	# Height difference required to apply an edge between walkable regions in minimap
+MinimapHeightOffset		= -0.8	# Offset applied to player height before scaling and applying sigmoid curve (NOTE: I tried using player foot position so it'd be consistent when crouching, but this is fine since the clip planes also move with crouching)
+MinimapHeightDiffScale	= 1.5	# Scale the vertical distance from player foot height by this factor before applying sigmoid curve for tonemapping
+MinimapHeightToneScale	= 0.25	# Scale the sigmoid curve (normally in the range -/+1) by this factor for rendering
+MinimapRenderEdges		= true	# As described
+MinimapTileSize			= 16.0	# One map texture covers this many meters of real space on the minimap
+
+[RosaFactions]
+lmFactionCons
+{
+	FactionCon( "Player",	"Robot",	"Hostile" )
+
+	FactionCon( "Robot",	"Player",	"Hostile" )
+}
+
+# ROSANOTE: Rule of thumb here is that volume delta is 60% of radius delta
+[RosaSurfaces]
+lmArray( Surface )
+{
+	( "",				Sound = "FootSoftWoodSound" )	// Null string, or default
+	( "NULL",			Sound = "FootSoftWoodSound" )	// HACKHACK: Explicit for null/invisible materials
+	( "Concrete",		Sound = "FootCleanCementSound" )
+	// Brick/Rock/Asphalt/Stone are just pseudonyms for Concrete
+	( "Brick",			Sound = "FootCleanCementSound" )
+	( "Asphalt",		Sound = "FootCleanCementSound" )
+	( "Rock",			Sound = "FootCleanCementSound" )
+	( "Stone",			Sound = "FootCleanCementSound" )
+	( "Carpet",			Sound = "FootCarpetSound",			RadiusScalar = 0.333,	VolumeScalar = 0.6 )
+	( "Wood",			Sound = "FootSoftWoodSound",		RadiusScalar = 0.5,		VolumeScalar = 0.8 )
+	( "Metal",			Sound = "FootDampenedMetalSound",	RadiusScalar = 1.5,		VolumeScalar = 1.3 )
+	( "Grass",			Sound = "FootGrassSound",			RadiusScalar = 0.333,	VolumeScalar = 0.6 )
+	( "WetConcrete",	Sound = "FootWetCementSound" )
+	( "Mud",			Sound = "FootMudSound",				RadiusScalar = 1.25,	VolumeScalar = 1.15 )
+	// Pseudonym for Mud
+	( "Water",			Sound = "FootMudSound",				RadiusScalar = 1.25,	VolumeScalar = 1.15 )
+}
+
+[RosaPlayer_DebugSpawner]
+lmArray( Entity, NumEntities )
+{
+	( "Robot_Melee",			N = 0.39 )
+	( "Robot_Ranged",			N = 0.39 )
+	( "CEO",					N = 0.39 )
+	( "Cabinet",				N = 0.75 )
+	( "TESTSphere",				N = 0.5 )
+	( "TESTSphereMetal",		N = 0.5 )
+	( "TESTCrate",				N = 0.5 )
+	( "TESTCollidable",			N = 0.5 )
+	( "TESTLightCone",			N = 0.5 )
+	( "TESTLightSphere",		N = 0.5 )
+	( "TESTLightSphereLow",		N = 0.5 )
+	( "TESTLightSphereShadows",	N = 0.5 )
+	( "TESTLightSphereFog",		N = 1.0 )
+	( "TESTFogBox",				N = 1.0 )
+	( "TESTFogSphere",			N = 1.0 )
+	( "TESTFogSphere_Blue",		N = 1.0 )
+}
+
+[Player_WithFlashlight]
+Extends			= "Player"
+RosaInventory	= "Player_WithFlashlight_Inventory"
+
+	[Player_WithFlashlight_Inventory]
+	Extends			= "Player_Inventory"
+	lmArray( InitialItem )
+	{
+		( "Flashlight" )
+	}
+
+[Player_Invulnerable]
+Extends		= "Player"
+RosaHealth	= "Player_Invulnerable_Health"
+
+	[Player_Invulnerable_Health]
+	Extends			= "Player_Health"
+	Invulnerable	= true
+
+[Player]
+#ShouldDebugRender	= true
+RosaTransform		= "Player_Transform"
+RosaPlayer			= "Player_Player"
+RosaCollision		= "Player_Collision"
+RosaRepulsor		= "Player_Repulsor"
+RosaHealth			= "Player_Health"
+RosaWallet			= "Player_Wallet"
+RosaAmmoBag			= "Player_AmmoBag"
+RosaKeyRing			= "Player_KeyRing"
+RosaMedkit			= "Player_Medkit"
+RosaCamera			= "Player_Camera"
+RosaFrobber			= "Player_Frobber"
+RosaSignReader		= "."
+RosaInventory		= "Player_Inventory"
+RosaHands			= "Player_Hands"
+RosaMapMarker		= "Player_MapMarker"
+RosaDamageEffects	= "Player_DamageEffects"
+RosaCharacter		= "Player_Character"
+RosaCharacterConfig	= "."
+RosaVisible			= "."
+RosaFaction			= "Player_Faction"
+RosaFootsteps		= "Player_Footsteps"
+RosaSound			= "."
+RosaParticles		= "."
+RosaObjectives		= "."
+RosaLootTable		= "Player_LootTable"
+RosaUpgrades		= "Player_Upgrades"
+#RosaSpawnManager	= "Player_SpawnManager"
+RosaRespawner		= "."
+Reactions			= "Player_Reactions"
+StatMod				= "Player_StatMod"
+PEMap				= "Player_PEMap"
+VariableMap			= "."
+
+	[Player_Transform]
+	UseGravity	= true
+	SpeedLimit	= 4.0
+
+	[Player_Player]
+	InitialMusicTrackBits	= 0x1		# Play first channel only
+	RollingAutosaveDelay	= 30.0
+	RetryAutosaveDelay		= 5.0
+	UnlandedForceFootstepWindow	= 0.2
+	UnlandedJumpWindow		= 0.2
+	UnlandedLeanWindow		= 0.2
+	LandAcceleration		= 24.0
+	AirAcceleration			= 12.0
+	TurnSpeed				= 0.5
+	BackpedalScalar			= 0.6
+	JumpHeight				= 1.5	# 1.5625 would correspond to the old JumpImpulse=10 (based on v0 = sqrt(-2gh)); brought down slightly to prevent the exploit of crouching at apex to mantel onto 3m walls
+	DoubleJumpHeight		= 1.5	# No longer a scalar, actual second jump height
+	PowerJumpRatio			= 0.5	# Ratio of forward impulse to up impulse when jumping out of a power slide; 0.5 is a 60 degree jump
+	PushToSprint			= true
+	UncrouchOnSprint		= true
+	SprintFOVScale			= 1.10
+	SprintFOVTime			= 0.25
+	StandExtentsZ			= 0.8
+	CrouchExtentsZ			= 0.45
+	StandViewOffsetZ		= 0.6375
+	CrouchViewOffsetZ		= 0.3625	# Puts camera at 0.8125 above ground
+	CrouchViewInterpTime	= 0.085
+	PowerSlideDuration		= 0.75
+	PowerSlideInputContext	= "Context_PowerSlide"
+	PowerSlideReqVelocity	= 2.5
+	PowerSlideRoll				= 8.0
+	PowerSlideRollInterpTime	= 0.10
+	DragInputContext		= "Context_Drag"
+	DragDropOffsetZ			= 0.25
+	DragDropOrientationYaw	= -60.0
+	DragDropSpawnImpulse	= 4.0
+	DragDropSpawnImpulseZ	= 2.0	# Added to 2D impulse direction before renormalizing
+	ClimbInputContext		= "Context_Climb"
+	ClimbOffImpulse			= 3.0
+	ClimbFacingBiasAngle	= 25.0
+	ClimbFacingBiasScale	= 2.0
+	MantleVelocity			= 4.0
+	MantleInputContext		= "Context_Mantle"
+	AutoAimMaxTurn			= 12.0	# In degrees per second
+	
+	# View bob and sway
+	UnlandedViewBobWindow			= 0.1
+	MaxViewBobOffsetX				= 0.1
+	MaxViewBobOffsetY				= 0.05
+	MaxViewBobOffsetZ				= -0.3
+	MaxViewBobAngleOffsetRoll		= 1.0
+	MaxViewBobAngleOffsetYaw		= 0.5
+	ViewBobAngleExponent			= 4.0
+	ViewBobInterpolateTime			= 0.1	# Interpolator is constantly reset to this duration, creates an ease-out over infinite time
+	MaxViewSwayOffsetX				= 0.005
+	MaxViewSwayOffsetY				= 0.005
+	MaxViewSwayOffsetZ				= 0.005
+	MaxViewSwayAngleOffsetPitch		= 0.1
+	MaxViewSwayAngleOffsetRoll		= 0.05
+	MaxViewSwayAngleOffsetYaw		= 0.1
+	ViewSwayInterpolateTime			= 0.5
+	ViewSwayNoiseOctaves			= 2
+	ViewSwayNoiseScalarsX			= 0.3
+	ViewSwayNoiseScalarsY			= 0.5
+	ViewSwayNoiseScalarsZ			= 0.2
+	ViewSwayNoiseAngleScalarsPitch	= 0.25
+	ViewSwayNoiseAngleScalarsRoll	= 0.15
+	ViewSwayNoiseAngleScalarsYaw	= 0.35
+	
+	# Default kick spring damper, overridden by weapons
+	KickSpringK	= 200.0
+	KickDamperC	= 20.0
+
+	# Spring params for view hands velocity (see also HandsVelocityFactor; that controls the offset amount, this controls the smoothing to that amount)
+	# This can be easily disabled if I end up not caring for it, by taking EVM_HandsVelocity out of EVM_All_Hands.
+	ViewHandsSpringK	= 300.0
+	ViewHandsDamperC	= 30.0
+
+	[Player_Footsteps]
+	FootstepStride = 1.2	# Base stride, can be stat modded
+
+	[Player_Collision]
+	HalfExtentsXY	= 0.3
+	HalfExtentsZ	= 0.8
+	BlocksTrace		= true
+	BlocksEntities	= true
+	StandOnSlopes	= true
+	MaxStepHeight	= 0.55	# Enough to clear a 1/2m obstacle (up from 0.4 (or 3/8m) in Vamp)
+
+	[Player_Repulsor]
+	Radius	= 0.5
+
+	[Player_Health]
+	Health					= 100
+	PublishToHUD			= true
+	HidePickupScreenDelay	= 2.0
+	DamageTimeout			= 0.5
+	SaveThreshold			= 5
+
+	[Player_Wallet]
+	Limit	= 999999
+
+	[Player_AmmoBag]
+	HidePickupScreenDelay	= 2.0	# Bringing back the Eldritch style pickup screen!
+	lmArray( AmmoType )
+	{
+		( "AmmoType_Lasergun" )
+	}
+
+		[AmmoType_Lasergun]
+		UnitPrice	= 2
+		BundleSize	= 5
+		Limit		= 12
+
+	[Player_KeyRing]
+	ShowKeycardUsedLog	= true
+
+	[Player_Medkit]
+	MaxBandages	= 2
+
+	[Player_Camera]
+	ViewOffsetZ		= 0.6375	# (Overridden by player component, but HACKHACK mirrored here as a reference height for HandsZFactor)
+	LeanVelocity	= 25.0		# Roll velocity in degrees per second
+	LeanRollMax		= 4.0		# Maximum roll in either direction.
+	LeanRadius		= 10.0		# Like a fretboard radius. Implicitly controls lean offset relative to angle.
+	LeanExtent		= 0.2		# Adds some volume around the camera so you can't lean right up to walls. Should be less than collision bounds!
+	StrafeRollVelocity	= 10.0
+	StrafeRollMax		= 1.5
+	HandsFactor		= 0.95		# Scalar on bob/sway for hands, gives them some motion
+	HandsLeanFactor	= 0.98		# Separate scalar on lean, reusing HandsFactor is too intense
+	HandsZFactor	= 1.05		# Scalar on Z offset (crouch) for hands, more feedback for being crouched
+	
+	# See also ViewHandsSpringK/ViewHandsDamperC.
+	# This can be easily disabled if I end up not caring for it, by taking EVM_HandsVelocity out of EVM_All_Hands.
+	HandsVelocityFactor				= 0.0025	# Scale the amount that player velocity affects hands
+	HandsRotationalVelocityFactor	= 0.0100	# Scale the amount that player rotational velocity affects hands
+	HandsVelocityLimit				= 0.015		# Per-axis limit on the offset produced by velocity
+	HandsRotationalVelocityLimit	= 10.0		# Per-axis limit (in degrees) on the rotational offset produced by rotational velocity
+
+	[Player_Frobber]
+	FrobDistance	= 2.0
+	AimDistance		= 15.0
+
+	[Player_Inventory]
+	lmArray( InitialItemSet )
+	{
+		( "InitialItemSet_Player_Default" )
+	}
+	lmArray( InitialItem )
+	{
+		//( "Flashlight_Off" )
+	}
+	lmArray( CycleSlot )
+	{
+		( "WeaponSlot0" )
+		( "WeaponSlot1" )
+		( "WeaponSlot2" )
+		( "WeaponSlot3" )
+	}
+	AvailableCycleSlots	= 2	# Start with access to just the first two, we'll stat mod the rest
+
+		[InitialItemSet_Player_Default]
+		lmArray( InitialItem )
+		{
+			( "Hands" )
+		}
+
+	[Player_Hands]
+	BraceletLeftBone		= "L_LowerArm"
+	BraceletLeftOffsetX		= -0.0776
+	BraceletLeftOffsetY		= 0.210
+	BraceletLeftOffsetZ		= 0.0005
+	BraceletRightBone		= "R_LowerArm"
+	BraceletRightOffsetX	= 0.0776
+	BraceletRightOffsetY	= 0.210
+	BraceletRightOffsetZ	= 0.0005
+
+	[Player_LootTable]
+	BandagePrice	= 20
+	DustPrice		= 3
+
+	[Player_Upgrades]
+	lmUpgrades
+	{
+		Upgrade( "Upgrade_PowerSlide",		"PowerSlide",		"Track_Movement",	200,	"Textures/UI/Upgrades/power-slide.tga",		"" )
+		Upgrade( "Upgrade_Stomp",			"Stomp",			"Track_Movement",	500,	"Textures/UI/Upgrades/stomp.tga",			"Upgrade_PowerSlide" )
+		Upgrade( "Upgrade_SoftFall",		"SoftFall",			"Track_Movement",	1100,	"Textures/UI/Upgrades/soft-fall.tga",		"Upgrade_Stomp" )
+		Upgrade( "Upgrade_DoubleJump",		"DoubleJump",		"Track_Movement",	2000,	"Textures/UI/Upgrades/double-jump.tga",		"Upgrade_SoftFall" )
+
+		Upgrade( "Upgrade_SneakAttack",		"SneakAttack",		"Track_Stealth",	200,	"Textures/UI/Upgrades/sneak-attack.tga",	"" )
+		Upgrade( "Upgrade_SharpStake",		"SharpStake",		"Track_Stealth",	500,	"Textures/UI/Upgrades/sharp-stake.tga",		"Upgrade_SneakAttack" )
+		Upgrade( "Upgrade_Camo",			"Camo",				"Track_Stealth",	1100,	"Textures/UI/Upgrades/camo.tga",			"Upgrade_SharpStake" )
+		Upgrade( "Upgrade_QuietFootsteps",	"QuietFootsteps",	"Track_Stealth",	2000,	"Textures/UI/Upgrades/quiet-footsteps.tga",	"Upgrade_Camo" )
+
+		Upgrade( "Upgrade_WeaponSlots1",	"WeaponSlots1",		"Track_Combat",		200,	"Textures/UI/Upgrades/weapon-slots.tga",	"" )
+		Upgrade( "Upgrade_SteadyKick",		"SteadyKick",		"Track_Combat",		500,	"Textures/UI/Upgrades/steady-kick.tga",		"Upgrade_WeaponSlots1" )
+		Upgrade( "Upgrade_AmmoCapacity",	"AmmoCapacity",		"Track_Combat",		1100,	"Textures/UI/Upgrades/ammo-capacity.tga",	"Upgrade_SteadyKick" )
+		Upgrade( "Upgrade_WeaponSlots2",	"WeaponSlots2",		"Track_Combat",		2000,	"Textures/UI/Upgrades/weapon-slots-2.tga",	"Upgrade_AmmoCapacity" )
+
+		Upgrade( "Upgrade_HealingDust",		"HealingDust",		"Track_Health",		200,	"Textures/UI/Upgrades/healing-dust.tga",	"" )
+		Upgrade( "Upgrade_Medkits1",		"Medkits1",			"Track_Health",		500,	"Textures/UI/Upgrades/large-medkit.tga",	"Upgrade_HealingDust",	"RefillBandages" )
+		Upgrade( "Upgrade_Medkits2",		"Medkits2",			"Track_Health",		1100,	"Textures/UI/Upgrades/large-medkit-2.tga",	"Upgrade_Medkits1",		"RefillBandages" )
+		Upgrade( "Upgrade_Shield",			"Shield",			"Track_Health",		2000,	"Textures/UI/Upgrades/shield.tga",			"Upgrade_Medkits2" )
+	}
+
+	[Player_StatMod]
+	Serialize	= true
+	lmStatMods
+	{
+		// Upgrade perks
+		StatMod( "PowerSlide",		"PowerSlide",			"Add",	1.0 )
+		//StatMod( "PowerSlide",		"PowerJump",			"Add",	1.0 )	// For now, for testing, always allow power jump (slide jump) if power slide is allowed
+		//StatMod( "Stomp",			"StompScalar",			"Mul",	2.5 )
+		//StatMod( "SoftFall",		"ImmuneToFalling",		"Add",	1.0 )
+		//StatMod( "DoubleJump",		"DoubleJump",			"Add",	1.0 )
+
+		//StatMod( "SneakAttack",		"SneakAttackDamage",	"Mul",	2.5 )
+		//StatMod( "SharpStake",		"StakeScalar",			"Mul",	2.0 )
+		//StatMod( "QuietFootsteps",	"FootstepRadius",		"Mul",	0.0 )
+		//StatMod( "QuietFootsteps",	"FootstepVolume",		"Mul",	0.2 )
+		//StatMod( "Camo",			"VisibleCertainty",		"Mul",	0.75 )
+
+		//StatMod( "WeaponSlots1",	"AvailableCycleSlots",	"Add",	1.0 )
+		//StatMod( "SteadyKick",		"KickScalar",			"Mul",	0.3 )
+		//StatMod( "AmmoCapacity",	"AmmoCapacity",			"Mul",	2.0 )
+		//StatMod( "WeaponSlots2",	"AvailableCycleSlots",	"Add",	1.0 )
+
+		//StatMod( "HealingDust",		"DustHealth",			"Add",	10.0 )
+		//StatMod( "Medkits1",		"MaxBandages",			"Add",	1.0 )
+		//StatMod( "Medkits2",		"MaxBandages",			"Add",	1.0 )
+		//StatMod( "Shield",			"DamageTaken",			"Mul",	0.7 )
+
+		// Bracelet
+		//StatMod( "QuickReload",		"ReloadRate",			"Mul",	2.5 )
+		//StatMod( "HighJump",		"JumpHeight",			"Mul",	2.25 )	// Corresponds to old statmod of 1.5x jump impulse, should probably be retuned; this DOES effect double jump as well
+		//StatMod( "FastMove",		"LandAcceleration",		"Mul",	1.4 )
+		//StatMod( "LockpickingA",	"Lock_NumPins",			"Add",	-1.0 )
+		//StatMod( "LockpickingA",	"Lock_PinAngle",		"Mul",	2.0 )
+		//StatMod( "LockpickingB",	"Lock_ForceFailPins",	"Set",	0.0 )
+		//StatMod( "LockpickingB",	"Lock_ExtraForcePins",	"Add",	1.0 )
+		//StatMod( "LongSlide",		"PowerSlideDuration",	"Mul",	1.5 )
+		//StatMod( "ExtraLoot",		"LootTablePoints",		"Add",	50.0 )
+		//StatMod( "SuperSneak",		"SneakAttackDamage",	"Mul",	1.6 )
+		//StatMod( "ExtraDust",		"VampireDust",			"Add",	10.0 )
+		//StatMod( "ExtraHeal",		"DustHealth",			"Add",	5.0 )	// ROSANOTE: Base value is 0 so we can't multiply.
+		//StatMod( "ToughShove",		"ShoveStagger",			"Mul",	1.75 )	// ROSANOTE: This mods the stagger *scalar*, not number of seconds!
+		//StatMod( "RangedBuff",		"RangedScalar",			"Mul",	1.4 )
+
+		StatMod( "Difficulty_Tourist",	"DamageTaken", "Mul", 0.0 )
+		//StatMod( "Difficulty_Easy",		"DamageTaken", "Mul", 0.5 )
+		//StatMod( "Difficulty_Hard",		"DamageTaken", "Mul", 1.5 )
+		//StatMod( "Difficulty_Expert",	"DamageTaken", "Mul", 1.5 )	// ROSANOTE: You don't take more damage in expert, but damage timeout and save threshold are disabled in code
+
+		//StatMod( "Difficulty_Hard",		"DamageDealt", "Mul", 0.9 )
+		//StatMod( "Difficulty_Expert",	"DamageDealt", "Mul", 0.8 )
+
+		//StatMod( "Difficulty_Easy",		"TargetScoreThresholdScalar", "Mul", 1.25 )
+		//StatMod( "Difficulty_Hard",		"TargetScoreThresholdScalar", "Mul", 0.75 )
+		//StatMod( "Difficulty_Expert",	"TargetScoreThresholdScalar", "Mul", 0.5 )
+		
+		StatMod( "Running",			"LandAcceleration",	"Mul", 2.0 )
+		StatMod( "Running",			"SpeedLimit",		"Mul", 1.5 )
+		StatMod( "Crouching",		"SpeedLimit",		"Mul", 0.35 )
+		StatMod( "PowerSliding",	"LandAcceleration",	"Mul", 2.0 )
+		StatMod( "PowerSliding",	"SpeedLimit",		"Mul", 6.0 )
+		StatMod( "Climbing",		"SpeedLimit",		"Mul", 0.4 )
+
+		StatMod( "Running",			"FootstepRadius",	"Mul", 2.0 )
+		StatMod( "Running",			"FootstepVolume",	"Mul", 1.5 )
+		StatMod( "Running",			"FootstepStride",	"Mul", 1.2 )
+		StatMod( "Crouching",		"FootstepRadius",	"Mul", 0.25 )
+		StatMod( "Crouching",		"FootstepVolume",	"Mul", 0.5 )
+		StatMod( "Crouching",		"FootstepStride",	"Mul", 0.8 )
+		// ROSANOTE: Footsteps are now entirely disabled when power sliding, see reactions
+		
+		//StatMod( "LockpickPinAngle",	"FOVScale",				"Mul",	0.95 )
+		//StatMod( "Lockpicking",			"FOVTime",				"Add",	0.50 )
+		
+		//StatMod( "Flashlight",			"VisibleCertainty",		"Mul",	1.4 )
+		
+		//StatMod( "Quicksand",		"LandAcceleration",	"Mul",	0.5 )
+		//StatMod( "Quicksand",		"SpeedLimit",		"Mul",	0.5 )
+		//StatMod( "Quicksand",		"JumpHeight",		"Mul",	0.5 )
+	}
+
+	[Player_PEMap]
+	lmPEMap
+	{
+		PEMap( "MeleeImpulse", ConstantFloat( 5.0 ) )
+	}
+
+	[Player_SpawnManager]
+	SpawnEntity					= "Chump"
+	MinSpawnDistance			= 6.0
+	MaxSpawnDistance			= 36.0
+	TargetPopulationLowThreat	= 4
+	TargetPopulationHighThreat	= 8
+	RelevanceCheckRate			= 5.0
+	MaxRelevanceDistance		= 48.0		# Should be larger than MaxSpawnDistance obviously
+	SpawnRateMin				= 15.0		# Minimum time between waves (randomly rolled each wave)
+	SpawnRateMax				= 25.0		# Maximum time between waves (randomly rolled each wave)
+	SpawnPointTimeout			= 5.0		# How soon a single spawn point can be reused
+	BigBadEntity				= "BigBad_Mid"
+	BigBadScoreThreshold		= 0.5		# How far into mission objectives the Big Bad can appear
+	MinibossSpawnPhase			= 5			# Spawn a miniboss every 5th spawn turn (60-120 seconds with current params)
+	MaxMinibosses				= 2			# Don't have more than 2 minibosses around at a time
+	lmArray( Miniboss, NumMinibosses )
+	{
+		( "PumpkinKing", Weight = 1.5 )
+	}
+
+	[Player_MapMarker]
+	Texture		= "Textures/UI/minimap-marker-player.tga"
+	Size		= 0.08
+	AlwaysShow	= true
+
+	[Player_DamageEffects]
+	Duration			= 1.2
+	FadeDuration		= 0.8
+	Material			= "Material_HUD"
+	Texture				= "Textures/UI/damage-indicator.tga"
+	Radius				= 0.25	# Relative to screen height
+	Size				= 0.125	# Relative to screen height
+	OverlayScreenName	= "HUD"
+	OverlayWidgetName	= "DamageOverlay"
+	OverlayDuration		= 0.25
+
+	[Player_Character]
+	lmArray( BodyOption )
+	{
+		( "Body_Woman1" )
+	}
+	lmArray( SkinPreset )
+	{
+		( "Skin_Light" )
+		( "Skin_MidLight" )
+		( "Skin_Mid" )
+		( "Skin_MidDark" )
+		( "Skin_Dark" )
+	}
+	lmArray( NailsPreset )
+	{
+		( "Nails_Clear" )
+		( "Nails_Champagne" )
+		( "Nails_Red" )
+		( "Nails_Blue" )
+		( "Nails_Black" )
+	}
+	SkinDefault		= "Skin_MidDark"
+	NailsDefault	= "Nails_Red"
+
+		[Body_Woman1]
+		HandsMesh	= "Meshes/Character/hands.cms"
+
+		[Skin_Light]
+		lmColorHSV( Color ) { 0.0555, 0.23, 0.96 }
+
+		[Skin_MidLight]
+		lmColorHSV( Color ) { 0.061, 0.39, 0.94 }
+
+		[Skin_Mid]
+		lmColorHSV( Color ) { 0.05, 0.5, 0.8 }
+
+		[Skin_MidDark]
+		lmColorHSV( Color ) { 0.049, 0.45, 0.69 }
+
+		[Skin_Dark]
+		lmColorHSV( Color ) { 0.042, 0.67, 0.42 }
+
+		[Nails_Clear]
+		# HACKHACK: _ means "use default"
+		lmColorHSVA( Color ) { _, _, _, 0.0 }
+
+		[Nails_Champagne]
+		lmColorHSVA( Color ) { 0.1, 0.17, 0.97, 0.5 }
+
+		[Nails_Red]
+		lmColorHSVA( Color ) { 0.98, 1.0, 0.6, 1.0 }
+
+		[Nails_Blue]
+		lmColorHSVA( Color ) { 0.577, 1.0, 0.7, 1.0 }
+
+		[Nails_Black]
+		lmColorHSVA( Color ) { 0.0, 0.0, 0.05, 1.0 }
+
+	[Player_Faction]
+	Faction = "Player"
+
+	[Player_Reactions]
+	lmReactions
+	{
+		// DLP 16 Oct 2021: Disregard the comment below, it's left over from Vamp.
+		// I'm just leaving it here for reference in case it becomes useful again.
+		// So, this isn't conditional anymore.
+		Reaction( Rule( "ConditionalGiveInitialLoadout" ) )
+		// Only do this (called from campaign PostGenStart) on subsequent legacies;
+		// in legacy 1, this happens through intro (whether played or skipped)
+		//Reaction( Rule(
+		//			"ConditionalGiveInitialLoadout",
+		//			PushContext( "PlayerPE",
+		//				Conditional( "GT", QueryActionStack( "Campaign_Legacy" ), ConstantInt( 1 ) )
+		//				)
+		//			) )
+		{
+			SendEvent( "GiveInitialLoadout", "SelfPE" )
+		}
+
+		Reaction( Rule( "GiveInitialLoadout" ) )
+		{
+			//RosaAddMoney( 200, false )	// ROSATODO: Keep this in sync with pickups in Intro!
+			//SendEvent( "AddItem", "PlayerPE", ItemDef = ConstantString( "Stake" ), Slot = RosaGetBestCycleSlot() )
+
+			SendEvent( "AddItem", "PlayerPE", ItemDef = ConstantString( "Lasergun" ), Slot = RosaGetBestCycleSlot() )
+			RosaAddAmmo( "AmmoType_Lasergun", 999, SuppressLog = true )
+			
+			// Always give player power slide
+			SendEvent( "GiveUpgrade",	"PlayerPE",	UpgradeTag	= ConstantString( "Upgrade_PowerSlide" ) )
+		}
+		
+		// End lockpicking if the door is opened; this is done in case an AI opens
+		// the door while picking, but be aware, this *also* ends up being the
+		// EndLockpicking path when completing a lockpick the normal way; which
+		// also means it happens before the rest of the SuccessActions. This is
+		// fine now, doesn't cause problems, but it's not intuitive if there's
+		// ever a bug.
+		Reaction( Rule( "ConditionalEndLockpicking", Conditional( "E", GetVariable( "PlayerPE", "LockpickTarget" ), QueryActionStack( "LockpickTarget" ) ) ) )
+		{
+			SendEvent( "EndLockpicking", "SelfPE" )
+		}
+
+		// Ghost achievement
+		Reaction( Rule( "OnObjectiveComplete",
+						Conditional( "E", QueryActionStack( "ObjectiveTag" ), ConstantString( "Objective_Stealth" ) ),
+						NOT( QueryActionStack( "Failed" ) )
+					) )
+		{
+			// ROSATODO: Re-enable if desired
+			//RosaAwardAchievement( "ACH_Ghost" )
+		}
+
+		Reaction( Rule( "ShowScenarioResultTitles", QueryActionStack( "Success" ) ) )
+		{
+			"Script_Common_ShowTitleCard_ShadowBox"
+			SetConfigVar( "HUD", "TitleCardText",		ConstantString( "TitleCard_Success" ) )
+			SetConfigVar( "HUD", "TitleCardSubText",	ConstantString( "TitleCardSub_ReturnToHub" ) )
+		}
+
+		Reaction( Rule( "ShowScenarioResultTitles", QueryActionStack( "AllowContinue" ) ) )
+		{
+			"Script_Common_ShowTitleCard_ShadowBox"
+			SetConfigVar( "HUD", "TitleCardText",		ConstantString( "TitleCard_Failure" ) )
+			SetConfigVar( "HUD", "TitleCardSubText",	ConstantString( "TitleCardSub_ReturnToHub" ) )
+		}
+
+		Reaction( Rule( "ShowScenarioResultTitles" ) )
+		{
+			"Script_Common_ShowTitleCard"
+			SetConfigVar( "HUD", "TitleCardText",		ConstantString( "TitleCard_Failure" ) )
+			SetConfigVar( "HUD", "TitleCardSubText",	ConstantString( "NullString" ) )
+		}
+
+		Reaction( Rule( "ActiveReturnToHub" ) )
+		{
+			SendEvent( "Campaign_FailMission" )	// This will be ignored if the mission is already completed
+			SendEvent( "Campaign_ShowResults" )	// This will bypass the delay to show the results if the mission was not yet completed
+		}
+
+		// Get health when collecting dust (if stat mod allows it)
+		Reaction( Rule( "OnDustCollected" ) )
+		{
+			SendEvent( "GiveHealth", "SelfPE", HealthAmount = StatMod( "SelfPE", "DustHealth", ConstantFloat( 0.0 ) ) )
+		}
+
+		// Sprinting footsteps, add huff on one foot
+		Reaction( Rule( "OnFootstep",
+				NOT( QueryActionStack( "IsPowerSliding" ) ),
+				QueryActionStack( "IsSprinting" ),
+				QueryActionStack( "RightFoot" ),
+				Conditional( "GTE", QueryActionStack( "SprintTime" ), ConstantFloat( 1.0 ) )
+			) )
+		{
+			// I'm turning off the sprint huff sound, it's kind of annoying
+			RosaPlayBark( Sound = "Sound_Player_Sprint", Category = "VO" )
+			SendEvent( "OnAINoise",
+				// This is basically 8 * Surface.RadiusScalar * ( Speed / SpeedLimit ),
+				// we're starting with a default assumption of a 8m radius and modifying it.
+				NoiseRadius = StatMod( "SelfPE", "FootstepRadius",
+					Mul(
+						RosaGetSurfaceProperty( "FootstepSurface", "RadiusScalar" ),
+						Mul( ConstantFloat( 8.0 ), "SpeedScalarPE" ) ) ) )
+			RosaPlaySound(
+				SoundPE = Add( ConstantString( "Player" ), RosaGetSurfaceProperty( "FootstepSurface", "Sound" ) ),
+				VolumePE = StatMod( "SelfPE", "FootstepVolume",
+					Mul(
+						RosaGetSurfaceProperty( "FootstepSurface", "VolumeScalar" ),
+						Mul( ConstantFloat( 0.8 ), "SpeedScalarPE" ) ) ) )
+		}
+
+		Reaction( Rule( "OnFootstep", NOT( QueryActionStack( "IsPowerSliding" ) ) ) )
+		{
+			SendEvent( "OnAINoise",
+				NoiseRadius = StatMod( "SelfPE", "FootstepRadius",
+					Mul(
+						RosaGetSurfaceProperty( "FootstepSurface", "RadiusScalar" ),
+						Mul( ConstantFloat( 8.0 ), "SpeedScalarPE" ) ) ) )
+			RosaPlaySound(
+				SoundPE = Add( ConstantString( "Player" ), RosaGetSurfaceProperty( "FootstepSurface", "Sound" ) ),
+				VolumePE = StatMod( "SelfPE", "FootstepVolume",
+					Mul(
+						RosaGetSurfaceProperty( "FootstepSurface", "VolumeScalar" ),
+						Mul( ConstantFloat( 0.8 ), "SpeedScalarPE" ) ) ) )
+		}
+
+		// No grunt on double jump
+		Reaction( Rule( "OnJumped", QueryActionStack( "DoubleJump" ) ) )
+		{
+			// Do nothing
+		}
+
+		// Jump grunt
+		Reaction( Rule( "OnJumped" ) )
+		{
+			RosaPlayBark( Sound = "Sound_Player_Grunt", Category = "VO" )
+		}
+
+		// Mantel grunt
+		Reaction( Rule( "OnBeginMantle" ) )
+		{
+			RosaPlayBark( Sound = "Sound_Player_Mantel", Category = "VO" )
+		}
+
+		// Power slide grunt/SFX
+		Reaction( Rule( "OnBeginPowerSlide", QueryActionStack( "IsLanded" ) ) )
+		{
+			SetVariable( "SelfPE", "ShouldPlayOnLandedPowerSlideSFX", "FalsePE" )
+			// New for Zeta: power sliding makes AI noise so you can't just slide through levels
+			// Not stat modding, not using surface, not using speed scalar.
+			SendEvent( "OnAINoise", NoiseRadius = ConstantFloat( 8.0 ) )
+			RosaPlaySound( "Sound_PowerSlide" )
+			RosaPlayBark( Sound = "Sound_Player_PowerSlide", Category = "VO" )
+		}
+
+		// Power slide grunt only, do slide SFX when landing
+		Reaction( Rule( "OnBeginPowerSlide" ) )
+		{
+			SetVariable( "SelfPE", "ShouldPlayOnLandedPowerSlideSFX", "TruePE" )
+			RosaPlayBark( Sound = "Sound_Player_PowerSlide", Category = "VO" )
+		}
+
+		// Death
+		Reaction( Rule( "OnDied" ) )
+		{
+			//RosaIncrementStat( "NumDeaths" )
+			SendEvent( "EndLockpicking",	"SelfPE" )
+			SendEvent( "StopTouching",		"SelfPE" )
+			SendEvent( "SetInvisible",		"SelfPE" )
+			SendEvent( "DisableFrob",		"SelfPE" )
+			SendEvent( "PushInputContext",	"SelfPE", InputContext = ConstantString( "Context_Death" ) )
+			SendEvent( "SetViewOffsetZ",	"SelfPE", ViewOffsetZ = ConstantFloat( -0.1 ) )
+			SendEvent( "HideHands",			"SelfPE" )
+			RosaPlayBark( Sound = "Sound_Player_Death", Category = "VO" )
+			
+			SendEvent( "Campaign_PublishCatchphrase",
+					Speaker		= "KillerPE",
+					Category	= ConstantString( "Death" ),
+					Duration	= ConstantFloat( 4.0 )
+				)
+
+			// I'm letting the level script handle this, why not
+			SendEvent( "StartRespawning", DispatchDelay = 2.0 )
+		}
+		
+		// HACKHACK for Zeta
+		Reaction( Rule( "OnAmmoAdded" ) )
+		{
+			RosaPlaySound( "Sound_Player_AddAmmo" )
+		}
+
+		Reaction( Rule( "OnRespawn" ) )
+		{
+			SendEvent(
+					"FadeIn",
+					GameFade		= ConstantBool( true ),
+					Duration		= ConstantFloat( 0.5 ),
+					FadeColorR		= ConstantFloat( 0.0 ),
+					FadeColorG		= ConstantFloat( 0.5 ),
+					FadeColorB		= ConstantFloat( 1.0 )
+				)
+
+			SendEvent( "StartTouching",		"SelfPE" )
+			SendEvent( "SetVisible",		"SelfPE" )
+			SendEvent( "EnableFrob",		"SelfPE" )
+			SendEvent( "PopInputContext",	"SelfPE", InputContext = ConstantString( "Context_Death" ) )
+			SendEvent( "ResetViewOffsetZ",	"SelfPE", ViewOffsetZ = ConstantFloat( -0.1 ) )
+			SendEvent( "ShowHands",			"SelfPE" )
+
+			SendEvent( "GoToOrigin",		"SelfPE" )
+
+			SendEvent( "RestoreHealth",		"SelfPE" )
+
+			RosaAddAmmo( "AmmoType_Lasergun", 999, SuppressLog = true )
+			
+			RosaPlayBark( Sound = "Sound_Player_WakeUp", Category = "VO" )
+			RosaPlaySound( Sound = "Sound_Player_Respawn" )
+		}
+
+		// Initialization
+		Reaction( Rule( "OnInitialized" ) )
+		{
+			// Reset combat music
+			SetVariable( "SelfPE", "CombatMusicOn", "FalsePE" )
+			SetVariable( "SelfPE", "CombatMusicRefCount", "IntZeroPE" )
+
+			// Fade in
+			SendEvent( "FadeIn", Duration = ConstantFloat( 0.5 ) )
+			SendEvent( "FadeIn", GameFade = "TruePE" )
+
+			// Hide contextual UI
+			UIShowHideWidget( "HUD", "BandagesHelp",		true )
+			UIShowHideWidget( "HUD", "AmmoIcon",			true )
+			UIShowHideWidget( "HUD", "AmmoCounter",			true )
+			UIShowHideWidget( "HUD", "AmmoHelp",			true )
+			UIShowHideWidget( "HUD", "FrobName",			true )
+			UIShowHideWidget( "HUD", "FrobLiteralName",		true )
+			UIShowHideWidget( "HUD", "FrobVerb",			true )
+			UIShowHideWidget( "HUD", "FrobHold",			true )
+			UIShowHideWidget( "HUD", "AimName",				true )
+			UIShowHideWidget( "HUD", "AimLiteralName",		true )
+			UIShowHideWidget( "HUD", "AimHealthBarBack",	true )
+			UIShowHideWidget( "HUD", "AimHealthBar",		true )
+			UIShowHideWidget( "HUD", "SignText",			true )
+			UIShowHideWidget( "HUD", "TitleSmash",			true )
+			UIShowHideWidget( "HUD", "TitleCard",				true )
+			UIShowHideWidget( "HUD", "TitleCardSub",			true )
+			UIShowHideWidget( "HUD", "TitleCardSub_ShadowBox",	true )
+
+			// Reset contextual crosshair
+			UIShowHideWidget( "HUD", "Crosshair",			false )
+			UIShowHideWidget( "HUD", "Crosshair_Friendly",	true )
+			UIShowHideWidget( "HUD", "Crosshair_Hostile",	true )
+
+			// Reset other UI
+			SetConfigVar( "HUD", "SubtitleText", ConstantString( "NullString" ) )
+			SetConfigVar( "HUD", "TitleCardText", ConstantString( "NullString" ) )
+			SetConfigVar( "HUD", "TitleCardSubText", ConstantString( "NullString" ) )
+
+			UIShowHideWidget( "SupertitlesScreen", "SupertitlesText",	true )
+		}
+
+		// "Saved" damage reaction (when low HP threshold causes damage resistance)
+		// Same as below but with heartbeat sound added
+		Reaction( Rule( "OnDamaged", "IsAlivePE", QueryActionStack( "Saved" ) ) )
+		{
+			//RosaIncrementStat( "DamageTaken", QueryActionStack( "DamageAmount" ) )
+			RosaPlayBark( Sound = "Sound_Player_Damage", Category = "VO" )
+			RosaPlaySound( "Sound_Heartbeat" )
+		}
+
+		// Damage reaction
+		Reaction( Rule( "OnDamaged", "IsAlivePE" ) )
+		{
+			//RosaIncrementStat( "DamageTaken", QueryActionStack( "DamageAmount" ) )
+			RosaPlayBark( Sound = "Sound_Player_Damage", Category = "VO" )
+		}
+
+		// Falling damage
+		Reaction( Rule(	"OnLanded",
+						Conditional( "GTE", QueryActionStack( "LandedMagnitude" ), ConstantFloat( 22.0 ) ),
+						NOT( StatMod( "SelfPE", "ImmuneToFalling", ConstantFloat( 0.0 ) ) )
+			) )
+		{
+			// For every 0.1 m/s above the min that the player is falling,
+			// take 1 extra damage on top of a base of 10.
+			//SendEvent( "TakeDamage", "SelfPE",
+			//	DamageSet		= ConstantString( "DamageSet_Falling" ),
+			//	DamageScalar	= Add( ConstantFloat( 10.0 ), Mul( ConstantFloat( 10.0 ), Sub( QueryActionStack( "LandedMagnitude" ), ConstantFloat( 22.0 ) ) ) ),
+			//	Damager			= "SelfPE",
+			//	DamageLocation	= "LocationPE" )
+		}
+		
+		// Do power slide SFX (only if we're not taking falling damage,
+		// since this is not a multi-compare reactions component).
+		Reaction( Rule( "OnLanded",
+						QueryActionStack( "IsPowerSliding" ),
+						GetVariable( "SelfPE", "ShouldPlayOnLandedPowerSlideSFX" )
+			) )
+		{
+			SetVariable( "SelfPE", "ShouldPlayOnLandedPowerSlideSFX", "FalsePE" )
+			SendEvent( "OnAINoise", NoiseRadius = ConstantFloat( 8.0 ) )
+			RosaPlaySound( "Sound_PowerSlide" )
+		}
+		
+		Reaction( Rule( "OnBandaged" ) )
+		{
+			RosaPlaySound( "Sound_Bandage" )
+		}
+
+		// Increment the refcount and conditionally start music
+		Reaction( Rule( "CombatStart", Conditional( "E", "IntZeroPE", GetVariable( "SelfPE", "CombatMusicRefCount" ) ) ) )
+		{
+			SetVariable( "SelfPE", "CombatMusicRefCount", Add( GetVariable( "SelfPE", "CombatMusicRefCount" ), "IntOnePE" ) )
+			SendEvent( "StartCombatMusic", "SelfPE" )
+
+			// Unqueue any previous StopCombatMusic
+			UnqueueEvent( "SelfPE", "StopCombatMusicEvent" )
+			
+			// Also increment a pvar so we know that combat happened
+			RosaSetPersistentVar( "DetectionCount", Add( ConstantInt( 1 ), RosaGetPersistentVar( "DetectionCount" ) ) )
+			
+			// Notify the spawn manager in case we've deferred spawning
+			SendEvent( "SpawnManager_OnCombat", "SelfPE" )
+
+			// Fail stealth objective, if any
+			RosaCompleteObjective( "Objective_Stealth", true )
+			
+			// Notify any interested parties that we've been discovered
+			SendEvent( "OnPlayerDetected" )
+		}
+
+		// Just increment the refcount
+		Reaction( Rule( "CombatStart" ) )
+		{
+			SetVariable( "SelfPE", "CombatMusicRefCount", Add( GetVariable( "SelfPE", "CombatMusicRefCount" ), "IntOnePE" ) )
+		}
+
+		// Decrement the refcount and conditionally stop music after a delay
+		Reaction( Rule( "CombatEnd", Conditional( "E", "IntOnePE", GetVariable( "SelfPE", "CombatMusicRefCount" ) ) ) )
+		{
+			SetVariable( "SelfPE", "CombatMusicRefCount", Sub( GetVariable( "SelfPE", "CombatMusicRefCount" ), "IntOnePE" ) )
+			SendEvent( "StopCombatMusic", "SelfPE", DispatchDelay = 2.0, VariableMapTag = "StopCombatMusicEvent" )
+		}
+
+		// Just decrement the refcount
+		Reaction( Rule( "CombatEnd" ) )
+		{
+			SetVariable( "SelfPE", "CombatMusicRefCount", Sub( GetVariable( "SelfPE", "CombatMusicRefCount" ), "IntOnePE" ) )
+		}
+
+		// Start combat music if it's not already playing
+		Reaction( Rule( "StartCombatMusic", NOT( GetVariable( "SelfPE", "CombatMusicOn" ) ) ) )
+		{
+			SetVariable( "SelfPE", "CombatMusicOn", "TruePE" )
+			SendEvent(
+					"SetMusicLevels",
+					"SelfPE",
+					TrackBits = OR( ConstantInt( 0x2 ), RosaCampaignModify( "PostCombatMusicTrackBits", ConstantInt( 0x1 ), true ) ),
+					TrackMask = ConstantInt( 0x7 ),
+					Duration = ConstantFloat( 0.25 )
+				)
+
+			// Also set the initial music track bits on the player so we'll serialize properly.
+			// (This is a bit of a hack for changing from bass-only to bass+guitar in stealth missions.)
+			SendEvent(
+					"SetInitialMusicTrackBits",
+					"SelfPE",
+					InitialMusicTrackBits = RosaCampaignModify( "PostCombatMusicTrackBits", ConstantInt( 0x1 ), true )
+				)
+		}
+
+		// Stop combat music if there's no threats after the delay
+		Reaction( Rule( "StopCombatMusic", Conditional( "E", "IntZeroPE", GetVariable( "SelfPE", "CombatMusicRefCount" ) ) ) )
+		{
+			SetVariable( "SelfPE", "CombatMusicOn", "FalsePE" )
+			SendEvent(
+					"SetMusicLevels",
+					"SelfPE",
+					TrackBits = RosaCampaignModify( "PostCombatMusicTrackBits", ConstantInt( 0x1 ), true ),
+					TrackMask = ConstantInt( 0x7 ),
+					Duration = ConstantFloat( 3.0 )
+				)
+			//RosaAwardAchievement( "ACH_Escape" )
+		}
+	}
+
+		[DamageSet_Falling]
+		lmArray( DamageVector )
+		{
+			( Amount = 1.0, Type = "Blunt" )
+		}
+
+		[DamageSet_Landed]
+		lmArray( DamageVector )
+		{
+			( Amount = 40.0, Type = "Blunt", StaggerDuration = 2.0 )
+		}
+
+	# Return a 0-1 value representing speed of footstep
+	[SpeedScalarPE]
+	lmPE
+	{
+		Saturate(
+			Div(
+				Add(
+					QueryActionStack( "AdditionalSpeed" ),
+					"SpeedPE" ),
+				RosaGetSpeedLimit( "SelfPE" ) ) )
+	}
+
+[ClimbableBase]
+RosaTransform	= "ImmobileTransform"
+RosaClimbable	= "."
+
+[TrailerCam]
+RosaTransform		= "ImmobileTransform"
+RosaLoopMetadata	= "."

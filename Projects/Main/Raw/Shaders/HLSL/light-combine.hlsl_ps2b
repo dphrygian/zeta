@@ -1,0 +1,66 @@
+#include "common.hlsl_psh"
+#include "fog.hlsl_psh"
+
+sampler	LAccumSampler	: register(s0);
+sampler	AlbedoSampler	: register(s1);
+sampler	DepthSampler	: register(s2);
+
+float4	SunVector;
+
+struct PS_INPUT 
+{
+	float2 UV	: TEXCOORD0;
+};
+
+// Skin glow is additive, not physically correct
+// This is not SSS, not based on viewing angle or anything
+// This adds a varying glow to *any* amount of light, with a tunable peak at 1/S
+float3 GetSkinGlow( const float3 Light )
+{
+	// Coefficients on glow
+	// This is *not* simply subsurface color; output also depends on curve speed
+	// NOTE: Peak glow is actually C/2 because the output of curve T peaks at 1/2
+	const float3 C = float3( 0.2f, 0.1f, 0.0f );
+
+	// Curve "speed"; glow peaks at L=1/S (must be non-zero!)
+	const float3 S = float3( 5.0f, 1.0f, 1.0f );
+
+	// Input to the curve is light, scaled by speed to adjust the shape of the glow
+	const float3 N = Light * S;
+
+	// Finally, the curve itself: this grows from 0 to 1/2 at N=1/S and then slowly trails to 0 at infinity
+	const float3 T = N / ( ( N * N ) + 1.0f );
+
+	// Scale curve down by coefficient to fit desired amount of glow
+	return T * C;
+}
+
+float4 Main( PS_INPUT In ) : COLOR
+{
+	const float  	Depth		= tex2D( DepthSampler, In.UV ).r;
+	const float4	WSPos		= GetWSPos( In.UV, Depth );
+	const float3	ViewToPos	= WSPos.xyz - EyePosition.xyz;
+	const float		Distance	= length( ViewToPos );
+	const float3	ViewToPosN	= ViewToPos / Distance;
+
+	const float4	AlbedoEm	= tex2D( AlbedoSampler, In.UV );
+	const float		EmUnpack	= AlbedoEm.a * 2.0f - 1.0f;
+	const float		EmTerm		= Unpack( abs( EmUnpack ) );			// Scale back into [0,1] range
+	const float3	Emissive	= AlbedoEm.rgb * EmTerm * FogParams.z;	// FogParams.z is emissive scalar (because emissive is otherwise limited to LDR)
+	const float3	Light		= tex2D( LAccumSampler, In.UV ).rgb;
+
+	const float		Skin		= step( 0.0f, EmUnpack );				// 0 if skin, 1 if not skin
+	const float3	SkinGlow	= GetSkinGlow( Emissive + Light );
+	const float3	NoGlow		= float3( 0.0f, 0.0f, 0.0f );
+	const float3	Glow		= lerp( SkinGlow, NoGlow, Skin );
+
+	const float4	AllLight	= float4( Glow + Emissive + Light, 0.0f );
+
+	const float		SunValue	= 0.5f * ( 1.0f + dot( ViewToPosN, SunVector.xyz ) );
+	const float		SunValueT	= SunValue * SunValue;
+	const float4	Fog			= GetFog_Deferred( Distance, WSPos.z, SunValueT );
+
+	//return FogParams.w * BlendFog( Fog, Fog );	// Render fog for testing
+	//return FogParams.w * AllLight;				// Remove fog for testing
+	return FogParams.w * BlendFog( Fog, AllLight );	// FogParams.w is exposure scalar
+}

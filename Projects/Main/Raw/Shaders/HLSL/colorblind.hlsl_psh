@@ -1,0 +1,85 @@
+// This header defines color matrices used to transform colors into color blindness modes.
+
+#define COLOR_BLIND_TYPE_Protanopia		0x01
+#define COLOR_BLIND_TYPE_Protanomaly	0x02
+#define COLOR_BLIND_TYPE_Deuteranopia	0x04
+#define COLOR_BLIND_TYPE_Deuteranomaly	0x08
+#define COLOR_BLIND_TYPE_Tritanopia		0x10
+#define COLOR_BLIND_TYPE_Tritanomaly	0x20
+#define COLOR_BLIND_TYPE_Achromatopsia	0x40
+#define COLOR_BLIND_TYPE_Achromatomaly	0x80
+
+#define COLOR_BLIND			0
+#define COLOR_BLIND_TYPE	COLOR_BLIND_TYPE_Protanopia
+// COLOR_BLIND_TYPE_Deuteranomaly is the most common red-green blindness.
+// COLOR_BLIND_TYPE_Protanopia is a more severe red-green blindness, good for testing.
+// COLOR_BLIND_TYPE_Tritanopia is the most common blue-yellow blindness.
+
+#if COLOR_BLIND
+
+#if COLOR_BLIND_TYPE == COLOR_BLIND_TYPE_Protanopia
+
+// 1% in men
+static float4x4 ColorBlindMat = {	0.567f,	0.433f,	0.0f,	0.0f,
+									0.558f,	0.442f,	0.0f,	0.0f,
+									0.0f,	0.242f,	0.758f,	0.0f,
+									0.0f,	0.0f,	0.0f,	1.0f };
+
+#elif COLOR_BLIND_TYPE == COLOR_BLIND_TYPE_Protanomaly
+
+static float4x4 ColorBlindMat = {	0.817f,	0.183f,	0.0f,	0.0f,
+									0.333f,	0.667f,	0.0f,	0.0f,
+									0.0f,	0.125f,	0.875f,	0.0f,
+									0.0f,	0.0f,	0.0f,	1.0f };
+
+#elif COLOR_BLIND_TYPE == COLOR_BLIND_TYPE_Deuteranopia
+
+// 1% in men
+static float4x4 ColorBlindMat = {	0.625f,	0.375f,	0.0f,	0.0f,
+									0.7f,	0.3f,	0.0f,	0.0f,
+									0.0f,	0.3f,	0.7f,	0.0f,
+									0.0f,	0.0f,	0.0f,	1.0f };
+
+#elif COLOR_BLIND_TYPE == COLOR_BLIND_TYPE_Deuteranomaly
+
+// 5% in men
+static float4x4 ColorBlindMat = {	0.8f,	0.2f,	0.0f,	0.0f,
+									0.258f,	0.742f,	0.0f,	0.0f,
+									0.0f,	0.142f,	0.858f,	0.0f,
+									0.0f,	0.0f,	0.0f,	1.0f };
+
+#elif COLOR_BLIND_TYPE == COLOR_BLIND_TYPE_Tritanopia
+
+static float4x4 ColorBlindMat = {	0.95f,	0.05f,	0.0f,	0.0f,
+									0.0f,	0.433f,	0.567f,	0.0f,
+									0.0f,	0.475f,	0.525f,	0.0f,
+									0.0f,	0.0f,	0.0f,	1.0f };
+
+#elif COLOR_BLIND_TYPE == COLOR_BLIND_TYPE_Tritanomaly
+
+static float4x4 ColorBlindMat = {	0.967f,	0.033f,	0.0f,	0.0f,
+									0.0f,	0.733f,	0.267f,	0.0f,
+									0.0f,	0.183f,	0.817f,	0.0f,
+									0.0f,	0.0f,	0.0f,	1.0f };
+
+#elif COLOR_BLIND_TYPE == COLOR_BLIND_TYPE_Achromatopsia
+
+static float4x4 ColorBlindMat = {	0.299f,	0.587f,	0.114f,	0.0f,
+									0.299f,	0.587f,	0.114f,	0.0f,
+									0.299f,	0.587f,	0.114f,	0.0f,
+									0.0f,	0.0f,	0.0f,	1.0f };
+
+#elif COLOR_BLIND_TYPE == COLOR_BLIND_TYPE_Achromatomaly
+
+static float4x4 ColorBlindMat = {	0.618f,	0.320f,	0.062f,	0.0f,
+									0.163f,	0.775f,	0.062f,	0.0f,
+									0.163f,	0.320f,	0.516f,	0.0f,
+									0.0f,	0.0f,	0.0f,	1.0f };
+
+#else
+
+#error No color blind matrix defined!
+
+#endif // COLOR_BLIND_TYPE
+
+#endif // COLOR_BLIND

@@ -1,0 +1,28 @@
+#include "common.hlsl_vsh"
+#include "foliage.hlsl_vsh"
+
+struct VS_INPUT 
+{
+	float4 Position	: POSITION;
+	float3 Normal	: NORMAL;
+	float4 Color	: TEXCOORD1;
+};
+
+struct VS_OUTPUT
+{
+	float4	Position	: POSITION;
+	float4	PositionWS	: TEXCOORD0;
+};
+
+VS_OUTPUT Main( VS_INPUT In )
+{
+	VS_OUTPUT Out;
+
+	const float4	PositionWS		= mul( In.Position, WorldMatrix );
+	const float4	FoliagePosition	= GetFoliagePosition( PositionWS, In.Normal, In.Color );
+
+	Out.Position	= FixHalfPixelOffset( mul( FoliagePosition, VP ) );
+	Out.PositionWS	= FoliagePosition;
+
+	return Out;
+}

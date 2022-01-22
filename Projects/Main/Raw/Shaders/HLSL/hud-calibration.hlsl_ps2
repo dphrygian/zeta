@@ -1,0 +1,12 @@
+#include "common.hlsl_psh"
+#include "calibration.hlsl_psh"
+
+sampler Sampler	: register(s0);
+
+float4 UIColor( const float4 Color )
+{
+	// UI is usually all in sRGB space; to properly reflect gamma, I need to convert to linear and back.
+	return float4( Calibrate( sRGBToLinear( Color ).rgb ), 1.0f );
+}
+
+#include "hud.hlsl_psh"

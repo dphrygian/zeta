@@ -1,0 +1,124 @@
+#version 120
+
+// ****************************************************************
+// BEGIN LIGHTING
+
+uniform vec4 LightCube[6];
+
+vec4 GetCubeLight( vec3 InNormal )
+{
+	vec3	NormalSquared	= InNormal * InNormal;
+	ivec3	IsNegative		= ivec3( lessThan( InNormal, vec3( 0.0f ) ) );
+	return
+		NormalSquared.x * LightCube[ IsNegative.x ] +
+		NormalSquared.y * LightCube[ IsNegative.y + 2 ] +
+		NormalSquared.z * LightCube[ IsNegative.z + 4 ];
+}
+
+// END LIGHTING
+// ****************************************************************
+
+uniform sampler2D	Texture0;	// Albedo
+uniform sampler2D	Texture1;	// Normal
+uniform sampler2D	Texture2;	// Depth
+uniform samplerCube	Texture3;	// Environment
+
+uniform mat4	InvVPMatrix;
+uniform vec4	EyePosition;
+
+varying vec4	PassVPos;
+
+vec2 FixUV( vec2 UV )
+{
+	return vec2( UV.x, 1.0f - UV.y );
+}
+
+float NonZeroSign( float x )
+{
+	return ( step( 0.0f, x ) * 2.0f ) - 1.0f;
+}
+
+vec4 GetWSPos( vec2 UV, float Depth )
+{
+	vec2 FixedUV	= ( UV * 2.0f ) - 1.0f;
+	vec4 VPos4		= vec4( FixedUV.x, FixedUV.y, Depth, 1.0f );	// ROSANOTE: *Don't* negate FixedUV.y, it's already flipped in GLSL
+	vec4 WSPos		= VPos4 * InvVPMatrix;
+	return WSPos / WSPos.w;
+}
+
+vec3 GetInvStereographicProjection( vec2 Normal, float NormalZSign )
+{
+	float XXYY	= dot( Normal.xy, Normal.xy );
+	float Denom	= 1.0f / ( 1.0f + XXYY );
+	return vec3( 2.0f * Normal.xy * Denom, NormalZSign * abs( ( XXYY - 1.0f ) * Denom ) );
+}
+
+vec2 Unpack( vec2 Packed )
+{
+	return clamp( ( Packed * 1.066666f ) - 0.066666f, 0.0f, 1.0f );
+}
+
+// HACKHACK: Cubemaps don't interpolate across faces, so mine are authored
+// with the same values at the edges of each face to avoid discontinuities.
+// But that introduces another artifact, where the values at edges take up
+// too much space, which produces a visible line interrupting an otherwise
+// smooth gradient. The solution is to adjust the coordinates so that we
+// only sample up to halfway through that last texel on the edge. The 0.875
+// here is hard-coded to match my usual size of 8x8 cubemaps; in the general
+// case, it would be (n-1)/n for nxn cubemaps. This solution is adapted from
+// http://the-witness.net/news/2012/02/seamless-cube-map-filtering/
+vec3 FixCubeCoords( vec3 c )
+{
+	vec3	a = abs( c );
+	float	m = max( max( a.x, a.y ), a.z );
+	float	s = 0.875f;
+
+	vec3	f = c;
+	if( a.x != m ) { f.x *= s; }
+	if( a.y != m ) { f.y *= s; }
+	if( a.z != m ) { f.z *= s; }
+
+	return f;
+}
+
+vec4 SampleCube( samplerCube CubeSampler, vec3 Normal, vec3 ToEye )
+{
+	vec3 Reflect = -reflect( ToEye, Normal );
+	return textureCube( CubeSampler, FixCubeCoords( Reflect.xzy ) );	// Swizzle to match expected coordinate system
+}
+
+void main()
+{
+	// Fix VPos
+	vec2	NormVPos		= PassVPos.xy / PassVPos.w;
+	vec2	FixedUV			= FixUV( NormVPos );
+
+	vec4	NormalSpec		= texture2D( Texture1, FixedUV );
+	vec4	NormalUnpack	= ( NormalSpec * 2.0f ) - 1.0f;
+	float	NormalZSign		= NonZeroSign( NormalUnpack.z );
+	vec3	WSNormal		= GetInvStereographicProjection( NormalUnpack.xy, NormalZSign );
+
+	vec2	SmoothRefl		= Unpack( abs( NormalUnpack.zw ) );
+	float	Dielectric		= step( 0.0f, NormalUnpack.w );
+
+	vec3	BaseColor		= texture2D( Texture0, FixedUV ).rgb;
+	vec3	Black			= vec3( 0.0f, 0.0f, 0.0f );
+	vec3	White			= vec3( 1.0f, 1.0f, 1.0f );
+	vec3	AlbedoColor		= mix( Black, BaseColor, Dielectric );
+	vec3	ReflColor		= mix( BaseColor, White, Dielectric );
+	
+	float	Depth			= texture2D( Texture2, FixedUV ).r;
+	vec3	WSPos			= GetWSPos( FixedUV, Depth ).xyz;
+
+	vec3	View			= normalize( EyePosition.xyz - WSPos );	// View vector V
+
+	float	NdotV			= clamp( dot( WSNormal, View ), 0.0f, 1.0f );
+	float	FresnelC		= mix( 0.25f, 1.0f, clamp( SmoothRefl.x * 2.0f, 0.0f, 1.0f ) );
+	float	Fresnel			= FresnelC * pow( 1.0f - NdotV, 5.0f );
+	float	Reflectance		= mix( SmoothRefl.y, 1.0f, Fresnel );
+
+	vec3	Ambient			= AlbedoColor * GetCubeLight( WSNormal ).rgb;
+	vec3	Reflection		= ReflColor * SampleCube( Texture3, WSNormal, View ).rgb;
+
+	gl_FragColor = vec4( mix( Ambient, Reflection, Reflectance ), 1.0f );
+}

@@ -1,0 +1,15 @@
+#version 120
+
+uniform mat4	WVP;
+uniform mat4	WorldMatrix;
+
+attribute vec4	InPosition;
+attribute vec3	InNormal;
+
+varying vec3	PassNormal;
+
+void main()
+{
+	gl_Position	= InPosition * WVP;
+	PassNormal	= ( vec4( InNormal, 0.0f ) * WorldMatrix ).xyz;
+}

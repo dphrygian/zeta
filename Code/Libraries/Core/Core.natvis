@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<!-- See https://docs.microsoft.com/en-us/previous-versions/visualstudio/visual-studio-2015/debugger/create-custom-views-of-native-objects?view=vs-2015 for guide -->
+<!-- See https://docs.microsoft.com/en-us/previous-versions/visualstudio/visual-studio-2015/debugger/format-specifiers-in-cpp?view=vs-2015 for formatting -->
+<AutoVisualizer xmlns="http://schemas.microsoft.com/vstudio/debugger/natvis/2010">
+
+  <Type Name="SimpleString">
+    <DisplayString>{m_String,s}</DisplayString>
+    <StringView>m_String,s</StringView>
+  </Type>
+
+  <Type Name="HashedString">
+    <!-- No DisplayString here, because I want the reversed string inline if possible and this does exactly that -->
+    <Expand>
+      <CustomListItems>
+        <Variable Name="pNode" InitialValue="gReverseHashMap.m_Root"/>
+        <Size>1</Size>
+        <Loop>
+          <If Condition="pNode == 0">
+            <Item Name="ReversedHash">0</Item>
+            <Break/>
+          </If>
+          <If Condition="m_Hash == pNode->m_Key.m_Hash">
+            <Item Name="ReversedHash">pNode->m_Value</Item>
+          </If>
+          <Elseif Condition="m_Hash &lt; pNode->m_Key.m_Hash">
+            <Exec>pNode = pNode->m_Left</Exec>
+          </Elseif>
+          <Else>
+            <Exec>pNode = pNode->m_Right</Exec>
+          </Else>
+        </Loop>
+      </CustomListItems>
+      <Item Name="m_Hash">m_Hash</Item>
+    </Expand>
+  </Type>
+
+  <Type Name="Array&lt;*&gt;">
+    <DisplayString>{{size={m_Size}, capacity={m_Capacity}}}</DisplayString>
+    <Expand>
+      <ArrayItems>
+        <Size>m_Size</Size>
+        <ValuePointer>m_Array</ValuePointer>
+      </ArrayItems>
+    </Expand>
+  </Type>
+
+  <Type Name="List&lt;*&gt;">
+    <DisplayString>{{size={m_Size}}}</DisplayString>
+    <Expand>
+      <LinkedListItems>
+        <Size>m_Size</Size>
+        <HeadPointer>m_Head</HeadPointer>
+        <NextPointer>m_Next</NextPointer>
+        <ValueNode>m_Item</ValueNode>
+      </LinkedListItems>
+    </Expand>
+  </Type>
+
+  <Type Name="Set&lt;*&gt;">
+    <DisplayString>{{size={m_Size}}}</DisplayString>
+    <Expand>
+      <TreeItems>
+        <Size>m_Size</Size>
+        <HeadPointer>m_Root</HeadPointer>
+        <LeftPointer>m_Left</LeftPointer>
+        <RightPointer>m_Right</RightPointer>
+        <ValueNode>m_Item</ValueNode>
+      </TreeItems>
+    </Expand>
+  </Type>
+
+  <Type Name="Map&lt;*&gt;">
+    <DisplayString>{{size={m_Size}}}</DisplayString>
+    <Expand>
+      <TreeItems>
+        <Size>m_Size</Size>
+        <HeadPointer>m_Root</HeadPointer>
+        <LeftPointer>m_Left</LeftPointer>
+        <RightPointer>m_Right</RightPointer>
+        <ValueNode Name="[{m_Key}]">m_Value</ValueNode>
+      </TreeItems>
+    </Expand>
+  </Type>
+
+  <Type Name="Multimap&lt;*&gt;">
+    <DisplayString>{{size={m_Size}}}</DisplayString>
+    <Expand>
+      <TreeItems>
+        <Size>m_Map.m_Size</Size>
+        <HeadPointer>m_Map.m_Root</HeadPointer>
+        <LeftPointer>m_Left</LeftPointer>
+        <RightPointer>m_Right</RightPointer>
+        <ValueNode Name="[{m_Key}]">m_Value</ValueNode>
+      </TreeItems>
+    </Expand>
+  </Type>
+
+</AutoVisualizer>

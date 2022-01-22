@@ -1,0 +1,27 @@
+#include "common.hlsl_vsh"
+#include "animated.hlsl_vsh"
+
+struct VS_INPUT 
+{
+	float4 Position	: POSITION;
+	float4	BoneWeights	: BLENDWEIGHT;
+	int4	BoneIndices	: BLENDINDICES;
+};
+
+struct VS_OUTPUT
+{
+	float4	Position	: POSITION;
+	float4	PositionWS	: TEXCOORD0;
+};
+
+VS_OUTPUT Main( VS_INPUT In )
+{
+	VS_OUTPUT Out;
+	
+	const float4 SkinnedPosition	= ApplyBones( In.Position, In.BoneWeights, In.BoneIndices );
+
+	Out.Position	= FixHalfPixelOffset( mul( SkinnedPosition, WVP ) );
+	Out.PositionWS	= mul( SkinnedPosition, WorldMatrix );
+
+	return Out;
+}

@@ -1,0 +1,19 @@
+#include "common.hlsl_psh"
+
+float4	SunVector;
+float4	SkyColorHi;
+float4	SkyColorLo;
+
+struct PS_INPUT 
+{
+	float3 PositionPass	: TEXCOORD0;
+};
+
+float4 Main( PS_INPUT In ) : COLOR
+{
+	const float		SunValue	= 0.5f * ( 1.0f + dot( normalize( In.PositionPass ), SunVector.xyz ) );
+	const float		T			= SunValue * SunValue;
+	const float4	SkyHSV		= lerp( SkyColorLo, SkyColorHi, T );
+	const float4	SkyRGB		= HSVtoRGB( SkyHSV );
+	return SkyRGB;
+}

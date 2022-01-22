@@ -1,0 +1,23 @@
+row_major float4x4	WindMatrix;
+float4				WindPhaseTime;		// xyz=phase scalar, w=time
+float4				WindPhaseSpace;		// xyz=phase scalar, w=unused
+
+float3 Hermite_EaseInOut( const float3 x )
+{
+	return x * x * ( 3.0f - ( 2.0f * x ) );
+}
+
+float4 GetFoliagePosition( const float4 PositionWS, const float3 NormalB, const float4 Color )
+{
+	const float3	Phase			= WindPhaseTime.xyz * WindPhaseTime.w + WindPhaseSpace.xyz * dot( PositionWS.xyz, float3( 1.0f, 1.0f, 1.0f ) );	// This dot just sums the xyz components
+	const float4	AppliedPhase	= float4( Hermite_EaseInOut( abs( ( frac( Phase ) * 2.0f ) - 1.0f ) ), 0.0f );
+
+	// Multiply the vert normal into the wind matrix, so foliage flap follows normals
+	float4x4		WindFlapMatrix	= WindMatrix;
+	WindFlapMatrix[2].xyz			*= mul( NormalB, WorldMatrix );
+	WindFlapMatrix[0]				*= AppliedPhase.x;
+	WindFlapMatrix[1]				*= AppliedPhase.y;
+	WindFlapMatrix[2]				*= AppliedPhase.z;
+
+	return PositionWS + mul( Color, WindFlapMatrix );
+}

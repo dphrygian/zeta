@@ -1,0 +1,165 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="src\Actions\wbactionuipushscreen.cpp">
+      <Filter>src\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Actions\wbactionuisetwidgetimage.cpp">
+      <Filter>src\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Actions\wbactionuishowhidewidget.cpp">
+      <Filter>src\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Actions\wbactionuishowyesnodialog.cpp">
+      <Filter>src\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Common\uimanagercommon.cpp">
+      <Filter>src\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Screens\uiscreen-base.cpp">
+      <Filter>src\Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Screens\uiscreen-fade.cpp">
+      <Filter>src\Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Screens\uiscreen-okdialog.cpp">
+      <Filter>src\Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Screens\uiscreen-waitdialog.cpp">
+      <Filter>src\Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Screens\uiscreen-yesnodialog.cpp">
+      <Filter>src\Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Widgets\uiwidget-composite.cpp">
+      <Filter>src\Widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Widgets\uiwidget-frame.cpp">
+      <Filter>src\Widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Widgets\uiwidget-image.cpp">
+      <Filter>src\Widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Widgets\uiwidget-slider.cpp">
+      <Filter>src\Widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Widgets\uiwidget-spacer.cpp">
+      <Filter>src\Widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Widgets\uiwidget-text.cpp">
+      <Filter>src\Widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="src\uifactory.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\uimanager.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\uiscreen.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\uistack.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\uiwidget.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Actions\wbactionuishowyesnodialog.h">
+      <Filter>src\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Actions\wbactionuipushscreen.h">
+      <Filter>src\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Actions\wbactionuisetwidgetimage.h">
+      <Filter>src\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Actions\wbactionuishowhidewidget.h">
+      <Filter>src\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Common\uimanagercommon.h">
+      <Filter>src\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Screens\uiscreen-base.h">
+      <Filter>src\Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Screens\uiscreen-fade.h">
+      <Filter>src\Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Screens\uiscreen-okdialog.h">
+      <Filter>src\Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Screens\uiscreen-waitdialog.h">
+      <Filter>src\Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Screens\uiscreen-yesnodialog.h">
+      <Filter>src\Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Widgets\uiwidget-composite.h">
+      <Filter>src\Widgets</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Widgets\uiwidget-frame.h">
+      <Filter>src\Widgets</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Widgets\uiwidget-image.h">
+      <Filter>src\Widgets</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Widgets\uiwidget-slider.h">
+      <Filter>src\Widgets</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Widgets\uiwidget-spacer.h">
+      <Filter>src\Widgets</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Widgets\uiwidget-text.h">
+      <Filter>src\Widgets</Filter>
+    </ClInclude>
+    <ClInclude Include="src\iuiinputmap.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ui.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\uifactory.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\uimanager.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\uiscreen.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\uiscreens.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\uistack.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\uiwbactions.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\uiwidget.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\uiwidgets.h">
+      <Filter>src</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{f07867d1-802b-4c3e-bfa2-a38f1499a395}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Actions">
+      <UniqueIdentifier>{ded877ca-b775-4688-9a35-d1b95f1da199}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Common">
+      <UniqueIdentifier>{97900151-8adb-4d3e-be93-10f14d0a1f0f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Screens">
+      <UniqueIdentifier>{bfab05b5-14b4-499b-9ccc-207ca3f67c34}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Widgets">
+      <UniqueIdentifier>{8dd83297-bb15-47fc-bdda-188531a6366c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

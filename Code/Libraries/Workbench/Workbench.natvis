@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<!-- See https://docs.microsoft.com/en-us/previous-versions/visualstudio/visual-studio-2015/debugger/create-custom-views-of-native-objects?view=vs-2015 for guide -->
+<!-- See https://docs.microsoft.com/en-us/previous-versions/visualstudio/visual-studio-2015/debugger/format-specifiers-in-cpp?view=vs-2015 for formatting -->
+<AutoVisualizer xmlns="http://schemas.microsoft.com/vstudio/debugger/natvis/2010">
+
+  <Type Name="WBEvent">
+    <Expand>
+      <CustomListItems>
+        <Variable Name="pNode" InitialValue="m_Parameters.m_Root"/>
+        <Size>1</Size>
+        <Loop>
+          <If Condition="pNode == 0">
+            <Item Name="GetEventName">0</Item>
+            <Break/>
+          </If>
+          <!-- HACKHACK: 207162613 is the hash for "EventName" -->
+          <If Condition="207162613 == pNode->m_Key.m_Hash">
+            <Item Name="GetEventName">pNode->m_Value</Item>
+          </If>
+          <Elseif Condition="207162613 &lt; pNode->m_Key.m_Hash">
+            <Exec>pNode = pNode->m_Left</Exec>
+          </Elseif>
+          <Else>
+            <Exec>pNode = pNode->m_Right</Exec>
+          </Else>
+        </Loop>
+      </CustomListItems>
+      <Item Name="Size">m_Parameters.m_Size</Item>
+      <ExpandedItem>m_Parameters</ExpandedItem>
+    </Expand>
+  </Type>
+
+  <Type Name="WBEvent::SParameter">
+    <DisplayString Condition="m_Type == EWBEPT_None">none</DisplayString>
+    <DisplayString Condition="m_Type == EWBEPT_Bool">{*(bool*)(&amp;m_Data1)}</DisplayString>
+    <DisplayString Condition="m_Type == EWBEPT_Int">{*(int*)(&amp;m_Data1)}</DisplayString>
+    <DisplayString Condition="m_Type == EWBEPT_Float">{*(float*)(&amp;m_Data1)}</DisplayString>
+    <DisplayString Condition="m_Type == EWBEPT_Hash">{*(HashedString*)(&amp;m_Data1)}</DisplayString>
+    <DisplayString Condition="m_Type == EWBEPT_Vector">{*(Vector*)(&amp;m_Data1)}</DisplayString>
+    <DisplayString Condition="m_Type == EWBEPT_Angles">{*(Angles*)(&amp;m_Data1)}</DisplayString>
+    <DisplayString Condition="m_Type == EWBEPT_Entity">{*(WBEntityRef*)(&amp;m_Data1)}</DisplayString>
+    <DisplayString Condition="m_Type == EWBEPT_Pointer">{*(void**)(&amp;m_Data1)}</DisplayString>
+  </Type>
+
+  <Type Name="WBEntity">
+    <DisplayString>{{{m_DefinitionName}_{m_UID-0x1d000000,d}, m_UID={m_UID,x}}}</DisplayString>
+  </Type>
+ 
+  <Type Name="WBEntityRef">
+    <Expand>
+      <CustomListItems>
+        <Variable Name="pNode" InitialValue="WBWorld::m_Instance->m_Entities.m_Root"/>
+        <Size>1</Size>
+        <Loop>
+          <If Condition="pNode == 0">
+            <Item Name="WBEntity">0</Item>
+            <Break/>
+          </If>
+          <If Condition="m_UID == pNode->m_Key">
+            <Item Name="WBEntity">*pNode->m_Value</Item>
+          </If>
+          <Elseif Condition="m_UID &lt; pNode->m_Key">
+            <Exec>pNode = pNode->m_Left</Exec>
+          </Elseif>
+          <Else>
+            <Exec>pNode = pNode->m_Right</Exec>
+          </Else>
+        </Loop>
+      </CustomListItems>
+    </Expand>
+  </Type>
+
+  <Type Name="WBComponent">
+    <DisplayString>{{WBComp{m_DEV_ReadableName,sb} ({m_DEV_DefinitionName})}}</DisplayString>
+  </Type>
+
+  <Type Name="WBRule">
+    <DisplayString>{{event={m_Event} score={1+m_Conditions.m_Size} additive={m_Additive} }}</DisplayString>
+  </Type>
+
+  <Type Name="WBParamEvaluator::SEvaluatedParam">
+    <DisplayString Condition="m_Type == EPT_None">none</DisplayString>
+    <DisplayString Condition="m_Type == EPT_Bool">{m_Bool}</DisplayString>
+    <DisplayString Condition="m_Type == EPT_Int">{m_Int}</DisplayString>
+    <DisplayString Condition="m_Type == EPT_Float">{m_Float}</DisplayString>
+    <DisplayString Condition="m_Type == EPT_String">{m_String}</DisplayString>
+    <DisplayString Condition="m_Type == EPT_Entity">{m_Entity}</DisplayString>
+    <DisplayString Condition="m_Type == EPT_Vector">{m_Vector}</DisplayString>
+    <DisplayString Condition="m_Type == EPT_Angles">{m_Angles}</DisplayString>
+  </Type>
+
+</AutoVisualizer>

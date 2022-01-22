@@ -1,0 +1,85 @@
+#include "common.hlsl_psh"
+#include "calibration.hlsl_psh"
+#include "colorblind.hlsl_psh"
+#include "color-grading.hlsl_psh"
+#include "fog.hlsl_psh"
+
+sampler MainSampler			: register(s0);
+sampler BlurSampler			: register(s1);
+sampler DisplaceSampler		: register(s2);
+sampler BlotSampler			: register(s3);
+sampler CanvasSampler		: register(s4);
+sampler EdgeSampler			: register(s5);
+sampler ColorGradingSampler	: register(s6);
+sampler DepthSampler		: register(s7);
+
+uniform float4				PostLevels;				// x = blur (with normalization factor), y = displace pct, z = edge luminance mul, w = edge luminance add
+uniform float4				WatercolorParams;		// x = blur sharp, y = blur blend, z = blot sharp, w = blot blend
+uniform float4				AspectUVAdjustmentA;	// Set from code to correct aspect ratio; xy is multiply, zw is add
+uniform float4				AspectUVAdjustmentB;	// Set from code to correct aspect ratio; xy is 1/AspectUVAdjustmentA.xy
+
+struct PS_INPUT
+{
+	float2 UV	: TEXCOORD0;
+};
+
+float4 Main( PS_INPUT In ) : COLOR
+{
+	const float3 White			= float3( 1.0f, 1.0f, 1.0f );
+	const float3 Black			= float3( 0.0f, 0.0f, 0.0f );
+	const float3 Gray			= float3( 0.5f, 0.5f, 0.5f );
+
+	const float2 AspectUV		= ( In.UV * AspectUVAdjustmentA.xy ) + AspectUVAdjustmentA.zw;
+
+	const float TrueDepth		= GetLinearDepth( tex2D( DepthSampler, In.UV ).r );
+	const float TrueFogTerm		= 1.0f - ScaleDistance( TrueDepth * ClipValues.y );		// Unlike edge shader, it should be correct to ignore height fog here
+
+	const float2 DisplaceUV		= tex2D( DisplaceSampler, AspectUV ).xy * 2.0f - 1.0f; // range -1..1
+	const float2 MaxDisplace	= TrueFogTerm * PostLevels.y * AspectUVAdjustmentB.xy;
+	const float2 MainUV			= In.UV + ( DisplaceUV * MaxDisplace );
+
+	const float DisplaceDepth	= GetLinearDepth( tex2D( DepthSampler, MainUV ).r );
+	const float DisplaceFogTerm	= 1.0f - ScaleDistance( DisplaceDepth * ClipValues.y );	// Unlike edge shader, it should be correct to ignore height fog here
+
+	const float3 MainColor		= tex2D( MainSampler, MainUV ).rgb;
+
+	const float3 BlurColor		= tex2D( BlurSampler, MainUV ).rgb;
+	const float3 NormBlurColor	= PostLevels.x * BlurColor;
+
+	const float3 BlurDiff		= DisplaceFogTerm * abs( MainColor - NormBlurColor );	// Scale by fog term so we don't sharpen in the distance, regardless of difference
+	const float3 WatercolorT	= WatercolorParams.y * saturate( WatercolorParams.x * BlurDiff );
+	const float3 Watercolor		= lerp( NormBlurColor, MainColor, WatercolorT );
+	
+	const float3 BlotColor		= tex2D( BlotSampler, AspectUV ).rgb;
+	const float3 BlotT			= WatercolorParams.w * saturate( WatercolorParams.z * BlurDiff );
+	const float3 UsingBlot		= 2.0f * lerp( Gray, BlotColor, BlotT );	// Range 0-2 so it can brighten and darken
+	const float3 BlottedColor	= Watercolor * UsingBlot;
+	const float4 CanvasColor	= SampleSRGBToLinear( CanvasSampler, AspectUV );
+	const float3 HDRColor		= CanvasColor.rgb * CanvasColor.a + BlottedColor * ( 1.0f - CanvasColor.a );
+
+	// DLP 29 May 2021: I'm leaving this on for now; it thresholds the edge overlay based on scene luminance, as a HACKHACK to
+	// prevent edge lines from showing through fog lights. I have a proper solution for that now, but I like the way this looks.
+	const float  HDRLuminance	= Luminance( BlottedColor );
+	const float  LumAlpha		= saturate( HDRLuminance * PostLevels.z + PostLevels.w );
+	const float3 EdgeColor		= lerp( tex2D( EdgeSampler, MainUV ).rgb, White, LumAlpha );
+	//const float3 EdgeColor		= tex2D( EdgeSampler, MainUV ).rgb;
+
+	// Switching to Reinhard for softer, desaturated look
+	const float3 LDRColor		= TonemapCustom( max( HDRColor * EdgeColor, Black ) );	// Multiplicative edges (works better than subtractive)
+
+	// Do color grading in sRGB space to save sRGB -> linear conversions on grading texture.
+	// Linear grading might be give nicer value lerps but it'd be a subtle difference.
+	const float3 GradedColor	= ColorGrade( LDRColor, ColorGradingSampler );
+
+	const float3 GammaColor		= Calibrate( GradedColor );
+
+	// NOTE: Luma() is meant for nonlinear values, but not meant for sRGB?
+	// Not sure how to interpret that since I use those terms interchangeably.
+	const float4 FinalColor 	= float4( GammaColor, Luma( GammaColor ) );
+
+#if COLOR_BLIND
+	return mul( ColorBlindMat, FinalColor );
+#else
+	return FinalColor;
+#endif
+}

@@ -1,0 +1,85 @@
+#version 120
+
+float skGradientThresholdLo	= 0.00f;
+float skGradientThresholdHi	= 1.00f;
+
+uniform sampler2D Texture0;
+uniform sampler2D Texture1;
+
+uniform mat4	InvVPMatrix;
+uniform	vec4	EyePosition;
+uniform	vec4	EyeDirection;
+uniform vec4	FogParams;
+
+varying vec2	PassUV;
+
+vec4 GetWSPos( vec2 UV, float Depth )
+{
+	vec2 FixedUV	= ( UV * 2.0f ) - 1.0f;
+	vec4 VPos4		= vec4( FixedUV.x, FixedUV.y, Depth, 1.0f );	// DEOSNOTE: *Don't* negate FixedUV.y, it's already flipped in GLSL
+	vec4 WSPos		= VPos4 * InvVPMatrix;
+	return WSPos / WSPos.w;
+}
+
+vec2 FixUV( vec2 UV )
+{
+	return vec2( UV.x, 1.0f - UV.y );
+}
+
+float NonZeroSign( float x )
+{
+	return ( step( 0.0f, x ) * 2.0f ) - 1.0f;
+}
+
+vec3 GetInvStereographicProjection( vec2 Normal, float NormalZSign )
+{
+	float XXYY	= dot( Normal.xy, Normal.xy );
+	float Denom	= 1.0f / ( 1.0f + XXYY );
+	return vec3( 2.0f * Normal.xy * Denom, NormalZSign * abs( ( XXYY - 1.0f ) * Denom ) );
+}
+
+float SmoothStep( float Lo, float Hi, float X )
+{
+	float T = clamp( ( X - Lo) / ( Hi - Lo ), 0.0f, 1.0f );
+    return T * T * (3.0f - 2.0f * T);
+}
+
+// Scales and clamps distance to [0,1] based on 
+float ScaleDistance( float InDistance )
+{
+	float ScaledDistance = ( InDistance - FogParams.x ) * FogParams.y;
+	return clamp( ScaledDistance, 0.0f, 1.0f );
+}
+
+void main()
+{
+	vec2	FixedUV				= FixUV( PassUV );
+	
+	vec4	NormalSpec			= texture2D( Texture0, FixedUV );
+	vec4	NormalUnpack		= ( NormalSpec * 2.0f ) - 1.0f;
+	float	NormalZSign			= NonZeroSign( NormalUnpack.z );
+	vec3	WSNormal			= GetInvStereographicProjection( NormalUnpack.xy, NormalZSign );
+
+	float	Depth				= texture2D( Texture1, FixedUV ).r;
+	vec4	WSPos				= GetWSPos( FixedUV, Depth );
+	vec3	WSToEyeOffset		= EyePosition.xyz - WSPos.xyz;
+	float	WSToEyeLength		= length ( WSToEyeOffset );
+	vec3	WSToEyeDir			= WSToEyeOffset / WSToEyeLength;
+
+	vec3	WSToEyeProjView		= dot( WSToEyeDir, EyeDirection.xyz ) * EyeDirection.xyz;
+	vec3	WSNormalProjView	= dot( WSNormal, EyeDirection.xyz ) * EyeDirection.xyz;
+	vec3	WSToEyeRejView		= WSToEyeDir - WSToEyeProjView;
+	vec3	WSNormalRejView		= WSNormal - WSNormalProjView;
+	float	Gradient			= ( 0.5f * ( 1.0f - dot( WSToEyeRejView, WSNormalRejView ) ) );
+	float	FacingCancel		= clamp( 1.0f + dot( WSNormal, EyeDirection.xyz ), 0.0f, 1.0f );
+	float	GradTerm			= SmoothStep( skGradientThresholdLo, skGradientThresholdHi, Gradient * FacingCancel );
+
+	float	FogTerm				= 1.0f - ScaleDistance( WSToEyeLength );
+
+	gl_FragColor =
+		mix(
+			vec4( 0.0f, 0.0f, 0.0f, 0.98f ),
+			vec4( 0.0f, 0.0f, 0.0f, -4.0f ),
+			FogTerm * GradTerm
+		);
+}

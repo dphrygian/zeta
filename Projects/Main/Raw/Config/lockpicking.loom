@@ -1,0 +1,55 @@
+[RosaLockpicking]
+InputContext		= "Context_Lockpicking"
+GameEndDelay		= 0.6
+PinShakeLow			= 0.0
+PinShakeHigh		= 4.0
+RattleVolumeLow		= 0.0
+RattleVolumeHigh	= 0.9
+LockpickVelocity	= 12.0
+InputTimeout		= 0.65
+ForceNoiseRadius	= 15.0	# Very large radius, it was feeling like this wasn't doing anything
+ForceNoiseScalar	= 5.0	# Artificially increase certainty to focus attention on this noise
+RattleSound			= "Sound_Lockpick_Rattle"
+PinMissSound		= "Sound_Lockpick_PinMiss"
+PinBindSound		= "Sound_Lockpick_PinBind"
+PinForceSound		= "Sound_Lockpick_PinForce"
+PinResistSound		= "Sound_Lockpick_PinResist"
+OpenedSound			= "Sound_Lockpick_Opened"
+CameraLerpTime		= 0.35
+
+[RosaLockpicking]
+lmActions( Start )
+{
+	RosaConditionalShowBook( "Tutorial_Lockpicking", true, "Tutorial_Lockpicking", BookScreen = "TutorialBookScreen" )
+}
+lmActions( Success )
+{
+	SendEvent( "OnLockpicked", GetVariable( "PlayerPE", "LockpickTarget" ) )
+	RosaSetPersistentVar( "NumLockpicks", Add( ConstantInt( 1 ), RosaGetPersistentVar( "NumLockpicks" ) ) )
+	// ROSATODO: Re-enable if desired
+	//"CheckLockpickAchievement"
+}
+
+	[CheckLockpickAchievement]
+	lmSelectorAction
+	{
+		Selection( Conditional( "E", ConstantInt( 10 ), RosaGetPersistentVar( "NumLockpicks" ) ), RosaAwardAchievement( "ACH_Lockpick" ) )
+	}
+
+[Lock_VeryEasy]
+NumPins			= 2
+PinAngle		= 90.0	# PinAngle is actually the half-angle; this means half the circle is a valid bind
+ForceChance		= 1.0
+ForceFailPins	= 0
+
+[Lock_Easy]
+NumPins			= 2
+PinAngle		= 30.0
+ForceChance		= 0.75
+ForceFailPins	= 1
+
+[Lock_Hard]
+NumPins			= 4
+PinAngle		= 22.5
+ForceChance		= 0.666
+ForceFailPins	= 1
